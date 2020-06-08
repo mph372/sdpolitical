@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  district: MyString
+  total_voters: 1
+  dem_percent: 1.5
+  rep_percent: 1.5
+  other_percent: 1.5
+  newsom_percent: 1.5
+  cox_percent: 1.5
+  clinton_percent: 1.5
+  trump_percent: 1.5
+  brown_percent: 1.5
+  kashkar_percent: 1.5
+  obama_percent: 1.5
+  romney_percent: 1.5
+  average_percent: 1.5
+  jurisdiction: one
+
+two:
+  name: MyString
+  district: MyString
+  total_voters: 1
+  dem_percent: 1.5
+  rep_percent: 1.5
+  other_percent: 1.5
+  newsom_percent: 1.5
+  cox_percent: 1.5
+  clinton_percent: 1.5
+  trump_percent: 1.5
+  brown_percent: 1.5
+  kashkar_percent: 1.5
+  obama_percent: 1.5
+  romney_percent: 1.5
+  average_percent: 1.5
+  jurisdiction: two

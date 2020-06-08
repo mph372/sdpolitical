@@ -1,0 +1,27 @@
+<%= form_with(model: jurisdiction, local: true) do |form| %>
+  <% if jurisdiction.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(jurisdiction.errors.count, "error") %> prohibited this jurisdiction from being saved:</h2>
+
+      <ul>
+      <% jurisdiction.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :contribution_limit %>
+    <%= form.number_field :contribution_limit %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

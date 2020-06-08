@@ -1,0 +1,84 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @district.name %>
+</p>
+
+<p>
+  <strong>District:</strong>
+  <%= @district.district %>
+</p>
+
+<p>
+  <strong>Total voters:</strong>
+  <%= @district.total_voters %>
+</p>
+
+<p>
+  <strong>Dem percent:</strong>
+  <%= @district.dem_percent %>
+</p>
+
+<p>
+  <strong>Rep percent:</strong>
+  <%= @district.rep_percent %>
+</p>
+
+<p>
+  <strong>Other percent:</strong>
+  <%= @district.other_percent %>
+</p>
+
+<p>
+  <strong>Newsom percent:</strong>
+  <%= @district.newsom_percent %>
+</p>
+
+<p>
+  <strong>Cox percent:</strong>
+  <%= @district.cox_percent %>
+</p>
+
+<p>
+  <strong>Clinton percent:</strong>
+  <%= @district.clinton_percent %>
+</p>
+
+<p>
+  <strong>Trump percent:</strong>
+  <%= @district.trump_percent %>
+</p>
+
+<p>
+  <strong>Brown percent:</strong>
+  <%= @district.brown_percent %>
+</p>
+
+<p>
+  <strong>Kashkar percent:</strong>
+  <%= @district.kashkar_percent %>
+</p>
+
+<p>
+  <strong>Obama percent:</strong>
+  <%= @district.obama_percent %>
+</p>
+
+<p>
+  <strong>Romney percent:</strong>
+  <%= @district.romney_percent %>
+</p>
+
+<p>
+  <strong>Average percent:</strong>
+  <%= @district.average_percent %>
+</p>
+
+<p>
+  <strong>Jurisdiction:</strong>
+  <%= @district.jurisdiction %>
+</p>
+
+<%= link_to 'Edit', edit_district_path(@district) %> |
+<%= link_to 'Back', districts_path %>

@@ -1,0 +1,97 @@
+<%= form_with(model: district, local: true) do |form| %>
+  <% if district.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(district.errors.count, "error") %> prohibited this district from being saved:</h2>
+
+      <ul>
+      <% district.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :district %>
+    <%= form.text_field :district %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_voters %>
+    <%= form.number_field :total_voters %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dem_percent %>
+    <%= form.text_field :dem_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rep_percent %>
+    <%= form.text_field :rep_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :other_percent %>
+    <%= form.text_field :other_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :newsom_percent %>
+    <%= form.text_field :newsom_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cox_percent %>
+    <%= form.text_field :cox_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :clinton_percent %>
+    <%= form.text_field :clinton_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :trump_percent %>
+    <%= form.text_field :trump_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :brown_percent %>
+    <%= form.text_field :brown_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kashkari_percent %>
+    <%= form.text_field :kashkari_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :obama_percent %>
+    <%= form.text_field :obama_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :romney_percent %>
+    <%= form.text_field :romney_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :average_percent %>
+    <%= form.text_field :average_percent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :jurisdiction_id %>
+    <%= form.text_field :jurisdiction_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

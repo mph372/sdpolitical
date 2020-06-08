@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @jurisdiction.name %>
+</p>
+
+<p>
+  <strong>Contribution limit:</strong>
+  <%= @jurisdiction.contribution_limit %>
+</p>
+
+<%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction) %> |
+<%= link_to 'Back', jurisdictions_path %>

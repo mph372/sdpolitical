@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jurisdictions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Contribution limit</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jurisdictions.each do |jurisdiction| %>
+      <tr>
+        <td><%= jurisdiction.name %></td>
+        <td><%= jurisdiction.contribution_limit %></td>
+        <td><%= link_to 'Show', jurisdiction %></td>
+        <td><%= link_to 'Edit', edit_jurisdiction_path(jurisdiction) %></td>
+        <td><%= link_to 'Destroy', jurisdiction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Jurisdiction', new_jurisdiction_path %>
