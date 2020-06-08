@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_211404) do
+ActiveRecord::Schema.define(version: 2020_06_08_212504) do
 
   create_table "districts", force: :cascade do |t|
     t.string "name"
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(version: 2020_06_08_211404) do
     t.integer "contribution_limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "corporate_contributions"
+    t.boolean "pac_contributions"
+    t.boolean "party_contributions"
   end
 
 end

@@ -21,6 +21,21 @@
     <%= form.number_field :contribution_limit %>
   </div>
 
+    <div class="field">
+        <%= form.label "Corporate Contributions Allowed" %> 
+        <%= form.check_box :corporate_contributions, {}, true, false %> <br />
+    </div>  
+
+        <div class="field">
+        <%= form.label "PAC Contributions Allowed" %> 
+        <%= form.check_box :pac_contributions, {}, true, false %> <br />
+    </div>  
+
+        <div class="field">
+        <%= form.label "Party Contributions Allowed" %> 
+        <%= form.check_box :party_contributions, {}, true, false %> <br />
+    </div> 
+
   <div class="actions">
     <%= form.submit %>
   </div>

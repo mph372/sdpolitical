@@ -88,7 +88,7 @@
 
   <div class="field">
     <%= form.label :jurisdiction_id %>
-    <%= form.text_field :jurisdiction_id %>
+    <%= form.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {}, { "data-placeholder": "Select Jurisdiction" }) %>
   </div>
 
   <div class="actions">

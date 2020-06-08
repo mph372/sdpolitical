@@ -56,8 +56,8 @@
 </p>
 
 <p>
-  <strong>Kashkar percent:</strong>
-  <%= @district.kashkar_percent %>
+  <strong>Kashkari percent:</strong>
+  <%= @district.kashkari_percent %>
 </p>
 
 <p>
@@ -77,7 +77,7 @@
 
 <p>
   <strong>Jurisdiction:</strong>
-  <%= @district.jurisdiction %>
+  <%= @district.jurisdiction.name %>
 </p>
 
 <%= link_to 'Edit', edit_district_path(@district) %> |
