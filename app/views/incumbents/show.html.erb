@@ -1,4 +1,81 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <h2><%= @incumbent.title %> <%= @incumbent.first_name %> <%= @incumbent.last_name %></h2>
+</p>
+<%= image_tag @incumbent.image_url.to_s %> <br>
+
+<p>
+  <strong>Date of Birth:</strong> <%= @incumbent.birth_date %> (Age <%= @incumbent.calculated_age %>)
+</p>
+
+<p>
+  <strong>Party:</strong> <%= @incumbent.party %> 
+</p>
+
+<p>
+  <strong>Year Elected to this Office:</strong> <%= @incumbent.first_elected %> 
+</p>
+
+<p>
+  <strong>Prior Elected Office:</strong> <%= @incumbent.prior_elected %> 
+</p>
+
+<p>
+  <strong>Elected Official Salary:</strong> $<%= number_with_delimiter(@incumbent.salary, :delimiter => ',') %> 
+</p>
+
+<p>
+  <strong>Professional career:</strong> <%= @incumbent.professional_career %>
+</p>
+
+<p>
+  <strong>Congressional District:</strong> <%= @incumbent.congressional_district %>
+</p>
+
+<p>
+  <strong>Senate District:</strong> <%= @incumbent.senate_district %>
+</p>
+
+<p>
+  <strong>Assembly District:</strong> <%= @incumbent.assembly_district %>
+</p>
+
+<p>
+  <strong>Supervisorial District:</strong> <%= @incumbent.supe_district %>
+</p>
+
+<p>
+  <strong>Birthplace:</strong> <%= @incumbent.birth_place %>
+</p>
+
+<p>
+  <strong>Public E-Mail:</strong> <%= mail_to @incumbent.email %>
+</p>
+
+<p>
+  <strong>Twitter:</strong> <%= @incumbent.twitter %>
+</p>
+
+<p>
+  <strong>Facebook:</strong> <%= @incumbent.facebook %>
+</p>
+
+<p>
+  <strong>Public Phone Number:</strong> <%= @incumbent.phone %>
+</p>
+
+<p>
+  <strong>Termed Out:</strong> <%= @incumbent.term %>
+</p>
+
+<p>
+  <strong>On November, 2020 ballot?:</strong> <%= @incumbent.on_ballot %>
+</p>
+
+<p>
+  <strong>Current term expires:</strong> <%= @incumbent.term_expires %>
+</p>
+
 <%= link_to 'Edit', edit_incumbent_path(@incumbent) %> |
 <%= link_to 'Back', incumbents_path %>
