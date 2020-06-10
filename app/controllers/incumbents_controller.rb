@@ -69,6 +69,6 @@ class IncumbentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def incumbent_params
-      params.fetch(:incumbent, {})
+      params.require(:incumbent).permit(:title, :first_name, :last_name, :birth_date, :party, :first_elected, :prior_elected, :salary, :professional_career, :congressional_district, :assembly_district, :senate_district, :supe_district, :birth_place, :email, :phone, :term_expires, :term, :twitter, :facebook, :on_ballot, :image, :district_id)
     end
 end

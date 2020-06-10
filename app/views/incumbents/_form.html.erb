@@ -11,6 +11,122 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birth_date %>
+    <%= form.date_field :birth_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :party %>
+    <%= form.text_field :party %>
+  </div>
+
+  <div class="field">
+    <%= form.label :first_elected %>
+    <%= form.text_field :first_elected %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prior_elected %>
+    <%= form.text_field :prior_elected %>
+  </div>
+
+  <div class="field">
+    <%= form.label :salary %>
+    <%= form.text_field :salary %>
+  </div>
+
+  <div class="field">
+    <%= form.label :professional_career %>
+    <%= form.text_field :professional_career %>
+  </div>  
+
+  <div class="field">
+    <%= form.label :congressional_district %>
+    <%= form.text_field :congressional_district %>
+  </div>  
+
+  <div class="field">
+    <%= form.label :assembly_district %>
+    <%= form.text_field :assembly_district %>
+  </div>
+
+  <div class="field">
+    <%= form.label :senate_district %>
+    <%= form.text_field :senate_district %>
+  </div>  
+
+  <div class="field">
+    <%= form.label :supe_district %>
+    <%= form.text_field :supe_district %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birth_place %>
+    <%= form.text_field :birth_place %>
+  </div>    
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  
+  <div class="field">
+    <%= form.label :twitter %>
+    <%= form.text_field :facebook %>
+  </div>
+
+  <div class="field">
+    <%= form.label :facebook %>
+    <%= form.text_field :facebook %>
+  </div> 
+
+  <div class="field">
+    <%= form.label :phone %>
+    <%= form.text_field :phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :term %>
+    <%= form.text_field :term %>
+  </div>
+
+  <div class="field">
+    <%= form.label :term_expires %>
+    <%= form.text_field :term_expires %>
+  </div>
+
+  <div class="field">
+    <%= form.label :on_ballot %>
+    <%= form.check_box :on_ballot, {}, true, false %> <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :image, "Headshot" %>
+    <%= form.file_field :image %>
+  </div>      
+
+  <div class="field">
+    <%= form.label :district_id %>
+    <%= form.select(:district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {}, { "data-placeholder": "Select District" }) %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
