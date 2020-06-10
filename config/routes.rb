@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :incumbents
   resources :districts
   resources :jurisdictions
   root 'jurisdictions#index'

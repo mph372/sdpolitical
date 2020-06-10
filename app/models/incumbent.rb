@@ -1,0 +1,2 @@
+class Incumbent < ApplicationRecord
+end

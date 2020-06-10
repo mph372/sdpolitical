@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_212504) do
+ActiveRecord::Schema.define(version: 2020_06_10_160053) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "districts", force: :cascade do |t|
     t.string "name"
@@ -34,6 +37,33 @@ ActiveRecord::Schema.define(version: 2020_06_08_212504) do
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
   end
 
+  create_table "incumbents", force: :cascade do |t|
+    t.bigint "district_id"
+    t.string "title"
+    t.string "first_name"
+    t.string "last_name"
+    t.date "birth_date"
+    t.string "party"
+    t.integer "first_elected"
+    t.string "prior_elected"
+    t.integer "salary"
+    t.string "professional_career"
+    t.integer "congressional_district"
+    t.integer "assembly_district"
+    t.integer "senate_district"
+    t.integer "supe_district"
+    t.integer "birth_place"
+    t.string "email"
+    t.string "twitter"
+    t.string "facebook"
+    t.string "phone"
+    t.integer "term"
+    t.boolean "on_ballot"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_incumbents_on_district_id"
+  end
+
   create_table "jurisdictions", force: :cascade do |t|
     t.string "name"
     t.integer "contribution_limit"
@@ -42,6 +72,8 @@ ActiveRecord::Schema.define(version: 2020_06_08_212504) do
     t.boolean "corporate_contributions"
     t.boolean "pac_contributions"
     t.boolean "party_contributions"
+    t.text "description"
   end
 
+  add_foreign_key "incumbents", "districts"
 end

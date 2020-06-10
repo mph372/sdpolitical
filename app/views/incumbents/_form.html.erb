@@ -1,0 +1,17 @@
+<%= form_with(model: incumbent, local: true) do |form| %>
+  <% if incumbent.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(incumbent.errors.count, "error") %> prohibited this incumbent from being saved:</h2>
+
+      <ul>
+      <% incumbent.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
