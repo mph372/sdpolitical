@@ -10,11 +10,18 @@
 </p>
 
 <p>
-  <strong>Party:</strong> <%= @incumbent.party %> 
+  
+  <% if @incumbent.party == 'Republican' %>
+  <strong>Party:</strong> <span style="color: #DE0100;"><%= @incumbent.party %></span>
+<% else %>
+   <p>Book Online : <%= @incumbent.party %></p>
+<% end %>
 </p>
 
+
+
 <p>
-  <strong>Year Elected to this Office:</strong> <%= @incumbent.first_elected %> 
+  <strong>Year Elected as <%= @incumbent.title %>:</strong> <%= @incumbent.first_elected %> 
 </p>
 
 <p>
@@ -30,19 +37,19 @@
 </p>
 
 <p>
-  <strong>Congressional District:</strong> <%= @incumbent.congressional_district %>
+  <strong>Congressional District:</strong> <%= @incumbent.congressional_district.ordinalize %>
 </p>
 
 <p>
-  <strong>Senate District:</strong> <%= @incumbent.senate_district %>
+  <strong>Senate District:</strong> <%= @incumbent.senate_district.ordinalize %>
 </p>
 
 <p>
-  <strong>Assembly District:</strong> <%= @incumbent.assembly_district %>
+  <strong>Assembly District:</strong> <%= @incumbent.assembly_district.ordinalize %>
 </p>
 
 <p>
-  <strong>Supervisorial District:</strong> <%= @incumbent.supe_district %>
+  <strong>Supervisorial District:</strong> <%= @incumbent.supe_district.ordinalize %>
 </p>
 
 <p>

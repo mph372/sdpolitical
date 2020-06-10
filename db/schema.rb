@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_10_185616) do
+ActiveRecord::Schema.define(version: 2020_06_10_193607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,5 +77,20 @@ ActiveRecord::Schema.define(version: 2020_06_10_185616) do
     t.text "description"
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.bigint "incumbent_id"
+    t.date "period_begin"
+    t.date "period_end"
+    t.date "report_filed"
+    t.integer "period_receipts"
+    t.integer "period_disbursements"
+    t.integer "current_coh"
+    t.integer "current_debt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["incumbent_id"], name: "index_reports_on_incumbent_id"
+  end
+
   add_foreign_key "incumbents", "districts"
+  add_foreign_key "reports", "incumbents"
 end
