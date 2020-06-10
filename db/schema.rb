@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_10_170811) do
+ActiveRecord::Schema.define(version: 2020_06_10_185616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2020_06_10_170811) do
     t.integer "assembly_district"
     t.integer "senate_district"
     t.integer "supe_district"
-    t.integer "birth_place"
+    t.string "birth_place"
     t.string "email"
     t.string "twitter"
     t.string "facebook"
