@@ -12,9 +12,42 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :incumbent_id %>
-    <%= form.text_field :incumbent_id %>
+    <%= form.label :period_begin, "Period Start Date" %>
+    <%= form.date_field :period_begin %>
   </div>
+
+  <div class="field">
+    <%= form.label :period_end, "Period End Date" %>
+    <%= form.date_field :period_end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :report_filed, "Date Report Filed" %>
+    <%= form.date_field :report_filed %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :period_receipts, "Receipts this period" %>
+    <%= form.text_field :period_receipts %>
+  </div>
+
+  <div class="field">
+    <%= form.label :period_disbursements, "Disbursements this period" %>
+    <%= form.text_field :period_disbursements %>
+  </div>  
+
+  <div class="field">
+    <%= form.label :current_coh, "Current Cash-on-Hand" %>
+    <%= form.text_field :current_coh %>
+  </div>
+
+  <div class="field">
+    <%= form.label :current_debt, "Current Debt" %>
+    <%= form.text_field :current_debt %>
+  </div>  
+
+  <%= form.text_field :incumbent_id, :value => params[:incumbent_id]%>
 
   <div class="actions">
     <%= form.submit %>

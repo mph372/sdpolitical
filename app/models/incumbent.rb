@@ -1,6 +1,7 @@
 class Incumbent < ApplicationRecord
     belongs_to :district
     mount_uploader :image, IncumbentUploader
+    has_many :reports
 
     def calculated_age
         now = Time.now.utc.to_date

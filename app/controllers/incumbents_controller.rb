@@ -10,6 +10,8 @@ class IncumbentsController < ApplicationController
   # GET /incumbents/1
   # GET /incumbents/1.json
   def show
+    @incumbent = Incumbent.find(params[:id])
+    @reports = @incumbent.reports
   end
 
   # GET /incumbents/new

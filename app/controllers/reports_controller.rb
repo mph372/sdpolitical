@@ -19,6 +19,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    @report = Report.find(params[:id])
   end
 
   # POST /reports
@@ -40,6 +41,8 @@ class ReportsController < ApplicationController
   # PATCH/PUT /reports/1
   # PATCH/PUT /reports/1.json
   def update
+    @report = Report.find(params[:id])
+    @report.update(report_params)
     respond_to do |format|
       if @report.update(report_params)
         format.html { redirect_to @report, notice: 'Report was successfully updated.' }
@@ -69,6 +72,6 @@ class ReportsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def report_params
-      params.require(:report).permit(:incumbent_id)
+      params.require(:report).permit(:incumbent_id, :period_begin, :period_end, :report_filed, :period_receipts,	:period_disbursements,	:current_coh,	 :current_debt )
     end
 end
