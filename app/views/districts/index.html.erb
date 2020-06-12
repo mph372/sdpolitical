@@ -5,22 +5,14 @@
 <table>
   <thead>
     <tr>
+      <th>Jurisdiction</th>
       <th>Name</th>
       <th>District</th>
       <th>Total voters</th>
       <th>Dem percent</th>
       <th>Rep percent</th>
       <th>Other percent</th>
-      <th>Newsom percent</th>
-      <th>Cox percent</th>
-      <th>Clinton percent</th>
-      <th>Trump percent</th>
-      <th>Brown percent</th>
-      <th>Kashkar percent</th>
-      <th>Obama percent</th>
-      <th>Romney percent</th>
-      <th>Average percent</th>
-      <th>Jurisdiction</th>
+      <th>Registration Advantage</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -28,22 +20,19 @@
   <tbody>
     <% @districts.each do |district| %>
       <tr>
+        <td><%= district.jurisdiction.name %></td>
         <td><%= district.name %></td>
         <td><%= district.district %></td>
-        <td><%= district.total_voters %></td>
+        <td><%= number_with_delimiter(district.total_voters, :delimiter => ',') %></td>
         <td>% <%= district.dem_percent %></td>
         <td>% <%= district.rep_percent %></td>
         <td>% <%= district.other_percent %></td>
-        <td>% <%= district.newsom_percent %></td>
-        <td>% <%= district.cox_percent %></td>
-        <td>% <%= district.clinton_percent %></td>
-        <td>% <%= district.trump_percent %></td>
-        <td>% <%= district.brown_percent %></td>
-        <td>% <%= district.kashkari_percent %></td>
-        <td>% <%= district.obama_percent %></td>
-        <td>% <%= district.romney_percent %></td>
-        <td>% <%= district.average_percent %></td>
-        <td><%= district.jurisdiction.name %></td>
+        <td><% if district.registration_advantage > 0 %>
+            <span style="color: #0015BC;">D+ <%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+            <% else %>
+             <span style="color: #DE0100;">R+ <%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+            <%end%>
+            </td>        
         <td><%= link_to 'Show', district %></td>
         <td><%= link_to 'Edit', edit_district_path(district) %></td>
         <td><%= link_to 'Destroy', district, method: :delete, data: { confirm: 'Are you sure?' } %></td>
