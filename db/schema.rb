@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_10_193607) do
+ActiveRecord::Schema.define(version: 2020_06_11_235357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,9 @@ ActiveRecord::Schema.define(version: 2020_06_10_193607) do
     t.datetime "updated_at", null: false
     t.string "image"
     t.integer "term_expires"
+    t.integer "seeking_office"
+    t.string "official_website"
+    t.string "campaign_website"
     t.index ["district_id"], name: "index_incumbents_on_district_id"
   end
 
