@@ -10,6 +10,9 @@ class DistrictsController < ApplicationController
   # GET /districts/1
   # GET /districts/1.json
   def show
+    @district = District.find(params[:id])
+    @incumbents = @district.incumbents
+    @candidates = @district.candidates
   end
 
   # GET /districts/new

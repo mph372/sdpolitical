@@ -80,5 +80,48 @@
   <%= @district.jurisdiction.name %>
 </p>
 
+<%= content_tag(:iframe,'', width: 640, height: 480, src: "https://www.google.com/maps/d/u/0/embed?mid=1vpKkRpmUy0cEP9K3cmnugkxklE-3NAu7") %>
+
+
+<h3>Candidates</h3>
+<table>
+<thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Party</th>
+      <th>Profession</th>
+      <th>Age</th>
+      <th>Campaign Website</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @incumbents.each do |incumbent| %>
+      <% if incumbent.on_ballot == true %>
+          <tr>
+          <td><strong><%= incumbent.first_name %></strong></td>
+          <td><strong><%= incumbent.last_name %></strong></td>
+          <td><strong><%= incumbent.party %></strong></td>
+          <td><strong><%= incumbent.title %></strong></td>
+          <td><strong>Age <%= incumbent.calculated_age %></strong></td>
+          <td><strong><%= link_to incumbent.campaign_website %></strong></td>
+          </tr>
+      <% end %>
+    <% end %>    
+    <% @candidates.each do |candidate| %>
+      <tr>
+        <td><%= candidate.first_name %></td>
+        <td><%= candidate.last_name %></td>
+        <td><%= candidate.party %></td>
+        <td><%= candidate.professional_career %></td>
+        <td>Age <%= candidate.calculated_age %></td>
+        <td><%= link_to candidate.campaign_website %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <%= link_to 'Edit', edit_district_path(@district) %> |
 <%= link_to 'Back', districts_path %>
