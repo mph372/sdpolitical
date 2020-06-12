@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>District:</strong>
+  <%= @candidate.district %>
+</p>
+
+<p>
+  <strong>Birth date:</strong>
+  <%= @candidate.birth_date %>
+</p>
+
+<p>
+  <strong>Party:</strong>
+  <%= @candidate.party %>
+</p>
+
+<p>
+  <strong>Professional career:</strong>
+  <%= @candidate.professional_career %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @candidate.email %>
+</p>
+
+<p>
+  <strong>Campaign website:</strong>
+  <%= @candidate.campaign_website %>
+</p>
+
+<p>
+  <strong>Twitter:</strong>
+  <%= @candidate.twitter %>
+</p>
+
+<p>
+  <strong>Facebook:</strong>
+  <%= @candidate.facebook %>
+</p>
+
+<%= link_to 'Edit', edit_candidate_path(@candidate) %> |
+<%= link_to 'Back', candidates_path %>

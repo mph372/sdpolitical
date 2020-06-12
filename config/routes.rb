@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :candidates
   resources :reports
   resources :incumbents
   resources :districts
