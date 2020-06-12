@@ -42,3 +42,6 @@
 
 <%= link_to 'Edit', edit_candidate_path(@candidate) %> |
 <%= link_to 'Back', candidates_path %>
+
+<%= link_to("Add Report", new_report_path(:candidate_id => @candidate.id), :action => "new", :method => :get)%>
+

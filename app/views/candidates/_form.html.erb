@@ -13,17 +13,27 @@
 
   <div class="field">
     <%= form.label :district_id %>
-    <%= form.text_field :district_id %>
+    <%= form.select(:district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {}, { "data-placeholder": "Select District" }) %>
   </div>
 
   <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  </div>  
+
+  <div class="field">
     <%= form.label :birth_date %>
-    <%= form.date_select :birth_date %>
+    <%= form.date_field :birth_date %>
   </div>
 
   <div class="field">
     <%= form.label :party %>
-    <%= form.text_field :party %>
+    <%= form.select :party, ['Republican', 'Democrat', 'Declined to State', 'Green', 'Peace & Freedom', 'Libertarian', 'Reform', 'Natural Law', 'American Independent', 'Unknown'], :include_blank => true %>
   </div>
 
   <div class="field">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_212819) do
+ActiveRecord::Schema.define(version: 2020_06_12_214734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 2020_06_12_212819) do
     t.string "facebook"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["district_id"], name: "index_candidates_on_district_id"
   end
 
@@ -105,10 +107,13 @@ ActiveRecord::Schema.define(version: 2020_06_12_212819) do
     t.integer "current_debt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "candidate_id"
+    t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["incumbent_id"], name: "index_reports_on_incumbent_id"
   end
 
   add_foreign_key "candidates", "districts"
   add_foreign_key "incumbents", "districts"
+  add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "incumbents"
 end

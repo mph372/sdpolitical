@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
-    @report = Report.new(report_params)
+    @report = @report = Report.new(report_params)
 
     respond_to do |format|
       if @report.save
@@ -64,6 +64,17 @@ class ReportsController < ApplicationController
     end
   end
 
+  protected
+
+  def person
+    @person ||=
+      if params[:incumbent_id]
+        Incumbent.find(params[:incumbent_id])
+      elsif params[:candidate_id]
+        Candidate.find(params[:candidate_id])
+      end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_report
@@ -72,6 +83,6 @@ class ReportsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def report_params
-      params.require(:report).permit(:incumbent_id, :period_begin, :period_end, :report_filed, :period_receipts,	:period_disbursements,	:current_coh,	 :current_debt )
+      params.require(:report).permit(:incumbent_id, :period_begin, :period_end, :report_filed, :period_receipts,	:period_disbursements,	:current_coh,	 :current_debt, :candidate_id )
     end
 end

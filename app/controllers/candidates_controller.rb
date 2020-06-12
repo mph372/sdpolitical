@@ -10,6 +10,8 @@ class CandidatesController < ApplicationController
   # GET /candidates/1
   # GET /candidates/1.json
   def show
+    @candidate = Candidate.find(params[:id])
+   # @reports = @candidate.reports
   end
 
   # GET /candidates/new
@@ -69,6 +71,6 @@ class CandidatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def candidate_params
-      params.require(:candidate).permit(:district_id, :birth_date, :party, :professional_career, :email, :campaign_website, :twitter, :facebook)
+      params.require(:candidate).permit(:district_id, :birth_date, :party, :professional_career, :email, :campaign_website, :twitter, :facebook, :first_name, :last_name)
     end
 end
