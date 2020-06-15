@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_192002) do
+ActiveRecord::Schema.define(version: 2020_06_15_220243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(version: 2020_06_15_192002) do
     t.datetime "updated_at", null: false
     t.string "map_url"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
+  end
+
+  create_table "elections", force: :cascade do |t|
+    t.integer "year"
+    t.bigint "district_id"
+    t.string "election_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_elections_on_district_id"
   end
 
   create_table "incumbents", force: :cascade do |t|
@@ -185,6 +194,7 @@ ActiveRecord::Schema.define(version: 2020_06_15_192002) do
   add_foreign_key "committees", "incumbents"
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
+  add_foreign_key "elections", "districts"
   add_foreign_key "incumbents", "districts"
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "people", "districts"

@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   resources :people
   resources :committees
   resources :measures
-  resources :candidates
   resources :reports
   resources :incumbents
   resources :districts
