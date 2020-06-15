@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  year: 1
+  district: one
+  election_type: MyString
+
+two:
+  year: 1
+  district: two
+  election_type: MyString

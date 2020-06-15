@@ -4,10 +4,10 @@
   <strong>Incumbent:</strong>
 </p>
 
-<% if @report.incumbent.blank? %>
-    <%= @report.candidate.last_name %>
+<% if @report.person.blank? %>
+    <%= @report.person.last_name %>
 <% else %>
-    <%= @report.incumbent.title %>
+    <%= @report.person.title %>
 <% end %>
 
 

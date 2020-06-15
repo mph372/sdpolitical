@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @election.year %>
+</p>
+
+<p>
+  <strong>District:</strong>
+  <%= @election.district %>
+</p>
+
+<p>
+  <strong>Election type:</strong>
+  <%= @election.election_type %>
+</p>
+
+<%= link_to 'Edit', edit_election_path(@election) %> |
+<%= link_to 'Back', elections_path %>

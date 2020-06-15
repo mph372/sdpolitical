@@ -93,23 +93,25 @@
       <th>Profession</th>
       <th>Age</th>
       <th>Campaign Website</th>
+      <th>Cash on Hand</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody> 
     <% @persons.each do |person| %>
-      <tr
-      <% if person.is_incumbent == true %> style="font-weight:bold" <%end%> >
+      <% if person.on_ballot? %>
+      <% report = person.reports.most_recent %>
+      <tr <% if person.is_incumbent == true %> style="font-weight:bold" <%end%> >
         <td><%= person.first_name %></td>
         <td><%= person.last_name %></td>
         <td><%= person.party %></td>
         <td><%= person.professional_career %></td>
         <td>Age <%= person.calculated_age %></td>
         <td><%= link_to person.campaign_website %></td>
-      
+        <td>$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
       </tr>
-      
+      <%end%>
     <% end %>
   </tbody>
 </table>

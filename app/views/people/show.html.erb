@@ -139,3 +139,38 @@
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
+
+<h3>Reports</h3>
+<table>
+<thead>
+    <tr>
+      <th>Reporting Period Begin</th>
+      <th>Reporting Period End</th>
+      <th>Date report filed</th>
+      <th>Period Receipts</th>
+      <th>Period Disbursements</th>
+      <th>Current Cash-on-hand</th>
+      <th>Current debt</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= report.period_begin %></td>
+        <td><%= report.period_end %></td>
+        <td><%= report.report_filed %></td>
+        <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
+        <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
+        <td>$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
+        <td>$ <%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td>
+        <td><%= link_to 'Show', report %></td>
+        <td><%= link_to 'Edit', edit_report_path(report,  { :person_id => @person.id } ) %></td>
+        <td><%= link_to 'Destroy', report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to("Add Report", new_report_path(:person_id => @person.id), :action => "new", :method => :get)%>

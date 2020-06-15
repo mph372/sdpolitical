@@ -1,10 +1,7 @@
 class District < ApplicationRecord
-  belongs_to :jurisdiction
-  has_many :incumbents
-  has_many :candidates
-  has_many :reports, through: :candidates 
+  belongs_to :jurisdiction 
   has_many :persons
-
+  has_many :reports, through: :persons
   def registration_advantage
     dem_percent - rep_percent
   end
