@@ -1,0 +1,141 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>District:</strong>
+  <%= @person.district.name %> - District <%= @person.district.district %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @person.title %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @person.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @person.last_name %>
+</p>
+
+<p>
+  <strong>Birthdate:</strong>
+  <%= @person.birthdate %>
+</p>
+
+<p>
+<% if @person.party == 'Republican' %>
+  <strong>Party:</strong> <span style="color: #DE0100;"><%= @person.party %></span>
+<% elsif @person.party == 'Democrat'%>
+   <strong>Party:</strong> <span style="color: #0015BC;"><%= @person.party %></span>
+<% else %>
+  <strong>Party:</strong> <span style="color: gray;"><%= @person.party %></span>
+<% end %>
+</p>
+
+<p>
+  <strong>First elected:</strong>
+  <%= @person.first_elected %>
+</p>
+
+<p>
+  <strong>Prior elected:</strong>
+  <%= @person.prior_elected %>
+</p>
+
+<p>
+  <strong>Salary:</strong>
+  <%= @person.salary %>
+</p>
+
+<p>
+  <strong>Professional career:</strong>
+  <%= @person.professional_career %>
+</p>
+
+<p>
+  <strong>Congressional district:</strong>
+  <%= @person.congressional_district %>
+</p>
+
+<p>
+  <strong>Assembly district:</strong>
+  <%= @person.assembly_district %>
+</p>
+
+<p>
+  <strong>Senate district:</strong>
+  <%= @person.senate_district %>
+</p>
+
+<p>
+  <strong>Supe district:</strong>
+  <%= @person.supe_district %>
+</p>
+
+<p>
+  <strong>Birthplace:</strong>
+  <%= @person.birthplace %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @person.email %>
+</p>
+
+<p>
+  <strong>Twitter:</strong>
+  <%= @person.twitter %>
+</p>
+
+<p>
+  <strong>Facebook:</strong>
+  <%= @person.facebook %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @person.phone %>
+</p>
+
+<p>
+  <strong>Term:</strong>
+  <%= @person.term %>
+</p>
+
+<p>
+  <strong>On ballot:</strong>
+  <%= @person.on_ballot %>
+</p>
+
+<%= image_tag @person.image_url.to_s %> <br>
+
+<p>
+  <strong>Term expires:</strong>
+  <%= @person.term_expires %>
+</p>
+
+<p>
+  <strong>Seeking office:</strong>
+  <%= @person.seeking_office %>
+</p>
+
+<p>
+  <strong>Official website:</strong>
+  <%= @person.official_website %>
+</p>
+
+<p>
+  <strong>Campaign website:</strong>
+  <%= @person.campaign_website %>
+</p>
+
+<p>
+  <strong>Is incumbent:</strong>
+  <%= @person.is_incumbent %>
+</p>
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

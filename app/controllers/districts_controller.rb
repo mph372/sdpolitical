@@ -11,8 +11,7 @@ class DistrictsController < ApplicationController
   # GET /districts/1.json
   def show
     @district = District.find(params[:id])
-    @incumbents = @district.incumbents
-    @candidates = @district.candidates
+    @persons = @district.persons.order(is_incumbent: :desc)
   end
 
   # GET /districts/new

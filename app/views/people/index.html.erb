@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<h1>People</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>District</th>
+      <th>Title</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Birthdate</th>
+      <th>Party</th>
+      <th>First elected</th>
+      <th>Prior elected</th>
+      <th>Salary</th>
+      <th>Professional career</th>
+      <th>Congressional district</th>
+      <th>Assembly district</th>
+      <th>Senate district</th>
+      <th>Supe district</th>
+      <th>Birthplace</th>
+      <th>Email</th>
+      <th>Twitter</th>
+      <th>Facebook</th>
+      <th>Phone</th>
+      <th>Term</th>
+      <th>On ballot</th>
+      <th>Image</th>
+      <th>Term expires</th>
+      <th>Seeking office</th>
+      <th>Official website</th>
+      <th>Campaign website</th>
+      <th>Is incumbent</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @people.each do |person| %>
+      <tr>
+        <td><%= person.district %></td>
+        <td><%= person.title %></td>
+        <td><%= person.first_name %></td>
+        <td><%= person.last_name %></td>
+        <td><%= person.birthdate %></td>
+        <td><%= person.party %></td>
+        <td><%= person.first_elected %></td>
+        <td><%= person.prior_elected %></td>
+        <td><%= person.salary %></td>
+        <td><%= person.professional_career %></td>
+        <td><%= person.congressional_district %></td>
+        <td><%= person.assembly_district %></td>
+        <td><%= person.senate_district %></td>
+        <td><%= person.supe_district %></td>
+        <td><%= person.birthplace %></td>
+        <td><%= person.email %></td>
+        <td><%= person.twitter %></td>
+        <td><%= person.facebook %></td>
+        <td><%= person.phone %></td>
+        <td><%= person.term %></td>
+        <td><%= person.on_ballot %></td>
+        <td><%= person.image %></td>
+        <td><%= person.term_expires %></td>
+        <td><%= person.seeking_office %></td>
+        <td><%= person.official_website %></td>
+        <td><%= person.campaign_website %></td>
+        <td><%= person.is_incumbent %></td>
+        <td><%= link_to 'Show', person %></td>
+        <td><%= link_to 'Edit', edit_person_path(person) %></td>
+        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Person', new_person_path %>

@@ -97,28 +97,19 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @incumbents.each do |incumbent| %>
-      <% if incumbent.on_ballot == true %>
-          <tr>
-          <td><strong><%= incumbent.first_name %></strong></td>
-          <td><strong><%= incumbent.last_name %></strong></td>
-          <td><strong><%= incumbent.party %></strong></td>
-          <td><strong><%= incumbent.title %></strong></td>
-          <td><strong>Age <%= incumbent.calculated_age %></strong></td>
-          <td><strong><%= link_to incumbent.campaign_website %></strong></td>
-          </tr>
-      <% end %>
-    <% end %>    
-    <% @candidates.each do |candidate| %>
-      <tr>
-        <td><%= candidate.first_name %></td>
-        <td><%= candidate.last_name %></td>
-        <td><%= candidate.party %></td>
-        <td><%= candidate.professional_career %></td>
-        <td>Age <%= candidate.calculated_age %></td>
-        <td><%= link_to candidate.campaign_website %></td>
+  <tbody> 
+    <% @persons.each do |person| %>
+      <tr
+      <% if person.is_incumbent == true %> style="font-weight:bold" <%end%> >
+        <td><%= person.first_name %></td>
+        <td><%= person.last_name %></td>
+        <td><%= person.party %></td>
+        <td><%= person.professional_career %></td>
+        <td>Age <%= person.calculated_age %></td>
+        <td><%= link_to person.campaign_website %></td>
+      
       </tr>
+      
     <% end %>
   </tbody>
 </table>

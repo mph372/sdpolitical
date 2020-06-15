@@ -1,0 +1,59 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  district: one
+  title: MyString
+  first_name: MyString
+  last_name: MyString
+  birthdate: 2020-06-15
+  party: MyString
+  first_elected: 2020-06-15
+  prior_elected: MyString
+  salary: 1
+  professional_career: MyString
+  congressional_district: 1
+  assembly_district: 1
+  senate_district: 1
+  supe_district: 1
+  birthplace: MyString
+  email: MyString
+  twitter: MyString
+  facebook: MyString
+  phone: MyString
+  term: 1
+  on_ballot: false
+  image: MyString
+  term_expires: 1
+  seeking_office: 1
+  official_website: MyString
+  campaign_website: MyString
+  is_incumbent: false
+
+two:
+  district: two
+  title: MyString
+  first_name: MyString
+  last_name: MyString
+  birthdate: 2020-06-15
+  party: MyString
+  first_elected: 2020-06-15
+  prior_elected: MyString
+  salary: 1
+  professional_career: MyString
+  congressional_district: 1
+  assembly_district: 1
+  senate_district: 1
+  supe_district: 1
+  birthplace: MyString
+  email: MyString
+  twitter: MyString
+  facebook: MyString
+  phone: MyString
+  term: 1
+  on_ballot: false
+  image: MyString
+  term_expires: 1
+  seeking_office: 1
+  official_website: MyString
+  campaign_website: MyString
+  is_incumbent: false

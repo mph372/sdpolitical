@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_174127) do
+ActiveRecord::Schema.define(version: 2020_06_15_192002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,6 +127,39 @@ ActiveRecord::Schema.define(version: 2020_06_15_174127) do
     t.index ["jurisdiction_id"], name: "index_measures_on_jurisdiction_id"
   end
 
+  create_table "people", force: :cascade do |t|
+    t.bigint "district_id"
+    t.string "title"
+    t.string "first_name"
+    t.string "last_name"
+    t.date "birthdate"
+    t.string "party"
+    t.date "first_elected"
+    t.string "prior_elected"
+    t.integer "salary"
+    t.string "professional_career"
+    t.integer "congressional_district"
+    t.integer "assembly_district"
+    t.integer "senate_district"
+    t.integer "supe_district"
+    t.string "birthplace"
+    t.string "email"
+    t.string "twitter"
+    t.string "facebook"
+    t.string "phone"
+    t.integer "term"
+    t.boolean "on_ballot"
+    t.string "image"
+    t.integer "term_expires"
+    t.integer "seeking_office"
+    t.string "official_website"
+    t.string "campaign_website"
+    t.boolean "is_incumbent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_people_on_district_id"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.bigint "incumbent_id"
     t.date "period_begin"
@@ -140,9 +173,11 @@ ActiveRecord::Schema.define(version: 2020_06_15_174127) do
     t.datetime "updated_at", null: false
     t.bigint "candidate_id"
     t.bigint "committee_id"
+    t.bigint "person_id"
     t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["incumbent_id"], name: "index_reports_on_incumbent_id"
+    t.index ["person_id"], name: "index_reports_on_person_id"
   end
 
   add_foreign_key "candidates", "districts"
@@ -152,7 +187,9 @@ ActiveRecord::Schema.define(version: 2020_06_15_174127) do
   add_foreign_key "committees", "measures"
   add_foreign_key "incumbents", "districts"
   add_foreign_key "measures", "jurisdictions"
+  add_foreign_key "people", "districts"
   add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "committees"
   add_foreign_key "reports", "incumbents"
+  add_foreign_key "reports", "people"
 end
