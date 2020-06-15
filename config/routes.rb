@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :committees
+  resources :measures
   resources :candidates
   resources :reports
   resources :incumbents

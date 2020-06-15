@@ -1,6 +1,7 @@
 class Candidate < ApplicationRecord
   belongs_to :district
   has_many :reports
+  mount_uploader :image, IncumbentUploader
 
   def calculated_age
     now = Time.now.utc.to_date

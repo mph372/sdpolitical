@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_231510) do
+ActiveRecord::Schema.define(version: 2020_06_15_163515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,23 @@ ActiveRecord::Schema.define(version: 2020_06_12_231510) do
     t.string "first_name"
     t.string "last_name"
     t.index ["district_id"], name: "index_candidates_on_district_id"
+  end
+
+  create_table "committees", force: :cascade do |t|
+    t.string "name"
+    t.bigint "jurisdiction_id"
+    t.string "type"
+    t.bigint "candidate_id"
+    t.bigint "incumbent_id"
+    t.bigint "measure_id"
+    t.boolean "support"
+    t.boolean "is_active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidate_id"], name: "index_committees_on_candidate_id"
+    t.index ["incumbent_id"], name: "index_committees_on_incumbent_id"
+    t.index ["jurisdiction_id"], name: "index_committees_on_jurisdiction_id"
+    t.index ["measure_id"], name: "index_committees_on_measure_id"
   end
 
   create_table "districts", force: :cascade do |t|
@@ -97,6 +114,19 @@ ActiveRecord::Schema.define(version: 2020_06_12_231510) do
     t.text "description"
   end
 
+  create_table "measures", force: :cascade do |t|
+    t.string "letter"
+    t.text "text"
+    t.string "topic"
+    t.string "type"
+    t.string "origin"
+    t.bigint "jurisdiction_id"
+    t.float "threshold"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jurisdiction_id"], name: "index_measures_on_jurisdiction_id"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.bigint "incumbent_id"
     t.date "period_begin"
@@ -114,7 +144,12 @@ ActiveRecord::Schema.define(version: 2020_06_12_231510) do
   end
 
   add_foreign_key "candidates", "districts"
+  add_foreign_key "committees", "candidates"
+  add_foreign_key "committees", "incumbents"
+  add_foreign_key "committees", "jurisdictions"
+  add_foreign_key "committees", "measures"
   add_foreign_key "incumbents", "districts"
+  add_foreign_key "measures", "jurisdictions"
   add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "incumbents"
 end

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  letter: MyString
+  text: MyText
+  topic: MyString
+  type: 
+  origin: MyString
+  jurisdiction: one
+  threshold: 1.5
+
+two:
+  letter: MyString
+  text: MyText
+  topic: MyString
+  type: 
+  origin: MyString
+  jurisdiction: two
+  threshold: 1.5

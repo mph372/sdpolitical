@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @committee.name %>
+</p>
+
+<p>
+  <strong>Jurisdiction:</strong>
+  <%= @committee.jurisdiction %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @committee.type %>
+</p>
+
+<p>
+  <strong>Candidate:</strong>
+  <%= @committee.candidate %>
+</p>
+
+<p>
+  <strong>Incumbent:</strong>
+  <%= @committee.incumbent %>
+</p>
+
+<p>
+  <strong>Measure:</strong>
+  <%= @committee.measure %>
+</p>
+
+<p>
+  <strong>Support:</strong>
+  <%= @committee.support %>
+</p>
+
+<p>
+  <strong>Is active:</strong>
+  <%= @committee.is_active %>
+</p>
+
+<%= link_to 'Edit', edit_committee_path(@committee) %> |
+<%= link_to 'Back', committees_path %>

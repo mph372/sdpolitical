@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Letter:</strong>
+  <%= @measure.letter %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @measure.text %>
+</p>
+
+<p>
+  <strong>Topic:</strong>
+  <%= @measure.topic %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @measure.type %>
+</p>
+
+<p>
+  <strong>Origin:</strong>
+  <%= @measure.origin %>
+</p>
+
+<p>
+  <strong>Jurisdiction:</strong>
+  <%= @measure.jurisdiction %>
+</p>
+
+<p>
+  <strong>Threshold:</strong>
+  <%= @measure.threshold %>
+</p>
+
+<%= link_to 'Edit', edit_measure_path(@measure) %> |
+<%= link_to 'Back', measures_path %>
