@@ -10,6 +10,8 @@ class CommitteesController < ApplicationController
   # GET /committees/1
   # GET /committees/1.json
   def show
+    @committee = Committee.find(params[:id])
+    @reports = @committee.reports
   end
 
   # GET /committees/new
@@ -69,6 +71,6 @@ class CommitteesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def committee_params
-      params.require(:committee).permit(:name, :jurisdiction_id, :type, :candidate_id, :incumbent_id, :measure_id, :support, :is_active)
+      params.require(:committee).permit(:name, :jurisdiction_id, :committee_type, :candidate_id, :incumbent_id, :measure_id, :support, :is_active)
     end
 end

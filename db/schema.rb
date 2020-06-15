@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_163515) do
+ActiveRecord::Schema.define(version: 2020_06_15_174127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,11 +34,11 @@ ActiveRecord::Schema.define(version: 2020_06_15_163515) do
   create_table "committees", force: :cascade do |t|
     t.string "name"
     t.bigint "jurisdiction_id"
-    t.string "type"
+    t.string "committee_type"
     t.bigint "candidate_id"
     t.bigint "incumbent_id"
     t.bigint "measure_id"
-    t.boolean "support"
+    t.string "support"
     t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2020_06_15_163515) do
     t.string "letter"
     t.text "text"
     t.string "topic"
-    t.string "type"
+    t.string "measure_type"
     t.string "origin"
     t.bigint "jurisdiction_id"
     t.float "threshold"
@@ -139,7 +139,9 @@ ActiveRecord::Schema.define(version: 2020_06_15_163515) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "candidate_id"
+    t.bigint "committee_id"
     t.index ["candidate_id"], name: "index_reports_on_candidate_id"
+    t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["incumbent_id"], name: "index_reports_on_incumbent_id"
   end
 
@@ -151,5 +153,6 @@ ActiveRecord::Schema.define(version: 2020_06_15_163515) do
   add_foreign_key "incumbents", "districts"
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "reports", "candidates"
+  add_foreign_key "reports", "committees"
   add_foreign_key "reports", "incumbents"
 end

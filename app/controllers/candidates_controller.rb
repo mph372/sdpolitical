@@ -11,7 +11,7 @@ class CandidatesController < ApplicationController
   # GET /candidates/1.json
   def show
     @candidate = Candidate.find(params[:id])
-   # @reports = @candidate.reports
+    @reports = @candidate.reports
   end
 
   # GET /candidates/new

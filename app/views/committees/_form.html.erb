@@ -18,32 +18,33 @@
 
   <div class="field">
     <%= form.label :jurisdiction_id %>
-    <%= form.text_field :jurisdiction_id %>
+    <%= form.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ "#{v.name}", v.id ] }, {}, { "data-placeholder": "Select Jurisdiction" }) %>
   </div>
 
   <div class="field">
-    <%= form.label :type %>
-    <%= form.text_field :type %>
+    <%= form.label :committee_type %>
+    <%= form.select :committee_type, ['General Purpose', 'Primarily Formed'], :include_blank => true %>
   </div>
 
   <div class="field">
     <%= form.label :candidate_id %>
-    <%= form.text_field :candidate_id %>
+    <%= form.select(:candidate_id, Candidate.all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Candidate" }) %>
   </div>
 
   <div class="field">
     <%= form.label :incumbent_id %>
-    <%= form.text_field :incumbent_id %>
+    <%= form.select(:incumbent_id, Incumbent.all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Incumbent" }) %>
   </div>
 
   <div class="field">
     <%= form.label :measure_id %>
-    <%= form.text_field :measure_id %>
+    <%= form.select(:measure_id, Measure.all.collect { |v| [ "Measure #{v.letter}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Measure" })  %>
   </div>
 
   <div class="field">
-    <%= form.label :support %>
-    <%= form.check_box :support %>
+    <%= form.label :support, "Support or Oppose" %>
+    <%= form.radio_button :support, "Support" %> Support <br/>
+    <%= form.radio_button :support, "Oppose" %> Oppose <br/>
   </div>
 
   <div class="field">
