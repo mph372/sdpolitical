@@ -13,17 +13,22 @@
 
   <div class="field">
     <%= form.label :period_begin, "Period Start Date" %>
-    <%= form.date_field :period_begin %>
+    <%= form.date_select :period_begin, :order => [:month, :day, :year], start_year: 2018, end_year: 2022, default: Date.new(2020, 1, 19) %>
   </div>
 
   <div class="field">
     <%= form.label :period_end, "Period End Date" %>
-    <%= form.date_field :period_end %>
+    <%= form.date_select :period_end, :order => [:month, :day, :year], start_year: 2018, end_year: 2022, default: Date.new(2020, 2, 15) %>
   </div>
 
   <div class="field">
     <%= form.label :report_filed, "Date Report Filed" %>
-    <%= form.date_field :report_filed %>
+    <%= form.date_select :period_end, :order => [:month, :day, :year], start_year: 2018, end_year: 2022 , default: Date.today %>
+  </div>
+
+    <div class="field">
+    <%= form.label :is_amended, "Report is an amendment" %>
+    <%= form.check_box :is_amended %>
   </div>
 
 
@@ -45,9 +50,14 @@
   <div class="field">
     <%= form.label :current_debt, "Current Debt" %>
     <%= form.text_field :current_debt %>
-  </div>  
+  </div>
 
-  <%= form.text_field :person_id, :value => params[:person_id]%>
+  <div class="field">
+    <%= form.label :cycle %>
+    <%= form.select :cycle, [2018, 2020, 2022], :include_blank => true, :selected => 2020 %>
+  </div>   
+
+  <%= form.hidden_field :person_id, :value => params[:person_id]%>
 
   <div class="actions">
     <%= form.submit %>

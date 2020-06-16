@@ -80,6 +80,11 @@
   <%= @district.jurisdiction.name %>
 </p>
 
+<p>
+  <strong>Incumbent:</strong>
+  <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %>
+</p>
+
 <%= content_tag(:iframe,'', width: 640, height: 480, src: "#{@district.map_url}") %>
 
 

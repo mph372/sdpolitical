@@ -8,6 +8,7 @@
       <th>Jurisdiction</th>
       <th>Name</th>
       <th>District</th>
+      <th>Incumbent</th>
       <th>Total voters</th>
       <th>Dem percent</th>
       <th>Rep percent</th>
@@ -23,6 +24,7 @@
         <td><%= link_to "#{district.jurisdiction.name}", district.jurisdiction.name %></td>
         <td><%= district.name %></td>
         <td><%= district.district %></td>
+        <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %></td>
         <td><%= number_with_delimiter(district.total_voters, :delimiter => ',') %></td>
         <td>% <%= district.dem_percent %></td>
         <td>% <%= district.rep_percent %></td>
