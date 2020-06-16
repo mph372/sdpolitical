@@ -20,7 +20,7 @@
   <tbody>
     <% @districts.each do |district| %>
       <tr>
-        <td><%= district.jurisdiction.name %></td>
+        <td><%= link_to "#{district.jurisdiction.name}", district.jurisdiction.name %></td>
         <td><%= district.name %></td>
         <td><%= district.district %></td>
         <td><%= number_with_delimiter(district.total_voters, :delimiter => ',') %></td>

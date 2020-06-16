@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_220243) do
+ActiveRecord::Schema.define(version: 2020_06_16_172127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,14 +36,12 @@ ActiveRecord::Schema.define(version: 2020_06_15_220243) do
     t.bigint "jurisdiction_id"
     t.string "committee_type"
     t.bigint "candidate_id"
-    t.bigint "incumbent_id"
     t.bigint "measure_id"
     t.string "support"
     t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["candidate_id"], name: "index_committees_on_candidate_id"
-    t.index ["incumbent_id"], name: "index_committees_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_committees_on_jurisdiction_id"
     t.index ["measure_id"], name: "index_committees_on_measure_id"
   end
@@ -68,6 +66,8 @@ ActiveRecord::Schema.define(version: 2020_06_15_220243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "map_url"
+    t.integer "incumbent_id"
+    t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
   end
 
@@ -78,38 +78,6 @@ ActiveRecord::Schema.define(version: 2020_06_15_220243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["district_id"], name: "index_elections_on_district_id"
-  end
-
-  create_table "incumbents", force: :cascade do |t|
-    t.bigint "district_id"
-    t.string "title"
-    t.string "first_name"
-    t.string "last_name"
-    t.date "birth_date"
-    t.string "party"
-    t.integer "first_elected"
-    t.string "prior_elected"
-    t.integer "salary"
-    t.string "professional_career"
-    t.integer "congressional_district"
-    t.integer "assembly_district"
-    t.integer "senate_district"
-    t.integer "supe_district"
-    t.string "birth_place"
-    t.string "email"
-    t.string "twitter"
-    t.string "facebook"
-    t.string "phone"
-    t.integer "term"
-    t.boolean "on_ballot"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "image"
-    t.integer "term_expires"
-    t.integer "seeking_office"
-    t.string "official_website"
-    t.string "campaign_website"
-    t.index ["district_id"], name: "index_incumbents_on_district_id"
   end
 
   create_table "jurisdictions", force: :cascade do |t|
@@ -134,6 +102,14 @@ ActiveRecord::Schema.define(version: 2020_06_15_220243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jurisdiction_id"], name: "index_measures_on_jurisdiction_id"
+  end
+
+  create_table "other_districts", force: :cascade do |t|
+  end
+
+  create_table "otherdistricts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "people", force: :cascade do |t|
@@ -166,11 +142,11 @@ ActiveRecord::Schema.define(version: 2020_06_15_220243) do
     t.boolean "is_incumbent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "running_reelection"
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 
   create_table "reports", force: :cascade do |t|
-    t.bigint "incumbent_id"
     t.date "period_begin"
     t.date "period_end"
     t.date "report_filed"
@@ -185,21 +161,17 @@ ActiveRecord::Schema.define(version: 2020_06_15_220243) do
     t.bigint "person_id"
     t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
-    t.index ["incumbent_id"], name: "index_reports_on_incumbent_id"
     t.index ["person_id"], name: "index_reports_on_person_id"
   end
 
   add_foreign_key "candidates", "districts"
   add_foreign_key "committees", "candidates"
-  add_foreign_key "committees", "incumbents"
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
   add_foreign_key "elections", "districts"
-  add_foreign_key "incumbents", "districts"
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "people", "districts"
   add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "committees"
-  add_foreign_key "reports", "incumbents"
   add_foreign_key "reports", "people"
 end

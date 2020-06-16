@@ -39,7 +39,7 @@
   <tbody>
     <% @people.each do |person| %>
       <tr>
-        <td><%= person.district %></td>
+        <td><%= "#{person.district.name} District - #{person.district.district}" %></td>
         <td><%= person.title %></td>
         <td><%= person.first_name %></td>
         <td><%= person.last_name %></td>

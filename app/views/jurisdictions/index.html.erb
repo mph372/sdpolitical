@@ -7,6 +7,9 @@
     <tr>
       <th>Name</th>
       <th>Contribution limit</th>
+      <th>Corporate Contributions</th>
+      <th>PAC Contributions</th>
+      <th>Party Contributions</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,8 +17,27 @@
   <tbody>
     <% @jurisdictions.each do |jurisdiction| %>
       <tr>
-        <td><%= jurisdiction.name %></td>
+        <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
+        <% if jurisdiction.contribution_limit > 0%>        
         <td>$<%= jurisdiction.contribution_limit %></td>
+        <%else%>
+        <td>No limit</td>
+        <%end%>
+        <% if jurisdiction.corporate_contributions == true %>
+          <td>Permitted</td>
+        <%else%>
+          <td>Prohibited</td>
+        <%end%>
+        <% if jurisdiction.pac_contributions == true %>
+          <td>Permitted</td>
+        <%else%>
+          <td>Prohibited</td>
+        <%end%>
+        <% if jurisdiction.party_contributions == true %>
+          <td>Permitted</td>
+        <%else%>
+          <td>Prohibited</td>
+        <%end%>
         <td><%= link_to 'Show', jurisdiction %></td>
         <td><%= link_to 'Edit', edit_jurisdiction_path(jurisdiction) %></td>
         <td><%= link_to 'Destroy', jurisdiction, method: :delete, data: { confirm: 'Are you sure?' } %></td>

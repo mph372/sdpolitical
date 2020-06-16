@@ -11,7 +11,8 @@ class DistrictsController < ApplicationController
   # GET /districts/1.json
   def show
     @district = District.find(params[:id])
-    @persons = @district.persons.order(is_incumbent: :desc)
+    @incumbents = @district.incumbent
+    @persons = @district.candidates
   end
 
   # GET /districts/new
@@ -71,6 +72,6 @@ class DistrictsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def district_params
-      params.require(:district).permit(:name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url)
+      params.require(:district).permit(:name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url, :incumbent_id)
     end
 end

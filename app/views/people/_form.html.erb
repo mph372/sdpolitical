@@ -11,9 +11,18 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :on_ballot, "Running for Other Office" %>
+    <%= form.check_box :on_ballot %>
+  </div>
+
+   <div class="field">
+    <%= form.label :running_reelection, "Running for this office" %>
+    <%= form.check_box :running_reelection %>
+  </div>  
 
   <div class="field">
-    <%= form.label :district_id %>
+    <%= form.label :district_id, "Candidate for:" %>
     <%= form.select(:district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {}, { "data-placeholder": "Select District" }) %>
   </div>
 
@@ -112,10 +121,7 @@
     <%= form.number_field :term %>
   </div>
 
-  <div class="field">
-    <%= form.label :on_ballot %>
-    <%= form.check_box :on_ballot %>
-  </div>
+
 
   <div class="field">
     <%= form.label :image, "Headshot" %>

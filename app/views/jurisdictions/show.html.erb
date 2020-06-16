@@ -7,8 +7,14 @@
 
 <p>
   <strong>Contribution limit:</strong>
-  <%= @jurisdiction.contribution_limit %>
+  <% if @jurisdiction.contribution_limit > 0%>        
+    <td>$<%= @jurisdiction.contribution_limit %></td>
+  <%else%>
+    <td>No limit</td>
+  <%end%>
 </p>
 
 <%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction) %> |
-<%= link_to 'Back', jurisdictions_path %>
+<%= link_to 'Back', jurisdictions_path %> |
+<%= link_to("Add District", new_district_path(:jurisdiction_id => @jurisdiction.id), :action => "new", :method => :get)%>
+

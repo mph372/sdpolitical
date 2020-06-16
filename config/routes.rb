@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :committees
   resources :measures
   resources :reports
-  resources :incumbents
   resources :districts
   resources :jurisdictions
   root 'jurisdictions#index'

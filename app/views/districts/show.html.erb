@@ -99,20 +99,33 @@
   </thead>
 
   <tbody> 
-    <% @persons.each do |person| %>
-      <% if person.on_ballot? %>
-      <% report = person.reports.most_recent %>
-      <tr <% if person.is_incumbent == true %> style="font-weight:bold" <%end%> >
-        <td><%= person.first_name %></td>
-        <td><%= person.last_name %></td>
-        <td><%= person.party %></td>
-        <td><%= person.professional_career %></td>
-        <td>Age <%= person.calculated_age %></td>
-        <td><%= link_to person.campaign_website %></td>
-        <td>$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
+      <tr>
+      <% if @district.incumbent.running_reelection? %>
+        <td><%= @district.incumbent.first_name %></td>
+        <td><%= @district.incumbent.last_name %></td>
+        <td><%= @district.incumbent.party %></td>
+        <td><%= @district.incumbent.professional_career %></td>
+        <td>Age <%= @district.incumbent.calculated_age %></td>
+        <td><%= link_to @district.incumbent.campaign_website %></td>
       </tr>
-      <%end%>
     <% end %>
+  
+
+  
+    <% @district.candidates.each do |candidate| %>
+    <tr>
+      <% if candidate.on_ballot? %>
+        <% report = candidate.reports.most_recent %>
+        <td><%= candidate.first_name %></td>
+        <td><%= candidate.last_name %></td>
+        <td><%= candidate.party %></td>
+        <td><%= candidate.professional_career %></td>
+        <td>Age <%= candidate.calculated_age %></td>
+        <td><%= link_to candidate.campaign_website %></td>
+        <td>$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
+        <% end %>
+    <% end %>
+    </tr>
   </tbody>
 </table>
 
