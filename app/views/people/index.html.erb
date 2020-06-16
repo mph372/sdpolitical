@@ -2,7 +2,7 @@
 
 <h1>People</h1>
 
-<table>
+<table id="people">
   <thead>
     <tr>
       <th>District</th>
@@ -26,13 +26,12 @@
       <th>Phone</th>
       <th>Term</th>
       <th>On ballot</th>
-      <th>Image</th>
       <th>Term expires</th>
       <th>Seeking office</th>
       <th>Official website</th>
       <th>Campaign website</th>
       <th>Is incumbent</th>
-      <th colspan="3"></th>
+  
     </tr>
   </thead>
 
@@ -60,15 +59,11 @@
         <td><%= person.phone %></td>
         <td><%= person.term %></td>
         <td><%= person.on_ballot %></td>
-        <td><%= person.image %></td>
         <td><%= person.term_expires %></td>
         <td><%= person.seeking_office %></td>
         <td><%= person.official_website %></td>
         <td><%= person.campaign_website %></td>
         <td><%= person.is_incumbent %></td>
-        <td><%= link_to 'Show', person %></td>
-        <td><%= link_to 'Edit', edit_person_path(person) %></td>
-        <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
