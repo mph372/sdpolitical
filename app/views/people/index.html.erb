@@ -2,69 +2,74 @@
 
 <h1>People</h1>
 
-<table id="people">
+<h2>Candidates</h2>
+<table class="table table-hover" id="candidate">
+  <thead>
+    <tr>
+      <th>Running for</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Profession</th>
+      <th>Age</th>
+      <th>Party</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @people.each do |person| %>
+    <% if person.is_incumbent == false %>
+      <tr>
+        <td><%= "#{person.district.name} District - #{person.district.district}" %></td>
+        <td><%= person.first_name %></td>
+        <td><%= person.last_name %></td>
+        <td><%= person.professional_career %></td>
+        <td><%= person.calculated_age %></td>
+        <td><%= person.party %></td>
+      </tr>
+      <%end%>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h2>Elected Officials</h2>
+<table class="table table-hover" id="incumbent">
   <thead>
     <tr>
       <th>District</th>
       <th>Title</th>
       <th>First name</th>
       <th>Last name</th>
-      <th>Birthdate</th>
+      <th>Age</th>
       <th>Party</th>
-      <th>First elected</th>
-      <th>Prior elected</th>
-      <th>Salary</th>
       <th>Professional career</th>
-      <th>Congressional district</th>
-      <th>Assembly district</th>
-      <th>Senate district</th>
-      <th>Supe district</th>
-      <th>Birthplace</th>
-      <th>Email</th>
-      <th>Twitter</th>
-      <th>Facebook</th>
-      <th>Phone</th>
-      <th>Term</th>
+      <th>Termed Out</th>
       <th>On ballot</th>
-      <th>Term expires</th>
+      <th>Current term expires</th>
       <th>Seeking office</th>
-      <th>Official website</th>
-      <th>Campaign website</th>
-      <th>Is incumbent</th>
-  
+      <th>Is incumbent</th>  
     </tr>
   </thead>
 
   <tbody>
     <% @people.each do |person| %>
+      <% if person.is_incumbent == true %>
       <tr>
         <td><%= "#{person.district.name} District - #{person.district.district}" %></td>
         <td><%= person.title %></td>
         <td><%= person.first_name %></td>
         <td><%= person.last_name %></td>
-        <td><%= person.birthdate %></td>
+        <td><%= person.calculated_age %></td>
         <td><%= person.party %></td>
-        <td><%= person.first_elected %></td>
-        <td><%= person.prior_elected %></td>
-        <td><%= person.salary %></td>
         <td><%= person.professional_career %></td>
-        <td><%= person.congressional_district %></td>
-        <td><%= person.assembly_district %></td>
-        <td><%= person.senate_district %></td>
-        <td><%= person.supe_district %></td>
-        <td><%= person.birthplace %></td>
-        <td><%= person.email %></td>
-        <td><%= person.twitter %></td>
-        <td><%= person.facebook %></td>
-        <td><%= person.phone %></td>
         <td><%= person.term %></td>
         <td><%= person.on_ballot %></td>
         <td><%= person.term_expires %></td>
         <td><%= person.seeking_office %></td>
-        <td><%= person.official_website %></td>
-        <td><%= person.campaign_website %></td>
         <td><%= person.is_incumbent %></td>
       </tr>
+      <%end%>
     <% end %>
   </tbody>
 </table>

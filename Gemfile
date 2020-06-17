@@ -35,6 +35,10 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
+gem "bootstrap_form", "~> 4.0"
+gem 'acts-as-taggable-on', '~> 6.0'
+gem 'bootstrap', '~> 4.5.0'
+gem 'simple_form'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

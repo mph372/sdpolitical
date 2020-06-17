@@ -1,6 +1,8 @@
 class Person < ApplicationRecord
   belongs_to :district, inverse_of: :candidates, class_name: "District", optional: true
   has_one :incumbent_district, inverse_of: :incumbent, class_name: "District", required: false
+
+ 
   
   has_many :reports do
     def most_recent
