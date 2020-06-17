@@ -2,9 +2,9 @@
 
 <h1>People</h1>
 
-<h2>Candidates</h2>
-<table class="table table-hover" id="candidate">
-  <thead>
+<h3>Candidates</h3>
+<table class="table table-bordered table-sm" id="candidate">
+  <thead class="thead-light">
     <tr>
       <th>Running for</th>
       <th>First name</th>
@@ -12,13 +12,14 @@
       <th>Profession</th>
       <th>Age</th>
       <th>Party</th>
-
+      <th>Cash on hand</th>
     </tr>
   </thead>
 
   <tbody>
     <% @people.each do |person| %>
     <% if person.is_incumbent == false %>
+      <% report = person.reports.most_recent %>
       <tr>
         <td><%= "#{person.district.name} District - #{person.district.district}" %></td>
         <td><%= person.first_name %></td>
@@ -26,6 +27,7 @@
         <td><%= person.professional_career %></td>
         <td><%= person.calculated_age %></td>
         <td><%= person.party %></td>
+        <td>$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
       </tr>
       <%end%>
     <% end %>
@@ -33,22 +35,18 @@
 </table>
 
 
-<h2>Elected Officials</h2>
-<table class="table table-hover" id="incumbent">
-  <thead>
+<h3>Elected Officials</h3>
+<table class="table table-striped table-bordered table-sm" id="incumbent" cellspacing="0" width="100%">
+  <thead class="thead-light">
     <tr>
       <th>District</th>
-      <th>Title</th>
       <th>First name</th>
       <th>Last name</th>
       <th>Age</th>
       <th>Party</th>
-      <th>Professional career</th>
-      <th>Termed Out</th>
       <th>On ballot</th>
       <th>Current term expires</th>
-      <th>Seeking office</th>
-      <th>Is incumbent</th>  
+
     </tr>
   </thead>
 
@@ -56,18 +54,13 @@
     <% @people.each do |person| %>
       <% if person.is_incumbent == true %>
       <tr>
-        <td><%= "#{person.district.name} District - #{person.district.district}" %></td>
-        <td><%= person.title %></td>
+        <td><%= "#{person.incumbent_district.name} District - #{person.incumbent_district.district}" %></td>
         <td><%= person.first_name %></td>
         <td><%= person.last_name %></td>
         <td><%= person.calculated_age %></td>
         <td><%= person.party %></td>
-        <td><%= person.professional_career %></td>
-        <td><%= person.term %></td>
         <td><%= person.on_ballot %></td>
         <td><%= person.term_expires %></td>
-        <td><%= person.seeking_office %></td>
-        <td><%= person.is_incumbent %></td>
       </tr>
       <%end%>
     <% end %>

@@ -5,6 +5,7 @@ class PeopleController < ApplicationController
   # GET /people.json
   def index
     @people = Person.all
+    @reports = Report.all.order(report_filed: :desc)
   end
 
   # GET /people/1

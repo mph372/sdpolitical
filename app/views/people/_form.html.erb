@@ -34,6 +34,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :incumbent_district, "Incumbent of:" %>
+    <%= form.select(:incumbent_district, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {}, { "data-placeholder": "Select Incumbent District" }) %>
+  </div>
+
+  <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title %>
   </div>
