@@ -1,152 +1,146 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>District:</strong>
-  <%= @person.district.name %> - District <%= @person.district.district %>
-</p>
+<div class="row">
+  
+    <div class="col-auto">
+    <% if @person.image_url.present? %>
+    <%= image_tag @person.image_url.to_s, alt: 'headshot'%>
+    <%else%>
+    <%= image_tag "no_photo_available.jpg", alt: 'No headshot available' %>
+    <%end%>
+    </div>
+    <div class="col">
+      <h4><%= @person.title %> <%= @person.first_name %> <%= @person.last_name %> 
+        <% if @person.party == "Republican"%>
+        (R)
+        <% elsif @person.party == "Democrat"%>
+        (D)
+        <% elsif @person.party == "Declined to State"%>
+        (DTS)
+        <%end%>
+        </h4>
+      <% if @person.is_incumbent? %>
+      <p>
+        <strong>Represents:</strong>
+        <%= @person.incumbent_district.jurisdiction.name %> - <%= @person.incumbent_district.name %> - District <%= @person.incumbent_district.district %> <br>
+      <%end%>
+      
+      <% if @person.on_ballot? %>
+        <strong>Running for:</strong>
+        <%= @person.district.jurisdiction.name %> - <%= @person.district.name %> - District <%= @person.district.district %> 
+      <br>
+      <%end%>
+      
+        <strong>Born:</strong>
+        <%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>) 
+        <%if @person.birthplace? %>
+        in <%= @person.birthplace %>
+        <% end %>
+        <br>
+        <strong>Profession:</strong>
+        <%= @person.professional_career %>
+        <br>
+        <% if @person.is_incumbent? %>
+        <% if @person.first_elected? %>
+        <strong>First Elected/Appointed as <%= @person.title %>:</strong>
+        <%= @person.first_elected.strftime("%B, %Y") %> (Tenure: <%= @person.calculated_tenure %> years)
+        <br>
+        <%end%>
+        <strong>Salary as <%= @person.title %></strong>
+         $<%= number_with_delimiter(@person.salary, :delimiter => ',')  %>
+        <br>
+        <strong>Current term expires:</strong>
+        <%= @person.term_expires %> <br>
+        <% if @person.term?%>
+        <strong>Term Limited:</strong>
+        <%= @person.term %> <br>
+        <%end%>
+        </p>
+        <p>
+        <strong>Prior Elected Office:</strong>
+        <%= @person.prior_elected %>
+        
+        <br>
+        <div class="row">
+          <div class="col-auto">
+        <strong>Resides in:</strong>
+          </div>
+          <div class="col-auto">
+            <%= @person.congressional_district %> Congressional District <br>
+            <%= @person.senate_district %> Senate District <br>
+            <%= @person.assembly_district %> Assembly District<br>
+            <%= @person.supe_district %> Supervisorial District<br>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-auto">
+        <strong>Public Contact Information:</strong>
+          </div>
+          <div class="col-auto">
+            Phone: <%= @person.phone %> <br>
+            E-Mail: <%= @person.email %> <br>
+            Facebook: <%= @person.facebook %> <br>
+            Twitter: <%= @person.twitter %> <br>
+            Website: <%= @person.official_website %>
+          </div>
+        </div>
+        <%end%>
+        <% if @person.on_ballot? %>
+        <hr>
+        <h4>Candidate Information</h4>
+          <p>
+          <strong>Campaign website:</strong>
+          <%= @person.campaign_website %>
+          </p>
 
-<p>
-  <strong>Incumbent District:</strong>
-  <%= @person.district.name %> - District <%= @person.district.district %>
-</p>
+          <h5>Opponents</h5>
+          <table class="table table-striped table-bordered">
+          <thead>
+              <tr>
+                <th class="col">Name</th>
+                <th class="col">Party</th>
+                <th class="col">Profession</th>
+                <th class="col">Cash on Hand</th>
+              </tr>
+            </thead>
 
-<p>
-  <strong>Title:</strong>
-  <%= @person.title %>
-</p>
+            <tbody>             
+              <% @person.district.candidates.each do |candidate| %>
+              <tr>
+                <% if candidate.on_ballot? %>
+                  <% if candidate.id != @person.id %>
+                  <% report = candidate.reports.most_recent %>
+                  <td  class="col"><%= "#{candidate.first_name} #{candidate.last_name}" %></td>
+                  <td  class="col"><%= candidate.party %></td>
+                  <td  class="col"><%if candidate.is_incumbent? %>
+                  <%= candidate.title %>
+                  <%else%>
+                  <%= candidate.professional_career %></td>
+                  <%end%>
+                  <td  class="col">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
+                  <% end %>
+                  <%end%>
+              <% end %>
+              </tr>
+            </tbody>
+          </table>
+        <%end%>
+    </div>
+  
 
-<p>
-  <strong>First name:</strong>
-  <%= @person.first_name %>
-</p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @person.last_name %>
-</p>
+    
+  </div>
 
-<p>
-  <strong>Birthdate:</strong>
-  <%= @person.birthdate %>
-</p>
 
-<p>
-<% if @person.party == 'Republican' %>
-  <strong>Party:</strong> <span style="color: #DE0100;"><%= @person.party %></span>
-<% elsif @person.party == 'Democrat'%>
-   <strong>Party:</strong> <span style="color: #0015BC;"><%= @person.party %></span>
-<% else %>
-  <strong>Party:</strong> <span style="color: gray;"><%= @person.party %></span>
-<% end %>
-</p>
 
-<p>
-  <strong>First elected:</strong>
-  <%= @person.first_elected %>
-</p>
-
-<p>
-  <strong>Prior elected:</strong>
-  <%= @person.prior_elected %>
-</p>
-
-<p>
-  <strong>Salary:</strong>
-  <%= @person.salary %>
-</p>
-
-<p>
-  <strong>Professional career:</strong>
-  <%= @person.professional_career %>
-</p>
-
-<p>
-  <strong>Congressional district:</strong>
-  <%= @person.congressional_district %>
-</p>
-
-<p>
-  <strong>Assembly district:</strong>
-  <%= @person.assembly_district %>
-</p>
-
-<p>
-  <strong>Senate district:</strong>
-  <%= @person.senate_district %>
-</p>
-
-<p>
-  <strong>Supe district:</strong>
-  <%= @person.supe_district %>
-</p>
-
-<p>
-  <strong>Birthplace:</strong>
-  <%= @person.birthplace %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @person.email %>
-</p>
-
-<p>
-  <strong>Twitter:</strong>
-  <%= @person.twitter %>
-</p>
-
-<p>
-  <strong>Facebook:</strong>
-  <%= @person.facebook %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @person.phone %>
-</p>
-
-<p>
-  <strong>Term:</strong>
-  <%= @person.term %>
-</p>
-
-<p>
-  <strong>On ballot:</strong>
-  <%= @person.on_ballot %>
-</p>
-
-<%= image_tag @person.image_url.to_s %> <br>
-
-<p>
-  <strong>Term expires:</strong>
-  <%= @person.term_expires %>
-</p>
-
-<p>
-  <strong>Seeking office:</strong>
-  <%= @person.seeking_office %>
-</p>
-
-<p>
-  <strong>Official website:</strong>
-  <%= @person.official_website %>
-</p>
-
-<p>
-  <strong>Campaign website:</strong>
-  <%= @person.campaign_website %>
-</p>
-
-<p>
-  <strong>Is incumbent:</strong>
-  <%= @person.is_incumbent %>
-</p>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
-
-<h3>Reports</h3>
-<table>
+<hr>
+<h3>Campaign Finance Reports</h3>
+<table class="table small-table table-striped table-bordered">
 <thead>
     <tr>
       <th>Reporting Period Begin</th>

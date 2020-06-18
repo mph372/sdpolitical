@@ -16,5 +16,10 @@ class Person < ApplicationRecord
     now.year - birthdate.year - ((now.month > birthdate.month || (now.month == birthdate.month && now.day >= birthdate.day)) ? 0 : 1)
   end
 
+  def calculated_tenure
+    now = Time.now.utc.to_date
+    now.year - first_elected.year - ((now.month > first_elected.month || (now.month == first_elected.month && now.day >= first_elected.day)) ? 0 : 1)
+  end
+
 
 end
