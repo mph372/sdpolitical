@@ -71,7 +71,7 @@
       <%= f.number_field :congressional_district %>   
     </div>
     <div class="col">
-      <%= f.number_field :senate_district %>   
+      <%= f.collection_select(:senate_district, District.all.where(name: "State Senate"), :id, :district, prompt: "Select a district", :include_blank => true ) %>   
     </div>
     <div class="col">
       <%= f.number_field :assembly_district %>   

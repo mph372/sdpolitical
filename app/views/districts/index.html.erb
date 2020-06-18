@@ -21,7 +21,7 @@
   <tbody>
     <% @districts.each do |district| %>
       <tr>
-        <td><%= link_to "#{district.jurisdiction.name}", district.jurisdiction.name %></td>
+        <td><%= link_to "#{district.jurisdiction.name}", district %></td>
         <td><%= district.name %></td>
         <td><%= district.district %></td>
         <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %></td>

@@ -23,6 +23,19 @@
   border: 1px;
 }
 
+.election-stats {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.gop-text {
+  color: #DE0100
+}
+
+.dem-text {
+  color: #0015BC
+}
+
 
  
  @import "rails_bootstrap_forms";

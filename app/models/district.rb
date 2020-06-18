@@ -6,4 +6,21 @@ class District < ApplicationRecord
   def registration_advantage
     dem_percent - rep_percent
   end
+
+  def gov_2018
+    newsom_percent - cox_percent
+  end
+
+  def pres_2016
+    clinton_percent - trump_percent
+  end
+
+  def gov_2014
+    brown_percent - kashkari_percent
+  end
+
+  def pres_2012
+    obama_percent - romney_percent
+  end
+
 end

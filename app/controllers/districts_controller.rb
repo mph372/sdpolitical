@@ -12,7 +12,8 @@ class DistrictsController < ApplicationController
   def show
     @district = District.find(params[:id])
     @incumbents = @district.incumbent
-    @persons = @district.candidates
+    @candidates = @district.candidates
+    @people = Person.all
   end
 
   # GET /districts/new

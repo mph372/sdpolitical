@@ -1,7 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-  
     <div class="col-auto">
     <% if @person.image_url.present? %>
     <%= image_tag @person.image_url.to_s, alt: 'headshot'%>
@@ -25,11 +24,7 @@
         <%= @person.incumbent_district.jurisdiction.name %> - <%= @person.incumbent_district.name %> - District <%= @person.incumbent_district.district %> <br>
       <%end%>
       
-      <% if @person.on_ballot? %>
-        <strong>Running for:</strong>
-        <%= @person.district.jurisdiction.name %> - <%= @person.district.name %> - District <%= @person.district.district %> 
-      <br>
-      <%end%>
+
       
         <strong>Born:</strong>
         <%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>) 
@@ -86,22 +81,42 @@
           </div>
         </div>
         <%end%>
-        <% if @person.on_ballot? %>
+        
+    </div>
+  
+
+
+    
+</div>
+
+
+
+
+
+
+<% if @person.on_ballot? %>
         <hr>
         <h4>Candidate Information</h4>
-          <p>
+        <p>
+        <% if @person.on_ballot? %>
+            <strong>Running for:</strong>
+            <%= @person.district.jurisdiction.name %> - <%= @person.district.name %> - District <%= @person.district.district %> 
+          <br>
+        <%end%>
           <strong>Campaign website:</strong>
-          <%= @person.campaign_website %>
-          </p>
+          <%= @person.campaign_website %> <br>
+          <strong>Contribution Limit:</strong>
+          $<%= @person.district.jurisdiction.contribution_limit %>
+        </p>
 
-          <h5>Opponents</h5>
+      <h5>Opponents</h5>
           <table class="table table-striped table-bordered">
           <thead>
               <tr>
-                <th class="col">Name</th>
-                <th class="col">Party</th>
-                <th class="col">Profession</th>
-                <th class="col">Cash on Hand</th>
+                <th class="col-auto">Name</th>
+                <th class="col-auto">Party</th>
+                <th class="col-auto">Profession</th>
+                <th class="col-auto">Cash on Hand</th>
               </tr>
             </thead>
 
@@ -111,14 +126,14 @@
                 <% if candidate.on_ballot? %>
                   <% if candidate.id != @person.id %>
                   <% report = candidate.reports.most_recent %>
-                  <td  class="col"><%= "#{candidate.first_name} #{candidate.last_name}" %></td>
-                  <td  class="col"><%= candidate.party %></td>
-                  <td  class="col"><%if candidate.is_incumbent? %>
+                  <td  class="col-auto"><%= "#{candidate.first_name} #{candidate.last_name}" %></td>
+                  <td  class="col-auto"><%= candidate.party %></td>
+                  <td  class="col-auto"><%if candidate.is_incumbent? %>
                   <%= candidate.title %>
                   <%else%>
                   <%= candidate.professional_career %></td>
                   <%end%>
-                  <td  class="col">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
+                  <td  class="col-auto">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
                   <% end %>
                   <%end%>
               <% end %>
@@ -126,18 +141,6 @@
             </tbody>
           </table>
         <%end%>
-    </div>
-  
-
-
-    
-  </div>
-
-
-
-
-<%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
 <hr>
 <h3>Campaign Finance Reports</h3>
 <table class="table small-table table-striped table-bordered">
@@ -173,3 +176,5 @@
 </table>
 
 <%= link_to("Add Report", new_report_path(:person_id => @person.id), :action => "new", :method => :get)%>
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>
