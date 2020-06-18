@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_222960) do
+ActiveRecord::Schema.define(version: 2020_06_18_165209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 2020_06_16_222960) do
     t.string "facebook"
     t.string "phone"
     t.integer "term"
-    t.boolean "on_ballot"
+    t.boolean "on_ballot", default: false
     t.string "image"
     t.integer "term_expires"
     t.integer "seeking_office"
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 2020_06_16_222960) do
     t.boolean "is_incumbent"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "running_reelection"
+    t.boolean "running_reelection", default: false
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 

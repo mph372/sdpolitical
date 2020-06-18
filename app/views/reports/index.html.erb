@@ -5,14 +5,14 @@
 <table class="table table-hover" id="reports">
   <thead>
     <tr>
-      <th style="width: 20%;">Name</th>
-      <th>Reporting Period Begin</th>
-      <th>Reporting Period End</th>
+      <th>Name</th>
+      <th>Reporting Period</th>
       <th>Date report filed</th>
       <th>Period Receipts</th>
       <th>Period Disbursements</th>
       <th>Current Cash-on-hand</th>
       <th>Current debt</th>
+      <th>Cash on-hand minus debt</th>
     </tr>
   </thead>
 
@@ -20,13 +20,13 @@
     <% @reports.each do |report| %>
       <tr>
         <td><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %></td>
-        <td><%= report.period_begin %></td>
-        <td><%= report.period_end %></td>
-        <td><%= report.report_filed %></td>
+        <td><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
+        <td><%= report.report_filed.to_formatted_s(:long) %></td>
         <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
         <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
         <td>$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
         <td>$ <%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td>
+        <td>$ <%= number_with_delimiter(report.net_coh, :delimiter => ',') %></td>
       </tr>
     <% end %>
   </tbody>

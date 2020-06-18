@@ -20,3 +20,34 @@
 //= require bootstrap
 //= require_tree .
 
+$(document).on('change', '#incumbentOffice', function(){
+    debugger;
+    if($(this).prop('checked')){
+        $('#incumbentOfficePicker').removeAttr('disabled');
+        $('#reElection').removeAttr('disabled');
+    } else {
+        $('#incumbentOfficePicker').attr('disabled', 'disabled');
+        $('#reElection').attr('disabled', 'disabled');
+    }
+});
+
+$(document).on('change', '#runningFor', function(){
+    debugger;
+    if($(this).prop('checked')){
+        $('#runningForPicker').removeAttr('disabled');
+        
+    } else {
+        $('#runningForPicker').attr('disabled', 'disabled');
+        
+    }
+});
+
+$(document).on('change', '#reElection', function(){
+    debugger;
+    if($(this).prop('checked')){
+        $('#runningFor').attr('disabled', 'disabled');
+    } else {
+        $('#runningFor').removeAttr('disabled');
+        
+    }
+});
