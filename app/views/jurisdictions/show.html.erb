@@ -1,18 +1,77 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @jurisdiction.name %>
-</p>
 
-<p>
-  <strong>Contribution limit:</strong>
-  <% if @jurisdiction.contribution_limit > 0%>        
-    <td>$<%= @jurisdiction.contribution_limit %></td>
-  <%else%>
-    <td>No limit</td>
-  <%end%>
-</p>
+<h3><%= @jurisdiction.name %></h3>
+<hr>
+<div class="row">
+  <div class="col">
+    <p><%= @jurisdiction.description %> </p> <br>
+    <p><strong>Contribution limit:</strong>
+      <% if @jurisdiction.contribution_limit > 0%>        
+        <td>$<%= @jurisdiction.contribution_limit %></td>
+      <%else%>
+        <td>No limit</td>
+      <%end%>
+      <br>
+    <strong>Corporate Contributions:</strong>
+      <% if @jurisdiction.corporate_contributions?%>
+      Allowed
+      <%else%>
+      Prohibited
+      <%end%>
+      <br>
+    <strong>PAC Contributions:</strong>
+      <% if @jurisdiction.pac_contributions?%>
+      Allowed
+      <%else%>
+      Prohibited
+      <%end%>
+      <br>    
+    <strong>Party Contributions:</strong>
+      <% if @jurisdiction.party_contributions?%>
+      Allowed
+      <%else%>
+      Prohibited
+      <%end%>           
+    </p>
+  </div>
+  <div class="col-auto">
+    <%= content_tag(:iframe,'', width: 500, height: 320, src: "#{@jurisdiction.map_url}") %>
+  </div>
+</div>
+<hr>
+<h5> List of Offices & Districts </h5>
+<br>
+<table class="table table-sm table-bordered">
+<thead>
+    <tr>
+      <th>Office</th>
+      <th>District</th>
+      <th>Incumbent</th>
+      <th>Party</th>
+    </tr>
+  </thead>
+
+  <tbody> 
+      <tr>
+      <% @jurisdiction.districts.each do |district| %>
+        <td><%= district.name %></td>
+        <td><% if district.district == "At Large" %>
+              <%= link_to "#{district.district}", district %></td>
+            <% else %>
+              <%= link_to "#{district.district.to_i.ordinalize} District", district %>
+            <%end%>
+        <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %></td>
+        <td><%= district.incumbent.party %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+
 
 <%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction) %> |
 <%= link_to 'Back', jurisdictions_path %> |

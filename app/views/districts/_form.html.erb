@@ -1,107 +1,72 @@
-<%= form_with(model: district, local: true) do |form| %>
-  <% if district.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(district.errors.count, "error") %> prohibited this district from being saved:</h2>
+<form>
+<%= bootstrap_form_for(@district, label_errors: true) do |f| %>
 
-      <ul>
-      <% district.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <div class="row">
+    <div class="col">
+      <%= f.text_field :name %>
+    </div>   
+    <div class="col"> 
+      <%= f.text_field :district, label: "District Number (or At Large)" %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= form.label :district %>
-    <%= form.text_field :district %>
+  <div class="row">
+    <div class="col">
+      <%= f.number_field :total_voters, label: "Registered Voters" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :dem_percent, label: "Registered Democrat Voters" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :rep_percent, label: "Registered GOP Voters" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :other_percent, label: "Registered Other Voters" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :total_voters %>
-    <%= form.number_field :total_voters %>
+  <div class="row"> 
+    <div class="col">
+      <%= f.number_field :newsom_percent, label: "Newsom %" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :cox_percent, label: "Cox %" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :clinton_percent, label: "Clinton %" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :trump_percent, label: "Trump %" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :dem_percent %>
-    <%= form.text_field :dem_percent %>
+  <div class="row"> 
+    <div class="col">
+      <%= f.number_field :brown_percent, label: "Brown %" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :kashkari_percent, label: "Kashkari %" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :obama_percent, label: "Obama %" %>
+    </div>
+    <div class="col">
+      <%= f.number_field :romney_percent, label: "Romney %" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :rep_percent %>
-    <%= form.text_field :rep_percent %>
-  </div>
+  <div class="row">
+    <div class="col">
+    <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:jurisdiction_id]}, { "data-placeholder": "Select Jurisdiction" }) %>
+    </div>
+    <div class="col">
+    <%= f.select(:incumbent_id, Person.all.collect { |v| [ "#{v.first_name} #{v.last_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
+    </div>    
+  </div> 
 
-  <div class="field">
-    <%= form.label :other_percent %>
-    <%= form.text_field :other_percent %>
-  </div>
+  <%= f.text_field :map_url, label: "Map Embed Link" %>
+  <br>
+  <%= f.submit %>
+</form>    
 
-  <div class="field">
-    <%= form.label :newsom_percent %>
-    <%= form.text_field :newsom_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cox_percent %>
-    <%= form.text_field :cox_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :clinton_percent %>
-    <%= form.text_field :clinton_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :trump_percent %>
-    <%= form.text_field :trump_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :brown_percent %>
-    <%= form.text_field :brown_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :kashkari_percent %>
-    <%= form.text_field :kashkari_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :obama_percent %>
-    <%= form.text_field :obama_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :romney_percent %>
-    <%= form.text_field :romney_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :average_percent %>
-    <%= form.text_field :average_percent %>
-  </div>
-
-  <div class="field">
-    <%= form.label :jurisdiction_id %>
-    <%= form.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:jurisdiction_id]}, { "data-placeholder": "Select Jurisdiction" }) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :map_url %>
-    <%= form.text_field :map_url %>
-  </div>
-
-  <div class="field">
-    <%= form.label :incumbent_id %>
-    <%= form.select(:incumbent_id, Person.all.collect { |v| [ "#{v.first_name} #{v.last_name}", v.id ] }, {}, { "data-placeholder": "Select Jurisdiction" }) %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

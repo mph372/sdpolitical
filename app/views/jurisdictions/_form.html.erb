@@ -36,6 +36,17 @@
         <%= form.check_box :party_contributions, {}, true, false %> <br />
     </div> 
 
+    <div class="field">
+        <%= form.label "Description" %> 
+        <%= form.text_field :description %> <br />
+    </div> 
+
+    <div class="field">
+        <%= form.label "Map_URL" %> 
+        <%= form.text_field :map_url %> <br />
+    </div> 
+
+
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_18_165209) do
+ActiveRecord::Schema.define(version: 2020_06_22_174350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2020_06_18_165209) do
     t.boolean "pac_contributions"
     t.boolean "party_contributions"
     t.text "description"
+    t.string "map_url"
   end
 
   create_table "measures", force: :cascade do |t|

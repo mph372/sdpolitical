@@ -69,6 +69,6 @@ class JurisdictionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def jurisdiction_params
-      params.require(:jurisdiction).permit(:name, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions)
+      params.require(:jurisdiction).permit(:name, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :description, :map_url)
     end
 end
