@@ -36,6 +36,13 @@
   color: #0015BC
 }
 
+.amended {
+  font-style: italic;
+}
+
+.not-amended {
+  font-style: none;
+}
 
  
  @import "rails_bootstrap_forms";

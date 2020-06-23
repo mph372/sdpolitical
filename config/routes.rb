@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :expenditures
   resources :elections
   resources :people
   resources :committees

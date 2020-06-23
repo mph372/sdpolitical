@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Expenditure date:</strong>
+  <%= @expenditure.expenditure_date %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @expenditure.description %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= number_to_currency(@expenditure.amount) %>
+</p>
+
+<p>
+  <strong>Person:</strong>
+  <%= "#{@expenditure.person.first_name} #{@expenditure.person.last_name}" %>
+</p>
+
+<p>
+  <strong>Measure:</strong>
+  <%= @expenditure.measure %>
+</p>
+
+<p>
+  <strong>Is support:</strong>
+  <%= @expenditure.is_support %>
+</p>
+
+<p>
+  <strong>Is amendment:</strong>
+  <%= @expenditure.is_amendment %>
+</p>
+
+<%= link_to 'Edit', edit_expenditure_path(@expenditure) %> |
+<%= link_to 'Back', expenditures_path %>

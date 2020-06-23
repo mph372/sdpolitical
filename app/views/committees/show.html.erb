@@ -1,44 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @committee.name %>
-</p>
-
+<h3><%= @committee.name %></h3>
+<hr>
 <p>
   <strong>Jurisdiction:</strong>
-  <%= @committee.jurisdiction %>
-</p>
-
-<p>
-  <strong>Type:</strong>
+  <%= @committee.jurisdiction.name %>
+    <br>
+  <strong>Committee Type:</strong>
   <%= @committee.committee_type %>
+  <br>
+  <% if @committee.committee_type == "Primarily Formed" %>
+    <strong>Candidate or Measure Supporting or Opposing:</strong>
+      <% if @committee.person != nil %>
+        <%= link_to "#{@committee.person.first_name} #{@committee.person.last_name}", @committee.person %>
+      <%else%>
+        <% link_to "Measure #{@committee.measure}", @committee.measure%> 
+      <%end%>
+      <% if @committee.support? %>
+        (Support)
+      <%else%>
+        (Oppose)
+      <%end%>
+  <%end%>
+<br>
+<%if @committee.is_active?%>
+<em>Committee is currently active</em>
+<%else%>
+<em>Commitee is no longer active.</em>
+<%end%>
 </p>
 
-<p>
-  <strong>Candidate:</strong>
-  <%= @committee.candidate %>
-</p>
-
-<p>
-  <strong>Incumbent:</strong>
-  <%= @committee.incumbent %>
-</p>
-
-<p>
-  <strong>Measure:</strong>
-  <%= @committee.measure %>
-</p>
-
-<p>
-  <strong>Support:</strong>
-  <%= @committee.support %>
-</p>
-
-<p>
-  <strong>Is active:</strong>
-  <%= @committee.is_active %>
-</p>
 
 <%= link_to 'Edit', edit_committee_path(@committee) %> |
 <%= link_to 'Back', committees_path %>

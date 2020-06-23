@@ -1,53 +1,28 @@
-<%= form_with(model: jurisdiction, local: true) do |form| %>
-  <% if jurisdiction.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(jurisdiction.errors.count, "error") %> prohibited this jurisdiction from being saved:</h2>
 
-      <ul>
-      <% jurisdiction.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= bootstrap_form_for(@jurisdiction, label_errors: true) do |f| %>
+
+  <%= f.text_field :name, label: "Jurisdiction Name"%>
+  <%= f.text_area :description, label: "Jurisdiction Description" %>
+
+  <div class="row">
+    <div class="col">
+      <%= f.number_field :contribution_limit %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <div class="col">
+      <%= f.check_box :corporate_contributions, label: "Corporate Contributions Allowed" %>
+    </div>
+    <div class="col">
+      <%= f.check_box :pac_contributions, label: "PAC Contributions Allowed" %>
+    </div>
+    <div class="col">
+      <%= f.check_box :party_contributions, label: "Party Contributions Allowed" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :contribution_limit %>
-    <%= form.number_field :contribution_limit %>
-  </div>
+  <%= f.text_field :map_url, label: "Map URL" %>
+  <%= f.submit %>
 
-    <div class="field">
-        <%= form.label "Corporate Contributions Allowed" %> 
-        <%= form.check_box :corporate_contributions, {}, true, false %> <br />
-    </div>  
-
-        <div class="field">
-        <%= form.label "PAC Contributions Allowed" %> 
-        <%= form.check_box :pac_contributions, {}, true, false %> <br />
-    </div>  
-
-        <div class="field">
-        <%= form.label "Party Contributions Allowed" %> 
-        <%= form.check_box :party_contributions, {}, true, false %> <br />
-    </div> 
-
-    <div class="field">
-        <%= form.label "Description" %> 
-        <%= form.text_field :description %> <br />
-    </div> 
-
-    <div class="field">
-        <%= form.label "Map_URL" %> 
-        <%= form.text_field :map_url %> <br />
-    </div> 
+  <%end%>
+  <br>
 
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>

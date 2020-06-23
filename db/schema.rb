@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_22_174350) do
+ActiveRecord::Schema.define(version: 2020_06_23_173321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(version: 2020_06_22_174350) do
     t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "person_id"
     t.index ["candidate_id"], name: "index_committees_on_candidate_id"
     t.index ["jurisdiction_id"], name: "index_committees_on_jurisdiction_id"
     t.index ["measure_id"], name: "index_committees_on_measure_id"
+    t.index ["person_id"], name: "index_committees_on_person_id"
   end
 
   create_table "districts", force: :cascade do |t|
@@ -78,6 +80,24 @@ ActiveRecord::Schema.define(version: 2020_06_22_174350) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["district_id"], name: "index_elections_on_district_id"
+  end
+
+  create_table "expenditures", force: :cascade do |t|
+    t.date "expenditure_date"
+    t.string "description"
+    t.float "amount"
+    t.bigint "person_id"
+    t.bigint "measure_id"
+    t.boolean "is_support"
+    t.boolean "is_amendment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "committee_id"
+    t.bigint "district_id"
+    t.index ["committee_id"], name: "index_expenditures_on_committee_id"
+    t.index ["district_id"], name: "index_expenditures_on_district_id"
+    t.index ["measure_id"], name: "index_expenditures_on_measure_id"
+    t.index ["person_id"], name: "index_expenditures_on_person_id"
   end
 
   create_table "jurisdictions", force: :cascade do |t|
@@ -198,7 +218,12 @@ ActiveRecord::Schema.define(version: 2020_06_22_174350) do
   add_foreign_key "committees", "candidates"
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
+  add_foreign_key "committees", "people"
   add_foreign_key "elections", "districts"
+  add_foreign_key "expenditures", "committees"
+  add_foreign_key "expenditures", "districts"
+  add_foreign_key "expenditures", "measures"
+  add_foreign_key "expenditures", "people"
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "people", "districts"
   add_foreign_key "reports", "candidates"

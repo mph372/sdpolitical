@@ -6,7 +6,7 @@
       <%= f.text_field :name %>
     </div>   
     <div class="col"> 
-      <%= f.text_field :district, label: "District Number (or At Large)" %>
+      <%= f.select :district, ['At Large', '1', '2', '3', '4', '5', '6', '7', '8', '9'], {:include_blank => true} %>
     </div>
   </div>
 
@@ -38,9 +38,7 @@
     <div class="col">
       <%= f.number_field :trump_percent, label: "Trump %" %>
     </div>
-  </div>
 
-  <div class="row"> 
     <div class="col">
       <%= f.number_field :brown_percent, label: "Brown %" %>
     </div>
@@ -70,3 +68,4 @@
 </form>    
 
 <% end %>
+<br>

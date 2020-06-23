@@ -13,6 +13,7 @@ class PeopleController < ApplicationController
   def show
     @person = Person.find(params[:id])
     @reports = @person.reports.order(report_filed: :desc)
+    @expenditures = @person.expenditures.order(expenditure_date: :desc)
   end
 
   # GET /people/new
