@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-auto">
     <% if @person.image_url.present? %>
-    <%= image_tag @person.image_url.to_s, alt: 'headshot' %>
+    <%= image_tag @person.image.url(:headshot), alt: 'headshot' %>
     <%else%>
     <%= image_tag "no_photo_available.jpg", alt: 'No headshot available' %>
     <%end%>
@@ -38,11 +38,11 @@
         <% if @person.is_incumbent? %>
         <% if @person.first_elected? %>
         <strong>First Elected/Appointed as <%= @person.title %>:</strong>
-        <%= @person.first_elected.strftime("%B, %Y") %> (Tenure: <%= @person.calculated_tenure %> years)
+        <%= @person.first_elected.strftime("%B, %Y") %> (Tenure: <%= distance_of_time_in_words(Time.now.utc.to_date, @person.first_elected ) %>)
         <br>
         <%end%>
-        <strong>Salary as <%= @person.title %></strong>
-         $<%= number_with_delimiter(@person.salary, :delimiter => ',')  %>
+        <strong>Salary as <%= @person.title %>:</strong>
+        <%= number_to_currency(@person.salary)  %>
         <br>
         <strong>Current term expires:</strong>
         <%= @person.term_expires %> <br>
@@ -61,10 +61,18 @@
         <strong>Resides in:</strong>
           </div>
           <div class="col-auto">
-            <%= @person.congressional_district %> Congressional District <br>
-            <%= @person.senate_district %> Senate District <br>
-            <%= @person.assembly_district %> Assembly District<br>
-            <%= @person.supe_district %> Supervisorial District<br>
+            <% if @person.congressional_district != nil %>
+            <%= @person.congressional_district.ordinalize %> Congressional District <br>
+            <%end%>
+            <% if @person.senate_district != nil %>
+            <%= @person.senate_district.ordinalize %> Senate District <br>
+            <%end%>
+            <% if @person.assembly_district != nil %>
+            <%= @person.assembly_district.ordinalize %> Assembly District<br>
+            <%end%>
+            <% if @person.supe_district != nil %>
+            <%= @person.supe_district.ordinalize %> Supervisorial District<br>
+            <%end%>
           </div>
         </div>
         <br>
@@ -73,7 +81,7 @@
         <strong>Public Contact Information:</strong>
           </div>
           <div class="col-auto">
-            Phone: <%= @person.phone %> <br>
+            Phone: <%= number_to_phone(@person.phone) %> <br>
             E-Mail: <%= @person.email %> <br>
             Facebook: <%= @person.facebook %> <br>
             Twitter: <%= @person.twitter %> <br>
@@ -103,13 +111,23 @@
             <%= @person.district.jurisdiction.name %> - <%= @person.district.name %> - District <%= @person.district.district %> 
           <br>
         <%end%>
-          <strong>Campaign website:</strong>
+          <% if @person.campaign_website != nil %>
+          <strong>Campaign Website:</strong>
           <%= @person.campaign_website %> <br>
+          <%end%>
           <strong>Contribution Limit:</strong>
           $<%= @person.district.jurisdiction.contribution_limit %>
+        <br>
+        <strong>Current Net Cash-on-Hand (Cash-on-hand minus debt): </strong><%= number_to_currency(@person.reports.most_recent.net_coh) %>
         </p>
+        <% if @person.endorsed_republican? %>
+        <p class="rep-text">Endorsed by the Republican Party of San Diego County</p>
+        <%end%>
+        <% if @person.endorsed_democrat? %>
+        <p class="dem-text"><strong>Endorsed by the San Diego County Democratic Party</strong></p>
+        <%end%>
 
-        
+      <hr>
 
       <h5>Opponents</h5>
           <table class="table table-striped table-bordered">
@@ -128,7 +146,15 @@
                 <% if candidate.on_ballot? %>
                   <% if candidate.id != @person.id %>
                   <% report = candidate.reports.most_recent %>
-                  <td  class="col-auto"><%= "#{candidate.first_name} #{candidate.last_name}" %></td>
+                  <td>
+        <% if candidate.endorsed_republican? %>
+        <span class="rep-text">&#10003</span>
+        <%elsif candidate.endorsed_democrat?%>
+        <span class="dem-text">&#10003</span>
+        <%else%>
+        
+        <%end%>
+        <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate %></td>
                   <td  class="col-auto"><%= candidate.party %></td>
                   <td  class="col-auto"><%if candidate.is_incumbent? %>
                   <%= candidate.title %>
@@ -142,14 +168,16 @@
               </tr>
             </tbody>
           </table>
+            <p class="small-text">(<span class="dem-text">&#10003</span> = Endorsed by SD County Democratic Party; <span class="gop-text">&#10003</span> = Endorsed by Republican Party of San Diego County)</p>
         <%end%>
+            
+<% if @person.reports.present? %>
 <hr>
-<h3>Campaign Finance Reports</h3>
+<h5>Campaign Finance Reports</h5>
 <table class="table small-table table-striped table-bordered">
 <thead>
     <tr>
-      <th>Reporting Period Begin</th>
-      <th>Reporting Period End</th>
+      <th>Reporting Period</th>
       <th>Date report filed</th>
       <th>Period Receipts</th>
       <th>Period Disbursements</th>
@@ -161,9 +189,8 @@
   <tbody>
     <% @reports.each do |report| %>
       <tr>
-        <td><%= report.period_begin %></td>
-        <td><%= report.period_end %></td>
-        <td><%= report.report_filed %></td>
+        <td><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
+        <td><%= report.report_filed.to_formatted_s(:long) %></td>
         <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
         <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
         <td>$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
@@ -171,7 +198,40 @@
       </tr>
     <% end %>
   </tbody>
+  </table>
+  <%end%>
+<% if @person.expenditures.present? %>
 </table>
+<hr>
+<h5>Related Independent Expenditures</h5>
+<table class="table small-table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Committee</th>
+      <th>Amount</th>
+      <th>Support/Oppose</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @expenditures.each do |expenditure| %>
+      <tr>
+        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.expenditure_date.to_formatted_s(:long) %></td>
+        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.description %></td>
+        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>
+        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= number_to_currency(expenditure.amount) %></td>
+        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><% if expenditure.is_support? %>
+            Support
+            <%else%>
+            Oppose
+            <%end%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%end%>
 
 <%= link_to("Add Report", new_report_path(:person_id => @person.id), :action => "new", :method => :get)%> |
 <%= link_to 'Edit', edit_person_path(@person) %> |

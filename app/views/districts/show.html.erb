@@ -5,8 +5,9 @@
     <h6><%= @district.jurisdiction.name %></h6>
     <h4><%= @district.name %> - <%= @district.district.to_i.ordinalize %> District </h4>
     <hr>
+    <% if @district.incumbent != nil%>
     <p><strong>Current Incumbent: </strong><%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></p>
-    
+    <%end%>
       <div class="row">
         <div class="col-4"><strong>Total Voters:</strong></div>
         <div class="col-auto"><%= number_with_delimiter(@district.total_voters, :delimiter => ',') %></div>
@@ -14,26 +15,26 @@
       
       <div class="row">
         <div class="col-4"><span style="color: #0015BC;"><strong>Dem %:</strong></span></div>
-        <div class="col-auto"><%= @district.dem_percent %>%</div>
+        <div class="col-auto"><%= @district.dem_voters.truncate(2) %>%</div>
       </div>    
       
       <div class="row">
         <div class="col-4"><span style="color: #DE0100;"><strong>Rep %:</strong></span></div>
-        <div class="col-auto"><%= @district.rep_percent %>%</div>
+        <div class="col-auto"><%= @district.rep_voters.truncate(2) %>%</div>
       </div>          
       
       <div class="row">
         <div class="col-4"><span style="color: gray;"><strong>Other %:</strong></span></div>
-        <div class="col-auto"><%= @district.other_percent %>%</div>
+        <div class="col-auto"><%= @district.other_voters.truncate(2) %>%</div>
       </div>  
       <br>
       <div class="row">
         <div class="col-4"><strong>Advantage:</strong></div>
           <div class="col-auto">
                 <% if @district.registration_advantage > 0 %>
-                <span style="color: #0015BC;">D+ <%= number_with_precision(@district.registration_advantage, precision: 2) %>%</span>
+                <span style="color: #0015BC;">D+ <%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
                 <% else %>
-                <span style="color: #DE0100;">R+ <%= number_with_precision(@district.registration_advantage, precision: 2) %>%</span>
+                <span style="color: #DE0100;">R+ <%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
                 <%end%>
           </div>      
       </div>       
@@ -75,30 +76,30 @@
   <div class="row">
     <div class="col text-center border election-stats">
       <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Newsom +<%= number_with_precision(@district.gov_2018, precision: 2) %>%</span>
+        <span class="dem-text">Newsom +<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
       <% else %>
-        <span style="color: #DE0100;">Cox +<%= number_with_precision(@district.gov_2018, precision: 2) %>%</span>
+        <span style="color: #DE0100;">Cox +<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
       <%end%>
     </div>
     <div class="col text-center border election-stats">
       <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Clinton +<%= number_with_precision(@district.pres_2016, precision: 2) %>%</span>
+        <span class="dem-text">Clinton +<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
       <% else %>
-        <span style="color: #DE0100;">Trump +<%= number_with_precision(@district.pres_2016, precision: 2) %>%</span>
+        <span style="color: #DE0100;">Trump +<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
       <%end%>
     </div>
     <div class="col text-center border election-stats">
       <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Brown +<%= number_with_precision(@district.gov_2014, precision: 2) %>%</span>
+        <span class="dem-text">Brown +<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
       <% else %>
-        <span style="color: #DE0100;">Kashkari +<%= number_with_precision(@district.gov_2014, precision: 2) %>%</span>
+        <span style="color: #DE0100;">Kashkari +<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
       <%end%>
     </div>
     <div class="col text-center border election-stats">
       <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Obama +<%= number_with_precision(@district.pres_2012, precision: 2) %>%</span>
+        <span class="dem-text">Obama +<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
       <% else %>
-        <span style="color: #DE0100;">Romney +<%= number_with_precision(@district.pres_2012, precision: 2) %>%</span>
+        <span style="color: #DE0100;">Romney +<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
       <%end%>
     </div>
   </div>     
@@ -118,6 +119,7 @@
 
   <tbody> 
       <tr>
+      <% if @district.incumbent != nil%>
       <% if @district.incumbent.running_reelection? %>
         <% report = incumbent.reports.most_recent %>
         <td><%= @district.incumbent.first_name %></td>
@@ -127,6 +129,7 @@
         <td>$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
       </tr>
     <% end %>
+    <%end%>
   
 
   
@@ -134,7 +137,15 @@
     <tr>
       <% if candidate.on_ballot? %>
         <% report = candidate.reports.most_recent %>
-        <td><%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate %></td>
+        <td>
+        <% if candidate.endorsed_republican? %>
+        <span class="rep-text">&#10003</span>
+        <%elsif candidate.endorsed_democrat?%>
+        <span class="dem-text">&#10003</span>
+        <%else%>
+        
+        <%end%>
+        <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate %></td>
         <td><%= candidate.party %></td>
         <td><%if candidate.is_incumbent? %>
             <%= candidate.title %>
@@ -147,7 +158,7 @@
     </tr>
   </tbody>
 </table>
-<br>
+<p class="small-text">(<span class="dem-text">&#10003</span> = Endorsed by SD County Democratic Party; <span class="gop-text">&#10003</span> = Endorsed by Republican Party of San Diego County)</p>
 <hr>
 
 <% if @district.jurisdiction.name == "County of San Diego" || "California Legislature" || "Congress"%>

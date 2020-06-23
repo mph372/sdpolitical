@@ -1,4 +1,4 @@
-<form>
+
 <%= bootstrap_form_for(@district, label_errors: true) do |f| %>
 
   <div class="row">
@@ -6,50 +6,50 @@
       <%= f.text_field :name %>
     </div>   
     <div class="col"> 
-      <%= f.select :district, ['At Large', '1', '2', '3', '4', '5', '6', '7', '8', '9'], {:include_blank => true} %>
+      <%= f.text_field :district %>
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <%= f.number_field :total_voters, label: "Registered Voters" %>
+      <%= f.number_field :total_voters, label: "Registered Voters", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :dem_percent, label: "Registered Democrat Voters" %>
+      <%= f.number_field :dem_percent, label: "Registered Democrat Voters", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :rep_percent, label: "Registered GOP Voters" %>
+      <%= f.number_field :rep_percent, label: "Registered GOP Voters", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :other_percent, label: "Registered Other Voters" %>
+      <%= f.number_field :other_percent, label: "Registered Other Voters", step: :any %>
     </div>
   </div>
 
   <div class="row"> 
     <div class="col">
-      <%= f.number_field :newsom_percent, label: "Newsom %" %>
+      <%= f.number_field :newsom_percent, label: "Newsom %", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :cox_percent, label: "Cox %" %>
+      <%= f.number_field :cox_percent, label: "Cox %", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :clinton_percent, label: "Clinton %" %>
+      <%= f.number_field :clinton_percent, label: "Clinton %", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :trump_percent, label: "Trump %" %>
+      <%= f.number_field :trump_percent, label: "Trump %", step: :any %>
     </div>
 
     <div class="col">
-      <%= f.number_field :brown_percent, label: "Brown %" %>
+      <%= f.number_field :brown_percent, label: "Brown %", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :kashkari_percent, label: "Kashkari %" %>
+      <%= f.number_field :kashkari_percent, label: "Kashkari %", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :obama_percent, label: "Obama %" %>
+      <%= f.number_field :obama_percent, label: "Obama %", step: :any %>
     </div>
     <div class="col">
-      <%= f.number_field :romney_percent, label: "Romney %" %>
+      <%= f.number_field :romney_percent, label: "Romney %", step: :any %>
     </div>
   </div>
 
@@ -58,14 +58,13 @@
     <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:jurisdiction_id]}, { "data-placeholder": "Select Jurisdiction" }) %>
     </div>
     <div class="col">
-    <%= f.select(:incumbent_id, Person.all.collect { |v| [ "#{v.first_name} #{v.last_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
+    <%= f.select(:incumbent_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
     </div>    
   </div> 
 
   <%= f.text_field :map_url, label: "Map Embed Link" %>
   <br>
-  <%= f.submit %>
-</form>    
+  <%= f.submit %>  
 
 <% end %>
 <br>
