@@ -18,7 +18,7 @@
 
   <tbody>
     <% @people.each do |person| %>
-    <% if person.is_incumbent == false %>
+    <% if person.is_incumbent == false || person.on_ballot == true %>
       <% report = person.reports.most_recent %>
       <tr>
         <td><%= "#{person.district.name} - District #{person.district.district}" %></td>
@@ -45,9 +45,9 @@
 <table class="table small-table table-striped table-bordered table-sm" id="incumbent" cellspacing="0" width="100%">
   <thead class="thead-light">
     <tr>
-      <th>Incumbent District</th>
+      <th>Last name</th>    
       <th>First name</th>
-      <th>Last name</th>
+      <th>Incumbent District</th>
       <th>Age</th>
       <th>Party</th>
       <th>Current term expires</th>
@@ -58,9 +58,9 @@
     <% @people.each do |person| %>
       <% if person.is_incumbent == true %>
       <tr>
-        <td><%= "#{person.incumbent_district.name} - District #{person.incumbent_district.district}" %></td>
+        <td><%= person.last_name %></td>        
         <td><%= person.first_name %></td>
-        <td><%= person.last_name %></td>
+        <td><%= "#{person.incumbent_district.name} - District #{person.incumbent_district.district}" %></td>
         <td><%= person.calculated_age %></td>
         <td><% if person.party == 'Republican' %>
             <span style="color: #DE0100;"><%= person.party %></span>

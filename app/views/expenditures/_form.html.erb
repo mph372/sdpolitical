@@ -20,8 +20,8 @@
       </div>
       <div class="col">
         <%= f.form_group :support, label: { text: "Support or Oppose" }  do %>
-          <%= f.radio_button :is_support,   "Support", :value => "true" %> 
-          <%= f.radio_button :is_support,  "Oppose", :value => "false" %> 
+          <%= f.radio_button :is_support, true, label: "Support" %> 
+          <%= f.radio_button :is_support, false, label: "Oppose" %> 
         <%end%>
       </div>
     </div>

@@ -69,6 +69,6 @@ class ExpendituresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def expenditure_params
-      params.require(:expenditure).permit(:expenditure_date, :description, :amount, :person_id, :measure_id, :is_support, :is_amendment, :committee_id)
+      params.require(:expenditure).permit(:expenditure_date, :description, :amount, :person_id, :measure_id, :is_support, :is_amendment, :committee_id, :district_id)
     end
 end
