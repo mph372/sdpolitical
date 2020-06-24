@@ -36,7 +36,9 @@
     </p>
   </div>
   <div class="col-auto">
+    <% if @jurisdiction.map_url.present?%>
     <%= content_tag(:iframe,'', width: 500, height: 320, src: "#{@jurisdiction.map_url}") %>
+    <%end%>
   </div>
 </div>
 <hr>

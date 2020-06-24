@@ -2,38 +2,38 @@
 
 <h1>Districts</h1>
 <br>
-<table class="table small-table table-bordered table-sm table-hover">
+<table class="table table-striped table-bordered table-sm" style="width:100%" id="districts">
   <thead class="thead-light">
     <tr>
       <th>Jurisdiction</th>
       <th>Name</th>
       <th>District</th>
       <th>Incumbent</th>
-      <th>Total voters</th>
-      <th>Dem percent</th>
-      <th>Rep percent</th>
-      <th>Other percent</th>
+      <th>Dem Reg</th>
+      <th>Rep Reg</th>
+      <th>Other Reg</th>
       <th>Registration Advantage</th>
+      <th>Incumbent Term Expires</th>
     </tr>
   </thead>
 
   <tbody>
     <% @districts.each do |district| %>
       <tr>
-        <td><%= link_to "#{district.jurisdiction.name}", district %></td>
+        <td><%= district.jurisdiction.name %></td>
         <td><%= district.name %></td>
-        <td><%= district.district %></td>
+        <td><%= link_to "#{district.district}", district %></td>
         <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %></td>
-        <td><%= number_with_delimiter(district.total_voters, :delimiter => ',') %></td>
         <td><%= district.dem_voters.truncate(2) %>%</td>
         <td><%= district.rep_voters.truncate(2) %>%</td>
         <td><%= district.other_voters.truncate(2) %>%</td>
         <td><% if district.registration_advantage > 0 %>
-            <span style="color: #0015BC;">D+ <%= number_with_precision(district.registration_advantage.abs, precision: 2) %>%</span>
+            <span style="color: #0015BC;">D +<%= number_with_precision(district.registration_advantage.abs, precision: 2) %>%</span>
             <% else %>
-             <span style="color: #DE0100;">R+ <%= number_with_precision(district.registration_advantage.abs, precision: 2) %>%</span>
+             <span style="color: #DE0100;">R +<%= number_with_precision(district.registration_advantage.abs, precision: 2) %>%</span>
             <%end%>
-            </td>        
+            </td>   
+        <td><%= district.incumbent.term_expires %></td>
       </tr>
     <% end %>
   </tbody>
@@ -42,3 +42,35 @@
 <br>
 
 <%= link_to 'New District', new_district_path %>
+
+
+<script>
+    $( document ).on('turbolinks:load', function() {
+      $('#districts').DataTable( {
+        searchPanes:true,
+        dom: 'Pfrtip',
+        columnDefs:[
+            {
+                searchPanes:{
+                    show: true,
+                    orderable: false,
+                },
+                targets: [0,1,-1],
+            },
+            {
+                searchPanes:{
+                    show: false,
+                },
+                targets: [2],
+            },
+            {
+                searchPanes: {
+                    orderable: false,
+                    
+                },
+                targets: [4]
+            }
+        ],  
+    });
+});
+</script>

@@ -2,7 +2,7 @@
 
 <h1>Committees</h1>
 <br>
-<table class="table small-table table-bordered table-sm table-hover">
+<table class="table small-table table-bordered table-sm table-hover" id="committees">
   <thead class="thead-light">
     <tr>
       <th>Name</th>
@@ -35,3 +35,10 @@
 <br>
 
 <%= link_to 'New Committee', new_committee_path %>
+
+<script>
+    $( document ).on('turbolinks:load', function() {
+    $('#committees').DataTable( {
+    });
+});
+</script>

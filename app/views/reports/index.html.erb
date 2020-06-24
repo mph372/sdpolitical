@@ -2,7 +2,7 @@
 
 <h1>Reports</h1>
 <br>
-<table class="table small-table table-bordered table-sm table-hover">
+<table class="table small-table table-bordered table-sm table-hover" id="reports">
   <thead class="thead-light">
     <tr>
       <th>Name</th>
@@ -20,8 +20,8 @@
     <% @reports.each do |report| %>
       <tr>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %></td>
-        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
-        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= report.report_filed.to_formatted_s(:long) %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= report.report_filed.strftime("%b-%d-%y") %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
@@ -35,3 +35,10 @@
 <br>
 
 <%= link_to 'New Report', new_report_path %>
+
+<script>
+    $( document ).on('turbolinks:load', function() {
+    $('#reports').DataTable( {
+    });
+});
+</script>
