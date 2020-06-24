@@ -32,9 +32,9 @@
         <div class="col-4"><strong>Advantage:</strong></div>
           <div class="col-auto">
                 <% if @district.registration_advantage > 0 %>
-                <span style="color: #0015BC;">D+ <%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
+                <span style="color: #0015BC;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
                 <% else %>
-                <span style="color: #DE0100;">R+ <%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
+                <span style="color: #DE0100;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
                 <%end%>
           </div>      
       </div>       
@@ -105,6 +105,7 @@
   </div>     
 <br>
 <hr>
+<% if @district.candidates.present? %>
 <h5>Candidates</h5>
 <p>List of current candidates for this office</p>
 <table class="table table-sm table-bordered">
@@ -160,6 +161,7 @@
 </table>
 <p class="small-text">(<span class="dem-text">&#10003</span> = Endorsed by SD County Democratic Party; <span class="gop-text">&#10003</span> = Endorsed by Republican Party of San Diego County)</p>
 <hr>
+<%end%>
 
 <% if @district.jurisdiction.name == "County of San Diego" || "California Legislature" || "Congress"%>
 <h5>Resident Elected Officials</h5>

@@ -10,6 +10,7 @@ class JurisdictionsController < ApplicationController
   # GET /jurisdictions/1
   # GET /jurisdictions/1.json
   def show
+    @measures = @jurisdiction.measures
   end
 
   # GET /jurisdictions/new

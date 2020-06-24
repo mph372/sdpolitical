@@ -1,9 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Reports</h1>
-
-<table class="table table-hover" id="reports">
-  <thead>
+<br>
+<table class="table small-table table-bordered table-sm table-hover">
+  <thead class="thead-light">
     <tr>
       <th>Name</th>
       <th>Reporting Period</th>
@@ -19,14 +19,14 @@
   <tbody>
     <% @reports.each do |report| %>
       <tr>
-        <td><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %></td>
-        <td><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
-        <td><%= report.report_filed.to_formatted_s(:long) %></td>
-        <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
-        <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
-        <td>$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
-        <td>$ <%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td>
-        <td>$ <%= number_with_delimiter(report.net_coh, :delimiter => ',') %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= report.report_filed.to_formatted_s(:long) %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></td>
       </tr>
     <% end %>
   </tbody>

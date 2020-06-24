@@ -54,7 +54,7 @@
 
   <tbody> 
       <tr>
-      <% @jurisdiction.districts.each do |district| %>
+      <% @jurisdiction.districts.order(:district).each do |district| %>
         <td><%= district.name %></td>
         <td><% if district.district == "At Large" %>
               <%= link_to "#{district.district}", district %></td>
@@ -67,11 +67,32 @@
     <% end %>
   </tbody>
 </table>
+<% if @jurisdiction.measures.present? %>
+<h5>Current Ballot Measures</h5>
+<table class="table small-table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>Measure</th>
+      <th>Topic</th>
+      <th>Type</th>
+      <th>Origin</th>
+      <th>Threshold</th>
+    </tr>
+  </thead>
 
-
-
-
-
+  <tbody>
+    <% @measures.each do |measure| %>
+    <tr> 
+      <td><%= link_to "Measure #{measure.letter}", measure.letter %> </td>
+      <td><%= measure.topic %></td>
+      <td><%= measure.measure_type %></td>
+      <td><%= measure.origin %></td>     
+      <td><%= number_to_percentage(measure.threshold, precision: 2) %></td>                  
+    </tr>
+    <%end%>
+  </tbody>
+</table>
+<%end%>
 
 <%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction) %> |
 <%= link_to 'Back', jurisdictions_path %> |
