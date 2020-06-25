@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<% if user_signed_in? %>
 <h3><%= @committee.name %></h3>
 <hr>
 <p>
@@ -99,6 +99,15 @@
   </table>
   <%end%>  
 
+<% if current_user.admin? %>
 <%= link_to("Add Report", new_report_path(:committee_id => @committee.id), :action => "new", :method => :get)%> |
+<%= link_to 'Delete Committee', @committee, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Edit', edit_committee_path(@committee) %> |
+<%end%>
 <%= link_to 'Back', committees_path %>
+
+<%else %>
+  <p>Please Sign Up or Sign In to view the content.</p>
+  <%= link_to 'Sign up', new_user_registration_path %><br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>

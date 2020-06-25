@@ -3,7 +3,7 @@ class Person < ApplicationRecord
   has_one :incumbent_district, inverse_of: :incumbent, class_name: "District", required: false, foreign_key: "incumbent_id"
   accepts_nested_attributes_for :incumbent_district
   has_many :expenditures
- 
+
   
   has_many :reports do
     def most_recent

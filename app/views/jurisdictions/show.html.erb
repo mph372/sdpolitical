@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
-
-
+<% if user_signed_in? %>
 <h3><%= @jurisdiction.name %></h3>
 <hr>
 <div class="row">
@@ -96,7 +95,16 @@
 </table>
 <%end%>
 
+<% if current_user.admin? %>
+<%= link_to("Add District", new_district_path(:jurisdiction_id => @jurisdiction.id), :action => "new", :method => :get)%> |
 <%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction) %> |
-<%= link_to 'Back', jurisdictions_path %> |
-<%= link_to("Add District", new_district_path(:jurisdiction_id => @jurisdiction.id), :action => "new", :method => :get)%>
+<%= link_to 'Delete Jurisdiction', @jurisdiction, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%end%>
+<%= link_to 'Back', jurisdictions_path %> 
+
+<%else %>
+  <p>Please Sign Up or Sign In to view the content.</p>
+  <%= link_to 'Sign up', new_user_registration_path %><br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>
 

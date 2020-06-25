@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<% if user_signed_in? %>
 
 <h1>Reports</h1>
 <br>
@@ -37,12 +38,18 @@
 </table>
 
 <br>
-
+<% if current_user.admin? %>
 <%= link_to 'New Report', new_report_path %>
-
+<%end%>    
+<%else %>
+  <p>Please Sign Up or Sign In to view the content.</p>
+  <%= link_to 'Sign up', new_user_registration_path %><br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#reports').DataTable( {
+      retrieve: true
     });
 });
 </script>

@@ -40,6 +40,7 @@ gem 'acts-as-taggable-on', '~> 6.0'
 gem 'bootstrap', '~> 4.5.0'
 gem 'simple_form'
 gem 'high_voltage', '~> 3.1'
+gem 'devise'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

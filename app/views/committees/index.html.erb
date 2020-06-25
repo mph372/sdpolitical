@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<% if user_signed_in? %>
 <h1>Committees</h1>
 <br>
 <table class="table small-table table-bordered table-sm table-hover" id="committees">
@@ -33,12 +33,18 @@
 </table>
 
 <br>
-
+<% if current_user.admin? %>
 <%= link_to 'New Committee', new_committee_path %>
-
+<%end%>    
+<%else %>
+  <p>Please Sign Up or Sign In to view the content.</p>
+  <%= link_to 'Sign up', new_user_registration_path %><br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#committees').DataTable( {
+      retrieve: true
     });
 });
 </script>

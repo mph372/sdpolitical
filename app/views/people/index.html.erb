@@ -1,42 +1,34 @@
 <p id="notice"><%= notice %></p>
-
+<% if user_signed_in? %>
 <h1>Candidate & Elected Officials</h1>
 <br>
 <table class="table small-table table-bordered table-sm table-hover" style="width:100%" id="candidate">
   <thead class="thead-light">
     <tr>
-      <th>Status</th>
       <th>Office*</th>
+      <th>District</th>
       <th>First name</th>
       <th>Last name</th>
       <th>Party</th>
       <th>Age</th>
-      <th>Cash on hand</th>
+      <th>Current Term Expires</th>
     </tr>
   </thead>
 
   <tbody>
     <% @people.each do |person| %>
+      <% if person.is_incumbent? %>
       <% report = person.reports.most_recent %>
       <tr>
-        <td> <% if person.on_ballot? && person.is_incumbent? %>
-            Both
-            <%elsif person.on_ballot? %>
-            Candidate
-            <%elsif person.is_incumbent?%>
-            Incumbent
-            <%end%></td>
-        <td> <% if person.is_incumbent? %>
-            <%= person.incumbent_district.name %>
-            <%else%>
-            <%= person.district.name%>
-            <%end%></td>            
+        <td><%= person.incumbent_district.name %></td>    
+        <td><%= person.incumbent_district.district %></td>      
         <td><%= person.first_name %></td>
         <td><%= link_to "#{person.last_name}", person %></td>
         <td><%= person.party %>
         <td><%= person.calculated_age %></td>
-        <td>$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
+        <td><%= person.term_expires %></td>
       </tr>
+      <%end%>
     <% end %>
   </tbody>
 </table>
@@ -44,13 +36,20 @@
 <br>
 
 <br>
-
+<% if current_user.admin? %>
 <%= link_to 'New Person', new_person_path %>
 </div>
+<%end%>    
+<%else %>
+  <p>Please Sign Up or Sign In to view the content.</p>
+  <%= link_to 'Sign up', new_user_registration_path %><br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>
 <script>
     $( document ).on('turbolinks:load', function() {
       $('#candidate').DataTable( {
         searchPanes:true,
+        retrieve: true,
         dom: 'Pfrtip',
         columnDefs:[
             {
@@ -58,7 +57,7 @@
                     show: true,
                     orderable: false,
                 },
-                targets: [0],
+                targets: [0,4,-1],
             },
             {
                 searchPanes:{

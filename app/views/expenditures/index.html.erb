@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<% if user_signed_in? %>
 <h1>Committee Expenditures</h1>
 <br>
 <table class="table small-table table-bordered table-sm table-hover" id="expenditures">
@@ -51,12 +51,18 @@
 <span class="small-text" ><em>Expenditures listed in italics are amended version of prior reported expenditures.</em></span>
 
 <br>
-
+<% if current_user.admin? %>
 <%= link_to 'New Expenditure', new_expenditure_path %>
-
+<%end%>
+<%else %>
+  <p>Please Sign Up or Sign In to view the content.</p>
+  <%= link_to 'Sign up', new_user_registration_path %><br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#expenditures').DataTable( {
+      retrieve: true
     });
 });
 </script>

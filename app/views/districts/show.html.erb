@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<% if user_signed_in? %>
 <div class="row">
   <div class="col">
     <h6><%= @district.jurisdiction.name %></h6>
@@ -193,6 +193,14 @@
   </tbody>
 </table>
 <%end%>
-
+<% if current_user.admin? %>
 <%= link_to 'Edit', edit_district_path(@district) %> |
+<%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%end%>
 <%= link_to 'Back', districts_path %>
+
+<%else %>
+  <p>Please Sign Up or Sign In to view the content.</p>
+  <%= link_to 'Sign up', new_user_registration_path %><br>
+  <%= link_to 'Sign in', new_user_session_path %>
+<% end %>
