@@ -21,7 +21,11 @@
       <% if @person.is_incumbent? %>
       <p>
         <strong>Represents:</strong>
-        <%= link_to "#{@person.incumbent_district.jurisdiction.name}" %> - <%= link_to "#{@person.incumbent_district.name}", @person.incumbent_district %> -  <%= link_to "District #{@person.incumbent_district.district}", @person.incumbent_district %> <br>
+        <%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction %> - <%= link_to "#{@person.incumbent_district.name}", @person.incumbent_district %>
+        <% if @person.incumbent_district.district != "At Large"%> 
+          -  <%= link_to "District #{@person.incumbent_district.district}", @person.incumbent_district %> 
+         <%end%>
+         <br>
       <%end%>
       
 
@@ -32,10 +36,16 @@
         in <%= @person.birthplace %>
         <% end %>
         <br>
+        <% if @person.is_incumbent? %>
+        <strong>Profession Before Elected Office:</strong>
+        <%= @person.professional_career %>
+        <% else %>
         <strong>Profession:</strong>
         <%= @person.professional_career %><br>
-        <strong>Biography:</strong>
-        <%= h(@person.bio).gsub(/\n/, '</br>').html_safe %>
+        <%end%>
+        <br>
+        <strong>Prior Elected Office:</strong>
+        <%= @person.prior_elected %>
         <br>
         <% if @person.is_incumbent? %>
         <% if @person.first_elected? %>
@@ -43,7 +53,6 @@
         <%= @person.first_elected.strftime("%B, %Y") %> (Tenure: <%= distance_of_time_in_words(Time.now.utc.to_date, @person.first_elected ) %>)
         <br>
         <%end%>
-        <br>
         <strong>Salary as <%= @person.title %>:</strong>
         <%= number_to_currency(@person.salary)  %>
         <br>
@@ -51,14 +60,25 @@
         <%= @person.term_expires %> <br>
         <% if @person.term?%>
         <strong>Term Limited:</strong>
-        <%= @person.term %> <br>
+        <%= @person.term %> <br>        
         <%end%>
+        <strong>Full Biography:</strong>
+        <div>    
+        <% if @person.bio.length > 250 %>
+          <%= truncate(@person.bio, length: 800) %>
+          <%= link_to '...Read more', '', class: "read-more-#{@person.id}" %>
+          <script>
+            $('.read-more-<%= @person.id %>').on('click', function(e) {
+              e.preventDefault()
+              $(this).parent().html('<%= escape_javascript h(@person.bio).gsub(/\n/, '</br>').html_safe %>')
+            })
+          </script>
+        <% else %>
+          <%= h(@person.bio).gsub(/\n/, '</br>').html_safe %>
+        <% end %>
+        </div>        
         </p>
-        <p>
-        <strong>Prior Elected Office:</strong>
-        <%= @person.prior_elected %>
         
-        <br>
         <div class="row">
           <div class="col-auto">
         <strong>Resides in:</strong>
@@ -91,6 +111,23 @@
             Website: <%= @person.official_website %>
           </div>
         </div>
+        <% if @person.reports.where(incumbent_report: true).present? %>
+        <br>
+        <h5><u>Incumbent Campaign Finance Data</u><br></h5>
+        <div class="row">
+          <div class="col-auto">
+        <strong>Total Raised into <%= @person.incumbent_district.name %> Committee this Cycle: </strong> <br>
+        <strong>Total Expenditures from <%= @person.incumbent_district.name %> Committee this Cycle: </strong> <br>
+        <strong>Current Net Cash-on-Hand in <%= @person.incumbent_district.name %> Committee: </strong> <br>
+          </div>
+          <div class="col">
+            <%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: true ).sum(:period_receipts)) %> <br>
+            <%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: true ).sum(:period_disbursements)) %> <br>
+            <%= number_to_currency(@person.reports.where(incumbent_report: true).most_recent.net_coh) %> <br>
+          </div>
+        </div>
+        <%end%>
+        <br>
         <%end%>
         
     </div>
@@ -100,9 +137,11 @@
         <hr>
         <h4>Candidate Information</h4>
         <p>
-        <% if @person.on_ballot? %>
-            <strong>Running for:</strong>
-            <%= link_to "#{@person.district.jurisdiction.name}" %> - <%= link_to "#{@person.district.name}", @person.district %> -  <%= link_to "District #{@person.district.district}", @person.district %> <br>
+        <strong>Running for: </strong><% if @person.on_ballot? %>
+            <%= link_to "#{@person.district.jurisdiction.name}", @person.district.jurisdiction %> - <%= link_to "#{@person.district.name}", @person.district %>
+        <% if @person.district.district != "At Large"%> 
+          -  <%= link_to "District #{@person.district.district}", @person.district %> 
+         <%end%> <br>
         <%end%>
             <strong>Candidacy Status:</strong> <%= @person.ballot_status %><br>
           <% if @person.campaign_website.present? %>
@@ -110,22 +149,24 @@
           <%= @person.campaign_website %> <br>
           <%end%>
           <strong>Contribution Limit:</strong>
-          $<%= @person.district.jurisdiction.contribution_limit %>
+          $<%= @person.district.contribution_limit %>
         <br>
         </p>
+        
+        <% if @person.reports.present? %>
         <hr>
         <div class="row">
           <div class="col">
             <strong>Total Raised this Cycle: </strong> <br>
             <strong>Total Spent this Cycle: </strong> <br>
-            <strong>Current Net Cash-on-Hand (Cash-on-hand minus debt): </strong>
+            <strong><mark>Current Net Cash-on-Hand (Cash-on-hand minus debt): </mark></strong>
           </div>
           <div class="col">
-            <%= number_to_currency(@person.reports.where(:cycle => "2020").sum(:period_receipts)) %> <br>
-            <%= number_to_currency(@person.reports.where(:cycle => "2020").sum(:period_disbursements)) %> <br>
-            <%= number_to_currency(@person.reports.most_recent.net_coh) %><br>
+            <%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: false ).sum(:period_receipts)) %> <br>
+            <%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: false).sum(:period_disbursements)) %> <br>
+            <mark><%= number_to_currency(@person.reports.where(incumbent_report: [false, nil]).most_recent.net_coh ) %><br></mark>
           </div>
-        </div>
+        </div> <%end%>
         </p>
         <% if @person.endorsed_republican? %>
         <p class="rep-text">Endorsed by the Republican Party of San Diego County</p>
@@ -133,10 +174,10 @@
         <% if @person.endorsed_democrat? %>
         <p class="dem-text"><strong>Endorsed by the San Diego County Democratic Party</strong></p>
         <%end%>
-
+      
       <hr>
 
-      <h5>Opponents</h5>
+      <h5>Opponents In Race for <%= "#{@person.district.name}" %></h5>
           <table class="table table-striped table-bordered">
           <thead>
               <tr>
@@ -179,10 +220,11 @@
             
 <% if @person.reports.present? %>
 <hr>
-<h5>Campaign Finance Reports</h5>
+<h5>Campaign Finance Reports for <%= "#{@person.first_name} #{@person.last_name}"%></h5>
 <table class="table small-table table-striped table-bordered">
 <thead>
     <tr>
+      <th>Office</th>
       <th>Reporting Period</th>
       <th>Date report filed</th>
       <th>Period Receipts</th>
@@ -195,8 +237,14 @@
   <tbody>
     <% @reports.each do |report| %>
       <tr>
+        <td><% if report.incumbent_report?%>
+        <%= report.incumbent_district.name %>
+        <%else%>
+        <%= report.district.name %>
+        <%end%>
+        </td>
         <td><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
-        <td><%= report.report_filed.to_formatted_s(:long) %></td>
+        <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %></td>
         <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
         <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
         <td>$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>

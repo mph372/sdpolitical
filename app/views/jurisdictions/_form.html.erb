@@ -11,20 +11,7 @@
   </div>      
   <%= f.text_area :description, label: "Jurisdiction Description" %>
 
-  <div class="row">
-    <div class="col">
-      <%= f.number_field :contribution_limit %>
-    </div>
-    <div class="col">
-      <%= f.check_box :corporate_contributions, label: "Corporate Contributions Allowed" %>
-    </div>
-    <div class="col">
-      <%= f.check_box :pac_contributions, label: "PAC Contributions Allowed" %>
-    </div>
-    <div class="col">
-      <%= f.check_box :party_contributions, label: "Party Contributions Allowed" %>
-    </div>
-  </div>
+
 
   <%= f.text_field :map_url, label: "Map URL" %>
   <%= f.submit %>

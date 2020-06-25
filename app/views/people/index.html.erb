@@ -1,14 +1,13 @@
 <p id="notice"><%= notice %></p>
 <% if user_signed_in? %>
-<h1>Candidate & Elected Officials</h1>
+<h1>Elected Officials Directory</h1>
 <br>
 <table class="table small-table table-bordered table-sm table-hover" style="width:100%" id="candidate">
   <thead class="thead-light">
     <tr>
-      <th>Office*</th>
+      <th>Jurisdiction</th>
       <th>District</th>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>Name</th>
       <th>Party</th>
       <th>Age</th>
       <th>Current Term Expires</th>
@@ -20,10 +19,12 @@
       <% if person.is_incumbent? %>
       <% report = person.reports.most_recent %>
       <tr>
-        <td><%= person.incumbent_district.name %></td>    
-        <td><%= person.incumbent_district.district %></td>      
-        <td><%= person.first_name %></td>
-        <td><%= link_to "#{person.last_name}", person %></td>
+        <td><%= person.incumbent_district.jurisdiction.name %></td>    
+        <td><span><%= person.incumbent_district.name %></span><br>
+        <% if person.incumbent_district.district != "At Large"%>
+        <%= "#{person.incumbent_district.district.to_i.ordinalize} District" %>
+        <%end%></td>      
+        <td><%= link_to "#{person.last_name}, #{person.first_name}", person %></td>
         <td><%= person.party %>
         <td><%= person.calculated_age %></td>
         <td><%= person.term_expires %></td>
@@ -32,7 +33,6 @@
     <% end %>
   </tbody>
 </table>
-<span class="small-text" >* = For incumbents, district is where they currently represent. For candidates, it's where they are running for office.</span>
 <br>
 
 <br>
@@ -57,7 +57,7 @@
                     show: true,
                     orderable: false,
                 },
-                targets: [0,4,-1],
+                targets: [0,3,-1],
             },
             {
                 searchPanes:{

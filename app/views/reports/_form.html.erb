@@ -36,6 +36,7 @@
 <div class="row">
   <div class="col">
       <%= f.select(:person_id, Person.all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true}, label: "Candidate:" ) %>
+      <%= f.check_box :incumbent_report %>
   </div>
   <div class="col">
       <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true}, label: "Committee:" ) %>

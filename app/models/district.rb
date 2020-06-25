@@ -7,6 +7,10 @@ class District < ApplicationRecord
     dem_voters - rep_voters
   end
 
+  def other_voters_calculation
+    
+  end
+
   def gov_2018
     newsom_percent - cox_percent
   end
@@ -32,7 +36,7 @@ class District < ApplicationRecord
   end
 
   def other_voters
-    (other_percent / total_voters) * 100
+    (total_voters - (dem_percent+rep_percent)) / total_voters * 100
   end
 
 end

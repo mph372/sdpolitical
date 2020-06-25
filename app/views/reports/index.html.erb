@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <% if user_signed_in? %>
 
-<h1>Reports</h1>
+<h1>Campaign Finance Reports</h1>
 <br>
 <table class="table small-table table-bordered table-sm table-hover" id="reports">
   <thead class="thead-light">
@@ -21,11 +21,17 @@
     <% @reports.each do |report| %>
       <tr>
         <% if report.person.present?%>
-        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %><br>
+        <% if report.incumbent_report?%>
+        (<%= report.incumbent_district.name %>)
+        <%else%>
+        (<%= report.district.name %>)
+        <%end%>
+        </td>
         <%else%>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.committee.name}", report.committee  %></td>
         <%end%>
-        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>

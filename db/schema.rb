@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_25_171812) do
+ActiveRecord::Schema.define(version: 2020_06_25_213831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,11 @@ ActiveRecord::Schema.define(version: 2020_06_25_171812) do
     t.datetime "updated_at", null: false
     t.string "map_url"
     t.integer "incumbent_id"
+    t.integer "contribution_limit"
+    t.boolean "corporate_contributions"
+    t.boolean "pac_contributions"
+    t.boolean "party_contributions"
+    t.integer "party_contribution_limit"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
   end
@@ -187,8 +192,11 @@ ActiveRecord::Schema.define(version: 2020_06_25_171812) do
     t.bigint "person_id"
     t.boolean "is_amended"
     t.integer "cycle"
+    t.bigint "district_id"
+    t.boolean "incumbent_report"
     t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
+    t.index ["district_id"], name: "index_reports_on_district_id"
     t.index ["person_id"], name: "index_reports_on_person_id"
   end
 
@@ -246,6 +254,7 @@ ActiveRecord::Schema.define(version: 2020_06_25_171812) do
   add_foreign_key "people", "districts"
   add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "committees"
+  add_foreign_key "reports", "districts"
   add_foreign_key "reports", "people"
   add_foreign_key "taggings", "tags"
 end

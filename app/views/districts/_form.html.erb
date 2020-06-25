@@ -10,6 +10,20 @@
     </div>
   </div>
 
+    <div class="row">
+    <div class="col">
+      <%= f.number_field :contribution_limit %>
+    </div>
+    <div class="col">
+      <%= f.check_box :corporate_contributions, label: "Corporate Contributions Allowed" %>
+      <%= f.check_box :pac_contributions, label: "PAC Contributions Allowed" %>
+     </div>
+    <div class="col"> 
+      <%= f.check_box :party_contributions, label: "Party Contributions Allowed" %>
+      <%= f.number_field :party_contribution_limit %>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col">
       <%= f.number_field :total_voters, label: "Registered Voters", step: :any %>
@@ -19,9 +33,6 @@
     </div>
     <div class="col">
       <%= f.number_field :rep_percent, label: "Registered GOP Voters", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :other_percent, label: "Registered Other Voters", step: :any %>
     </div>
   </div>
 

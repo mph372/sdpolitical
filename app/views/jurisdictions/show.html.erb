@@ -4,35 +4,7 @@
 <hr>
 <div class="row">
   <div class="col">
-    <p><%= @jurisdiction.description %> </p> <br>
-    <p><strong>Contribution limit:</strong>
-      <% if @jurisdiction.contribution_limit > 0%>        
-        <td>$<%= @jurisdiction.contribution_limit %></td>
-      <%else%>
-        <td>No limit</td>
-      <%end%>
-      <br>
-    <strong>Corporate Contributions:</strong>
-      <% if @jurisdiction.corporate_contributions?%>
-      Allowed
-      <%else%>
-      Prohibited
-      <%end%>
-      <br>
-    <strong>PAC Contributions:</strong>
-      <% if @jurisdiction.pac_contributions?%>
-      Allowed
-      <%else%>
-      Prohibited
-      <%end%>
-      <br>    
-    <strong>Party Contributions:</strong>
-      <% if @jurisdiction.party_contributions?%>
-      Allowed
-      <%else%>
-      Prohibited
-      <%end%>           
-    </p>
+    <p><%=  h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %> </p> <br>
   </div>
   <div class="col-auto">
     <% if @jurisdiction.map_url.present?%>

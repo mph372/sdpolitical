@@ -3,7 +3,11 @@
 <div class="row">
   <div class="col">
     <h6><%= @district.jurisdiction.name %></h6>
-    <h2><%= @district.name %> - <%= @district.district.to_i.ordinalize %> District </h2>
+    <h2><%= @district.name %>  
+    <%if @district.district != "At Large"%>
+    <%= "- #{@district.district.to_i.ordinalize} District" %>
+    <%else%>
+    <%end%> </h2>
     <hr>
     <% if @district.incumbent != nil%>
     <p><strong>Current Incumbent: </strong><%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></p>
@@ -37,8 +41,42 @@
                 <span style="color: #DE0100;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
                 <%end%>
           </div>      
-      </div>       
-            
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-5">
+          <strong>Contribution Limit:</strong><br>
+          <strong>Corporate Contributions:</strong><br>
+          <strong>PAC Contributions:</strong><br>
+          <strong>Party Contributions:</strong>
+        </div>
+        <div class="col-auto">
+        <% if @district.contribution_limit.present? %>        
+          <td>$<%= number_with_delimiter(@district.contribution_limit, delimiter: ",") %></td>
+        <%else%>
+          <td>No limit</td>
+        <%end%>          
+        <br>
+        <% if @district.corporate_contributions?%>
+        Allowed
+        <%else%>
+        Prohibited
+        <%end%>
+        <br>        
+        <% if @district.pac_contributions?%>
+        Allowed
+        <%else%>
+        Prohibited
+        <%end%>
+        <br>  
+        <% if @district.party_contributions?%>
+        Allowed ($<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %>)
+        
+        <%else%>
+        Prohibited
+        <%end%>           
+      </div>
+    </div>       
   </div>
   <div class="col-auto">
     <%= content_tag(:iframe,'', width: 500, height: 320, src: "#{@district.map_url}") %>
@@ -165,7 +203,7 @@
 <hr>
 <%end%>
 
-<% if @district.jurisdiction.name == "County of San Diego" || "California Legislature" || "Congress"%>
+<% if @district.jurisdiction.name == "County of San Diego" || @district.jurisdiction.name == "California Legislature" || @district.jurisdiction.name == "Congress"%>
 <h5>Resident Elected Officials</h5>
 <p>List of current elected officials who reside in the district</P>
 <table class="table table-sm table-bordered">
@@ -196,6 +234,7 @@
 </table>
 <%end%>
 <% if current_user.admin? %>
+<%= link_to("Add Candidate", new_person_path(:district_id => @district.id), :action => "new", :method => :get)%> |
 <%= link_to 'Edit', edit_district_path(@district) %> |
 <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%end%>
