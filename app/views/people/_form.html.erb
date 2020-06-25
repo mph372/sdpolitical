@@ -10,7 +10,6 @@
       Incumbent Status <br>
         <%= f.check_box :is_incumbent, id:'incumbentOffice' %>
         <br>
-        <%= f.select(:incumbent_district, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.incumbent_id ] }, {:include_blank => true, }, id:'incumbentOfficePicker', :disabled => true ) %>
     </div>
     <div class="col">
         <%= f.form_group  label: { text: "Election Status" } do %>
@@ -72,16 +71,16 @@
  <br>
   <div class="row">
     <div class="col">
-      <%= f.number_field :congressional_district %>   
+      <%= f.collection_select(:congressional_district, District.all.where(name: "U.S. House"), :district, :district, label: "Congressional district", :include_blank => true ) %>    
     </div>
     <div class="col">
-      <%= f.collection_select(:senate_district, District.all.where(name: "State Senate"), :id, :district, prompt: "Select a district", :include_blank => true ) %>   
+      <%= f.collection_select(:senate_district, District.all.where(name: "State Senate"), :district, :district, label: "Congressional district", :include_blank => true ) %>    
     </div>
     <div class="col">
-      <%= f.number_field :assembly_district %>   
+      <%= f.collection_select(:assembly_district, District.all.where(name: "State Assembly"), :district, :district, label: "Assembly district", :include_blank => true ) %>    
     </div>
     <div class="col">
-     <%= f.number_field :supe_district %>   
+      <%= f.collection_select(:supe_district, District.all.where(name: "Board of Supervisors"), :district, :district, label: "Supervisor district", :include_blank => true ) %>    
     </div>
   </div>
  <br>

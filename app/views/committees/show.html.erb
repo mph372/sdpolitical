@@ -30,6 +30,75 @@
 <%end%>
 </p>
 
+<% if @committee.reports.present? %>
+<hr>
+<h5>Expenditures</h5>
+<table class="table small-table table-striped table-bordered">
+<thead>
+    <tr>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Candidate / Measure</th>
+      <th>District / Jurisdiction</th>
+      <th>Support / Oppose</th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <% @expenditures.each do |expenditure| %>
+      <tr>
+        <td><%= expenditure.expenditure_date.strftime("%b-%d-%y") %></td>
+        <td><%= number_to_currency(expenditure.amount) %></td>
+        <% if expenditure.person.present?%>
+              <td><%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %></td>
+              <td><%= expenditure.person.district.name %>
+              </td>
+            <%else%>
+              <td><%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %></td>
+              <td><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></td>
+              <%end%>
+        <td><% if expenditure.is_support?%>
+            Support
+            <%else%>
+            Oppose
+            <%end%></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+  <%end%>
+
+<% if @committee.reports.present? %>
+<hr>
+<h5>Campaign Finance Reports</h5>
+<table class="table small-table table-striped table-bordered">
+<thead>
+    <tr>
+      <th>Reporting Period</th>
+      <th>Date report filed</th>
+      <th>Period Receipts</th>
+      <th>Period Disbursements</th>
+      <th>Cash-on-hand</th>
+      <th>Debt</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reports.each do |report| %>
+      <tr>
+        <td><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
+        <td><%= report.report_filed.to_formatted_s(:long) %></td>
+        <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
+        <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
+        <td>$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
+        <td>$ <%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+  <%end%>  
+
+<%= link_to("Add Report", new_report_path(:committee_id => @committee.id), :action => "new", :method => :get)%> |
 <%= link_to 'Edit', edit_committee_path(@committee) %> |
 <%= link_to 'Back', committees_path %>

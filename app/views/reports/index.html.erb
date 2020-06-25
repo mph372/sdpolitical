@@ -19,9 +19,13 @@
   <tbody>
     <% @reports.each do |report| %>
       <tr>
-        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %></td>
+        <% if report.person.present?%>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %></td>
+        <%else%>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.committee.name}", report.committee  %></td>
+        <%end%>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></td>
-        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= report.report_filed.strftime("%b-%d-%y") %></td>
+        <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
         <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>

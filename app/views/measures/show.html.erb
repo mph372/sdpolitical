@@ -1,39 +1,54 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Letter:</strong>
-  <%= @measure.letter %>
-</p>
+<h4>Measure <%= @measure.letter %>  (<%= @measure.topic %>)</h4>
+<h6><%= link_to "#{@measure.jurisdiction.name}", @measure.jurisdiction %></h6>
 
 <p>
-  <strong>Text:</strong>
+  <strong>Measure Summary:</strong><br>
   <%= @measure.text %>
 </p>
 
 <p>
-  <strong>Topic:</strong>
-  <%= @measure.topic %>
-</p>
-
-<p>
   <strong>Type:</strong>
-  <%= @measure.measure_type %>
-</p>
-
-<p>
+  <%= @measure.measure_type %><br>
   <strong>Origin:</strong>
   <%= @measure.origin %>
 </p>
 
 <p>
-  <strong>Jurisdiction:</strong>
-  <%= @measure.jurisdiction.name %>
+  <strong>Required Vote Threshold:</strong>
+  <%= number_to_percentage(@measure.threshold, precision: 2) %>
 </p>
+<hr>
+<% if @measure.committees.present? %>
+<h5>Committees Supporting / Opposing Measure <%= @measure.letter %></h5>
+<table class="table small-table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>Committee Name</th>
+      <th>Support / Oppose</th>
+      <th>Total Receipts</th>
+      <th>Total Expenditures</th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Threshold:</strong>
-  <%= @measure.threshold %>
-</p>
+  <tbody>
+    <% @committees.each do |committee| %>
+    <tr> 
+      <td><%= link_to "#{committee.name}", committee %> </td>
+      <td><% if committee.support?%>
+          Support
+          <%else%>
+          Oppose
+          <%end%> </td>
+      <td><%= number_to_currency(committee.reports.sum(:period_receipts)) %> </td>
+      <td><%= number_to_currency(committee.reports.sum(:period_disbursements)) %> </td>                   
+    </tr>
+    <%end%>
+  </tbody>
+</table>
+<%end%>
 
 <%= link_to 'Edit', edit_measure_path(@measure) %> |
 <%= link_to 'Back', measures_path %>
+

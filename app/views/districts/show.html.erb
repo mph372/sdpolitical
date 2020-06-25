@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col">
     <h6><%= @district.jurisdiction.name %></h6>
-    <h4><%= @district.name %> - <%= @district.district.to_i.ordinalize %> District </h4>
+    <h2><%= @district.name %> - <%= @district.district.to_i.ordinalize %> District </h2>
     <hr>
     <% if @district.incumbent != nil%>
     <p><strong>Current Incumbent: </strong><%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></p>
@@ -48,10 +48,10 @@
 
 <div>
   <div class="row">
-    <div class="col text-center border election-stats">2018 Governor</div>
-    <div class="col text-center border election-stats">2016 President</div>
-    <div class="col text-center border election-stats">2014 Governor</div>
-    <div class="col text-center border election-stats">2012 President</div>
+    <div class="col bg-light text-center border election-stats">2018 Governor</div>
+    <div class="col bg-light text-center border election-stats">2016 President</div>
+    <div class="col bg-light text-center border election-stats">2014 Governor</div>
+    <div class="col bg-light text-center border election-stats">2012 President</div>
   </div>
   <div class="row">
       <div class="col text-center border dem-text">Newsom %</div>

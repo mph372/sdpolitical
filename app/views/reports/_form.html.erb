@@ -1,65 +1,47 @@
-<%= form_with(model: report, local: true) do |form| %>
-  <% if report.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(report.errors.count, "error") %> prohibited this report from being saved:</h2>
+<%= bootstrap_form_for(@report, label_errors: true) do |f| %>
 
-      <ul>
-      <% report.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= form.label :period_begin, "Period Start Date" %>
-    <%= form.date_select :period_begin, :order => [:month, :day, :year], start_year: 2018, end_year: 2022, default: Date.new(2020, 1, 19) %>
+<div class="row">
+  <div class="col">
+  <%= f.date_field :period_begin %>
   </div>
-
-  <div class="field">
-    <%= form.label :period_end, "Period End Date" %>
-    <%= form.date_select :period_end, :order => [:month, :day, :year], start_year: 2018, end_year: 2022, default: Date.new(2020, 2, 15) %>
+  <div class="col">
+  <%= f.date_field :period_end %>
   </div>
-
-  <div class="field">
-    <%= form.label :report_filed, "Date Report Filed" %>
-    <%= form.date_select :period_end, :order => [:month, :day, :year], start_year: 2018, end_year: 2022 , default: Date.today %>
+  <div class="col">
+  <%= f.date_field :report_filed %>
   </div>
-
-    <div class="field">
-    <%= form.label :is_amended, "Report is an amendment" %>
-    <%= form.check_box :is_amended %>
-  </div>
-
-
-  <div class="field">
-    <%= form.label :period_receipts, "Receipts this period" %>
-    <%= form.text_field :period_receipts %>
-  </div>
-
-  <div class="field">
-    <%= form.label :period_disbursements, "Disbursements this period" %>
-    <%= form.text_field :period_disbursements %>
+  <div class="col">
+  <%= f.select :cycle, ['2018', '2020', '2022'], :selected => '2020' %>
   </div>  
+</div>
 
-  <div class="field">
-    <%= form.label :current_coh, "Current Cash-on-Hand" %>
-    <%= form.text_field :current_coh %>
+<div class="row">
+  <div class="col">
+  <%= f.number_field :period_receipts, step: :any %>
   </div>
-
-  <div class="field">
-    <%= form.label :current_debt, "Current Debt" %>
-    <%= form.text_field :current_debt %>
+  <div class="col">
+  <%= f.number_field :period_disbursements, step: :any %>
   </div>
-
-  <div class="field">
-    <%= form.label :cycle %>
-    <%= form.select :cycle, [2018, 2020, 2022], :include_blank => true, :selected => 2020 %>
-  </div>   
-
-  <%= form.hidden_field :person_id, :value => params[:person_id]%>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="col">
+  <%= f.number_field :current_coh, step: :any, label: "Cash on Hand" %>
   </div>
-<% end %>
+  <div class="col">
+  <%= f.number_field :current_debt, step: :any, label: "Debt" %>
+  </div>
+</div>
+
+<%= f.check_box :is_amended, label: "Report is Amended" %>
+
+<div class="row">
+  <div class="col">
+      <%= f.select(:person_id, Person.all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true}, label: "Candidate:" ) %>
+  </div>
+  <div class="col">
+      <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true}, label: "Committee:" ) %>
+  </div>
+</div>
+<br>
+<%= f.submit %>
+<%end%>
+<br>
