@@ -28,6 +28,9 @@
     <%= f.text_field :last_name %>
     </div>
   </div>
+
+    <%= f.text_area :bio %>
+
   <div class="row">
     <div class="col">
       <%= f.date_select :birthdate, start_year: 1930, end_year: 2002 %>
@@ -47,7 +50,9 @@
       <%= f.text_field :professional_career %>
     </div>
     <div class="col">
-    <%= f.text_field :campaign_website %>    </div>
+    <%= f.text_field :campaign_website %></div>
+    <div class="col">
+    <%= f.select :ballot_status, ['Rumored', 'Declared Candidacy', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary'], :include_blank => true %></div>    
   </div>
  <hr>
  <h5>For Incumbents:</h5>

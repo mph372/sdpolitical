@@ -115,6 +115,7 @@
       <th>Party</th>
       <th>Profession</th>
       <th>Cash on Hand</th>
+      <th>Ballot Status</th>
     </tr>
   </thead>
 
@@ -154,6 +155,7 @@
             <%= candidate.professional_career %></td>
            <%end%>
         <td>$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
+        <td><%= candidate.ballot_status %></td>
         <% end %>
     <% end %>
     </tr>

@@ -33,7 +33,9 @@
         <% end %>
         <br>
         <strong>Profession:</strong>
-        <%= @person.professional_career %>
+        <%= @person.professional_career %><br>
+        <strong>Biography:</strong>
+        <%= h(@person.bio).gsub(/\n/, '</br>').html_safe %>
         <br>
         <% if @person.is_incumbent? %>
         <% if @person.first_elected? %>
@@ -41,6 +43,7 @@
         <%= @person.first_elected.strftime("%B, %Y") %> (Tenure: <%= distance_of_time_in_words(Time.now.utc.to_date, @person.first_elected ) %>)
         <br>
         <%end%>
+        <br>
         <strong>Salary as <%= @person.title %>:</strong>
         <%= number_to_currency(@person.salary)  %>
         <br>
@@ -101,6 +104,7 @@
             <strong>Running for:</strong>
             <%= link_to "#{@person.district.jurisdiction.name}" %> - <%= link_to "#{@person.district.name}", @person.district %> -  <%= link_to "District #{@person.district.district}", @person.district %> <br>
         <%end%>
+            <strong>Candidacy Status:</strong> <%= @person.ballot_status %><br>
           <% if @person.campaign_website.present? %>
           <strong>Campaign Website:</strong>
           <%= @person.campaign_website %> <br>

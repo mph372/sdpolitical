@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_25_152340) do
+ActiveRecord::Schema.define(version: 2020_06_25_171812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2020_06_25_152340) do
     t.boolean "party_contributions"
     t.text "description"
     t.string "map_url"
+    t.string "jurisdiction_type"
   end
 
   create_table "measures", force: :cascade do |t|
@@ -166,6 +167,8 @@ ActiveRecord::Schema.define(version: 2020_06_25_152340) do
     t.boolean "running_reelection", default: false
     t.boolean "endorsed_republican"
     t.boolean "endorsed_democrat"
+    t.string "ballot_status"
+    t.text "bio"
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 

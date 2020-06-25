@@ -13,7 +13,7 @@
       <th>Rep Reg</th>
       <th>Other Reg</th>
       <th>Registration Advantage</th>
-      <th>Incumbent Term Expires</th>
+      <th>Jurisdiction Type</th>
     </tr>
   </thead>
 
@@ -33,7 +33,7 @@
              <span style="color: #DE0100;">R +<%= number_with_precision(district.registration_advantage.abs, precision: 2) %>%</span>
             <%end%>
             </td>   
-        <td><%= district.incumbent.term_expires %></td>
+        <td><%= district.jurisdiction.jurisdiction_type %></td>
       </tr>
     <% end %>
   </tbody>

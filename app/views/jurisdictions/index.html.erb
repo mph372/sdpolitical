@@ -2,7 +2,7 @@
 <% if user_signed_in? %>
 <h1>Jurisdictions</h1>
 
-<table>
+<table class="table table-striped table-bordered table-sm" id="jurisdictions">
   <thead>
     <tr>
       <th>Name</th>
@@ -10,7 +10,7 @@
       <th>Corporate Contributions</th>
       <th>PAC Contributions</th>
       <th>Party Contributions</th>
-      <th colspan="3"></th>
+      <th>Jurisdiction Type</th>
     </tr>
   </thead>
 
@@ -38,9 +38,7 @@
         <%else%>
           <td>Prohibited</td>
         <%end%>
-        <td><%= link_to 'Show', jurisdiction %></td>
-        <td><%= link_to 'Edit', edit_jurisdiction_path(jurisdiction) %></td>
-        <td><%= link_to 'Destroy', jurisdiction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= jurisdiction.jurisdiction_type %>
       </tr>
     <% end %>
   </tbody>
@@ -55,3 +53,11 @@
   <%= link_to 'Sign up', new_user_registration_path %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% end %>
+
+<script>
+    $( document ).on('turbolinks:load', function() {
+    $('#jurisdictions').DataTable( {
+      retrieve: true
+    });
+});
+</script>
