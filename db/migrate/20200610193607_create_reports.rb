@@ -1,7 +1,6 @@
 class CreateReports < ActiveRecord::Migration[5.2]
   def change
     create_table :reports do |t|
-      t.references :incumbent, foreign_key: true
       t.date :period_begin
       t.date :period_end
       t.date :report_filed
