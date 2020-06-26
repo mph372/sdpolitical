@@ -29,7 +29,6 @@ class PeopleController < ApplicationController
   # POST /people.json
   def create
     @person = Person.new(person_params)
-
     
 
     respond_to do |format|
@@ -46,6 +45,7 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   # PATCH/PUT /people/1.json
   def update
+
     respond_to do |format|
       if @person.update(person_params)
         format.html { redirect_to @person, notice: 'Person was successfully updated.' }
@@ -75,6 +75,6 @@ class PeopleController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.require(:person).permit(:district_id, :title, :first_name, :last_name, :birthdate, :party, :first_elected, :prior_elected, :salary, :professional_career, :congressional_district, :assembly_district, :senate_district, :supe_district, :birthplace, :email, :twitter, :facebook, :phone, :term, :on_ballot, :image, :term_expires, :seeking_office, :official_website, :campaign_website, :is_incumbent, :running_reelection, :incumbent_district, :endorsed_republican, :endorsed_democrat, :ballot_status, :bio)
+      params.require(:person).permit(:district_id, :title, :first_name, :last_name, :birthdate, :party, :first_elected, :prior_elected, :salary, :professional_career, :congressional_district, :assembly_district, :senate_district, :supe_district, :birthplace, :email, :twitter, :facebook, :phone, :term, :on_ballot, :image, :term_expires, :seeking_office, :official_website, :campaign_website, :is_incumbent, :running_reelection, :incumbent_district, :endorsed_republican, :endorsed_democrat, :ballot_status, :bio, :incumbent_id)
     end
 end

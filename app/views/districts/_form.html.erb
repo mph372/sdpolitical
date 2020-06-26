@@ -66,7 +66,7 @@
 
   <div class="row">
     <div class="col">
-    <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:jurisdiction_id]}, { "data-placeholder": "Select Jurisdiction" }) %>
+    <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
     </div>
     <div class="col">
     <%= f.select(:incumbent_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
