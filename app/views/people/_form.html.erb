@@ -32,7 +32,7 @@
 
   <div class="row">
     <div class="col">
-      <%= f.date_select :birthdate, start_year: 1930, end_year: 2002 %>
+      <%= f.date_select :birthdate, start_year: 1930, end_year: 2002, order:[:month, :day, :year] %>
     </div>
     <div class="col">
       <%= f.select :party, ['Republican', 'Democrat', 'Declined to State', 'Green', 'Peace & Freedom', 'Libertarian', 'Reform', 'Natural Law', 'American Independent', 'Unknown'], :include_blank => true %>
@@ -90,7 +90,8 @@
  <br>
   <div class="row">
     <div class="col">
-      <%= f.file_field :image, { label: "Headshot" } %>    
+      <%= f.file_field :image, { label: "Headshot" } %>
+      <%= f.text_field :remote_image_url, label: "Or Image URL"%>    
       </div>
     <div class="col">
       <%= f.text_field :birthplace %>  

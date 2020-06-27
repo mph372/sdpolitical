@@ -13,6 +13,7 @@
       <th>Rep Reg</th>
       <th>Other Reg</th>
       <th>Registration Advantage</th>
+      <th>Incumbent Party</th>
       <th>Jurisdiction Type</th>
     </tr>
   </thead>
@@ -28,11 +29,12 @@
         <td><%= district.rep_voters.truncate(2) %>%</td>
         <td><%= district.other_voters.truncate(2) %>%</td>
         <td><% if district.registration_advantage > 0 %>
-            <span style="color: #0015BC;">D +<%= number_with_precision(district.registration_advantage.abs, precision: 2) %>%</span>
+            <span style="color: #0015BC;">D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
             <% else %>
-             <span style="color: #DE0100;">R +<%= number_with_precision(district.registration_advantage.abs, precision: 2) %>%</span>
+             <span style="color: #DE0100;">R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
             <%end%>
-            </td>   
+            </td>
+        <td><%= district.incumbent.party %>       
         <td><%= district.jurisdiction.jurisdiction_type %></td>
       </tr>
     <% end %>
@@ -42,6 +44,11 @@
 <br>
 <% if current_user.admin? %>
 <%= link_to 'New District', new_district_path %>
+<h4>Import Data</h4>
+<%= form_tag import_districts_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import from file"%>
+  <%end%>
 <%end%>
 <%else %>
   <p>Please Sign Up or Sign In to view the content.</p>
@@ -60,7 +67,7 @@
                     show: true,
                     orderable: false,
                 },
-                targets: [0,1,-1],
+                targets: [0,-1],
             },
             {
                 searchPanes:{

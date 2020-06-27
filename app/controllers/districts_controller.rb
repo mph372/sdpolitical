@@ -1,10 +1,15 @@
 class DistrictsController < ApplicationController
-  before_action :set_district, only: [:show, :edit, :update, :destroy]
+  before_action :set_district, only: [:show, :edit, :update, :import, :destroy]
 
   # GET /districts
   # GET /districts.json
   def index
     @districts = District.all
+  end
+
+  def import
+    District.my_import(params[:file])
+    redirect_to root_url, notice: "Succesfully Imported Data!"
   end
 
   # GET /districts/1
@@ -73,6 +78,6 @@ class DistrictsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def district_params
-      params.require(:district).permit(:name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url, :incumbent_id, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :party_contribution_limit)
+      params.require(:district).permit(:id, :name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url, :incumbent_id, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :party_contribution_limit)
     end
 end

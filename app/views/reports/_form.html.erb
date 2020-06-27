@@ -9,7 +9,7 @@
   <%= f.date_field :period_end %>
   </div>
   <div class="col">
-  <%= f.date_field :report_filed %>
+  <%= f.date_field :report_filed, value: Date.today %>
   </div>
   <div class="col">
   <%= f.select :cycle, ['2018', '2020', '2022'], :selected => '2020' %>

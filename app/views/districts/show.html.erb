@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <% if user_signed_in? %>
 <div class="row">
   <div class="col">
@@ -8,10 +7,11 @@
     <%= "- #{@district.district.to_i.ordinalize} District" %>
     <%else%>
     <%end%> </h2>
-    <hr>
-    <% if @district.incumbent != nil%>
-    <p><strong>Current Incumbent: </strong><%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></p>
+        <% if @district.incumbent != nil%>
+    <h5><strong>Current Incumbent: </strong><%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h5>
     <%end%>
+    <hr>
+
       <div class="row">
         <div class="col-4"><strong>Total Voters:</strong></div>
         <div class="col-auto"><%= number_with_delimiter(@district.total_voters, :delimiter => ',') %></div>

@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <% if user_signed_in? %>
 <div class="row">
     <div class="col-auto">
@@ -18,7 +17,7 @@
         (DTS)
         <%end%>
         </h4>
-      <% if @person.is_incumbent? %>
+      <% if @person.incumbent_district.present? %>
       <p>
         <strong>Represents:</strong>
         <%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction %> - <%= link_to "#{@person.incumbent_district.name}", @person.incumbent_district %>
@@ -62,6 +61,7 @@
         <strong>Term Limited:</strong>
         <%= @person.term %> <br>        
         <%end%>
+        <% if @person.bio.present? %>
         <strong>Full Biography:</strong>
         <div>    
         <% if @person.bio.length > 250 %>
@@ -76,7 +76,9 @@
         <% else %>
           <%= h(@person.bio).gsub(/\n/, '</br>').html_safe %>
         <% end %>
-        </div>        
+        
+        </div>  
+        <%end%>      
         </p>
         
         <div class="row">
@@ -104,11 +106,18 @@
         <strong>Public Contact Information:</strong>
           </div>
           <div class="col-auto">
-            Phone: <%= number_to_phone(@person.phone) %> <br>
-            E-Mail: <%= @person.email %> <br>
-            Facebook: <%= @person.facebook %> <br>
-            Twitter: <%= @person.twitter %> <br>
-            Website: <%= @person.official_website %>
+            Phone: <br>
+            E-Mail: <br>
+            Facebook: <br>
+            Twitter: <br>
+            Website: <br>
+          </div>
+          <div class="col-auto">
+            <%= number_to_phone(@person.phone) %> <br>
+            <%= mail_to @person.email %> <br>
+            <%= link_to "@#{@person.facebook}", "http://www.facebook.com/" + @person.facebook %> <br>
+            <%= link_to "@#{@person.twitter}", "http://www.twitter.com/" + @person.twitter %> <br>
+            <%= link_to @person.official_website %>
           </div>
         </div>
         <% if @person.reports.where(incumbent_report: true).present? %>
@@ -136,29 +145,37 @@
 <% if @person.on_ballot? %>
         <hr>
         <h4>Candidate Information</h4>
-        <p>
-        <strong>Running for: </strong><% if @person.on_ballot? %>
+        <div class="row">
+          <div class="col-auto"> <strong>Running for: </strong> <br>
+            <strong>Candidacy Status:</strong> <br>
+          <% if @person.campaign_website.present? %>
+          <strong>Campaign Website:</strong> <br>
+          <%end%>
+          <strong>Contribution Limit:</strong><br>
+          
+        </div>
+        <div class="col">
+          <% if @person.on_ballot? %>
             <%= link_to "#{@person.district.jurisdiction.name}", @person.district.jurisdiction %> - <%= link_to "#{@person.district.name}", @person.district %>
         <% if @person.district.district != "At Large"%> 
           -  <%= link_to "District #{@person.district.district}", @person.district %> 
          <%end%> <br>
         <%end%>
-            <strong>Candidacy Status:</strong> <%= @person.ballot_status %><br>
-          <% if @person.campaign_website.present? %>
-          <strong>Campaign Website:</strong>
-          <%= @person.campaign_website %> <br>
-          <%end%>
-          <strong>Contribution Limit:</strong>
-          $<%= @person.district.contribution_limit %>
+        <%= @person.ballot_status %><br>
+        <% if @person.campaign_website.present? %>
+        <%= link_to @person.campaign_website %> <br>
+        <%end%>
+        $<%= number_with_delimiter(@person.district.contribution_limit, delimiter: ",") %>
         <br>
-        </p>
+        </div>
+      </div>
         
         <% if @person.reports.present? %>
         <hr>
         <div class="row">
           <div class="col">
-            <strong>Total Raised this Cycle: </strong> <br>
-            <strong>Total Spent this Cycle: </strong> <br>
+            <strong>Total Raised for <%= @person.district.name %> this Cycle: </strong> <br>
+            <strong>Total Spent for <%= @person.district.name %> this Cycle: </strong> <br>
             <strong><mark>Current Net Cash-on-Hand (Cash-on-hand minus debt): </mark></strong>
           </div>
           <div class="col">

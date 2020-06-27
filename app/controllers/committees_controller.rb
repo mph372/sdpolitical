@@ -12,7 +12,7 @@ class CommitteesController < ApplicationController
   def show
     @committee = Committee.find(params[:id])
     @reports = @committee.reports
-    @expenditures = @committee.expenditures
+    @expenditures =
   end
 
   # GET /committees/new

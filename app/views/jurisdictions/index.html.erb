@@ -6,10 +6,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Contribution limit</th>
-      <th>Corporate Contributions</th>
-      <th>PAC Contributions</th>
-      <th>Party Contributions</th>
       <th>Jurisdiction Type</th>
     </tr>
   </thead>
@@ -18,26 +14,6 @@
     <% @jurisdictions.each do |jurisdiction| %>
       <tr>
         <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
-        <% if jurisdiction.contribution_limit > 0%>        
-        <td>$<%= jurisdiction.contribution_limit %></td>
-        <%else%>
-        <td>No limit</td>
-        <%end%>
-        <% if jurisdiction.corporate_contributions == true %>
-          <td>Permitted</td>
-        <%else%>
-          <td>Prohibited</td>
-        <%end%>
-        <% if jurisdiction.pac_contributions == true %>
-          <td>Permitted</td>
-        <%else%>
-          <td>Prohibited</td>
-        <%end%>
-        <% if jurisdiction.party_contributions == true %>
-          <td>Permitted</td>
-        <%else%>
-          <td>Prohibited</td>
-        <%end%>
         <td><%= jurisdiction.jurisdiction_type %>
       </tr>
     <% end %>
