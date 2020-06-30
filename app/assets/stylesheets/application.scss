@@ -14,6 +14,9 @@
  *= require_self
  */
 
+body {
+  font-family: 'Open Sans', sans-serif !important;
+}
 
 .small-table {
     font-size: small;
@@ -48,13 +51,87 @@
   font-size: small;
 }
 
+.green-pill {
+  border-radius: 25px;
+  background: #d7f5e9;
+  padding: 1px 20px;
+  color: #17533f;
+}
 
+.red-pill {
+  border-radius: 25px;
+  background: #ffecec;
+  padding: 1px 20px;
+  color: #824443;
+  font-size: 12px;
+}
 
+.dem-registration-pill {
+  border-radius: 25px;
+  background: #D9E2EC;
+  padding: 1px 20px;
+  color: #243B53;
+}
+
+.gop-registration-pill {
+  border-radius: 25px;
+  background: #ffecec;
+  padding: 1px 20px;
+  color: #824443;
+}
+
+.profile{
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  display: block;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+}
+
+.blue-circle {
+  background: #84C5F4;
+  border-radius: 50%;
+  width: 25px; 
+  height: 25px;
+  left:0; top: 2px;
+}
+
+.blue-checkmark {
+  left:0; top: 2px;
+  width: 25px; 
+  height: 25px;
+  text-align: center;
+  background: #84C5F4;
+  border-radius: 50%;}
+
+.red-checkmark {
+    left:0; top: 2px;
+    width: 25px; 
+    height: 25px;
+    text-align: center;
+    background: #E66A6A;
+  border-radius: 50%;}
+
+  .condensed-column  {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+.no-border {
+  border-top: 0px !important;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
 
  
  @import "rails_bootstrap_forms";
  @import "bootstrap";
- 
+ @import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Roboto&display=swap');
+
 
 
 

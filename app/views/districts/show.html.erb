@@ -1,238 +1,336 @@
 <% if user_signed_in? %>
-<div class="row">
-  <div class="col">
-    <h6><%= @district.jurisdiction.name %></h6>
-    <h2><%= @district.name %>  
+    <h4><%= @district.jurisdiction.name %></h4>
+    <h1><%= @district.name %>  
     <%if @district.district != "At Large"%>
     <%= "- #{@district.district.to_i.ordinalize} District" %>
     <%else%>
-    <%end%> </h2>
-        <% if @district.incumbent != nil%>
-    <h5><strong>Current Incumbent: </strong><%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h5>
-    <%end%>
-    <hr>
-
-      <div class="row">
-        <div class="col-4"><strong>Total Voters:</strong></div>
-        <div class="col-auto"><%= number_with_delimiter(@district.total_voters, :delimiter => ',') %></div>
-      </div>
-      
-      <div class="row">
-        <div class="col-4"><span style="color: #0015BC;"><strong>Dem %:</strong></span></div>
-        <div class="col-auto"><%= @district.dem_voters.truncate(2) %>%</div>
-      </div>    
-      
-      <div class="row">
-        <div class="col-4"><span style="color: #DE0100;"><strong>Rep %:</strong></span></div>
-        <div class="col-auto"><%= @district.rep_voters.truncate(2) %>%</div>
-      </div>          
-      
-      <div class="row">
-        <div class="col-4"><span style="color: gray;"><strong>Other %:</strong></span></div>
-        <div class="col-auto"><%= @district.other_voters.truncate(2) %>%</div>
-      </div>  
-      <br>
-      <div class="row">
-        <div class="col-4"><strong>Advantage:</strong></div>
-          <div class="col-auto">
-                <% if @district.registration_advantage > 0 %>
-                <span style="color: #0015BC;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
-                <% else %>
-                <span style="color: #DE0100;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
-                <%end%>
-          </div>      
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-5">
-          <strong>Contribution Limit:</strong><br>
-          <strong>Corporate Contributions:</strong><br>
-          <strong>PAC Contributions:</strong><br>
-          <strong>Party Contributions:</strong>
+    <%end%></h1> 
+    <br>
+<div class="row">
+  <div class="col-sm col-md col-lg col-xl">
+      <div class="card shadow-sm mb-3 bg-white rounded border-primary" style="max-width: 30rem;">
+          <div class="card-header">
+            INCUMBENT
+          </div>
+        <div class="row no-gutters">
+          <div class="col-4">
+            <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', style: 'height:auto;width:10rem;' %>
+          </div>
+          <div class="col-8 pl-3 pr-3">
+            <div class="card-body">
+              <h5 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= @district.incumbent.title %></h6>
+              <p class="card-text"><%= "#{@district.incumbent.first_name} #{@district.incumbent.last_name} was first elected as #{@district.incumbent.title} in #{@district.incumbent.first_elected.strftime("%B, %Y")}. #{@district.incumbent.last_name}'s current term expires in #{@district.incumbent.term_expires} and is term-limited in #{@district.incumbent.term}." %></p>
+            </div>
+          </div>
         </div>
-        <div class="col-auto">
-        <% if @district.contribution_limit.present? %>        
-          <td>$<%= number_with_delimiter(@district.contribution_limit, delimiter: ",") %></td>
-        <%else%>
-          <td>No limit</td>
-        <%end%>          
-        <br>
-        <% if @district.corporate_contributions?%>
-        Allowed
-        <%else%>
-        Prohibited
-        <%end%>
-        <br>        
-        <% if @district.pac_contributions?%>
-        Allowed
-        <%else%>
-        Prohibited
-        <%end%>
-        <br>  
-        <% if @district.party_contributions?%>
-        Allowed ($<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %>)
-        
-        <%else%>
-        Prohibited
-        <%end%>           
       </div>
-    </div>       
-  </div>
-  <div class="col-auto">
-    <%= content_tag(:iframe,'', width: 500, height: 320, src: "#{@district.map_url}") %>
-  </div>
-</div>
-<br>
 
-<div>
-  <div class="row">
-    <div class="col bg-light text-center border election-stats">2018 Governor</div>
-    <div class="col bg-light text-center border election-stats">2016 President</div>
-    <div class="col bg-light text-center border election-stats">2014 Governor</div>
-    <div class="col bg-light text-center border election-stats">2012 President</div>
-  </div>
-  <div class="row">
-      <div class="col text-center border dem-text">Newsom %</div>
-      <div class="col text-center border gop-text">Cox %</div>
-      <div class="col text-center border dem-text">Clinton %</div>
-      <div class="col text-center border gop-text">Trump %</div>
-      <div class="col text-center border dem-text">Brown %</div>
-      <div class="col text-center border gop-text">Kashkari %</div>
-      <div class="col text-center border dem-text">Obama %</div>
-      <div class="col text-center border gop-text">Romney %</div>
-  </div>  
-  <div class="row">
-      <div class="col text-center border"><%= @district.newsom_percent %></div>
-      <div class="col text-center border"><%= @district.cox_percent %></div>
-      <div class="col text-center border"><%= @district.clinton_percent %></div>
-      <div class="col text-center border"><%= @district.trump_percent %></div>
-      <div class="col text-center border"><%= @district.brown_percent %></div>
-      <div class="col text-center border"><%= @district.kashkari_percent %></div>
-      <div class="col text-center border"><%= @district.obama_percent %></div>
-      <div class="col text-center border"><%= @district.romney_percent %></div>
-  </div>
-  <div class="row">
-    <div class="col text-center border election-stats">
-      <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Newsom +<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
-      <% else %>
-        <span style="color: #DE0100;">Cox +<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
-      <%end%>
-    </div>
-    <div class="col text-center border election-stats">
-      <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Clinton +<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
-      <% else %>
-        <span style="color: #DE0100;">Trump +<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
-      <%end%>
-    </div>
-    <div class="col text-center border election-stats">
-      <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Brown +<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
-      <% else %>
-        <span style="color: #DE0100;">Kashkari +<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
-      <%end%>
-    </div>
-    <div class="col text-center border election-stats">
-      <% if @district.registration_advantage > 0 %>
-        <span class="dem-text">Obama +<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
-      <% else %>
-        <span style="color: #DE0100;">Romney +<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
-      <%end%>
-    </div>
-  </div>     
-<br>
-<hr>
-<% if @district.candidates.present? %>
-<h5>Candidates</h5>
-<p>List of current candidates for this office</p>
-<table class="table table-sm table-bordered">
-<thead>
-    <tr>
-      <th>Name</th>
-      <th>Party</th>
-      <th>Profession</th>
-      <th>Cash on Hand</th>
-      <th>Ballot Status</th>
-    </tr>
-  </thead>
+      
+      <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 30rem;">
+          <div class="card-header">
+            DISTRICT REGISTRATION
+          </div>
+        <div class="card-text pl-4 pr-4">
+        <div class="row p-1 pb-2"> 
+          <div class="col" style="color: #35469C;"><br>
+            <h6 class="card-subtitle text-muted" >DEM</h6>
+            <h5><%= @district.dem_voters.truncate(2) %>%</h5>
+          </div>
+          <div class="col" style="color: #911111;"><br>
+            <h6 class="card-subtitle text-muted" >REP</h6>
+            <h5><%= @district.rep_voters.truncate(2) %>%</h5>
+          </div>
+          <div class="col"><br>
+            <h6 class="card-subtitle text-muted">ADVANTAGE</h6>
+            <h5><% if @district.registration_advantage > 0 %>
+                  <span style="color: #35469C;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
+                  <% else %>
+                  <span style="color: #911111;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
+                  <%end%></h5>
+          </div>        
+          </div>        
+        </div>
+          <div class="card-footer">
+            <%= number_with_delimiter(@district.total_voters, :delimiter => ',') %> TOTAL VOTERS
+          </div>        
+      </div>
 
-  <tbody> 
-      <tr>
-      <% if @district.incumbent != nil%>
-      <% if @district.incumbent.running_reelection? %>
-        <% report = incumbent.reports.most_recent %>
-        <td><%= @district.incumbent.first_name %></td>
-        <td><%= @district.incumbent.last_name %></td>
-        <td><%= @district.incumbent.party %></td>
-        <td><%= @district.incumbent.professional_career %></td>
-        <td>$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
-      </tr>
-    <% end %>
-    <%end%>
-  
 
-  
-    <% @district.candidates.each do |candidate| %>
-    <tr>
-      <% if candidate.on_ballot? %>
-        <% report = candidate.reports.most_recent %>
-        <td>
-        <% if candidate.endorsed_republican? %>
-        <span class="rep-text">&#10003</span>
-        <%elsif candidate.endorsed_democrat?%>
-        <span class="dem-text">&#10003</span>
-        <%else%>
-        
-        <%end%>
-        <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate %></td>
-        <td><%= candidate.party %></td>
-        <td><%if candidate.is_incumbent? %>
-            <%= candidate.title %>
+  <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 30rem;">
+    <div class="card-header">
+      DISTRICT MAP
+    </div>
+    <div style="height:280px; border:2px solid #eee; display:inline-block; overflow:hidden;">
+      <iframe style="position:relative; top:-46px; border:none;" 
+          src="<%=@district.map_url %>" 
+          width=500 height=320></iframe>      
+    </div>
+    <div class="card-footer">
+        <%= link_to "View Full Map", @district.map_url %> 
+    </div>                        
+  </div>
+
+  <div class="card" style="max-width: 30rem;">
+    <div class="card-header">
+      CAMPAIGN FINANCE LIMITS
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+          Contribution Limit:
+          <div class="green-pill font-size-12 float-right"><strong><% if @district.contribution_limit.present? %>        
+            $<%= number_with_delimiter(@district.contribution_limit, delimiter: ",") %>
           <%else%>
-            <%= candidate.professional_career %></td>
-           <%end%>
-        <td>$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></td>
-        <td><%= candidate.ballot_status %></td>
-        <% end %>
-    <% end %>
-    </tr>
-  </tbody>
-</table>
-<p class="small-text">(<span class="dem-text">&#10003</span> = Endorsed by SD County Democratic Party; <span class="gop-text">&#10003</span> = Endorsed by Republican Party of San Diego County)</p>
-<hr>
-<%end%>
+            No Limit
+          <%end%></strong></div></li>
+      <li class="list-group-item">Corporate Contributions:
+          <% if @district.corporate_contributions?%>
+          <div class="green-pill float-right"><strong>Allowed</strong>
+          <%else%>
+          <div class="red-pill float-right"><strong>Prohibited</strong>
+          <%end%></li>
+      <li class="list-group-item">PAC Contributions:
+          <% if @district.pac_contributions?%>
+          <div class="green-pill float-right"><strong>Allowed</strong>
+          <%else%>
+          <div class="red-pill float-right"><strong>Prohibited</strong>
+          <%end%></li>
+      <li class="list-group-item">
+          <% if @district.party_contributions?%>
+          Party Contribution Limit:
+          <div class="green-pill font-size-12 float-right"><strong>$<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %></strong>
+          <%else%>
+          Party Contributions:
+          <div class="red-pill font-size-12 float-right"><strong>Prohibited</strong>
+          <%end%></li></li>
+    </ul>
+  </div>
+
+        
+  <br>
+  
+</div>
+
+
+<div class="col-sm order-sm-2">
+<div class="card shadow-sm mb-3 bg-white rounded" style="width: 30rem;">
+  <div class="card-header text-uppercase">
+    candidates for this office
+  </div>
+    <div class="card-text pl-4 pr-4">
+    <table class="table">
+      <thead>
+        <tr>
+        <th></th>
+        <th>Candidate</th>
+        <th>COH</th>
+        <th>Status</th>
+        <tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <% if @district.incumbent != nil%>
+        <% if @district.incumbent.running_reelection? %>
+        <% report = @district.incumbent.reports.most_recent %>
+        <td class="condensed-column">
+          <% if @district.incumbent.endorsed_republican? %>
+          <div class="red-checkmark"><span class="text-white">&#10003</div>
+          <%elsif @district.incumbent.endorsed_democrat?%>
+          <div class="blue-checkmark"><span class="text-white">&#10003</div>
+          <%else%>
+          <%end%>
+          </td>
+        <td>
+          <% if @district.incumbent.party == "Republican" %>
+          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"gop-text" }%><br><small><%= @district.incumbent.title %></small>
+          <%elsif @district.incumbent.party == "Democrat"%>
+          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dem-text" }%><br><small><%= @district.incumbent.title %></small>
+          <%else%>
+          <%end%></td>
+        <td><strong><span class="green-pill">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></span></strong></td>
+          <td>
+          <% if @district.incumbent.ballot_status == "Advanced to General"%>
+          <span class="badge badge-success"><%= @district.incumbent.ballot_status%></span>
+          <%elsif @district.incumbent.ballot_status == "Lost in Primary"%>
+          <span class="badge badge-warning"><%= @district.incumbent.ballot_status%></span>
+          <%elsif @district.incumbent.ballot_status == "Rumored"%>
+          <span class="badge badge-info"><%= @district.incumbent.ballot_status%></span>
+          <%elsif @district.incumbent.ballot_status == "Declared Candidacy"%>
+          <span class="badge badge-light"><%= @district.incumbent.ballot_status%></span>
+          <%elsif @district.incumbent.ballot_status == "On Ballot"%>
+          <span class="badge badge-primary"><%= @district.incumbent.ballot_status%></span>
+          <%elsif @district.incumbent.ballot_status == "Withdrew"%>
+          <span class="badge badge-danger"><%= @district.incumbent.ballot_status%></span>
+          <%end%>
+          </td>
+      </tr>
+      <% end %>
+      <%end%>
+
+      <% @district.candidates.each do |candidate| %>
+      <tr>
+        <% if candidate.on_ballot? %>
+          <% report = candidate.reports.most_recent %>
+          <td class="condensed-column">
+          <% if candidate.endorsed_republican? %>
+          <div class="red-checkmark"><span class="text-white">&#10003</div>
+          <%elsif candidate.endorsed_democrat?%>
+          <div class="blue-checkmark"><span class="text-white">&#10003</div>
+          <%else%>
+          <%end%>
+          </td>
+          <td>
+          <% if candidate.party == "Republican" %>
+          <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%><br><small><%= candidate.title %></small>
+          <%elsif candidate.party == "Democrat"%>
+          <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%><br><small><%= candidate.title %></small>
+          <%else%>
+          <%end%></td>
+          <td><strong><span class="green-pill">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></span></strong></td>
+          <td>
+          <% if candidate.ballot_status == "Advanced to General"%>
+          <span class="badge badge-success"><%= candidate.ballot_status%></span>
+          <%elsif candidate.ballot_status == "Lost in Primary"%>
+          <span class="badge badge-warning"><%= candidate.ballot_status%></span>
+          <%elsif candidate.ballot_status == "Rumored"%>
+          <span class="badge badge-info"><%= candidate.ballot_status%></span>
+          <%elsif candidate.ballot_status == "Declared Candidacy"%>
+          <span class="badge badge-light"><%= candidate.ballot_status%></span>
+          <%elsif candidate.ballot_status == "On Ballot"%>
+          <span class="badge badge-primary"><%= candidate.ballot_status%></span>
+          <%elsif candidate.ballot_status == "Withdrew"%>
+          <span class="badge badge-danger"><%= candidate.ballot_status%></span>
+          <%end%>
+          </td>
+          <% end %>
+          <% end %>
+          
+      </tr>    
+      <small class="text-muted">Checkmark = Party Endorsement</small>
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 30rem;">
+      <div class="card-header">
+      PAST PERFORMANCE
+    </div>
+  <div class="card-text pl-4 pr-4">
+  <table class="table">
+      <tbody>
+        <tr>
+          <td>2018 Gubernatorial</td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text">Newsom</span>
+        <% else %>
+          <span style="color: #DE0100;">Cox</span>
+        <%end%> 
+          </td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+        <% else %>
+          <span class="gop-text float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+        <%end%> 
+          </td>        
+        </tr>
+        <tr>
+          <td>2016 Presidential</td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text">Clinton</span>
+        <% else %>
+          <span style="color: #DE0100;">Trump</span>
+        <%end%>
+          </td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
+        <% else %>
+          <span class="gop-text float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
+        <%end%>
+          </td>        
+        </tr>
+        <tr>
+          <td>2014 Gubernatorial</td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text">Brown</span>
+        <% else %>
+          <span style="color: #DE0100;">Kashkari</span>
+        <%end%>
+          </td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
+        <% else %>
+          <span class="gop-text float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
+        <%end%>
+          </td>        
+        </tr>
+        <tr>
+          <td>2012 Presidential</td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text">Obama</span>
+        <% else %>
+          <span style="color: #DE0100;">Romney</span>
+        <%end%>
+          </td>
+          <td><% if @district.registration_advantage > 0 %>
+          <span class="dem-text float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
+        <% else %>
+          <span class="gop-text float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
+        <%end%>
+          </td>        
+        </tr>
+      </tbody>
+  </table>
+  </div>
+  </div>
 
 <% if @district.jurisdiction.name == "County of San Diego" || @district.jurisdiction.name == "California Legislature" || @district.jurisdiction.name == "Congress"%>
-<h5>Resident Elected Officials</h5>
-<p>List of current elected officials who reside in the district</P>
-<table class="table table-sm table-bordered">
-<thead>
-    <tr>
-      <th>Name</th>
-      <th>Party</th>
-      <th>Currently Represents</th>
-      <th>Age</th>
-    </tr>
-  </thead>
+<div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 30rem;">
+      <div class="card-header">
+        ELECTED OFFICIALS RESIDING IN DISTRICT
+      </div>
+       <div class="card-text pl-4 pr-4">
+      <table class="table">
+   
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>COH</th>
+        <tr>
+      </thead>
+
+      <tbody>
+        <% @people.each do |person| %>
+        <tr>
+          <% if person.is_incumbent?%>
+              <% report = person.reports.most_recent %>
+              <%if person.senate_district.to_s == @district.district || person.assembly_district.to_s == @district.district || person.congressional_district.to_s == @district.district || person.supe_district.to_s == @district.district %>
+              <td>
+                <% if person.party == "Republican" %>
+                <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"gop-text" }%><br><small><%= person.incumbent_district.name %></small>
+                <%elsif person.party == "Democrat"%>
+                <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"dem-text" }%><br><small><%= person.incumbent_district.name %></small>
+                <%else%>
+                <%end%></td>
+              <td>Age <%= person.calculated_age %></td>
+              <td><strong><span class="green-pill">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></span></strong></td>
+              <%end%>
+              <%end%>
+            <% end %>
+        </tr>
+      </tbody>
+    </table>
+<%end%>  
+</div>
+</div>
   
+ </div>
+</div>
 
   
-    <% @people.each do |person| %>
-    <tr>
-      <% if person.is_incumbent?%>
-        <%if person.senate_district.to_s == @district.district || person.assembly_district.to_s == @district.district || person.congressional_district.to_s == @district.district || person.supe_district.to_s == @district.district %>
-        <td><%= link_to "#{person.first_name} #{person.last_name}", person %></td>
-        <td><%= person.party %></td>
-        <td><%= person.incumbent_district.name %> - District <%= person.incumbent_district.district %></td>
-        <td>Age <%= person.calculated_age %></td>
-        <%end%>
-      <%end%>
-    <% end %>
-    </tr>
-  </tbody>
-</table>
-<%end%>
+
 <% if current_user.admin? %>
 <%= link_to("Add Candidate", new_person_path(:district_id => @district.id), :action => "new", :method => :get)%> |
 <%= link_to 'Edit', edit_district_path(@district) %> |
@@ -245,3 +343,4 @@
   <%= link_to 'Sign up', new_user_registration_path %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% end %>
+

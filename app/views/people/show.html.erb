@@ -1,4 +1,14 @@
 <% if user_signed_in? %>
+
+<div class="card" style="width: 30rem;">
+  <div class="card-body">
+  <h5 class="card-title"><%= @person.title %> <%= @person.first_name %> <%= @person.last_name %> </h5>
+  <h6 class="card-subtitle mb-2 text-muted"><%= link_to "#{@person.incumbent_district.name}", @person.incumbent_district %> - <%= @person.incumbent_district.district.to_i.ordinalize %> District</h6>
+    This is some text within a card body.
+  </div>    
+</div>
+<br>
+
 <div class="row">
     <div class="col-auto">
     <% if @person.image_url.present? %>
