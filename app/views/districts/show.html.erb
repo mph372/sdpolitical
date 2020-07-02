@@ -2,8 +2,8 @@
 <div class="wrapper container">
 <div class="row">
   <div class="col">
-    <h4><%= @district.jurisdiction.name %></h4>
-    <h1><%= @district.name %>  
+    <h4 class="mb-0 mt-2 dark-red-supporting"><%= @district.jurisdiction.name %></h4>
+    <h1 class="heavy text-responsive primary-blue"><%= @district.name %>  
     <%if @district.district != "At Large"%>
     <%= "- #{@district.district.to_i.ordinalize} District" %>
     <%else%>
@@ -20,13 +20,36 @@
             INCUMBENT
           </div>
         <div class="row no-gutters">
-          <div class="col-4 d-flex align-items-center justify-content-center" >
+          <div class="col-auto d-flex align-items-center justify-content-center pl-4" >
             <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow", size: "125x125"  %></div>
-          <div class="col-8">
+          <div class="col-auto">
             <div class="card-body">
               <h4 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h4>
               <h6 class="card-subtitle mb-2 text-muted"><%= @district.incumbent.title %></h6>
-              <p class="card-text"><%= "#{@district.incumbent.first_name} #{@district.incumbent.last_name} was first elected as #{@district.incumbent.title} in #{@district.incumbent.first_elected.strftime("%B, %Y")}." %><span class="d-sm-block d-none"><%= "#{@district.incumbent.last_name}'s current term expires in #{@district.incumbent.term_expires} and is term-limited in #{@district.incumbent.term}." %></span></p>
+              <p class="card-text">
+              <div>
+                  <small class="heavy">Birthdate: </small><small><%= @district.incumbent.birthdate.to_formatted_s(:long) %> (Age <%= @district.incumbent.calculated_age %>) 
+                  <%if @district.incumbent.birthplace? %>
+                  in <%= @district.incumbent.birthplace %>
+                  <% end %></small><br>
+                  <small class="heavy">Term Expires: </small><small><%= @district.incumbent.term_expires %></small>
+                  <% if @district.incumbent.term? %>
+                  <small><%= "(Term Limited in #{@district.incumbent.term})" %></small>
+                  <%end%><br>
+                  <small class="heavy">Resides in: </small><small><% if @district.incumbent.congressional_district != nil %>
+                  <%=  "CD-#{@district.incumbent.congressional_district}" %>,
+                  <%end%>
+                  <% if @district.incumbent.senate_district != nil %>
+                  <%= "SD-#{@district.incumbent.senate_district}" %>,
+                  <%end%>
+                  <% if @district.incumbent.assembly_district != nil %>
+                  <%= "AD-#{@district.incumbent.assembly_district}" %>,
+                  <%end%>
+                  <% if @district.incumbent.supe_district != nil %>
+                  <%= "BOS-#{@district.incumbent.supe_district}" %>
+                  <%end%></small>
+                </div>
+                </p>
             </div>
           </div>
         </div>

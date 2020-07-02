@@ -253,6 +253,10 @@ font-style: normal !important;
   color: #CB6E17;
 }
 
+.text-responsive {
+  font-size: calc(100% + 1vw + 1vh);
+}
+
  
  @import "rails_bootstrap_forms";
  @import "bootstrap";
