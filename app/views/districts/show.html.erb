@@ -20,12 +20,11 @@
             INCUMBENT
           </div>
         <div class="row no-gutters">
-          <div class="col-4">
-            <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', style: 'height:auto;width:100%;', class: 'img-fluid' %>
-          </div>
+          <div class="col-4 d-flex align-items-center justify-content-center" >
+            <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow", size: "125x125"  %></div>
           <div class="col-8">
-            <div class="card-body pb-0">
-              <h5 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h5>
+            <div class="card-body">
+              <h4 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h4>
               <h6 class="card-subtitle mb-2 text-muted"><%= @district.incumbent.title %></h6>
               <p class="card-text"><%= "#{@district.incumbent.first_name} #{@district.incumbent.last_name} was first elected as #{@district.incumbent.title} in #{@district.incumbent.first_elected.strftime("%B, %Y")}." %><span class="d-sm-block d-none"><%= "#{@district.incumbent.last_name}'s current term expires in #{@district.incumbent.term_expires} and is term-limited in #{@district.incumbent.term}." %></span></p>
             </div>
@@ -48,12 +47,16 @@
             <h6 class="card-subtitle text-muted" >REP</h6>
             <h5><%= @district.rep_voters.truncate(2) %>%</h5>
           </div>
+          <div class="col-md d-none d-xl-block" style="color: #627D98;"><br>
+            <h6 class="card-subtitle text-muted" >OTHER</h6>
+            <h5><%= @district.other_voters.truncate(2) %>%</h5>
+          </div>
           <div class="col-md"><br>
             <h6 class="card-subtitle text-muted">ADVANTAGE</h6>
             <h5><% if @district.registration_advantage > 0 %>
-                  <span style="color: #35469C;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
+                  <strong><span style="color: #35469C;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span></strong>
                   <% else %>
-                  <span style="color: #911111;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span>
+                  <strong><span style="color: #911111;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span></strong>
                   <%end%></h5>
           </div>        
           </div>        
@@ -71,7 +74,7 @@
     <div style="height:280px; border:2px solid #eee; display:inline-block; overflow:hidden;">
       <iframe style="position:relative; top:-46px; border:none;" 
           src="<%=@district.map_url %>" 
-          width=600 height=320></iframe>      
+          width=700 height=320></iframe>      
     </div>
     <div class="card-footer">
         <%= link_to "View Full Map", @district.map_url %> 
@@ -84,7 +87,7 @@
 
 
 <div class="col-lg">
-<% if @district.incumbent.running_reelection == false && @district.candidates.present? %>
+<% if @district.incumbent.running_reelection == true || @district.candidates.present? %>
 <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
   <div class="card-header text-uppercase">
     candidates for this office
@@ -96,7 +99,6 @@
         <tr>
         <th></th>
         <th>Candidate</th>
-        <th>COH</th>
         <th>Status</th>
         <tr>
       </thead>
@@ -121,7 +123,6 @@
           <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dem-text" }%><br><small><%= @district.incumbent.title %></small>
           <%else%>
           <%end%></td>
-        <td><strong><span class="green-pill">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></span></strong></td>
           <td>
           <% if @district.incumbent.ballot_status == "Advanced to General"%>
           <span class="badge badge-success"><%= @district.incumbent.ballot_status%></span>
@@ -160,7 +161,6 @@
           <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%><br><small><%= candidate.title %></small>
           <%else%>
           <%end%></td>
-          <td><strong><span class="green-pill">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></span></strong></td>
           <td>
           <% if candidate.ballot_status == "Advanced to General"%>
           <span class="badge badge-success"><%= candidate.ballot_status%></span>
@@ -197,17 +197,17 @@
   <table class="table">
       <tbody>
         <tr>
-          <td>2018 Gubernatorial</td>
-          <td><% if @district.registration_advantage > 0 %>
+          <td class="no-border">2018 Gubernatorial</td>
+          <td class="no-border"><% if @district.registration_advantage > 0 %>
           <span class="dem-text">Newsom</span>
         <% else %>
-          <span style="color: #DE0100;">Cox</span>
+          <span class="gop-text">Cox</span>
         <%end%> 
           </td>
-          <td><% if @district.registration_advantage > 0 %>
-          <span class="dem-text float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+          <td class="no-border"><% if @district.registration_advantage > 0 %>
+          <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-text float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
         <%end%> 
           </td>        
         </tr>
@@ -216,13 +216,13 @@
           <td><% if @district.registration_advantage > 0 %>
           <span class="dem-text">Clinton</span>
         <% else %>
-          <span style="color: #DE0100;">Trump</span>
+          <span class="gop-text">Trump</span>
         <%end%>
           </td>
           <td><% if @district.registration_advantage > 0 %>
-          <span class="dem-text float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-text float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
@@ -231,13 +231,13 @@
           <td><% if @district.registration_advantage > 0 %>
           <span class="dem-text">Brown</span>
         <% else %>
-          <span style="color: #DE0100;">Kashkari</span>
+          <span class="gop-text">Kashkari</span>
         <%end%>
           </td>
           <td><% if @district.registration_advantage > 0 %>
-          <span class="dem-text float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-text float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
@@ -246,13 +246,13 @@
           <td><% if @district.registration_advantage > 0 %>
           <span class="dem-text">Obama</span>
         <% else %>
-          <span style="color: #DE0100;">Romney</span>
+          <span class="gop-text">Romney</span>
         <%end%>
           </td>
           <td><% if @district.registration_advantage > 0 %>
-          <span class="dem-text float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-text float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
@@ -307,18 +307,20 @@
         <table class="table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>COH</th>
+            <th class="no-border"></th>
+            <th class="no-border">Name</th>
+            <th class="no-border">Age</th>
+            <th class="no-border">COH</th>
           <tr>
         </thead>
 
         <tbody>
           <% @people.each do |person| %>
           <tr>
-            <% if person.is_incumbent?%>
+            <% if person.incumbent_district.present? %>
                 <% report = person.reports.most_recent %>
                 <%if person.senate_district.to_s == @district.district || person.assembly_district.to_s == @district.district || person.congressional_district.to_s == @district.district || person.supe_district.to_s == @district.district %>
+                <td class="condensed-column"><%= image_tag person.image.url(:headshot), alt: 'headshot', :class => "avatar", size: "45x45"  %></td>
                 <td>
                   <% if person.party == "Republican" %>
                   <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"gop-text" }%><br><small><%= person.incumbent_district.name %></small>
@@ -346,7 +348,13 @@
   
 <div class="container">
 <% if current_user.admin? %>
-<%= link_to("Add Candidate", new_person_path(:district_id => @district.id), :action => "new", :method => :get)%> |
+
+<%= button_to "Add Candidate", new_person_path(:district_id => @district.id), 
+      :class => "btn btn-primary", :action => "new", :method => :get %>
+
+<%= button_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary" %>      
+
+ |
 <%= link_to 'Edit', edit_district_path(@district) %> |
 <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%end%>

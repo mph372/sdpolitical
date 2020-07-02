@@ -34,8 +34,9 @@ class IncumbentUploader < CarrierWave::Uploader::Base
   # end
 
   version :headshot do
-    process resize_to_fill: [300, 420]
+    process resize_to_fill: [400, 400]
   end
+
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:

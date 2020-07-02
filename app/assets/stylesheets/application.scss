@@ -12,11 +12,35 @@
  *
 
  *= require_self
+ *= require material_icons
+ *= require font-awesome
  */
 
 body {
-  font-family: 'Open Sans', sans-serif !important;
+  font-family: 'proxima-nova', sans-serif !important;
 }
+
+.fa{
+  font-size: 20px !important;
+}
+
+.primary-blue {
+  color: #486581
+}
+
+$primary: #486581;
+
+.table-condensed-header {
+font-family: 'proxima-nova-condensed', sans-serif !important;
+font-weight: 700 !important;
+font-style: normal !important;
+}
+
+.heavy {
+  font-family: 'proxima-nova', sans-serif !important;
+  font-weight: 700 !important;
+  font-style: bold !important;
+  }
 
 .small-table {
     font-size: small;
@@ -32,15 +56,23 @@ body {
 }
 
 .gop-text {
-  color: #DE0100
+  color: #A61B1B
 }
 
 .dem-text {
-  color: #0015BC
+  color: #0F609B
 }
 
 .amended {
   font-style: italic;
+}
+
+.dark-red-supporting {
+  color: #610316;
+}
+
+.gold-text {
+  color: #DE911D;
 }
 
 .not-amended {
@@ -54,8 +86,32 @@ body {
 .green-pill {
   border-radius: 25px;
   background: #d7f5e9;
+  padding: 1px 5px;
+  color: #17533f;
+}
+
+.dark-blue-pill {
+  border-radius: 25px;
+  background: #F0F4F8;
+  padding: 1px 5px;
+  color: #334E68;
+}
+
+.green-text {
+  color: #17533f;
+}
+
+.red-text {
+  color: #824443;
+}
+
+#cash-on-hand {
+  border-radius: 25px;
+  background: #d7f5e9;
   padding: 1px 20px;
   color: #17533f;
+  font-weight: 700 !important;
+
 }
 
 .red-pill {
@@ -66,14 +122,21 @@ body {
   font-size: 12px;
 }
 
-.dem-registration-pill {
+.red-money-pill {
+  border-radius: 25px;
+  background: #ffecec;
+  padding: 1px 20px;
+  color: #824443;
+}
+
+.dem-pill {
   border-radius: 25px;
   background: #D9E2EC;
   padding: 1px 20px;
   color: #243B53;
 }
 
-.gop-registration-pill {
+.gop-pill {
   border-radius: 25px;
   background: #ffecec;
   padding: 1px 20px;
@@ -120,18 +183,81 @@ body {
   }
 
 .no-border {
-  border-top: 0px !important;
+  border-top: none !important;
 }
 
 .font-size-12 {
   font-size: 12px;
 }
 
+.avatar {
+  border-radius: 50%;
+  border:3px solid white;
+}
+
+.avatar-wrapper {
+  width:200px;
+  height:200px;
+  margin: 25px auto;
+  overflow: hidden;
+  border-radius:50%;
+  position: relative;
+}
+
+.avatar-wrapper img {
+  position: absolute;
+  top:100%;
+  left:50%;
+  transform: translate(-50%,-50%)
+}
+
+.advanced-general {
+  border-radius: 25px;
+  background: #d7f5e9;
+  padding: 1px 10px;
+  color: #17533f;
+}
+
+.rumored-candidate {
+  border-radius: 25px;
+  background: #BCCCDC;
+  padding: 1px 10px;
+  color: #243B53;
+}
+
+.lost-primary {
+  border-radius: 25px;
+  background: #ffecec;
+  padding: 1px 20px;
+  color: #824443;
+}
+
+.declared-candidacy {
+  border-radius: 25px;
+  background: #E6E6FF;
+  padding: 1px 20px;
+  color: #0C008C;
+}
+
+.on-ballot {
+  border-radius: 25px;
+  background: #E3F8FF;
+  padding: 1px 20px;
+  color: #035388;
+}
+
+.withdrew {
+  border-radius: 25px;
+  background: #FFFBEA;
+  padding: 1px 20px;
+  color: #CB6E17;
+}
+
  
  @import "rails_bootstrap_forms";
  @import "bootstrap";
  @import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Roboto&display=swap');
-
-
+ @import url("https://use.typekit.net/suq4glw.css");
+ @import url("https://use.typekit.net/suq4glw.css");
 
 

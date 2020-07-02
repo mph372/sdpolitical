@@ -41,6 +41,9 @@ gem 'bootstrap', '~> 4.5.0'
 gem 'simple_form'
 gem 'high_voltage', '~> 3.1'
 gem 'devise'
+gem 'truncate_html', '~> 0.9.3'
+gem 'material_icons'
+gem "font-awesome-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

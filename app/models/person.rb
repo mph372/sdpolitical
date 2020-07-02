@@ -1,8 +1,9 @@
 class Person < ApplicationRecord
   belongs_to :district, inverse_of: :candidates, class_name: "District", optional: true
   has_one :incumbent_district, inverse_of: :incumbent, class_name: "District", required: false, foreign_key: "incumbent_id"
-  accepts_nested_attributes_for :incumbent_district
   has_many :expenditures
+
+  
 
   
   has_many :reports do
@@ -24,5 +25,12 @@ class Person < ApplicationRecord
     now.year - first_elected.year - ((now.month > first_elected.month || (now.month == first_elected.month && now.day >= first_elected.day)) ? 0 : 1)
   end
 
+  attr_accessor :incumbent_district_id
+   after_validation :assign_district
+   def assign_district
+      return unless incumbent_district_id
+      district = District.where(id: incumbent_district_id).first
+      self.incumbent_district = district
+   end
 
 end
