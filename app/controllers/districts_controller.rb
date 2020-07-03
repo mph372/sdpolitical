@@ -1,5 +1,5 @@
 class DistrictsController < ApplicationController
-  before_action :set_district, only: [:show, :edit, :update, :import, :destroy]
+  before_action :set_district, only: [:show, :edit, :update, :import, :destroy, :tracker]
 
   # GET /districts
   # GET /districts.json
@@ -67,6 +67,20 @@ class DistrictsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to districts_url, notice: 'District was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+# Add and remove districts from/to tracker for current user
+  def tracker
+    type = params[:type]
+    if type == "add"
+      current_user.tracker_additions << @district
+      redirect_to tracker_index_path, notice: "#{@district.name} - #{@district.district} has been added to your tracker!"
+    elsif type == "remove"
+      current_user.tracker_additions.delete(@district)
+      redirect_to root_path, notice: "#{@district.name} - #{@district.district} has been removed from your tracker!"
+    else
+      # type is missing, nothing should happen
+      redirect_to district_path(@district), notice: "Looks like nothing happened. Try again."
     end
   end
 

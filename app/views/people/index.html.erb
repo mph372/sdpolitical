@@ -42,7 +42,9 @@
 
 <br>
 <% if current_user.admin? %>
-<%= link_to 'New Person', new_person_path %>
+<div class="btn btn-primary">
+  <%= link_to 'New Person', new_person_path, :class => "btn" %> |
+</div>
 </div>
 <%end%>    
 <%else %>

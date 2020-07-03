@@ -125,38 +125,38 @@
 <!--Start of Incumbent Information Section-->
 <div class="row"> 
 <!--Incumbent Facts Card-->
-  <div class="col-md-5 mb-2">
+  <div class="col-md-6 mb-2">
     <h5 class="dark-red-supporting mb-3 heavy">Incumbent Facts</h5>
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
-      <small><%= "First Elected as #{@person.title}:"%></small><br>
+      <small class="heavy"><%= "First Elected as #{@person.title}:"%></small><br>
       <%= @person.first_elected.strftime("%B, %Y") %><br><br>
-      <small><%= "Profession Before Elected Office:" %></small><br>
+      <small class="heavy"><%= "Profession Before Elected Office:" %></small><br>
       <%= @person.professional_career %><br><br>
-      <small><%= "Prior Elected Office:"%></small><br>
+      <small class="heavy"><%= "Prior Elected Office:"%></small><br>
       <%= @person.prior_elected%><br><br>
-      <small><%= "Elected Official Salary:"%></small><br>
+      <small class="heavy"><%= "Elected Official Salary:"%></small><br>
       <%= number_to_currency(@person.salary)  %>  
     </div>      
   </div>
   <!--Begins Incumbent Fundraising Data--> 
-  <div class="col-md-7">
+  <div class="col-md-6">
     <h5 class="dark-red-supporting heavy mb-3">Incumbent Campaign Finance Data</h5>
     <% if @person.reports.where(incumbent_report: true).present? %>
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
-      <div class="row">
+      <div class="row my-2">
         <div class="col-auto">
           <strong><h6 style="font-weight:700;" class="m-0">Total Raised this Cycle</h6></strong>
           <small m-0>Into <%= @person.incumbent_district.name %> Committee</small>
         </div>
         <div class="col-auto ">
-          <h5 class="green-text d-flex justify-content-end">+ <%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: true ).sum(:period_receipts)) %></h5>
+          <h5 class="green-text d-flex ">+ <%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: true ).sum(:period_receipts)) %></h5>
         </div>
       </div>
     </div>
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
-      <div class="row">
+      <div class="row my-2">
         <div class="col-auto">
-          <strong><h6 style="font-weight:700;" class="m-0">Total Spent this Cycle</h6></strong>
+          <strong><h6 style="font-weight:700;" class="m-0 ">Total Spent this Cycle</h6></strong>
           <small m-0>From <%= @person.incumbent_district.name %> Committee</small>
         </div>
         <div class="col-auto">
@@ -165,13 +165,13 @@
       </div>
     </div> 
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
-      <div class="row">
-        <div class="col-auto">
-          <strong><h6 style="font-weight:700;" class="m-0">Current Cash-on-Hand</h6></strong>
+      <div class="row my-2">
+        <div class="col-6">
+          <strong><h6 style="font-weight:700;" class="m-0">Current COH</h6></strong>
           <small m-0>In <%= @person.incumbent_district.name %> Committee</small>
         </div>
-        <div class="col-auto">
-        <h5 class="float-right" id="cash-on-hand"><%= number_to_currency(@person.reports.where(incumbent_report: true).most_recent.net_coh) %></h5>
+        <div class="col-6">
+        <h5 class="float-right text-nowrap" id="cash-on-hand"><%= number_to_currency(@person.reports.where(incumbent_report: true).most_recent.net_coh) %></h5>
       </div>
     </div>
     <%else%>
@@ -399,15 +399,15 @@
 
 
 
-
+<br>
 <% if current_user.admin? %>
-<%= link_to("Add Report", new_report_path(:person_id => @person.id), :action => "new", :method => :get)%> 
- |
-<%= link_to 'Edit', edit_person_path(@person)  %> |
-<%= link_to 'Delete Person', @person, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to "Add Report", new_report_path(:person_id => @person.id), 
+      :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
+<%= link_to "Edit", edit_person_path(@person), :class => "btn btn-outline-primary mr-2" %> 
+<%= link_to 'Delete Person', @person, method: :delete, data: { confirm: 'Are you sure?' } %> 
 <%end%>
 
-<%= link_to 'Back', people_path %>
+<%= link_to "Back", people_path, :class => "float-right btn btn-outline-secondary" %>
 
 <%else %>
   <p>Please Sign Up or Sign In to view the content.</p>

@@ -45,7 +45,7 @@
         </td>
         <td><span class="float-right dem-text"><%= district.dem_voters.truncate(2) %>%</span></td>
         <td><span class="float-right gop-text"><%= district.rep_voters.truncate(2) %>%</span></td>
-        <td><% if district.registration_advantage > 0 %>
+        <td class="text-nowrap"><% if district.registration_advantage > 0 %>
             <span class="float-right dem-pill" style="color: #0015BC;">D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
             <% else %>
              <span class="float-right gop-pill" style="color: #DE0100;">R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
