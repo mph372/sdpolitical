@@ -7,13 +7,17 @@
 <div class="col-10">  
 <h1 class="primary-blue heavy">Districts</h1>
 <br>
+
+
+
 <div class="panel panel-default">
  <div class="table-responsive shadow bg-white rounded border-primary p-4">
-<table class="table" style="width:100%" id="districts">
+<table class="table" id="districts">
   <thead class="thead-light rounded">
     <tr>
-      <th>OFFICE</th>
+      <th></th>
       <th>INCUMBENT</th>
+      <th>OFFICE</th>
       <th class="text-right">DEM%</th>
       <th class="text-right">REP%</span></th>
       <th class="text-right">ADVANTAGE</th>
@@ -23,22 +27,24 @@
   <tbody>
     <% @districts.each do |district| %>
       <tr>
-        <td><small class="text-muted"><%= district.jurisdiction.name %></small><br>
-          <% if district.district == "At Large" %>
-          <%= link_to "#{district.name}", district %>
-          <%else%>
-          <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
-          <%end%>
-        </td>
-        <td><strong><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %></strong><br>
+
+        <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+        <td><strong><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %></strong><br>        
         <% if district.incumbent.party == "Democrat" %>
         <small class="dem-text"><%= district.incumbent.party %></small>
         <%else%>
         <small class="gop-text"><%= district.incumbent.party %></small>
         <%end%>
+        <td>
+          <% if district.district == "At Large" %>
+          <%= link_to "#{district.name}", district %>
+          <%else%>
+          <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
+          <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
         </td>
-        <td><span class="float-right"><%= district.dem_voters.truncate(2) %>%</span></td>
-        <td><span class="float-right"><%= district.rep_voters.truncate(2) %>%</span></td>
+        </td>
+        <td><span class="float-right dem-text"><%= district.dem_voters.truncate(2) %>%</span></td>
+        <td><span class="float-right gop-text"><%= district.rep_voters.truncate(2) %>%</span></td>
         <td><% if district.registration_advantage > 0 %>
             <span class="float-right dem-pill" style="color: #0015BC;">D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
             <% else %>

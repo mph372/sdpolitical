@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_02_155629) do
+ActiveRecord::Schema.define(version: 2020_07_03_190843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 2020_07_02_155629) do
     t.boolean "endorsed_democrat"
     t.string "ballot_status"
     t.text "bio"
+    t.boolean "is_appointed"
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 
