@@ -1,5 +1,6 @@
 class ExpendituresController < ApplicationController
   before_action :set_expenditure, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /expenditures
   # GET /expenditures.json

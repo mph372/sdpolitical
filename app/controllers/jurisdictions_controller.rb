@@ -1,5 +1,6 @@
 class JurisdictionsController < ApplicationController
   before_action :set_jurisdiction, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /jurisdictions
   # GET /jurisdictions.json

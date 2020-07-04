@@ -98,10 +98,10 @@
             <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.committee.name}", report.committee  %></td>
             <%end%>
             <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
-            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
-            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
-            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
-            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></span></td>
+            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right green-text">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
+            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right red-text">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
+            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
+            <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right red-pill">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></span></td>
             <td class="<%= report.is_amended? ? 'amended' : 'not-amended' %>"><span class="float-right">$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span></td>
           </tr>
         <% end %>
@@ -111,7 +111,7 @@
   </div>
 <br>
 <% if current_user.admin? %>
-<%= link_to 'New Report', new_report_path %>
+<%= link_to 'New Report', new_report_path, :class => "btn btn-primary mr-2" %>
 <%end%>    
 <%else %>
   <p>Please Sign Up or Sign In to view the content.</p>

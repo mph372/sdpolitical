@@ -17,7 +17,11 @@
               <li>Priority email support</li>
               <li>Help center access</li>
             </ul>
+            <% if user_signed_in? %>
             <%= link_to 'Start Monthly Plan', new_subscription_path(plan: "monthly", plan_id: Rails.application.credentials.monthly), class:"btn btn-lg btn-block btn-primary" %>
+            <% else %>
+            <%= link_to 'Subscribe', new_user_registration_path, class:"btn btn-lg btn-block btn-primary"  %>
+            <%end%>
           </div>
         </div>
         <div class="card mb-4 box-shadow">
@@ -32,7 +36,11 @@
               <li>Phone and email support</li>
               <li>Help center access</li>
             </ul>
+            <% if user_signed_in? %>
             <%= link_to 'Start Annual Plan', new_subscription_path(plan: "yearly", plan_id: Rails.application.credentials.yearly), class:"btn btn-lg btn-block btn-primary" %>
+            <% else %>
+            <%= link_to 'Subscribe', new_user_registration_path, class:"btn btn-lg btn-block btn-primary"  %>
+            <%end%>
           </div>
         </div>
       </div>

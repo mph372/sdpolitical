@@ -1,5 +1,6 @@
 class MeasuresController < ApplicationController
   before_action :set_measure, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /measures
   # GET /measures.json

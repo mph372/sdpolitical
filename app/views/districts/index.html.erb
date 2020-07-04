@@ -1,10 +1,9 @@
 <p id="notice"><%= notice %></p>
-<% if user_signed_in? %>
+
 <div class="container">
 <div class="row">
-  <div class="col-1">
-  </div>
-<div class="col-10">  
+
+<div class="col">  
 <h1 class="primary-blue heavy">Districts</h1>
 <br>
 
@@ -59,16 +58,11 @@
 </div>
 <br>
 <% if current_user.admin? %>
-<%= link_to 'New District', new_district_path %>
+<%= link_to 'New District', new_district_path, :class => "btn btn-primary mr-2" %>
 <%end%>
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+
 </div>
-<div class="col-1">
-</div>
+
 </div>
 </div>
 
