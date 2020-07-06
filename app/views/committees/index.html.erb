@@ -1,46 +1,48 @@
-<p id="notice"><%= notice %></p>
-<% if user_signed_in? %>
-<h1>Committees</h1>
-<br>
-<table class="table small-table table-bordered table-sm table-hover" id="committees">
-  <thead class="thead-light">
-    <tr>
-      <th>Name</th>
-      <th>Jurisdiction</th>
-      <th>Type</th>
-      <th>Candidate or Measure</th>
-      <th>Support</th>
-    </tr>
-  </thead>
+<div class="container">
+  <div class="row">
+    <div class="col">  
+    <h1 class="primary-blue heavy">Committees</h1>
+    <br>
+    <div class="panel panel-default">
+      <div class="table-responsive shadow bg-white rounded border-primary p-4">
+        <table class="table" id="committees">
+          <thead class="thead-light">
+            <tr>
+              <th>Name<br><small>Jurisdiction</small></th>
+              <th>Type</th>
+              <th>Candidate or Measure</th>
+              <th>Support/Oppose</th>
+            </tr>
+          </thead>
 
-  <tbody>
-    <% @committees.each do |committee| %>
-      <tr>
-        <td><%= link_to "#{committee.name}", committee %></td>
-        <td><%= link_to "#{committee.jurisdiction.name}", committee.jurisdiction %></td>
-        <td><%= committee.committee_type %></td>
-        <td> <% if committee.person.present? %>
-            <%= link_to "#{committee.person.first_name} #{committee.person.last_name}", committee.person %>
-            <%elsif committee.measure.present? %>
-            <%= link_to "Measure #{committee.measure.letter}", committee.measure %>
-            <%else%>
-            <%end%>
-        </td>
-        <td><%= committee.support %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          <tbody>
+            <% @committees.each do |committee| %>
+              <tr>
+                <td><%= link_to "#{committee.name}", committee %><br><small><%= link_to "#{committee.jurisdiction.name}", committee.jurisdiction %></small></td>
+                <td><%= committee.committee_type %></td>
+                <td> <% if committee.person.present? %>
+                    <%= link_to "#{committee.person.first_name} #{committee.person.last_name}", committee.person %>
+                    <%elsif committee.measure.present? %>
+                    <%= link_to "Measure #{committee.measure.letter}", committee.measure %>
+                    <%else%>
+                    <%end%>
+                </td>
+                <td><%= committee.support %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+       </div>
+      </div>  
+    </div>
+  </div>
+
 
 <br>
 <% if current_user.admin? %>
-<%= link_to 'New Committee', new_committee_path %>
+<%= link_to 'New Committee', new_committee_path, :class => "btn btn-primary mr-2" %>
 <%end%>    
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+</div>
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#committees').DataTable( {

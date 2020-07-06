@@ -1,81 +1,98 @@
-<% if user_signed_in? %>
-<h3><%= @jurisdiction.name %></h3>
+<div class="container">
+  <div class="row bg-light shadow-sm bg-white rounded mt-1 p-3">
+    <div class="col">
+      <div class="row p-1 m-1">
+        <h2 class="primary-blue heavy"><%= @jurisdiction.name %></h2>
+      </div>
+      <div class="row">
+        <div class="col">
+          <% if @jurisdiction.map_url.present?%>
+          <div class="float-right ml-3 mb-2 p-2" style="clear: right;">
+          <%= content_tag(:iframe,'', width: 320, height: 320, src: "#{@jurisdiction.map_url}", :class => "float-right") %>
+          <%end%>
+          </div>
+          <p class="p-2"><%=  h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %> </p>
+        </div>
+    </div> 
+  </div>   
+</div>
+ 
+<br>
 <hr>
-<div class="row">
-  <div class="col">
-    <p><%=  h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %> </p> <br>
+<br>
+<div class="container">
+  <h5 class="dark-red-supporting heavy"> List of Offices & Districts </h5>
+<br>
+  <div class="table-responsive shadow-sm bg-white rounded border-primary p-4">
+    <table class="table">
+    <thead>
+        <tr>
+          <th>Office</th>
+          <th>District</th>
+          <th class="condensed-column"></th>
+          <th>Incumbent</th>
+          <th>Term Expires</th>
+        </tr>
+      </thead>
+
+      <tbody> 
+          <tr>
+          <% @jurisdiction.districts.order(:district).each do |district| %>
+            <td><%= district.name %></td>
+            <td><% if district.district == "At Large" %>
+                  <%= link_to "#{district.district}", district %></td>
+                <% else %>
+                  <%= link_to "#{district.district.to_i.ordinalize} District", district %>
+                <%end%>
+            <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm float-right", size: "45x45"  %></td>   
+            <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %><br><small><%= district.incumbent.party %></small></td>
+            <td><%= district.incumbent.term_expires %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <div class="col-auto">
-    <% if @jurisdiction.map_url.present?%>
-    <%= content_tag(:iframe,'', width: 500, height: 320, src: "#{@jurisdiction.map_url}") %>
-    <%end%>
+</div>  
+<% if @jurisdiction.measures.present? %>
+<div class="container">
+  <h5>Current Ballot Measures</h5>
+  <div class="table-responsive shadow-sm bg-white rounded border-primary p-4">
+    <table class="table small-table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>Measure</th>
+          <th>Topic</th>
+          <th>Type</th>
+          <th>Origin</th>
+          <th>Threshold</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @measures.each do |measure| %>
+        <tr> 
+          <td><%= link_to "Measure #{measure.letter}", measure.letter %> </td>
+          <td><%= measure.topic %></td>
+          <td><%= measure.measure_type %></td>
+          <td><%= measure.origin %></td>     
+          <td><%= number_to_percentage(measure.threshold, precision: 2) %></td>                  
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
   </div>
 </div>
-<hr>
-<h5> List of Offices & Districts </h5>
+<%end%>
 <br>
-<table class="table table-sm table-bordered">
-<thead>
-    <tr>
-      <th>Office</th>
-      <th>District</th>
-      <th>Incumbent</th>
-      <th>Party</th>
-    </tr>
-  </thead>
-
-  <tbody> 
-      <tr>
-      <% @jurisdiction.districts.order(:district).each do |district| %>
-        <td><%= district.name %></td>
-        <td><% if district.district == "At Large" %>
-              <%= link_to "#{district.district}", district %></td>
-            <% else %>
-              <%= link_to "#{district.district.to_i.ordinalize} District", district %>
-            <%end%>
-        <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %></td>
-        <td><%= district.incumbent.party %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<% if @jurisdiction.measures.present? %>
-<h5>Current Ballot Measures</h5>
-<table class="table small-table table-striped table-bordered">
-    <thead>
-    <tr>
-      <th>Measure</th>
-      <th>Topic</th>
-      <th>Type</th>
-      <th>Origin</th>
-      <th>Threshold</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @measures.each do |measure| %>
-    <tr> 
-      <td><%= link_to "Measure #{measure.letter}", measure.letter %> </td>
-      <td><%= measure.topic %></td>
-      <td><%= measure.measure_type %></td>
-      <td><%= measure.origin %></td>     
-      <td><%= number_to_percentage(measure.threshold, precision: 2) %></td>                  
-    </tr>
-    <%end%>
-  </tbody>
-</table>
-<%end%>
-
+<div class="container">
 <% if current_user.admin? %>
-<%= link_to("Add District", new_district_path(:jurisdiction_id => @jurisdiction.id), :action => "new", :method => :get)%> |
-<%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction) %> |
-<%= link_to 'Delete Jurisdiction', @jurisdiction, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to("Add District", new_district_path(:jurisdiction_id => @jurisdiction.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%> 
+<%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction), :class => "btn btn-outline-primary mr-2" %> 
+<%= link_to 'Delete Jurisdiction', @jurisdiction, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
 <%end%>
-<%= link_to 'Back', jurisdictions_path %> 
+<%= link_to 'Back', jurisdictions_path, :class => "float-right btn btn-outline-secondary text-right" %> 
+</div>
+    
+</div>
 
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
-
+</div>

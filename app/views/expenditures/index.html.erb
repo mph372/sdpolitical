@@ -1,68 +1,74 @@
-<p id="notice"><%= notice %></p>
-<% if user_signed_in? %>
-<h1>Committee Expenditures</h1>
-<br>
-<table class="table small-table table-bordered table-sm table-hover" id="expenditures">
-  <thead class="thead-light">
-    <tr>
-      <th>Date</th>
-      <th>Description</th>
-      <th>Committee</th>
-      <th>Amount</th>
-      <th>Candidate / Measure</th>
-      <th>District</th>
-      <th>Support/Oppose</th>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 class="primary-blue heavy">Committee Expenditures</h1>
+      <br>
+      <div class="panel panel-default">
+        <div class="table-responsive shadow bg-white rounded border-primary p-4">
+          <table class="table" id="expenditures">
+            <thead class="thead-light">
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Committee</th>
+                <th>Amount</th>
+                <th>Candidate / Measure</th>
+                <th>Office / Jurisdiction</th>
+                <th>Support/Oppose</th>
 
-    </tr>
-  </thead>
+              </tr>
+            </thead>
 
-  <tbody>
-    <% @expenditures.each do |expenditure| %>
-      <tr>
-        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.expenditure_date.to_formatted_s(:long) %></td>
-        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.description %></td>
-        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.committee.name %></td>
-        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= number_to_currency(expenditure.amount) %></td>
-        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
-          <% if expenditure.person != nil %>
-            <%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %>
-            <%else%>
-            <%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %>
-            <%end%>
-        </td>
-        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
-        <% if expenditure.person.present?%>
-        <%= link_to "#{expenditure.person.district.name} - District #{expenditure.person.district.district}", expenditure.person.district %>
-        <%end%>
-        <% if expenditure.measure.present? %>
-        <%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %>
-        <%end%>        
-        </td>
-        <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><% if expenditure.is_support? %>
-            Support
-            <%else%>
-            Oppose
-            <%end%></td>
+            <tbody>
+              <% @expenditures.each do |expenditure| %>
+                <tr>
+                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.expenditure_date.to_formatted_s(:long) %></td>
+                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.description %></td>
+                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= link_to expenditure.committee.name %></td>
+                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= number_to_currency(expenditure.amount) %></td>
+                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
+                    <% if expenditure.person != nil %>
+                      <%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %>
+                      <%else%>
+                      <%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %>
+                      <%end%>
+                  </td>
+                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
+                  <% if expenditure.person.present?%>
+                  <%= link_to "#{expenditure.person.district.name}", expenditure.person.district %>
+                  <%end%>
+                  <% if expenditure.measure.present? %>
+                  <%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %>
+                  <%end%>        
+                  </td>
+                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><% if expenditure.is_support? %>
+                      Support
+                      <%else%>
+                      Oppose
+                      <%end%></td>
 
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<span class="small-text" ><em>Expenditures listed in italics are amended version of prior reported expenditures.</em></span>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>  
+      
+      <span class="small-text" ><em>Expenditures listed in italics are amended version of prior reported expenditures.</em></span>
 
-<br>
-<% if current_user.admin? %>
-<%= link_to 'New Expenditure', new_expenditure_path %>
-<%end%>
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
-<script>
-    $( document ).on('turbolinks:load', function() {
-    $('#expenditures').DataTable( {
-      retrieve: true
-    });
-});
-</script>
+      <br>
+      <br>
+      <% if current_user.admin? %>
+      <%= link_to 'New Expenditure', new_expenditure_path, :class => "btn btn-primary mr-2" %>
+      <%end%>
+    </div>
+  </div>
+</div>      
+
+      <script>
+          $( document ).on('turbolinks:load', function() {
+          $('#expenditures').DataTable( {
+            retrieve: true
+          });
+      });
+      </script>

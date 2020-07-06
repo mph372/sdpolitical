@@ -121,6 +121,7 @@
       <thead>
         <tr>
         <th></th>
+        <th></th>
         <th>Candidate</th>
         <th>Status</th>
         <tr>
@@ -139,6 +140,8 @@
           <%else%>
           <%end%>
           </td>
+          <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+
         <td>
           <% if @district.incumbent.party == "Republican" %>
           <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"gop-text" }%><br><small><%= @district.incumbent.title %></small>
@@ -169,6 +172,7 @@
       <tr>
         <% if candidate.on_ballot? %>
           <% report = candidate.reports.most_recent %>
+          
           <td class="condensed-column">
           <% if candidate.endorsed_republican? %>
           <div class="red-checkmark"><span class="text-white">&#10003</div>
@@ -177,6 +181,7 @@
           <%else%>
           <%end%>
           </td>
+          <td class="condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
           <td>
           <% if candidate.party == "Republican" %>
           <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%><br><small><%= candidate.title %></small>

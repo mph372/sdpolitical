@@ -139,6 +139,15 @@ font-style: normal !important;
   background: #D9E2EC;
   padding: 1px 20px;
   color: #243B53;
+
+}
+
+.dem-party-endorsed {
+  border-radius: 25px;
+  background: #D9E2EC;
+  padding: 1px 20px;
+  color: #243B53;
+  font-weight: 700 !important;
 }
 
 .gop-pill {
@@ -146,6 +155,13 @@ font-style: normal !important;
   background: #ffecec;
   padding: 1px 20px;
   color: #824443;
+}
+.gop-party-endorsed {
+  border-radius: 25px;
+  background: #ffecec;
+  padding: 1px 20px;
+  color: #824443;
+  font-weight: 700 !important;
 }
 
 .profile{
@@ -200,6 +216,11 @@ font-style: normal !important;
   border:2px solid white;
 }
 
+.center-image {
+  margin: auto;    
+  display: block;
+}
+
 .avatar-wrapper {
   width:200px;
   height:200px;
@@ -233,33 +254,37 @@ font-style: normal !important;
 .lost-primary {
   border-radius: 25px;
   background: #ffecec;
-  padding: 1px 20px;
+  padding: 1px 10px;
   color: #824443;
 }
 
 .declared-candidacy {
   border-radius: 25px;
   background: #E6E6FF;
-  padding: 1px 20px;
+  padding: 1px 10px;
   color: #0C008C;
 }
 
 .on-ballot {
   border-radius: 25px;
   background: #E3F8FF;
-  padding: 1px 20px;
+  padding: 1px 10px;
   color: #035388;
 }
 
 .withdrew {
   border-radius: 25px;
   background: #FFFBEA;
-  padding: 1px 20px;
+  padding: 1px 10px;
   color: #CB6E17;
 }
 
 .text-responsive {
   font-size: calc(100% + 1vw + 1vh);
+}
+
+.nounderline {
+  text-decoration: none !important
 }
 
  

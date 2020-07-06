@@ -1,50 +1,64 @@
 
-<% if user_signed_in? %>
+
 <div class="wrapper container bg-light">
   <div class="row ">
   <div class="col-1">
   </div>
     <div class="col-10 m-2">
       <div class="row bg-light shadow-sm bg-white rounded mt-1 p-3">
-        <div class="col-auto m-1 p-2" >
-          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow mb-4", size: "125x125"  %><br>
+        <div class="col-sm-3 m-1 p-2 text-center"  >
+          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image shadow", size: "125x125"  %><br>
             <h6 class="text-center"><% if @person.party == "Republican" %>
-                  <span class="gop-pill"><%= @person.party %></span> 
+                  <span class="gop-pill text-center"><%= @person.party %></span> 
+                    <% if @person.endorsed_republican? %>
+                    <br>
+                    <br>
+                    <div >
+                    <span class="gop-party-endorsed">&#10004 Party Endorsed</span>
+                    </div>
+                    <%end%>
                   <%elsif @person.party == "Democrat"%>
-                  <span class="dem-pill"><%= @person.party %></span>
+                  <span class="dem-pill text-center"><%= @person.party %></span>
+                    <% if @person.endorsed_democrat? %>
+                    <br>
+                    <br>
+                    <div >
+                    <span class="dem-party-endorsed">&#10004 Party Endorsed</span>
+                    </div>
+                    <%end%>
                   <%else%>
                   <%= @person.party %>
                   <%end%> </h6>
         </div>
           <div class="col-md m-1 p-2">
-            <h1 class="p-0 m-0 primary-blue"><strong><%= "#{@person.first_name} #{@person.last_name}" %></strong></h1>
+            <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name}" %></strong></h1>
               <% if @person.incumbent_district.present? %>
-              <h5 class=""><%= "#{@person.incumbent_district.jurisdiction.name}"%> - 
+              <h5 class="text-center text-md-left"><%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction, :class => "nounderline" %> - 
                 <% if @person.incumbent_district.district != "At Large" %>
-                <%= "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize}" %> District
+                <%= link_to "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize} District", @person.district, :class => "nounderline" %> 
                 <%else%>
                 <%= @person.title %>
                 <%end%></h5>
               <%end%>
               
-              <div class="row">
+              <div class="row text-center text-md-left">
               <% if @person.on_ballot? %>
-                <div class="col-auto">
-                  <h6 class="gold-text heavy"><%= "Candidate for #{@person.district.name}, " %><%= "#{@person.district.jurisdiction.name}"%></h6>  
+                <div class="col-auto text-center text-md-left">
+                  <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.name}, #{@person.district.jurisdiction.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                 </div>
-                <div class="col-auto">
+                <div class="col-auto text-center text-md-left">
                 <% if @person.ballot_status == "Advanced to General"%>
-                  <h6 class="advanced-general"><%= @person.ballot_status%></h6>
+                  <h6 class="advanced-general container text-center text-md-left"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Lost in Primary"%>
-                  <h6 class="lost-primary"><%= @person.ballot_status%></h6>
+                  <h6 class="lost-primary text-center text-md-left"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Rumored"%>
-                  <h6 class="rumored-candidate"><%= @person.ballot_status%></h6>
+                  <h6 class="rumored-candidate text-center text-md-left"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Declared Candidacy"%>
-                  <h6 class="declared-candidacy"><%= @person.ballot_status%></h6>
+                  <h6 class="declared-candidacy text-center text-md-left"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "On Ballot"%>
-                  <h6 class="on-ballot"><%= @person.ballot_status%></h6>
+                  <h6 class="on-ballot text-center text-md-left"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Withdrew"%>
-                  <h6 class="withdrew"><%= @person.ballot_status%></h6>
+                  <h6 class="withdrew" text-center text-md-left><%= @person.ballot_status%></h6>
                   <%end%>
                   </div>
                 <%end%>
@@ -53,10 +67,16 @@
                 <div class="col-auto">
                   <strong><small>Birthdate:</small></strong><br>
                   <strong><small>Term Expires:</small></strong><br>
+                  <%if @person.congressional_district.present? || @person.senate_district.present? || @person.assembly_district.present? || @person.supe_district.present? %>
                   <small>Resides in:</small>
+                  <%end%>
                 </div>
                 <div class="col">
+                  <% if @person.birthdate.present?%>
                   <small><%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>) 
+                  <%else%>
+                  <small><em>Unknown</em></small>
+                  <%end%>
                   <%if @person.birthplace? %>
                   in <%= @person.birthplace %></small>
                   <% end %><br>
@@ -81,45 +101,78 @@
               </div>
               <div class="row mt-2 d-flex align-items-start">
                 <div class="col" style="color: #1992D4;">
-                  <%= link_to material_icon.language, @person.official_website%>
-                  <%= mail_to @person.email do %>
-                      <%= fa_icon "envelope" %>
-                  <% end %>
-                  <%= mail_to @person.email do %>
-                      <%= fa_icon "envelope" %>
-                  <% end %>
+                  <% if @person.is_incumbent? %>
+                      <%if @person.official_website.present? %>
+                        <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue" do %>
+                            <%= fa_icon "desktop" %>
+                      <%end%>       
+                    <% end %>
+                  &nbsp      
+                  <%else%>
+                    <% if @person.campaign_website.present?%>
+                      <%= link_to @person.campaign_website, target: :_blank, :class => "nounderline primary-blue" do %>
+                      <%= fa_icon "desktop" %>  
+                      <%end%>
+                    <%end%> 
+                  &nbsp   
+                  <%end%>    
                   
-                  <%= link_to @person.facebook do %>
-                      <%= fa_icon "facebook" %>
-                  <% end %>
+                  <%if @person.email.present?%>
+                    <%= mail_to @person.email, target: :_blank, :class => "nounderline"  do %>
+                        <%= fa_icon "envelope" %>
+                    <% end %>
+                  &nbsp  
+                  <%end%>  
+                  
+                  <%if @person.twitter.present? %>
+                    <%= link_to "http://www.twitter.com/" + @person.twitter, target: :_blank, :class => "nounderline"  do %>
+                        <%= fa_icon "twitter" %>
+                    <% end %>
+                  &nbsp  
+                  <%end%>
+                  
+                  <% if @person.facebook.present? %>
+                    <%= link_to "http://www.facebook.com/" + @person.facebook, target: :_blank, :class => "nounderline"  do %>
+                        <%= fa_icon "facebook" %>
+                    <% end %>
+                  &nbsp
+                  <%end%>  
+                 <% if @person.phone.present? %> 
+                    <p class="nounderline primary-blue m-0"><%= number_to_phone(@person.phone) %></p>
+                  <%end%>
                   </div>
             </div> 
+            
       </div>
+      <!--Start of Biography Section-->
+      <div class="row">
+        <div class="col m-3 mt-0">
+        <% if @person.bio.present? %>
+        
+        <strong>Biography:</strong>
+        <div>    
+          <% if @person.bio.length > 250 %>
+          <%= truncate(@person.bio, length: 250, :escape => false) %>
+          <%= link_to '...Read more', '', class: "read-more-#{@person.id}" %>
+          <script>
+          $('.read-more-<%= @person.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript h(@person.bio).gsub(/\n/, '</br>').html_safe %>')
+            })
+          </script>
+          <% else %>
+            <%= h(@person.bio).gsub(/\n/, '</br>').html_safe %>
+          <% end %>
+        </div>
+          <%end%>
+      </div>
+      </div>
+      
+    <!--End of Biography Section-->
     </div>
 <!--End of Gray Header Area-->    
 
-  <div class="row mt-3 p-2">
-    <% if @person.bio.present? %>
-    <br>
-    <strong>Biography:</strong>
-    <div>    
-      <% if @person.bio.length > 250 %>
-      <%= truncate(@person.bio, length: 250, :escape => false) %>
-      <%= link_to '...Read more', '', class: "read-more-#{@person.id}" %>
-      <script>
-      $('.read-more-<%= @person.id %>').on('click', function(e) {
-        e.preventDefault()
-        $(this).parent().html('<%= escape_javascript h(@person.bio).gsub(/\n/, '</br>').html_safe %>')
-         })
-      </script>
-      <% else %>
-        <%= h(@person.bio).gsub(/\n/, '</br>').html_safe %>
-      <% end %>
-    </div>
-      <%end%>
-  </div>
-  <br>
-<!--End of Biography Section-->
+<br>
 
 <% if @person.is_incumbent? %>
 <!--Start of Incumbent Information Section-->
@@ -144,33 +197,33 @@
     <% if @person.reports.where(incumbent_report: true).present? %>
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
       <div class="row my-2">
-        <div class="col-auto">
+        <div class="col-8">
           <strong><h6 style="font-weight:700;" class="m-0">Total Raised this Cycle</h6></strong>
           <small m-0>Into <%= @person.incumbent_district.name %> Committee</small>
         </div>
-        <div class="col-auto ">
-          <h5 class="green-text d-flex ">+ <%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: true ).sum(:period_receipts)) %></h5>
+        <div class="col-4 ">
+          <h5 class="green-text float-right">+&nbsp<%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: true ).sum(:period_receipts)) %></h5>
         </div>
       </div>
     </div>
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
       <div class="row my-2">
-        <div class="col-auto">
+        <div class="col-8">
           <strong><h6 style="font-weight:700;" class="m-0 ">Total Spent this Cycle</h6></strong>
           <small m-0>From <%= @person.incumbent_district.name %> Committee</small>
         </div>
-        <div class="col-auto">
+        <div class="col-4">
           <h5 class="float-right red-text">(<%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: true ).sum(:period_disbursements)) %>)</h5>
         </div>
       </div>
     </div> 
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
       <div class="row my-2">
-        <div class="col-6">
+        <div class="col-8">
           <strong><h6 style="font-weight:700;" class="m-0">Current COH</h6></strong>
           <small m-0>In <%= @person.incumbent_district.name %> Committee</small>
         </div>
-        <div class="col-6">
+        <div class="col-4">
         <h5 class="float-right text-nowrap" id="cash-on-hand"><%= number_to_currency(@person.reports.where(incumbent_report: true).most_recent.net_coh) %></h5>
       </div>
     </div>
@@ -184,8 +237,10 @@
 
 
 <% if @person.on_ballot? %>
+
 <!--Start of Candidate Information -->
 <div class="container">
+<hr>
   <div class="row mt-2">
     <div class="col text-center text-responsive "> 
       <h4 class="heavy p-2 primary-blue "><%= "Race for #{@person.district.name}, " %><%= "#{@person.district.jurisdiction.name}"%></h4>
@@ -305,7 +360,7 @@
     <table class="table border-primary shadow-sm bg-white p-2" style="width:100%">
       <thead class="thead-light rounded">
         <tr>
-          <th>REPORT DATE</th>
+          <th>REPORT DATE<br><small>PERIOD</small></th>
           <th>RECEIPTS</th>
           <th>DISBURSEMENTS</th>
           <th>COH</th>
@@ -317,6 +372,16 @@
       <tbody>
       <% @reports.each do |report| %>
         <% if report.incumbent_report == false %>
+        <tr>
+          <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+          <td><span class="float-right">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
+          <td><span class="float-right">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
+          <td><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
+          <td><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td></span>
+          <td><span>$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span></td>
+        </tr>
+        <%end%>
+        <% if @person.running_reelection? %>
         <tr>
           <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
@@ -356,7 +421,7 @@
     </div>
   </div>
   <div class="table-responsive p-4">
-    <table class="table border-primary shadow-sm p-2" style="width:100%">
+    <table class="table border-primary shadow-sm p-2 bg-white" style="width:100%">
       <thead class="thead-light rounded">
       <tr>
         <th>Date</th>
@@ -398,22 +463,21 @@
 <%end%>
 
 
+  <div class="row">
+    <div class="col">
+    <br>
+    <% if current_user.admin? %>
+    <%= link_to "Add Report", new_report_path(:person_id => @person.id), 
+          :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
+    <%= link_to "Edit", edit_person_path(@person), :class => "btn btn-outline-primary mr-2" %> 
+    <%= link_to 'Delete Person', @person, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
+    <%end%>
 
-<br>
-<% if current_user.admin? %>
-<%= link_to "Add Report", new_report_path(:person_id => @person.id), 
-      :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
-<%= link_to "Edit", edit_person_path(@person), :class => "btn btn-outline-primary mr-2" %> 
-<%= link_to 'Delete Person', @person, method: :delete, data: { confirm: 'Are you sure?' } %> 
-<%end%>
+    <%= link_to "Back", people_path, :class => "float-right btn btn-outline-secondary text-right" %>
+    </div>
+  </div>
 
-<%= link_to "Back", people_path, :class => "float-right btn btn-outline-secondary" %>
 
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
 <div class="col-1">
   </div>  
 </div> <!-- End of wrapper -->

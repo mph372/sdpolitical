@@ -1,112 +1,132 @@
-<% if user_signed_in? %>
-<h3><%= @committee.name %></h3>
-<hr>
-<p>
-  <strong>Jurisdiction:</strong>
-  <%= @committee.jurisdiction.name %>
-    <br>
-  <strong>Committee Type:</strong>
-  <%= @committee.committee_type %>
-  <br>
-  <% if @committee.committee_type == "Primarily Formed" %>
-    <strong>Candidate or Measure Supporting or Opposing:</strong>
-      <% if @committee.person != nil %>
-        <%= link_to "#{@committee.person.first_name} #{@committee.person.last_name}", @committee.person %>
-      <%else%>
-        <% link_to "Measure #{@committee.measure}", @committee.measure%> 
-      <%end%>
-      <% if @committee.support? %>
-        (Support)
-      <%else%>
-        (Oppose)
-      <%end%>
-  <%end%>
-<br>
-<%if @committee.is_active?%>
-<em>Committee is currently active</em>
-<%else%>
-<em>Commitee is no longer active.</em>
-<%end%>
-</p>
-
-<% if @committee.reports.present? %>
-<hr>
-<h5>Expenditures</h5>
-<table class="table small-table table-striped table-bordered">
-<thead>
-    <tr>
-      <th>Date</th>
-      <th>Amount</th>
-      <th>Candidate / Measure</th>
-      <th>District / Jurisdiction</th>
-      <th>Support / Oppose</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @expenditures.each do |expenditure| %>
-      <tr>
-        <td><%= expenditure.expenditure_date.strftime("%b-%d-%y") %></td>
-        <td><%= number_to_currency(expenditure.amount) %></td>
-        <% if expenditure.person.present?%>
-              <td><%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %></td>
-              <td><%= expenditure.person.district.name %>
-              </td>
-            <%else%>
-              <td><%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %></td>
-              <td><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></td>
+<div class="container wrapper">
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10"></div>
+      <div class="row bg-light shadow-sm bg-white rounded mt-1 p-3">
+        <div class="container">
+          <div class="row" style="width=100%;">
+            <div class="col-12">
+          <h3 class="primary-blue heavy text-responsive"><%= @committee.name %></h3>
+          <hr>
+          </div>
+          <div class="container">
+          <div class="row">
+            <div class="col-auto">
+              <strong>Jurisdiction:</strong><br>
+              <strong>Committee Type:</strong><br>
+              <% if @committee.committee_type == "Primarily Formed" %>
+              <strong>Candidate or Measure Supporting or Opposing:</strong><br>
               <%end%>
-        <td><% if expenditure.is_support?%>
-            Support
-            <%else%>
-            Oppose
-            <%end%></td>
-        
-      </tr>
-    <% end %>
-  </tbody>
-  </table>
-  <%end%>
+              <%if @committee.is_active?%>
+              <em>Committee is currently active</em>
+              <%else%>
+              <em>Commitee is no longer active.</em>
+              <%end%>
+            </div>
 
-<% if @committee.reports.present? %>
-<hr>
-<h5>Campaign Finance Reports</h5>
-<table class="table small-table table-striped table-bordered">
-<thead>
-    <tr>
-      <th>Reporting Period</th>
-      <th>Date report filed</th>
-      <th>Period Receipts</th>
-      <th>Period Disbursements</th>
-      <th>Cash-on-hand</th>
-      <th>Debt</th>
-    </tr>
-  </thead>
+            <div class="col-auto">
+              <%= link_to @committee.jurisdiction.name %><br>
+              <%= @committee.committee_type %><br>
+                <% if @committee.person.present? %>
+                  <%= link_to "#{@committee.person.first_name} #{@committee.person.last_name}", @committee.person %>
+                <%else%>
+                  <% link_to "Measure #{@committee.measure}", @committee.measure%> 
+                <%end%>
+                <% if @committee.support? %>
+                  (Support)
+                <%else%>
+                  (Oppose)
+                <%end%>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+      <% if @committee.reports.present? %>
+      <hr>
+      <h5 class="dark-red-supporting heavy">Expenditures</h5>
+      
+          <div class="table-responsive shadow-sm bg-white rounded border-primary p-4">
+            <table class="table">
+            <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Candidate / Measure</th>
+                  <th>District / Jurisdiction</th>
+                  <th>Support / Oppose</th>
+                </tr>
+              </thead>
 
-  <tbody>
-    <% @reports.each do |report| %>
-      <tr>
-        <td><%= "#{report.period_begin.to_formatted_s(:long)} - #{report.period_end.to_formatted_s(:long)}" %></td>
-        <td><%= report.report_filed.to_formatted_s(:long) %></td>
-        <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
-        <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
-        <td>$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></td>
-        <td>$ <%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td>
-      </tr>
-    <% end %>
-  </tbody>
-  </table>
-  <%end%>  
+              <tbody>
+                <% @expenditures.order('expenditure_date DESC').each do |expenditure| %>
+                  <tr>
+                    <td><%= expenditure.expenditure_date.strftime("%b-%d-%y") %></td>
+                    <td><%= number_to_currency(expenditure.amount) %></td>
+                    <% if expenditure.person.present?%>
+                          <td><%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %></td>
+                          <td><%= link_to "#{expenditure.person.district.jurisdiction.name}", expenditure.person.district.jurisdiction  %></td>
+                        <%else%>
+                          <td><%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %></td>
+                          <td><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></td>
+                          <%end%>
+                    <td><% if expenditure.is_support?%>
+                        Support
+                        <%else%>
+                        Oppose
+                        <%end%></td>
+                    
+                  </tr>
+                <% end %>
+              </tbody>
+              </table>
+            
+          </div>
+        <%end%>
+      </div>
+      <div class="container">
+      <% if @committee.reports.present? %>
+      <hr>
+      <h5 class="dark-red-supporting heavy">Campaign Finance Reports</h5>
+      <div class="table-responsive shadow-sm bg-white rounded border-primary p-4">
+      <table class="table">
+      <thead>
+          <tr>
+            <th>Report Date</th>
+            <th>Period Receipts</th>
+            <th>Period Disbursements</th>
+            <th>Cash-on-hand</th>
+            <th>Debt</th>
+          </tr>
+        </thead>
 
-<% if current_user.admin? %>
-<%= link_to("Add Report", new_report_path(:committee_id => @committee.id), :action => "new", :method => :get)%> |
-<%= link_to 'Delete Committee', @committee, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'Edit', edit_committee_path(@committee) %> |
-<%end%>
-<%= link_to 'Back', committees_path %>
+        <tbody>
+          <% @reports.order('report_filed DESC').each do |report| %>
+            <tr>
+              <td><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+              <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
+              <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
+              <td><span class="green-pill">$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
+              <td>$ <%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        </table>
+        </div>
+        <br>
+        <%end%>  
+      </div>
+      <% if current_user.admin? %>
+      <%= link_to("Add Report", new_report_path(:committee_id => @committee.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%>
+      <%= link_to 'Edit', edit_committee_path(@committee), :class => "btn btn-outline-primary mr-2" %>  
+      <%= link_to 'Delete Committee', @committee, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
+      <%end%>
+      <%= link_to 'Back', committees_path, :class => "float-right btn btn-outline-secondary text-right" %>
+      <div class="col-1"></div>
+      </div>
+    </div>
+  </div>  
+    
 
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>

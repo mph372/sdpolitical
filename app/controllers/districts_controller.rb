@@ -8,10 +8,7 @@ class DistrictsController < ApplicationController
     @districts = District.all
   end
 
-  def import
-    District.my_import(params[:file])
-    redirect_to root_url, notice: "Succesfully Imported Data!"
-  end
+
 
   # GET /districts/1
   # GET /districts/1.json
@@ -35,7 +32,7 @@ class DistrictsController < ApplicationController
   # POST /districts.json
   def create
     @district = District.new(district_params)
-
+    
     respond_to do |format|
       if @district.save
         format.html { redirect_to @district, notice: 'District was successfully created.' }

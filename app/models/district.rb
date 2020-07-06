@@ -6,9 +6,10 @@ class District < ApplicationRecord
   has_many :candidates, inverse_of: :district, class_name: 'Person'
   belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
   has_many :reports, through: :persons
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :trackers
   has_many :added_districts, through: :trackers, source: :user
+  
   def registration_advantage
     dem_voters - rep_voters
   end
@@ -49,12 +50,6 @@ class District < ApplicationRecord
     (total_voters - (dem_percent+rep_percent)) / total_voters * 100
   end
 
-  def self.my_import(file)
-    districts = []
-    CSV.foreach(file.path, headers: true) do |row|
-      districts << District.new(row.to_h)
-    end
-    District.import districts, recursive: true 
-  end
+
 
 end

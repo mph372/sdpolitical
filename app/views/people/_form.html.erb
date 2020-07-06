@@ -8,8 +8,6 @@
     <div class="row">
       <div class="col">
       Incumbent Status <br>
-        
-        <%= f.select(:incumbent_district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {:include_blank => true, :selected => params[:incumbent_district_id]}, id:"IncumbentPicker", label: "Running for:") %>
     </div>
     <div class="col">
  
