@@ -73,12 +73,12 @@
                 </div>
                 <div class="col">
                   <% if @person.birthdate.present?%>
-                  <small><%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>) 
+                  <small><%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>) </small>
                   <%else%>
                   <small><em>Unknown</em></small>
                   <%end%>
                   <%if @person.birthplace? %>
-                  in <%= @person.birthplace %></small>
+                  <small>in <%= @person.birthplace %></small>
                   <% end %><br>
                   <small><%= @person.term_expires %></small>
                   <% if @person.term? %>
