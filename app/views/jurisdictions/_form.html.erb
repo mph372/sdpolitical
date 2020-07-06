@@ -1,11 +1,11 @@
-
+<div class="container bg-white shadow-sm border rounded mt-2 p-5">
 <%= bootstrap_form_for(@jurisdiction, label_errors: true) do |f| %>
 
-  <div class="row">
-    <div class="col">
+  <div class="row ">
+    <div class="col ">
       <%= f.text_field :name, label: "Jurisdiction Name"%>
     </div>
-    <div class="col">
+    <div class="col ">
       <%= f.select :jurisdiction_type, ['Federal', 'State', 'County', 'City', 'School District', 'Water District', 'Fire District', 'Healthcare', 'Public Utility'], :include_blank => true, label: "Jurisdiction Type" %>
     </div>
   </div>      
@@ -15,8 +15,9 @@
 
   <%= f.text_field :map_url, label: "Map URL" %>
   <%= f.submit %>
-
+  <%= link_to 'Back', jurisdictions_path, :class => "btn btn-outline-primary"  %>
   <%end%>
   <br>
+  </div>
 
 

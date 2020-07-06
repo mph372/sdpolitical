@@ -1,85 +1,103 @@
 
+<div class="container bg-white shadow-sm border rounded mt-2">
+<br>
 <%= bootstrap_form_for(@district, label_errors: true) do |f| %>
 <% if @district.errors.any? %>
     <% @district.errors.full_messages.each do |message| %>
       <li><%= message %></li>
     <% end %>
   <% end %>
-  <div class="row">
-    <div class="col">
-      <%= f.text_field :name %>
-    </div>   
-    <div class="col"> 
-      <%= f.text_field :district %>
-    </div>
+
+<div class="row p-3">
+  <div class="col-md-3">
+    <h5 class="heavy">District Overview</h5>
   </div>
-
-    <div class="row">
-    <div class="col">
-      <%= f.number_field :contribution_limit %>
-    </div>
-    <div class="col">
-      <%= f.check_box :corporate_contributions, label: "Corporate Contributions Allowed" %>
-      <%= f.check_box :pac_contributions, label: "PAC Contributions Allowed" %>
-     </div>
-    <div class="col"> 
-      <%= f.check_box :party_contributions, label: "Party Contributions Allowed" %>
-      <%= f.number_field :party_contribution_limit %>
-    </div>
+  <div class="col-md-9">
+      <div class="row">
+        <div class="col-md">
+          <%= f.text_field :name, label: "Office Name" %>
+        </div>   
+        <div class="col-md"> 
+          <%= f.text_field :district, label: "District Number/Type" %>
+        </div>
+      </div>  
+      <div class="row">
+        <div class="col-md">
+          <%= f.form_group do %>
+            <%= f.check_box :corporate_contributions, label: "Corporate Allowed" %>
+            <%= f.check_box :pac_contributions, label: "PAC Allowed" %>
+            <%= f.check_box :party_contributions, label: "Party Allowed", id:"runningFor" %>
+          <%end%>
+        </div>   
+        <div class="col-md"> 
+          <%= f.number_field :contribution_limit %>
+        </div>  
+        <div class="col-md">  
+          <%= f.number_field :party_contribution_limit, :disabled => true, id:"runningForPicker" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md"> 
+          <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
+        </div>  
+        <div class="col-md">  
+          <%= f.select(:incumbent_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
+        </div>
+      </div>
+        <%= f.text_field :map_url, label: "Map Embed Link" %>
   </div>
+</div>
 
-  <div class="row">
-    <div class="col">
-      <%= f.number_field :total_voters, label: "Registered Voters", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :dem_percent, label: "Registered Democrat Voters", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :rep_percent, label: "Registered GOP Voters", step: :any %>
-    </div>
+<hr>
+
+<div class="row p-3">
+  <div class="col-md-3">
+    <h5 class="heavy">District Statistics</h5>
   </div>
-
-  <div class="row"> 
-    <div class="col">
-      <%= f.number_field :newsom_percent, label: "Newsom %", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :cox_percent, label: "Cox %", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :clinton_percent, label: "Clinton %", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :trump_percent, label: "Trump %", step: :any %>
-    </div>
-
-    <div class="col">
-      <%= f.number_field :brown_percent, label: "Brown %", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :kashkari_percent, label: "Kashkari %", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :obama_percent, label: "Obama %", step: :any %>
-    </div>
-    <div class="col">
-      <%= f.number_field :romney_percent, label: "Romney %", step: :any %>
-    </div>
+  <div class="col-md-9">
+      <div class="row">
+        <div class="col-md border-right">
+           <%= f.number_field :total_voters, label: "Registered Voters", step: :any %>
+           <%= f.number_field :dem_percent, label: "Registered Democrat Voters", step: :any %>
+           <%= f.number_field :rep_percent, label: "Registered GOP Voters", step: :any %>
+        </div>   
+        <div class="col-md dem-text"> 
+          <%= f.number_field :newsom_percent, label: "Newsom %", step: :any %>
+          <%= f.number_field :clinton_percent, label: "Clinton %", step: :any %>
+          <%= f.number_field :brown_percent, label: "Brown %", step: :any %>
+          <%= f.number_field :obama_percent, label: "Obama %", step: :any %>
+        </div>
+        <div class="col-md gop-text">
+          <%= f.number_field :cox_percent, label: "Cox %", step: :any %>
+          <%= f.number_field :trump_percent, label: "Trump %", step: :any %>
+          <%= f.number_field :kashkari_percent, label: "Kashkari %", step: :any %>
+          <%= f.number_field :romney_percent, label: "Romney %", step: :any %>
+        </div>  
+      
   </div>
+</div>
 
-  <div class="row">
-    <div class="col">
-    <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
-    </div>
-    <div class="col">
-    <%= f.select(:incumbent_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
-    </div>    
-  </div> 
 
-  <%= f.text_field :map_url, label: "Map Embed Link" %>
-  <br>
-  <%= f.submit %>  
 
+
+
+<%= f.submit %>  
+&nbsp
 <% end %>
-<br>
+<%= link_to 'Back', districts_path, :class => "btn btn-outline-primary" %>
+</div>
+
+<script>
+
+$(document).on('change', '#runningFor', function(){
+    debugger;
+    if($(this).prop('checked')){
+        $('#runningForPicker').removeAttr('disabled');
+        
+    } else {
+        $('#runningForPicker').attr('disabled', 'disabled');
+        
+    }
+});
+
+</script>

@@ -1,35 +1,39 @@
-
+<div class="container bg-white shadow-sm border rounded mt-2">
 <%= bootstrap_form_for(@committee, label_errors: true) do |f| %>
 
-<%= f.text_field :name, label: "Commitee Name" %>
 
-<div class="row">
-  <div class="col">
-    <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
-  </div>  
-  <div class="col">
-    <%= f.select :committee_type, ['General Purpose', 'Primarily Formed'], :include_blank => true %>
-  </div>    
-</div>
-
-<div class="row">
-  <div class="col">
-    <%= f.select(:person_id, Person.all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Candidate" }) %>
+<div class="row p-3">
+  <div class="col-md-3">
+    <h5 class="heavy">Committee Information</h5>
   </div>
-  <div class="col">
-    <%= f.select(:measure_id, Measure.all.collect { |v| [ "Measure #{v.letter}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Measure" }) %>
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col-md">
+        <%= f.text_field :name, label: "Commitee Name" %> 
+        <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
+        <%= f.select :committee_type, ['General Purpose', 'Primarily Formed'], :include_blank => true %>
+        <%= f.check_box :is_active %>
+      </div>
+        <div class="col-md">
+          <%= f.select(:person_id, Person.all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, {  }) %>
+          <%= f.select(:measure_id, Measure.all.collect { |v| [ "Measure #{v.letter}", v.id ] }, {:include_blank => true }, {  }) %>
+          <%= f.form_group :support, label: { text: "Support or Oppose" }  do %>
+            <%= f.radio_button :support, "Support" %> 
+            <%= f.radio_button :support, "Oppose" %> 
+            <%end%>
+      </div>  
+
+    </div>    
   </div>  
-  <div class="col">
-    <%= f.form_group :support, label: { text: "Support or Oppose" }  do %>
-    <%= f.radio_button :support, "Support" %> 
-    <%= f.radio_button :support, "Oppose" %> 
-    <%end%>
-  </div>     
+
 </div>
-<%= f.check_box :is_active %>
+
+
 <br>
 <%= f.submit %>
-
+    <%= link_to 'Back', committees_path, :class => "btn btn-outline-primary"  %>
 <%end%>
 
 <br>
+
+</div>
