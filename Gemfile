@@ -45,6 +45,8 @@ gem 'truncate_html', '~> 0.9.3'
 gem 'material_icons'
 gem "font-awesome-rails"
 gem 'stripe', '~> 5.22'
+gem 'figaro'
+gem 'fog-aws'
 
 
 # Reduces boot times through caching; required in config/boot.rb
