@@ -20,8 +20,8 @@
             INCUMBENT
           </div>
         <div class="row no-gutters">
-          <div class="col-auto d-flex align-items-center justify-content-center pl-4" >
-            <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow", size: "125x125"  %></div>
+          <div class="col-auto d-flex  justify-content-center pl-4 mt-3" >
+            <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow", size: "100x100"  %></div>
           <div class="col-auto">
             <div class="card-body">
               <h4 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h4>
@@ -181,7 +181,7 @@
           <%else%>
           <%end%>
           </td>
-          <td class="condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+          <td class="condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "45x45"  %></td>
           <td>
           <% if candidate.party == "Republican" %>
           <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%><br><small><%= candidate.title %></small>
@@ -297,30 +297,31 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
           Contribution Limit:
-          <div class="green-pill font-size-12 float-right"><strong><% if @district.contribution_limit.present? %>        
+          <div class="green-text heavy float-right"><strong>
+          <% if @district.contribution_limit.present? %>        
             $<%= number_with_delimiter(@district.contribution_limit, delimiter: ",") %>
           <%else%>
             No Limit
           <%end%></strong></div></li>
       <li class="list-group-item">Corporate Contributions:
           <% if @district.corporate_contributions?%>
-          <div class="green-pill float-right"><strong>Allowed</strong>
+          <div class="green-text float-right"> <%= material_icon.check_circle %>
           <%else%>
-          <div class="red-pill float-right"><strong>Prohibited</strong>
+          <div class="gop-text heavy float-right"> <%= material_icon.cancel %>
           <%end%></li>
       <li class="list-group-item">PAC Contributions:
           <% if @district.pac_contributions?%>
-          <div class="green-pill float-right"><strong>Allowed</strong>
+          <div class="green-text float-right"><%= material_icon.check_circle %>
           <%else%>
-          <div class="red-pill float-right"><strong>Prohibited</strong>
+          <div class="gop-text float-right"><%= material_icon.cancel %>
           <%end%></li>
       <li class="list-group-item">
           <% if @district.party_contributions?%>
           Party Contribution Limit:
-          <div class="green-pill font-size-12 float-right"><strong>$<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %></strong>
+          <div class="green-text heavy float-right"><strong>$<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %></strong>
           <%else%>
           Party Contributions:
-          <div class="red-pill font-size-12 float-right"><strong>Prohibited</strong>
+         <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
           <%end%></li></li>
     </ul>
   </div> 
