@@ -121,6 +121,7 @@
       <br>
       <% if current_user.admin? %>
       <%= link_to("Add Report", new_report_path(:committee_id => @committee.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%>
+      <%= link_to("Add Expenditure", new_expenditure_path(:committee_id => @committee.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%>
       <%= link_to 'Edit', edit_committee_path(@committee), :class => "btn btn-outline-primary mr-2" %>  
       <%= link_to 'Delete Committee', @committee, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
       <%end%>

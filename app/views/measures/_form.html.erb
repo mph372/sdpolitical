@@ -1,52 +1,38 @@
-<%= form_with(model: measure, local: true) do |form| %>
-  <% if measure.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(measure.errors.count, "error") %> prohibited this measure from being saved:</h2>
-
-      <ul>
-      <% measure.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+<div class="container bg-white shadow-sm border rounded mt-2 p-4">
+<%= bootstrap_form_for(@measure, label_errors: true) do |f| %>
+<% if @measure.errors.any? %>
+    <% @measure.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
   <% end %>
 
-  <div class="field">
-    <%= form.label :letter %>
-    <%= form.text_field :letter %>
+<div class="row m-2">
+  <div class="col-md-3">
+    <h5 class="heavy">Measure Information</h5>
   </div>
+  <div class="col-md-9"> 
+    <div class="row">
+      <div class="col">
+        <%= f.text_field :letter %>
+        <%= f.select :origin, ['Citizens', 'Legislative'], {:include_blank => true} %>
+        <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ "#{v.name}", v.id ] }, {}, { "data-placeholder": "Select Jurisdiction" }) %>
+      </div>
+      <div class="col">
+        <%= f.text_field :topic %>
+        <%= f.select :measure_type, ['Initiative', 'Referendum'], {:include_blank => true} %>
+        <%= f.text_field :threshold %>
+      </div>  
+    
+  </div>
+  <%= f.text_area :text %>  
+  <%= f.submit %>
+  <br><br>
+<%= link_to 'Back', measures_path, :class => "btn btn-outline-primary" %>
+</div>    
 
-  <div class="field">
-    <%= form.label :text %>
-    <%= form.text_area :text %>
-  </div>
 
-  <div class="field">
-    <%= form.label :topic %>
-    <%= form.text_field :topic %>
-  </div>
 
-  <div class="field">
-    <%= form.label :measure_type %>
-    <%= form.text_field :measure_type %>
-  </div>
 
-  <div class="field">
-    <%= form.label :origin %>
-    <%= form.text_field :origin %>
-  </div>
-
-  <div class="field">
-    <%= form.label :jurisdiction_id %>
-    <%= form.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ "#{v.name}", v.id ] }, {}, { "data-placeholder": "Select Jurisdiction" }) %>
-  </div>
-
-  <div class="field">
-    <%= form.label :threshold %>
-    <%= form.text_field :threshold %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>
+
+</div>

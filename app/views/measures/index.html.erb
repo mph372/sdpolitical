@@ -1,42 +1,40 @@
-<p id="notice"><%= notice %></p>
-<% if user_signed_in? %>
-<h1>Measures</h1>
-<br>
-<table class="table small-table table-bordered table-sm table-hover" id="measures">
-  <thead class="thead-light">
-    <tr>
-      <th>Letter</th>
-      <th>Topic</th>
-      <th>Type</th>
-      <th>Origin</th>
-      <th>Jurisdiction</th>
-      <th>Threshold</th>
-    </tr>
-  </thead>
+<div class="container">
+  <div class="row">
+    <div class="col">  
+      <h1>Measures</h1>
+      <br>
+      <div class="table-responsive shadow bg-white rounded border-primary p-4">
+      <table class="table " id="measures">
+        <thead class="thead-light">
+          <tr>
+            <th>Letter</th>
+            <th>Topic</th>
+            <th>Type</th>
+            <th>Origin</th>
+            <th>Jurisdiction</th>
+            <th>Threshold</th>
+          </tr>
+        </thead>
 
-  <tbody>
-    <% @measures.each do |measure| %>
-      <tr>
-        <td><%= link_to "Measure #{measure.letter}", measure %></td>
-        <td><%= measure.topic %></td>
-        <td><%= measure.measure_type %></td>
-        <td><%= measure.origin %></td>
-        <td><%= measure.jurisdiction.name %></td>
-        <td><%= number_to_percentage(measure.threshold, precision: 2) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+        <tbody>
+          <% @measures.each do |measure| %>
+            <tr>
+              <td><%= link_to "Measure #{measure.letter}", measure %></td>
+              <td><%= measure.topic %></td>
+              <td><%= measure.measure_type %></td>
+              <td><%= measure.origin %></td>
+              <td><%= measure.jurisdiction.name %></td>
+              <td><%= number_to_percentage(measure.threshold, precision: 2) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 <br>
 <% if current_user.admin? %>
-<%= link_to 'New Measure', new_measure_path %>
+<%= link_to 'New Measure', new_measure_path, :class => "btn btn-primary mr-2" %>
 <%end%>    
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#measures').DataTable( {

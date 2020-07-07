@@ -1,60 +1,68 @@
-<% if user_signed_in? %>
-<h4>Measure <%= @measure.letter %>  (<%= @measure.topic %>)</h4>
-<h6><%= link_to "#{@measure.jurisdiction.name}", @measure.jurisdiction %></h6>
+<div class="container">
+  <div class="row bg-light shadow-sm bg-white rounded mt-1 p-5">
+    <div class="col">
 
-<p>
-  <strong>Measure Summary:</strong><br>
-  <%= @measure.text %>
-</p>
+      <div class="row">
+        <h2 class="primary-blue heavy">Measure <%= @measure.letter %> </h2><h4>(<%= @measure.topic %>)</h4>
+        <h6><%= link_to "#{@measure.jurisdiction.name}", @measure.jurisdiction %></h6>
+      </div>
+      <br>
+      <div class="row">
+        <strong>Measure Summary:</strong><br>
+        <p><%= @measure.text %></p><br>
+      </div>
 
-<p>
-  <strong>Type:</strong>
-  <%= @measure.measure_type %><br>
-  <strong>Origin:</strong>
-  <%= @measure.origin %>
-</p>
+      <div class="row">  
+        <div class="col-auto p-0">
+            <strong>Type:</strong><br>
+            <strong>Origin:</strong><br>
+            <strong>Required Vote Threshold:</strong>
+        </div>
+        <div class="col-auto">
+          <%= @measure.measure_type %><br>
+          <%= @measure.origin %><br>
+          <%= number_to_percentage(@measure.threshold, precision: 2) %>
+        </div>
+      </div>
+    </div>
+  </div>    
+  
+  <hr>
+  <% if @measure.committees.present? %>
+  <h5 class="dark-red-supporting heavy">Committees Supporting / Opposing Measure <%= @measure.letter %></h5>
+  <div class="table-responsive">
+    <table class="table border-primary shadow-sm bg-white p-2">
+      <thead>
+      <tr>
+        <th>Committee Name</th>
+        <th>Support / Oppose</th>
+        <th>Total Receipts</th>
+        <th>Total Expenditures</th>
+      </tr>
+    </thead>
 
-<p>
-  <strong>Required Vote Threshold:</strong>
-  <%= number_to_percentage(@measure.threshold, precision: 2) %>
-</p>
-<hr>
-<% if @measure.committees.present? %>
-<h5>Committees Supporting / Opposing Measure <%= @measure.letter %></h5>
-<table class="table small-table table-striped table-bordered">
-    <thead>
-    <tr>
-      <th>Committee Name</th>
-      <th>Support / Oppose</th>
-      <th>Total Receipts</th>
-      <th>Total Expenditures</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @committees.each do |committee| %>
-    <tr> 
-      <td><%= link_to "#{committee.name}", committee %> </td>
-      <td><% if committee.support?%>
-          Support
-          <%else%>
-          Oppose
-          <%end%> </td>
-      <td><%= number_to_currency(committee.reports.sum(:period_receipts)) %> </td>
-      <td><%= number_to_currency(committee.reports.sum(:period_disbursements)) %> </td>                   
-    </tr>
-    <%end%>
-  </tbody>
-</table>
-<%end%>
-
+    <tbody>
+      <% @committees.each do |committee| %>
+      <tr> 
+        <td><%= link_to "#{committee.name}", committee %> </td>
+        <td><% if committee.support?%>
+            Support
+            <%else%>
+            Oppose
+            <%end%> </td>
+        <td><%= number_to_currency(committee.reports.sum(:period_receipts)) %> </td>
+        <td><%= number_to_currency(committee.reports.sum(:period_disbursements)) %> </td>                   
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
+  </div>
+  <%end%>
+  
 <% if current_user.admin? %>
 <%= link_to 'Edit', edit_measure_path(@measure) %> |
 <%= link_to 'Delete Measure', @measure, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%end%>
 <%= link_to 'Back', measures_path %>
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+</div>
+</div>

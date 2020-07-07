@@ -45,7 +45,7 @@ gem 'truncate_html', '~> 0.9.3'
 gem 'material_icons'
 gem "font-awesome-rails"
 gem 'stripe', '~> 5.22'
-gem 'activeadmin'
+
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

@@ -27,4 +27,5 @@ class Person < ApplicationRecord
 
 
 
+
 end
