@@ -31,7 +31,6 @@
               <% if @district.incumbent.present? %>
               <h4 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h4>
               <h6 class="card-subtitle mb-2 text-muted"><%= @district.incumbent.title %></h6>
-              <span class="text-center text-md-left dark-red-supporting">Seeking Re-Election</span>
               <%else%>
               <h4 class="card-title">VACANT</h4>
               <%end%>
@@ -48,18 +47,18 @@
                   <%end%>
                   <%if @district.incumbent.congressional_district.present? || @district.incumbent.senate_district.present? || @district.incumbent.assembly_district.present? || @district.incumbent.supe_district.present? %>                  
                   <br>
-                  <small class="heavy">Resides in: </small><%end%><% if @district.incumbent.congressional_district != nil %><small>
-                  <%=  "CD-#{@district.incumbent.congressional_district}" %>,
+                  <small class="heavy">Resides in: </small><%end%><% if @district.incumbent.congressional_district != nil %>
+                  <small><%=  "CD-#{@district.incumbent.congressional_district}" %>,</small>
                   <%end%>
                   <% if @district.incumbent.senate_district != nil %>
-                  <%= "SD-#{@district.incumbent.senate_district}" %>,
+                  <small><%= "SD-#{@district.incumbent.senate_district}" %>,</small>
                   <%end%>
                   <% if @district.incumbent.assembly_district != nil %>
-                  <%= "AD-#{@district.incumbent.assembly_district}" %>,
+                  <small><%= "AD-#{@district.incumbent.assembly_district}" %>,</small>
                   <%end%>
                   <% if @district.incumbent.supe_district != nil %>
-                  <%= "BOS-#{@district.incumbent.supe_district}" %>
-                  <%end%></small>
+                  <small><%= "BOS-#{@district.incumbent.supe_district}" %></small>
+                  <%end%>
                 </div>
                 <%end%>
                 </p>
@@ -185,11 +184,11 @@
         <% if candidate.on_ballot? %>
           <% report = candidate.reports.most_recent %>
           
-          <td class="condensed-column">
+          <td class="condensed-column pt-4 pb-0">
           <% if candidate.endorsed_republican? %>
-          <div class="red-checkmark"><span class="text-white">&#10003</div>
+          <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
           <%elsif candidate.endorsed_democrat?%>
-          <div class="blue-checkmark"><span class="text-white">&#10003</div>
+          <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
           <%else%>
           <%end%>
           </td>
@@ -330,7 +329,7 @@
       <li class="list-group-item">
           <% if @district.party_contributions?%>
           Party Contribution Limit:
-          <div class="green-text heavy float-right"><strong>$<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %></strong>
+          <div class="green-text heavy float-right"><strong><%if @district.party_contribution_limit == 0 %>No Limit<%else%>$<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %><%end%></strong>
           <%else%>
           Party Contributions:
          <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>

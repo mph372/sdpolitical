@@ -94,8 +94,8 @@
                   <% end %><br>
                   <small><%= @person.term_expires %></small>
                   <% if @person.term? && @person.is_incumbent %>
-                  <small><%= "(Term Limited in #{@person.term})" %></small><br>
-                  <%end%>
+                  <small><%= "(Term Limited in #{@person.term})" %></small>
+                  <%end%><br>
                   <small>
                   <% if @person.congressional_district != nil %>
                   <%=  "CD-#{@person.congressional_district}" %>,
@@ -294,7 +294,7 @@
           <li class="list-group-item">
               <% if @person.district.party_contributions?%>
               Party Contribution Limit:
-              <div class="green-text heavy float-right"><strong>$<%= number_with_delimiter(@person.district.party_contribution_limit, delimiter: ",") %></strong>
+              <div class="green-text heavy float-right"><strong><%if @person.district.party_contribution_limit == 0 %>No Limit<%else%>$<%= number_with_delimiter(@person.district.party_contribution_limit, delimiter: ",") %><%end%></strong>
               <%else%>
               Party Contributions:
               <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
@@ -325,7 +325,7 @@
           <li class="list-group-item">
               <% if @person.incumbent_district.party_contributions?%>
               Party Contribution Limit:
-              <div class="green-text heavy float-right"><strong>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %></strong>
+              <div class="green-text heavy float-right"><strong><%if @person.incumbent_district.party_contribution_limit == 0 %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %><%end%></strong>
               <%else%>
               Party Contributions:
               <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
@@ -350,7 +350,7 @@
             <tr >
                 <% if @person.district.incumbent.running_reelection == true %>
                 <% incumbent = @person.district.incumbent %>
-                <% report = incumbent.reports.most_recent %>
+                
                 <td class="text-center no-border condensed-column"><%= image_tag incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <td class="no-border">
                   <% if incumbent.party == "Republican" %>
@@ -364,7 +364,8 @@
                 <%else%>
                 <%= incumbent.professional_career %>
                 <%end%></small></td>
-                <% if incumbent.reports.present?%>               
+                <% if incumbent.reports.present?%>  
+                <% report = incumbent.reports.most_recent %>             
                 <td class="text-right no-border"><span class="green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
                 <%else%>
                 <td class="text-right no-border">$0.00<br><small>Cash-on-Hand</small></td>
