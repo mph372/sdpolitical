@@ -22,7 +22,6 @@
 <br>
 <div class="container">
   <h5 class="dark-red-supporting heavy"> List of Offices & Districts </h5>
-<br>
   <div class="table-responsive shadow-sm bg-white rounded border-primary p-4">
     <table class="table">
     <thead>
@@ -53,11 +52,13 @@
     </table>
   </div>
 </div>  
+<br>
 <% if @jurisdiction.measures.present? %>
+<hr>
 <div class="container">
-  <h5>Current Ballot Measures</h5>
+  <h5 class="dark-red-supporting heavy">Current Ballot Measures</h5>
   <div class="table-responsive shadow-sm bg-white rounded border-primary p-4">
-    <table class="table small-table table-striped table-bordered">
+    <table class="table">
         <thead>
         <tr>
           <th>Measure</th>

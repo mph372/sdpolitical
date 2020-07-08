@@ -1,12 +1,47 @@
-<% if user_signed_in? %>
+<div class="container bg-white shadow-sm rounded p-4">
+  <div class="row">
+    <div class="col-auto">
+    Report Filer:<br>
+    Report Filed:<br>
+    Period Begin:<br>
+    Period End:  <br>
+    <hr>
+    Period Receipts: <br>
+    Loans Received:<br>
+    Period Disbursements:<br>
+    Cash-On-Hand:<br>
+    Outstanding Debt:<br>
+    </div>
+    <div class="col-auto">
+    <% if @report.person.present? %><%= link_to "#{@report.person.first_name} #{@report.person.last_name}", @report.person %><%end%>
+    <% if @report.committee.present? %><%= link_to "#{@report.committee.name}", @report.committee %><%end%><br>
+    <%= @report.report_filed.to_formatted_s(:long) %><%if @report.is_amended?%>(Amended)<%end%><br>
+    <%= @report.period_begin.to_formatted_s(:long) %><br>
+    <%= @report.period_end.to_formatted_s(:long) %>
+    <hr>
+    $<%= number_with_delimiter(@report.period_receipts, :delimiter => ',') %><br>
+    $<% if @report.loans_received.present? %><%= number_with_delimiter(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%><br>
+    $<%= number_with_delimiter(@report.period_disbursements, :delimiter => ',') %><br>
+    $<%= number_with_delimiter(@report.current_coh, :delimiter => ',') %><br>
+    $<%= number_with_delimiter(@report.current_debt, :delimiter => ',') %>
+    </div>
+
+
+
+
+
+  </div>
+<br>
+
+
+
+
+
+
+
 <% if current_user.admin? %>
 <%= link_to 'Edit', edit_report_path(@report) %> |
 <%= link_to 'Delete Report', @report, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
 <%= link_to 'Back', reports_path %>
-
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+</div>

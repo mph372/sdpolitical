@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1 class="primary-blue heavy">Committee Expenditures</h1>
+      <h1 class="primary-blue heavy">Independent Expenditures</h1>
       <br>
       <div class="panel panel-default">
         <div class="table-responsive shadow bg-white rounded border-primary p-4">
           <table class="table" id="expenditures">
             <thead class="thead-light">
               <tr>
-                <th>Date</th>
+                <th>Expenditure Date</th>
                 <th>Description</th>
                 <th>Committee</th>
                 <th>Amount</th>
@@ -22,18 +22,18 @@
             <tbody>
               <% @expenditures.each do |expenditure| %>
                 <tr>
-                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.expenditure_date.to_formatted_s(:long) %></td>
-                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.description %></td>
-                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= link_to expenditure.committee.name %></td>
-                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= number_to_currency(expenditure.amount) %></td>
-                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
+                  <td class=""><%= expenditure.expenditure_date.to_formatted_s(:long) %><% if expenditure.is_amendment? %>*<%end%></td>
+                  <td class=""><%= expenditure.description %></td>
+                  <td class=""><%= link_to expenditure.committee.name %></td>
+                  <td class=""><%= number_to_currency(expenditure.amount) %></td>
+                  <td class="">
                     <% if expenditure.person != nil %>
                       <%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %>
                       <%else%>
                       <%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %>
                       <%end%>
                   </td>
-                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
+                  <td class="">
                   <% if expenditure.person.present?%>
                   <%= link_to "#{expenditure.person.district.name}", expenditure.person.district %>
                   <%end%>
@@ -41,7 +41,7 @@
                   <%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %>
                   <%end%>        
                   </td>
-                  <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><% if expenditure.is_support? %>
+                  <td class=""><% if expenditure.is_support? %>
                       Support
                       <%else%>
                       Oppose
@@ -54,7 +54,7 @@
         </div>
       </div>  
       <br>
-      <span class="small-text" ><em>Expenditures listed in italics are amended version of prior reported expenditures.</em></span>
+      <span class="small-text" ><em>* = amended version of prior reported expenditures.</em></span>
 
       <br>
       <br>

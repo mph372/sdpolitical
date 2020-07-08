@@ -1,29 +1,58 @@
 
 <div class="container">
-<div class="row">
-<h1 class="primary-blue heavy m-4">Campaign Finance Reports</h1>
-  <div class="col-lg-6">
+
+    <div class="row">
+      <h1 class="primary-blue heavy m-4">Campaign Finance Reports</h1>
+    </div>
+      <div class="row">
+    <div class="col-lg-6">
+        <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
+          <div class="card-header">
+              TOP CANDIDATE FUNDRAISERS<br> (PERIOD ENDING FEB 15, 2020)
+          </div>
+          <div class="table-responsive p-1">
+            <table class="table table p-2 bg-white" style="width:100%">           
+                  <thead class="thead-light">
+                    <tr>
+                      <th></th>
+                      <th>Candidate<br></th>
+                      <th>Period Receipts</th>
+                    </tr>
+                  </thead>
+                  <% Report.where(candidate_report: true).order(period_receipts: :DESC).limit(10).each do |report|  %>
+                  <% if report.period_begin == report.most_recent_filing_period_start %>
+                  <tbody>
+                    <tr>
+                      <td class="condensed-column text-center"><%= image_tag report.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                      <td><% if report.person.running_reelection? %><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.incumbent_district.name %>
+                      <%else%><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.district.name %><%end%></td>
+                      <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
+                      <%end%>
+                    <tr>
+                    <%end%>
+                  </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
       <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
         <div class="card-header">
-            TOP CANDIDATE FUNDRAISERS<br> (PERIOD ENDING FEB 15, 2020)
+            MOST-FUNDED COMMITTEES<br> (PERIOD ENDING FEB 15, 2020)
         </div>
-        
         <div class="table-responsive p-1">
           <table class="table table p-2 bg-white" style="width:100%">           
                 <thead class="thead-light">
                   <tr>
-                    <th></th>
-                    <th>Candidate<br></th>
-                    <th>Period Receipts</th>
+                    <th>Committee<br></th>
+                    <th>COH</th>
                   </tr>
                 </thead>
-                <% Report.where(candidate_report: true).order(period_receipts: :DESC).limit(10).each do |report|  %>
-                <% if report.period_begin == report.most_recent_filing_period_start %>
+                <% Report.limit(10).order(current_coh: :DESC).each do |report|  %>
                 <tbody>
                   <tr>
-                    <td class="condensed-column text-center"><%= image_tag report.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
-                    <td><% if report.person.running_reelection? %><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.incumbent_district.name %>
-                    <%else%><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.district.name %><%end%></td>
+                    <% if report.committee != nil && report.period_begin == report.most_recent_filing_period_start %>
+                    <td><%= link_to "#{report.committee.name}", report.committee  %><br><small><%= report.committee.jurisdiction.name %></td>
                     <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
                     <%end%>
                   <tr>
@@ -33,34 +62,6 @@
         </div>
       </div>
   </div>
-  <div class="col-lg-6">
-    <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
-      <div class="card-header">
-          MOST-FUNDED COMMITTEES<br> (PERIOD ENDING FEB 15, 2020)
-      </div>
-      <div class="table-responsive p-1">
-        <table class="table table p-2 bg-white" style="width:100%">           
-              <thead class="thead-light">
-                <tr>
-                  <th>Committee<br></th>
-                  <th>COH</th>
-                </tr>
-              </thead>
-              <% Report.limit(10).order(current_coh: :DESC).each do |report|  %>
-              <tbody>
-                <tr>
-                  <% if report.committee != nil && report.period_begin == report.most_recent_filing_period_start %>
-                  <td><%= link_to "#{report.committee.name}", report.committee  %><br><small><%= report.committee.jurisdiction.name %></td>
-                  <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
-                  <%end%>
-                <tr>
-                <%end%>
-              </tbody>
-        </table>
-      </div>
-    </div>
-</div>
-
 </div>  
     
 
@@ -77,6 +78,7 @@
           <th>Name<br><small>(Committee)</small></th>
           <th>Report Date</th>
           <th>Receipts</th>
+          <th>Loans Received</th>
           <th>Disbursements</th>
           <th>COH</th>
           <th>DEBT</th>
@@ -100,10 +102,11 @@
             <%end%>
             <td class=""><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
             <td class=""><span class="float-right green-text">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
+            <td class=""><span class="float-right">$<% if report.loans_received.present? %><%= number_with_delimiter(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%></span></td>
             <td class=""><span class="float-right red-text">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
             <td class=""><span class="float-right green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
             <td class=""><span class="float-right red-pill">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></span></td>
-            <td class=""><span class="float-right">$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span></td>
+            <td class=""><%if report.net_coh < 0 %><span class="float-right gop-text">($<%= number_with_delimiter(report.net_coh, :delimiter => ',') %>)</span><%else%><span class="float-right">$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span><%end%></td>
           </tr>
         <% end %>
       </tbody>

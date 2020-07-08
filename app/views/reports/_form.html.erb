@@ -20,6 +20,7 @@
     <div class="row">
       <div class="col border-right">
         <%= f.number_field :period_receipts, step: :any %>
+        <%= f.number_field :loans_received, step: :any, label: "Loans Received" %>
         <%= f.number_field :period_disbursements, step: :any %>
         <%= f.number_field :current_coh, step: :any, label: "Cash on Hand" %>
         <%= f.number_field :current_debt, step: :any, label: "Debt" %>

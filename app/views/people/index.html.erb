@@ -1,6 +1,6 @@
 <% if user_signed_in? %>
 <div class="container wrapper">
-<h1 class="primary-blue heavy text-responsive">Elected Officials Directory</h1>
+<h1 class="primary-blue heavy text-responsive">Elected Officials & Candidates Directory</h1>
 <br>
 <div class="panel panel-default">
   <div class="table-responsive shadow bg-white rounded border-primary p-4">
@@ -8,31 +8,45 @@
   <thead class="thead-light">
   
     <tr>
+      <th class="th-sm">Name</th>
       <th class="th-sm">Jurisdiction</th>
       <th class="th-sm">Office</th>
-      <th class="th-sm">Name</th>
       <th class="th-sm">Party</th>
       <th class="th-sm">Age</th>
       <th class="th-sm">Current Term Expires</th>
+      <th>COH</th>
     </tr>
   </thead>
 
   <tbody>
     <% @people.each do |person| %>
-      <% if person.is_incumbent? && person.incumbent_district.present? %>
+      
       <% report = person.reports.most_recent %>
       <tr>
+        <td><%= link_to "#{person.last_name}, #{person.first_name}", person %><% if person.is_incumbent? && person.incumbent_district.present? %>*<%end%></td>
+        <% if person.incumbent_district.present? %>
         <td><%= person.incumbent_district.jurisdiction.name %></td>    
-        <td><span><%= person.incumbent_district.name %></span><br>
+        <td><span><%= person.incumbent_district.name %></span><br><small>
         <% if person.incumbent_district.district != "At Large"%>
         <%= "#{person.incumbent_district.district.to_i.ordinalize} District" %>
-        <%end%></td>      
-        <td><%= link_to "#{person.last_name}, #{person.first_name}", person %></td>
+        <%end%></small></td> <%end%>   
+        <% unless person.incumbent_district.present? %>
+        <td><%= person.district.jurisdiction.name %></td>    
+        <td><span><%= person.district.name %></span><br><small>
+        <% if person.district.district != "At Large"%>
+        <%= "#{person.district.district.to_i.ordinalize} District" %>
+        <%end%></small></td> <%end%>   
         <td><%= person.party %>
         <td><%= person.calculated_age %></td>
-        <td><%= person.term_expires %></td>
+        <td><% if person.incumbent_district.present? %><%= person.term_expires %><%else%>Candidate<% end %></td>
+        <td><span class="float-right green-pill"><% if (person.on_ballot || person.running_reelection) && person.reports.where(candidate_report: true).present? %>
+            <%= number_to_currency(person.reports.where(candidate_report: true).most_recent.current_coh ) %>
+            <% elsif person.incumbent_district.present? && person.reports.where(incumbent_report: true).present? %>
+            <%= number_to_currency(person.reports.where(incumbent_report: true).most_recent.current_coh ) %>
+            <%else%>
+            $0.00</span><%end%></td>
       </tr>
-      <%end%>
+      
     <% end %>
   </tbody>
 </table>
@@ -65,13 +79,13 @@
                     show: true,
                     orderable: false,
                 },
-                targets: [0,3,-1],
+                targets: [3],
             },
             {
                 searchPanes:{
                     show: false,
                 },
-                targets: [2],
+                targets: [0,6],
             },
             {
                 searchPanes: {
