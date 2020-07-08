@@ -35,7 +35,7 @@
               <% if @person.incumbent_district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction, :class => "nounderline" %> - 
                 <% if @person.incumbent_district.district != "At Large" %>
-                <%= link_to "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize} District", @person.district, :class => "nounderline" %> 
+                <%= link_to "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize} District", @person.incumbent_district, :class => "nounderline" %> 
                 <%else%>
                 <%= link_to "#{@person.title}", @person.incumbent_district, :class => "nounderline" %>
                 <%end%></h5>
