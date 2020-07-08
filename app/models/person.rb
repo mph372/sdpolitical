@@ -26,6 +26,8 @@ class Person < ApplicationRecord
   end
 
 
-
+  def former_candidate
+    ballot_status == "Withdrew" || ballot_status == "Lost in Primary"
+  end
 
 end

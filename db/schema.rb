@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_06_222847) do
+ActiveRecord::Schema.define(version: 2020_07_07_180214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,7 @@ ActiveRecord::Schema.define(version: 2020_07_06_222847) do
     t.integer "cycle"
     t.bigint "district_id"
     t.boolean "incumbent_report"
+    t.boolean "candidate_report", default: true
     t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["district_id"], name: "index_reports_on_district_id"

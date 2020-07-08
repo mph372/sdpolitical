@@ -20,6 +20,12 @@ class Report < ApplicationRecord
     period_disbursements / period_receipts
   end
 
+  def current_period
+    if period_begin == most_recent_filing_period_start
+      return true
+    end
+  end
+
 
 
 end

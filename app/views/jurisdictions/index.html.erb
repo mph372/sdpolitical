@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
-<% if user_signed_in? %>
-<h1>Jurisdictions</h1>
+<div class="container">
 
-<table class="table table-striped table-bordered table-sm" id="jurisdictions">
+<h1 class="heavy primary-blue">Jurisdictions</h1>
+<div class="table-responsive shadow bg-white rounded border-primary p-4">
+<table class="table" id="jurisdictions">
   <thead>
     <tr>
       <th>Name</th>
@@ -19,17 +19,13 @@
     <% end %>
   </tbody>
 </table>
-
+</div>
 <br>
 <% if current_user.admin? %>
-<%= link_to 'New Jurisdiction', new_jurisdiction_path %>
+<%= link_to 'New Jurisdiction', new_jurisdiction_path, :class => "btn btn-primary mr-2" %>
 <%end%>    
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
 
+</div>
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#jurisdictions').DataTable( {

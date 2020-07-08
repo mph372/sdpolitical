@@ -13,17 +13,17 @@
                     <% if @person.endorsed_republican? %>
                     <br>
                     <br>
-                    <div >
-                    <span class="gop-party-endorsed">&#10004 Party Endorsed</span>
+                    <div>
+                      <div class="gop-party-endorsed" style="display: inline-block;">&#10004 Party Endorsed</div>
                     </div>
                     <%end%>
                   <%elsif @person.party == "Democrat"%>
-                  <span class="dem-pill text-center"><%= @person.party %></span>
+                  <div class="dem-pill text-center" style="display: inline;"><%= @person.party %></div>
                     <% if @person.endorsed_democrat? %>
                     <br>
                     <br>
-                    <div >
-                    <span class="dem-party-endorsed">&#10004 Party Endorsed</span>
+                    <div>
+                      <div class="dem-party-endorsed" style="display: inline-block">&#10004 Party Endorsed</div>
                     </div>
                     <%end%>
                   <%else%>
@@ -37,36 +37,48 @@
                 <% if @person.incumbent_district.district != "At Large" %>
                 <%= link_to "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize} District", @person.district, :class => "nounderline" %> 
                 <%else%>
-                <%= @person.title %>
+                <%= link_to "#{@person.title}", @person.incumbent_district, :class => "nounderline" %>
                 <%end%></h5>
               <%end%>
               
-              <div class="row text-center text-md-left">
-              <% if @person.on_ballot? %>
-                <div class="col-auto text-center text-md-left">
-                  <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.name}, #{@person.district.jurisdiction.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
-                </div>
-                <div class="col-auto text-center text-md-left">
+              <div class="row text-center text-md-left mb-2">
+              <% if @person.on_ballot? || @person.running_reelection? %>
+                <% if @person.running_reelection? %>
+                  <div class="col-auto text-center text-md-left">  
+                    <h6 class="nounderline dark-red-supporting heavy text-center text-md-left">Seeking Re-Election</h6>
+                  </div>
+                  <%else%>  
+                  <div class="col-auto text-center text-md-left">
+                    <% if @person.former_candidate %>
+                    <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.name}, #{@person.district.jurisdiction.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                    <%else%>
+                    <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.name}, #{@person.district.jurisdiction.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                    <%end%>
+                  </div>  
+                  <%end%>
+                  
                 <% if @person.ballot_status == "Advanced to General"%>
-                  <h6 class="advanced-general container text-center text-md-left"><%= @person.ballot_status%></h6>
+                  <h6 class="advanced-general text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Lost in Primary"%>
-                  <h6 class="lost-primary text-center text-md-left"><%= @person.ballot_status%></h6>
+                  <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Rumored"%>
-                  <h6 class="rumored-candidate text-center text-md-left"><%= @person.ballot_status%></h6>
+                  <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Declared Candidacy"%>
-                  <h6 class="declared-candidacy text-center text-md-left"><%= @person.ballot_status%></h6>
+                  <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "On Ballot"%>
-                  <h6 class="on-ballot text-center text-md-left"><%= @person.ballot_status%></h6>
+                  <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Withdrew"%>
                   <h6 class="withdrew" text-center text-md-left><%= @person.ballot_status%></h6>
                   <%end%>
-                  </div>
                 <%end%>
+                
               </div>   
               <div class="row mt-0">
                 <div class="col-auto">
-                  <strong><small>Birthdate:</small></strong><br>
+                  <strong><small>Born:</small></strong><br>
+                  <% if @person.is_incumbent? %>
                   <strong><small>Term Expires:</small></strong><br>
+                  <%end%>
                   <%if @person.congressional_district.present? || @person.senate_district.present? || @person.assembly_district.present? || @person.supe_district.present? %>
                   <small>Resides in:</small>
                   <%end%>
@@ -81,9 +93,9 @@
                   <small>in <%= @person.birthplace %></small>
                   <% end %><br>
                   <small><%= @person.term_expires %></small>
-                  <% if @person.term? %>
-                  <small><%= "(Term Limited in #{@person.term})" %></small>
-                  <%end%><br>
+                  <% if @person.term? && @person.is_incumbent %>
+                  <small><%= "(Term Limited in #{@person.term})" %></small><br>
+                  <%end%>
                   <small>
                   <% if @person.congressional_district != nil %>
                   <%=  "CD-#{@person.congressional_district}" %>,
@@ -98,16 +110,17 @@
                   <%= "BOS-#{@person.supe_district}" %>
                   <%end%></small>
                 </div>
+              
               </div>
               <div class="row mt-2 d-flex align-items-start">
                 <div class="col" style="color: #1992D4;">
                   <% if @person.is_incumbent? %>
                       <%if @person.official_website.present? %>
                         <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue" do %>
-                            <%= fa_icon "desktop" %>
+                            <%= fa_icon "desktop" %>&nbsp
                       <%end%>       
                     <% end %>
-                  &nbsp      
+                        
                   <%else%>
                     <% if @person.campaign_website.present?%>
                       <%= link_to @person.campaign_website, target: :_blank, :class => "nounderline primary-blue" do %>
@@ -194,7 +207,7 @@
   <!--Begins Incumbent Fundraising Data--> 
   <div class="col-md-6">
     <h5 class="dark-red-supporting heavy mb-3">Incumbent Campaign Finance Data</h5>
-    <% if @person.reports.where(incumbent_report: true).present? %>
+    <% if @person.reports.where(incumbent_report: true).present? && @person.incumbent_district.present? %>
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
       <div class="row my-2">
         <div class="col-8">
@@ -224,7 +237,7 @@
           <small m-0>In <%= @person.incumbent_district.name %> Committee</small>
         </div>
         <div class="col-4">
-        <h5 class="float-right text-nowrap" id="cash-on-hand"><%= number_to_currency(@person.reports.where(incumbent_report: true).most_recent.net_coh) %></h5>
+        <h5 class="float-right text-nowrap" id="cash-on-hand"><%= number_to_currency(@person.reports.where(incumbent_report: true).most_recent.current_coh) %></h5>
       </div>
     </div>
     <%else%>
@@ -236,14 +249,18 @@
 
 
 
-<% if @person.on_ballot? %>
+<% if @person.on_ballot? || @person.running_reelection? %>
 
 <!--Start of Candidate Information -->
 <div class="container">
 <hr>
   <div class="row mt-2">
     <div class="col text-center text-responsive "> 
+    <% if @person.on_ballot? %>
       <h4 class="heavy p-2 primary-blue "><%= "Race for #{@person.district.name}, " %><%= "#{@person.district.jurisdiction.name}"%></h4>
+    <%elsif @person.running_reelection? %>
+      <h4 class="heavy p-2 primary-blue "><%= "Race for #{@person.incumbent_district.name}, " %><%= "#{@person.incumbent_district.jurisdiction.name}"%></h4>
+     <%end%> 
     </div>
   </div>
   <div class="row" > 
@@ -252,6 +269,7 @@
         <div class="card-header">
           CAMPAIGN FINANCE LIMITS
         </div>
+        <% if @person.on_ballot? %>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
               Contribution Limit:
@@ -282,20 +300,119 @@
               <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
               <%end%></li></li>
         </ul>
+        <%elsif @person.running_reelection? %>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+              Contribution Limit:
+              <div class="green-text heavy float-right"><strong>
+              <% if @person.incumbent_district.contribution_limit.present? %>        
+                $<%= number_with_delimiter(@person.incumbent_district.contribution_limit, delimiter: ",") %>
+              <%else%>
+                No Limit
+              <%end%></strong></div></li>
+          <li class="list-group-item">Corporate Contributions:
+              <% if @person.incumbent_district.corporate_contributions?%>
+              <div class="green-text float-right"> <%= material_icon.check_circle %>
+              <%else%>
+              <div class="gop-text heavy float-right"> <%= material_icon.cancel %>
+              <%end%></li>
+          <li class="list-group-item">PAC Contributions:
+              <% if @person.incumbent_district.pac_contributions?%>
+              <div class="green-text float-right"><%= material_icon.check_circle %>
+              <%else%>
+              <div class="gop-text float-right"><%= material_icon.cancel %>
+              <%end%></li>
+          <li class="list-group-item">
+              <% if @person.incumbent_district.party_contributions?%>
+              Party Contribution Limit:
+              <div class="green-text heavy float-right"><strong>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %></strong>
+              <%else%>
+              Party Contributions:
+              <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
+              <%end%></li></li>
+        </ul>
+        <%end%>
       </div> 
     </div>
     <div class="col-lg-6">
       <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
         <div class="card-header">
+          <%if @person.former_candidate %>
+          FORMER OPPONENTS
+          <%else%>
           CURRENT OPPONENTS
+          <%end%>
         </div>
       <% if @person.on_ballot? %>
       <div class="table-responsive p-1">
         <table class="table table p-2 bg-white" style="width:100%">
-          <tbody>             
+          <tbody>     
+            <tr >
+                <% if @person.district.incumbent.running_reelection == true %>
+                <% incumbent = @person.district.incumbent %>
+                <% report = incumbent.reports.most_recent %>
+                <td class="text-center no-border condensed-column"><%= image_tag incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                <td class="no-border">
+                  <% if incumbent.party == "Republican" %>
+                  <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent, { :class =>"gop-text" }%>
+                  <%elsif incumbent.party == "Democrat"%>
+                  <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent, { :class =>"dem-text" }%>
+                  <%else%>
+                  <%end%><br><small>
+                <%if incumbent.is_incumbent? %>
+                <%= incumbent.title %>
+                <%else%>
+                <%= incumbent.professional_career %>
+                <%end%></small></td>
+                <% if incumbent.reports.present?%>               
+                <td class="text-right no-border"><span class="green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
+                <%else%>
+                <td class="text-right no-border">$0.00<br><small>Cash-on-Hand</small></td>
+                <%end%>
+                <%end%>
+                
+                
+            
+            </tr>      
             <% @person.district.candidates.each do |candidate| %>
             <tr >
-              <% if candidate.on_ballot? %>
+              <% if candidate.former_candidate == false && candidate.on_ballot? || candidate.running_reelection? %>
+                <% if candidate.id != @person.id %>
+                <% report = candidate.reports.most_recent %>
+                <td class="text-center no-border condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                <td class="no-border">
+                  <% if candidate.party == "Republican" %>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%>
+                  <%elsif candidate.party == "Democrat"%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
+                  <%else%>
+                  <%end%><br><small>
+                <%if candidate.is_incumbent? %>
+                <%= candidate.title %>
+                <%else%>
+                <%= candidate.professional_career %>
+                <%end%></small></td>
+                <% if candidate.reports.present?%>               
+                <td class="text-right no-border"><span class="green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
+                <%else%>
+                <td class="text-right no-border">$0.00<br><small>Cash-on-Hand</small></td>
+                <%end%>
+                <% end %>
+                <%end%>
+            <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+      <%end%>
+      <% if @person.running_reelection? %>
+      <div class="table-responsive p-1">
+        <table class="table table p-2 bg-white" style="width:100%">
+          <tbody>             
+            <% @person.incumbent_district.candidates.each do |candidate| %>
+            <tr >
+              <% if candidate.on_ballot? || candidate.running_reelection? %>
                 <% if candidate.id != @person.id %>
                 <% report = candidate.reports.most_recent %>
                 <td class="text-center no-border condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
@@ -333,26 +450,38 @@
 <div class="container">
   <div class="row mt-1 mb-1">
     <div class="col">
-      <h5 class="dark-red-supporting  text-center heavy"><%= "#{@person.first_name} #{@person.last_name} for #{@person.district.name} Fundraising"%></h5>    
+    <% if @person.on_ballot? && @person.reports.where(candidate_report: true).present? %>
+      <h5 class="dark-red-supporting  text-center heavy"><%= "#{@person.first_name} #{@person.last_name} for #{@person.district.name} Fundraising" %><% if @person.reports.present? %> <%= "(Since #{@person.reports.where(candidate_report: true).order(:period_begin).first.period_begin.to_formatted_s(:long)})" %><%end%></h5>    
+    <%elsif @person.running_reelection?%>
+      <h5 class="dark-red-supporting  text-center heavy"><%= "#{@person.first_name} #{@person.last_name} for #{@person.incumbent_district.name} Fundraising" %><% if @person.reports.present? %> <%= "(Since #{@person.reports.where(candidate_report: true).order(:period_begin).first.period_begin.to_formatted_s(:long)})" %><%end%></h5>    
+    <%end%>
     </div>
   </div>
   <div class="row">
-    <% if @person.reports.present? %> <!--Beginning of "IF" statement for candidate financial data, if available -->
+    <% if @person.reports.where(candidate_report: true).present? %> <!--Beginning of "IF" statement for candidate financial data, if available -->
       <div class="col-lg px-1 text-center">
         <div class="bg-white border rounded shadow-sm p-3">
-          <h3 class="green-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: false ).sum(:period_receipts)) %></h3>
+          <h3 class="green-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)) %></h3>
+          <%if @person.on_ballot? %>
           <h6>Total Raised for <%= @person.district.name %></h6>
+          <%elsif @person.running_reelection? %>
+          <h6>Total Raised for <%= @person.incumbent_district.name %></h6>
+          <%end%>
         </div>
       </div>
       <div class="col-lg px-1 text-center">
         <div class="bg-white border rounded shadow-sm p-3 ">
-        <h3 class="red-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", incumbent_report: false ).sum(:period_disbursements)) %></h3>
+        <h3 class="red-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)) %></h3>
+          <%if @person.on_ballot? %>
         <h6>Total Spent for <%= @person.district.name %></h6>
+          <%elsif @person.running_reelection? %>
+          <h6>Total Spent for <%= @person.incumbent_district.name %></h6>
+          <%end%>
       </div>
   </div>
   <div class="col-lg px-1 text-center">
     <div class="bg-white border rounded shadow-sm p-3 mx-1">
-    <h3 class="green-pill heavy"><%= number_to_currency(@person.reports.where(incumbent_report: [false, nil]).most_recent.current_coh ) %></h3>
+    <h3 class="green-pill heavy"><%= number_to_currency(@person.reports.where(candidate_report: true).most_recent.current_coh ) %></h3>
     <h6>Cash-On-Hand</h6>
     </div>
   </div>
@@ -371,37 +500,34 @@
       
       <tbody>
       <% @reports.each do |report| %>
-        <% if report.incumbent_report == false %>
+        <% if report.candidate_report == true %>
         <tr>
-          <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
-          <td><span class="float-right">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
-          <td><span class="float-right">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
+          <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
+          <td><span class="float-right red-pill">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td></span>
           <td><span>$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span></td>
         </tr>
         <%end%>
-        <% if @person.running_reelection? %>
-        <tr>
-          <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
-          <td><span class="float-right">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
-          <td><span class="float-right">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
-          <td><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
-          <td><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td></span>
-          <td><span>$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span></td>
-        </tr>
-        <%end%>
+        
       <% end %>
     </tbody>
     </table>
+    <small>* = Report is amended version</small>
   </div>  
-  <%end%> <!--End of "IF" statement for candidate financial data, if available -->
-  
+  <%else%> <!--End of "IF" statement for candidate financial data, if available -->
+  <em>(No campaign finance information currently available for <%= "#{@person.first_name} #{@person.last_name}" %>)</em>
+  <%end%>
   <div class="container"> 
   <hr>
   <div class="row p-1 m-2">
     <div class="col">
-      <h5 class="dark-red-supporting heavy text-center"><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.district.name}"%></h5>
+      <% if @person.on_ballot?%>
+      <h5 class="dark-red-supporting heavy text-center"><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.district.name} (2020 General)"%></h5>
+      <%elsif %>
+      <h5 class="dark-red-supporting heavy text-center"><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.incumbent_district.name} (2020 General)"%></h5>
+      <%end%>
     </div>  
   </div> 
   <% if @person.expenditures.present? %> <!-- Start of candidate IE data, if available --> 
