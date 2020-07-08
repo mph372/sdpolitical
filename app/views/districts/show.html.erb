@@ -24,7 +24,7 @@
             <% if @district.incumbent.present? %>
             <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow", size: "100x100"  %></div>
             <% else %>
-            <%= image_tag 'https://sdpolitics.s3.amazonaws.com/uploads/person/image/1/headshot_92ef8bcf95.jpg', alt: 'vacant_headshot', :class => "avatar text-center shadow", size: "100x100"  %></div>
+            <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div>
             <%end%>
           <div class="col-auto">
             <div class="card-body">

@@ -20,13 +20,18 @@
               <tbody>
                 <% @districts.each do |district| %>
                   <tr>
-
+                    <% if district.incumbent.present? %>
                     <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
-                    <td><strong><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %></strong><br>        
+                    <%else%>
+                    <td class="condensed-column"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                    <%end%>
+                    <td><strong><% if district.incumbent.present? %><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %><%else%>Vacant<%end%></strong><br>        
+                    <% if district.incumbent.present? %>
                     <% if district.incumbent.party == "Democrat" %>
                     <small class="dem-text"><%= district.incumbent.party %></small>
                     <%else%>
                     <small class="gop-text"><%= district.incumbent.party %></small>
+                    <%end%>
                     <%end%>
                     <td>
                       <% if district.district == "At Large" %>
