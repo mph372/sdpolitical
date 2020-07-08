@@ -348,6 +348,7 @@
         <table class="table table p-2 bg-white" style="width:100%">
           <tbody>     
             <tr >
+                <% if @person.district.incumbent.present? %>
                 <% if @person.district.incumbent.running_reelection == true %>
                 <% incumbent = @person.district.incumbent %>
                 
@@ -369,6 +370,7 @@
                 <td class="text-right no-border"><span class="green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
                 <%else%>
                 <td class="text-right no-border">$0.00<br><small>Cash-on-Hand</small></td>
+                <%end%>
                 <%end%>
                 <%end%>
                 
