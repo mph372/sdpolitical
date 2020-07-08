@@ -123,7 +123,7 @@
 
 
 <div class="col-lg">
-<% if @district.incumbent.running_reelection == true || @district.candidates.present? %>
+<% if (@district.incumbent.present? && @district.incumbent.running_reelection == true) || @district.candidates.present? %>
 <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
   <div class="card-header text-uppercase">
     candidates for this office
@@ -142,7 +142,7 @@
 
       <tbody>
       <tr>
-        <% if @district.incumbent != nil%>
+        <% if @district.incumbent.present? %>
         <% if @district.incumbent.running_reelection? %>
         <% report = @district.incumbent.reports.most_recent %>
         <td class="condensed-column  pt-4 pb-0">
