@@ -8,26 +8,26 @@
   <div class="col-md-9">
     <div class="row">
       <div class="col">
-      <%= f.date_field :period_begin %>
-      <%= f.date_field :period_end %>
+      <%= f.date_field :period_begin, required: true %>
+      <%= f.date_field :period_end, required: true %>
       </div>
       <div class="col">
-      <%= f.date_field :report_filed %>
-      <%= f.select :cycle, ['2018', '2020', '2022'], :selected => '2020' %>
+      <%= f.date_field :report_filed, required: true %>
+      <%= f.select :cycle, ['2018', '2020', '2022'], :selected => '2020', required: true %>
       </div>
     </div>
     <hr>
     <div class="row">
       <div class="col border-right">
-        <%= f.number_field :period_receipts, step: :any %>
-        <%= f.number_field :loans_received, step: :any, label: "Loans Received" %>
-        <%= f.number_field :period_disbursements, step: :any %>
-        <%= f.number_field :current_coh, step: :any, label: "Cash on Hand" %>
-        <%= f.number_field :current_debt, step: :any, label: "Debt" %>
+        <%= f.number_field :period_receipts, step: :any, required: true %>
+        <%= f.number_field :loans_received, step: :any, label: "Loans Received", required: true %>
+        <%= f.number_field :period_disbursements, step: :any, required: true %>
+        <%= f.number_field :current_coh, step: :any, label: "Cash on Hand", required: true %>
+        <%= f.number_field :current_debt, step: :any, label: "Debt", required: true %>
         </div>
       <div class="col">
         <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, { :include_blank => true, :selected => params[:person_id]}, label: "Candidate:" ) %>
-        <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, { :include_blank => true }, label: "Committee:" ) %>
+        <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, { :include_blank => true, :selected => params[:committee_id] }, label: "Committee:" ) %>
         <%= f.check_box :incumbent_report %>
         <%= f.check_box :candidate_report %>
         <%= f.check_box :is_amended, label: "Report is Amended" %>

@@ -94,7 +94,7 @@
             <% if report.incumbent_report? && report.person.incumbent_district.present? %>
             <small>(<%= report.person.incumbent_district.name %>)</small>
             <%else%>
-            <small>(<%= report.district.name %>)</small>
+            <small>(<%= report.person.district.name %>)</small>
             <%end%>
             </td>
             <%else%>

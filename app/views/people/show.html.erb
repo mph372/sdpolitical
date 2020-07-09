@@ -7,7 +7,11 @@
     <div class="col-10 m-2">
       <div class="row bg-light shadow-sm bg-white rounded mt-1 p-3">
         <div class="col-sm-3 m-1 p-2 text-center"  >
+          <% if @person.image.present? %>
           <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image shadow", size: "125x125"  %><br>
+          <% else %>
+          <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div>
+          <%end%>
             <h6 class="text-center"><% if @person.party == "Republican" %>
                   <span class="gop-pill text-center"><%= @person.party %></span> 
                     <% if @person.endorsed_republican? %>
@@ -50,9 +54,9 @@
                   <%else%>  
                   <div class="col-auto text-center text-md-left">
                     <% if @person.former_candidate %>
-                    <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.name}, #{@person.district.jurisdiction.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                    <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                     <%else%>
-                    <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.name}, #{@person.district.jurisdiction.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                    <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                     <%end%>
                   </div>  
                   <%end%>
@@ -75,9 +79,9 @@
               </div>   
               <div class="row mt-0">
                 <div class="col-auto">
-                  <strong><small>Born:</small></strong><br>
+                  <strong><small>Born:</small></strong>
                   <% if @person.is_incumbent? %>
-                  <strong><small>Term Expires:</small></strong><br>
+                  <br><strong><small>Term Expires:</small></strong><br>
                   <%end%>
                   <%if @person.congressional_district.present? || @person.senate_district.present? || @person.assembly_district.present? || @person.supe_district.present? %>
                   <small>Resides in:</small>
@@ -91,10 +95,10 @@
                   <%end%>
                   <%if @person.birthplace? %>
                   <small>in <%= @person.birthplace %></small>
-                  <% end %><br>
+                  <% end %>
                   <small><%= @person.term_expires %></small>
                   <% if @person.term? && @person.is_incumbent %>
-                  <small><%= "(Term Limited in #{@person.term})" %></small>
+                  <br><small><%= "(Term Limited in #{@person.term})" %></small>
                   <%end%><br>
                   <small>
                   <% if @person.congressional_district != nil %>
