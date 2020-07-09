@@ -425,6 +425,7 @@
                 <td class="text-center no-border condensed-column"><% if candidate.image.present? %><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %>
                 <%else%>
                 <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div></td>
+                <%end%>
                 <td class="no-border">
                   <% if candidate.party == "Republican" %>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%>
