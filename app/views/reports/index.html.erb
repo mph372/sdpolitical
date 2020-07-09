@@ -91,14 +91,10 @@
           <tr>
             <% if report.person.present?%>
             <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %><br>
-              <% if report.incumbent_report? && report.person.incumbent_district.present? %>
+              <% if report.person.running_reelection || report.person.incumbent_report? %>
               <small>(<%= report.person.incumbent_district.name %>)</small>
-              <%else%>
-                <% if report.person.running_reelection %>
-                <small>(<%= report.person.incumbent_district.name %>)</small>
-                <%else%>
-                <small>(<%= report.person.district.name %>)</small>
-                <%end%>
+              <%else%>           
+              <small>(<%= report.person.district.name %>)</small>
               <%end%>
               </td>
               <%else%>
