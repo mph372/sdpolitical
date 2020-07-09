@@ -237,7 +237,7 @@
           <small m-0>In <%= @person.incumbent_district.name %> Committee</small>
         </div>
         <div class="col-4">
-        <h5 class="float-right text-nowrap" id="cash-on-hand"><%= number_to_currency(@person.reports.where(incumbent_report: true).most_recent.current_coh) %></h5>
+        <h5 class="float-right text-nowrap" id="cash-on-hand"><%= number_to_currency(@person.reports.where(incumbent_report: true).order('period_end DESC').first.current_coh) %></h5>
       </div>
     </div>
     <%else%>
@@ -365,9 +365,9 @@
                 <%else%>
                 <%= incumbent.professional_career %>
                 <%end%></small></td>
-                <% if incumbent.reports.present?%>  
-                <% report = incumbent.reports.most_recent %>             
-                <td class="text-right no-border"><span class="green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
+                <% if incumbent.reports.where(candidate_report: true).present?%>  
+                <% report = incumbent.reports %>             
+                <td class="text-right no-border"><span class="green-pill">$<%= number_with_delimiter(report.order('period_end DESC').first.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
                 <%else%>
                 <td class="text-right no-border">$0.00<br><small>Cash-on-Hand</small></td>
                 <%end%>
@@ -417,7 +417,7 @@
             <tr >
               <% if candidate.on_ballot? || candidate.running_reelection? %>
                 <% if candidate.id != @person.id %>
-                <% report = candidate.reports.most_recent %>
+                <% report = candidate.reports.order('period_end DESC').first %>
                 <td class="text-center no-border condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <td class="no-border">
                   <% if candidate.party == "Republican" %>
@@ -484,7 +484,7 @@
   </div>
   <div class="col-lg px-1 text-center">
     <div class="bg-white border rounded shadow-sm p-3 mx-1">
-    <h3 class="green-pill heavy"><%= number_to_currency(@person.reports.where(candidate_report: true).most_recent.current_coh ) %></h3>
+    <h3 class="green-pill heavy"><%= number_to_currency(@person.reports.where(candidate_report: true).order('period_end DESC').first.current_coh ) %></h3>
     <h6>Cash-On-Hand</h6>
     </div>
   </div>
