@@ -10,7 +10,7 @@
           <% if @person.image.present? %>
           <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image shadow", size: "125x125"  %><br>
           <% else %>
-          <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div>
+          <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div><br>
           <%end%>
             <h6 class="text-center"><% if @person.party == "Republican" %>
                   <span class="gop-pill text-center"><%= @person.party %></span> 
@@ -422,7 +422,9 @@
               <% if candidate.on_ballot? || candidate.running_reelection? %>
                 <% if candidate.id != @person.id %>
                 <% report = candidate.reports.order('period_end DESC').first %>
-                <td class="text-center no-border condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                <td class="text-center no-border condensed-column"><% if candidate.image.present? %><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %>
+                <%else%>
+                <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div></td>
                 <td class="no-border">
                   <% if candidate.party == "Republican" %>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%>
