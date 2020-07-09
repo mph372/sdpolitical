@@ -20,7 +20,7 @@
     <%= @report.period_end.to_formatted_s(:long) %>
     <hr>
     $<%= number_with_delimiter(@report.period_receipts, :delimiter => ',') %><br>
-    $<% if @report.loans_received.present? %><%= number_with_delimiter(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%><br>
+    $<% if @report.loans_received.present? %><%= number_with_delimiter(@report.loans_received, :delimiter => ',') %><%else%>0.00<%end%><br>
     $<%= number_with_delimiter(@report.period_disbursements, :delimiter => ',') %><br>
     $<%= number_with_delimiter(@report.current_coh, :delimiter => ',') %><br>
     $<%= number_with_delimiter(@report.current_debt, :delimiter => ',') %>
