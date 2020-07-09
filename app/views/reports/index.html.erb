@@ -92,7 +92,7 @@
             <% if report.person.present?%>
             <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %><br>
             <% if report.incumbent_report? && report.person.incumbent_district.present? %>
-            <small>(<%= report.incumbent_district.name %>)</small>
+            <small>(<%= report.person.incumbent_district.name %>)</small>
             <%else%>
             <small>(<%= report.district.name %>)</small>
             <%end%>

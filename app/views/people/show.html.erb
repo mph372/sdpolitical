@@ -485,7 +485,7 @@
   <div class="col-lg px-1 text-center">
     <div class="bg-white border rounded shadow-sm p-3 mx-1">
     <h3 class="green-pill heavy"><%= number_to_currency(@person.reports.where(candidate_report: true).order('period_end DESC').first.current_coh ) %></h3>
-    <h6>Cash-On-Hand</h6>
+    <h6>Most Recent Cash-On-Hand</h6>
     </div>
   </div>
   <div class="table-responsive p-4">
