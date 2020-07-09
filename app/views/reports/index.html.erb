@@ -19,8 +19,7 @@
                       <th>Period Receipts</th>
                     </tr>
                   </thead>
-                  <% Report.where(candidate_report: true).order(period_receipts: :DESC).limit(10).each do |report|  %>
-                  <% if report.period_begin == report.most_recent_filing_period_start %>
+                  <% Report.where("candidate_report = ? AND period_begin = ?", true, Date.new(2020,1,19)).order(period_receipts: :DESC).limit(10).each do |report|  %>
                   <tbody>
                     <tr>
                       <td class="condensed-column text-center"><%= image_tag report.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
@@ -29,7 +28,7 @@
                       <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
                       <%end%>
                     <tr>
-                    <%end%>
+                    
                   </tbody>
             </table>
           </div>
@@ -48,7 +47,7 @@
                     <th>COH</th>
                   </tr>
                 </thead>
-                <% Report.limit(10).order(current_coh: :DESC).each do |report|  %>
+                <% Report.where("period_begin = ?", Date.new(2020,1,19)).limit(10).order(current_coh: :DESC).each do |report|  %>
                 <tbody>
                   <tr>
                     <% if report.committee != nil && report.period_begin == report.most_recent_filing_period_start %>
