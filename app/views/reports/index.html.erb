@@ -94,7 +94,7 @@
                 <% if report.person.running_reelection || report.incumbent_report? %>
                       <small>(<%= report.person.incumbent_district.name %>)</small>
                       <%else%>           
-                      <small>(<%= report.person.district.name %>)</small>
+                      <small>(<%= report.person.district&.name %>)</small>
                       <%end%>
                 <%else%>
                 <td class=""><%= link_to "#{report.committee&.name}", report.committee  %>
