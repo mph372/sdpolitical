@@ -96,7 +96,7 @@
                   <%if @person.birthplace? %>
                   <small>in <%= @person.birthplace %></small>
                   <% end %>
-                  <small><%= @person.term_expires %></small>
+                  <br><small><%= @person.term_expires %></small>
                   <% if @person.term? && @person.is_incumbent %>
                   <br><small><%= "(Term Limited in #{@person.term})" %></small>
                   <%end%><br>
