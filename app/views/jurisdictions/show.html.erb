@@ -43,7 +43,11 @@
                 <% else %>
                   <%= link_to "#{district.district.to_i.ordinalize} District", district %>
                 <%end%>
-            <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm float-right", size: "45x45"  %></td>   
+                <% if district.incumbent.present? %>
+                <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                <%else%>
+                <td class="condensed-column"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                <%end%>
             <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %><br><small><%= district.incumbent.party %></small></td>
             <td><%= district.incumbent.term_expires %>
           </tr>

@@ -1,9 +1,11 @@
-class TrackerController < ApplicationController
+class DashboardController < ApplicationController
     before_action :authenticate_user!
     before_action :is_subscriber?
 
     def index
-        @tracked_districts = current_user.tracker_additions
+        @dashboard_districts = current_user.dashboard_additions
+        @expenditures = current_user.dashboard_additions
+
     end
 
     def is_subscriber?

@@ -8,13 +8,13 @@ Rails.application.routes.draw do
   resources :people
   resources :committees
   resources :measures
-  resources :tracker, only: [:index]
+  resources :dashboard, only: [:index]
   resources :pricing, only: [:index]
   resources :reports
   resources :districts do
     member do
-      put "add", to:"districts#tracker"
-      put "remove", to:"districts#tracker"
+      put "add", to:"districts#dashboard"
+      put "remove", to:"districts#dashboard"
     end
     collection {post :import}
   end

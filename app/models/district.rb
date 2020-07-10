@@ -7,8 +7,9 @@ class District < ApplicationRecord
   belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
   has_many :reports, through: :persons
   belongs_to :user, optional: true
-  has_many :trackers
-  has_many :added_districts, through: :trackers, source: :user
+  has_many :dashboards
+  has_many :added_districts, through: :dashboards, source: :user
+  has_many :expenditures
   
   def registration_advantage
     dem_voters - rep_voters
@@ -50,6 +51,8 @@ class District < ApplicationRecord
     (total_voters - (dem_percent+rep_percent)) / total_voters * 100
   end
 
-
+  def user_add_to_dashboard?
+    user.dashboards.where(user: user, district: @district).any?
+  end
 
 end

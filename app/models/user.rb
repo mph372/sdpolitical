@@ -1,12 +1,12 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  # :confirmable, :lockable, :timeoutable, :dashboardable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   has_many :districts
-  has_many :trackers
-  has_many :tracker_additions, through: :trackers, source: :district  
+  has_many :dashboards
+  has_many :dashboard_additions, through: :dashboards, source: :district  
   
   def subscribed?
     stripe_subscription_id?
