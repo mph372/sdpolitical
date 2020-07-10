@@ -37,7 +37,7 @@
               <p class="card-text">
               <%if @district.incumbent.present? %>
               <div>
-                  <small class="heavy">Birthdate: </small><small><%= @district.incumbent.birthdate.to_formatted_s(:long) %> (Age <%= @district.incumbent.calculated_age %>) 
+                  <small class="heavy">Birthdate: </small><small><%if @district.incumbent.birthdate.present? %><%= @district.incumbent.birthdate.to_formatted_s(:long) %> (Age <%= @district.incumbent.calculated_age %>)<%else%><em>Unknown</em><%end%> 
                   <%if @district.incumbent.birthplace? %>
                   in <%= @district.incumbent.birthplace %>
                   <% end %></small><br>
