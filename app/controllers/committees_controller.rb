@@ -1,6 +1,7 @@
 class CommitteesController < ApplicationController
   before_action :set_committee, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :is_subscriber?
 
   # GET /committees
   # GET /committees.json
@@ -74,5 +75,9 @@ class CommitteesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def committee_params
       params.require(:committee).permit(:name, :jurisdiction_id, :committee_type, :person_id, :measure_id, :support, :is_active, )
+    end
+
+    def is_subscriber?
+      redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
     end
 end

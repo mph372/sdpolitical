@@ -1,6 +1,7 @@
 class JurisdictionsController < ApplicationController
   before_action :set_jurisdiction, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :is_subscriber?
 
   # GET /jurisdictions
   # GET /jurisdictions.json
@@ -72,5 +73,9 @@ class JurisdictionsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def jurisdiction_params
       params.require(:jurisdiction).permit(:name, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :description, :map_url, :jurisdiction_type)
+    end
+
+    def is_subscriber?
+      redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
     end
 end

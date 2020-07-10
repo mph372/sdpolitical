@@ -1,0 +1,31 @@
+
+<div class="container">
+<div class="table-responsive shadow bg-white rounded border-primary p-4">
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name </th>
+            <th>E-Mail </th>
+            <th>Created At </th>
+            <th>Delete</th>
+        </tr>
+    <thead>
+
+    <tbody>
+         <% @users.each do |user| %>
+        <tr>
+            <td><%=user.first_name%></td>
+            <td><%=user.last_name%></td>
+            <td><%=user.email%><br><%if user.subscribed?%><small class="badge badge-primary">Subscribed</small><%end%><%if user.admin?%>&nbsp<small class="badge badge-warning">Admin</small><%end%></td>
+            <td><%=user.created_at%></td>
+            <td><%= link_to "Delete User", admin_destroy_user_path(user), method: :delete, data: { confirm: "Are you sure? This cannot be un-done!" } %></td>
+        </tr>
+
+        <% end %>
+    </tbody>
+
+
+</table>
+</div>
+</div>

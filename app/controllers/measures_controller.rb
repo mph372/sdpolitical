@@ -1,6 +1,7 @@
 class MeasuresController < ApplicationController
   before_action :set_measure, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :is_subscriber?
 
   # GET /measures
   # GET /measures.json
@@ -72,5 +73,9 @@ class MeasuresController < ApplicationController
     # Only allow a list of trusted parameters through.
     def measure_params
       params.require(:measure).permit(:letter, :text, :topic, :measure_type, :origin, :jurisdiction_id, :threshold)
+    end
+    
+    def is_subscriber?
+      redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
     end
 end

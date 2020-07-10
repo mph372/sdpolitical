@@ -1,6 +1,7 @@
 class ExpendituresController < ApplicationController
   before_action :set_expenditure, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :is_subscriber?
 
   # GET /expenditures
   # GET /expenditures.json
@@ -71,5 +72,9 @@ class ExpendituresController < ApplicationController
     # Only allow a list of trusted parameters through.
     def expenditure_params
       params.require(:expenditure).permit(:expenditure_date, :description, :amount, :person_id, :measure_id, :is_support, :is_amendment, :committee_id, :district_id, :election_type, :election_cycle)
+    end
+
+    def is_subscriber?
+      redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
     end
 end

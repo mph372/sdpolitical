@@ -1,6 +1,7 @@
 class DistrictsController < ApplicationController
   before_action :set_district, only: [:show, :edit, :update, :import, :destroy, :tracker]
   before_action :authenticate_user!
+  before_action :is_subscriber?
 
   # GET /districts
   # GET /districts.json
@@ -92,4 +93,9 @@ class DistrictsController < ApplicationController
     def district_params
       params.require(:district).permit(:id, :name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url, :incumbent_id, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :party_contribution_limit)
     end
+
+    def is_subscriber?
+      redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
+    end
+
 end

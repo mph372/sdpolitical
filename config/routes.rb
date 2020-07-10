@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'pages/home'
   devise_for :users, controllers: {registrations: "registrations"}
+  match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
+  resources :users, only: [:index]
   resources :expenditures
   resources :elections
   resources :people
