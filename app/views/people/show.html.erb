@@ -198,7 +198,7 @@
   <div class="col-md-6 mb-2">
     <h5 class="dark-red-supporting mb-3 heavy">Incumbent Facts</h5>
     <div class="bg-white border rounded shadow-sm p-3 mt-1">
-      <small class="heavy"><%= "First Elected as #{@person.title}:"%></small><br>
+      <small class="heavy"><% if @person.is_appointed? %><%= "First Appointed as #{@person.title}:"%><%else%><%= "First Elected as #{@person.title}:"%><%end%></small><br>
       <%= @person.first_elected.strftime("%B, %Y") %><br><br>
       <small class="heavy"><%= "Profession Before Elected Office:" %></small><br>
       <%= @person.professional_career %><br><br>

@@ -48,8 +48,9 @@
                 <%else%>
                 <td class="condensed-column"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <%end%>
-            <td><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %><br><small><%= district.incumbent.party %></small></td>
-            <td><%= district.incumbent.term_expires %>
+
+            <td><% if district.incumbent.present? %><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %><br><small><%= district.incumbent.party %></small><%else%>Vacant<%end%></td>
+            <td><%= district.incumbent&.term_expires %>
           </tr>
         <% end %>
       </tbody>

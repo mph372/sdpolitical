@@ -29,7 +29,7 @@
                     <% if district.incumbent.present? %>
                     <% if district.incumbent.party == "Democrat" %>
                     <small class="dem-text"><%= district.incumbent.party %></small>
-                    <%elsif%>
+                    <%elsif district.incumbent.party == "Republican"%>
                     <small class="gop-text"><%= district.incumbent.party %></small>
                     <%else%>
                     <small><%= district.incumbent.party %></small>

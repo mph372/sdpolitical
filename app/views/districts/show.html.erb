@@ -395,12 +395,12 @@
 <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary" %>      
 <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' }, :class => "primary-blue btn" %> 
 <%end%>
-
+<!--
 <% if user_add_to_dashboard?(current_user, @district) %>
 <%= link_to 'Stop Tracking District', add_district_path(@district, type: "remove"), method: :put, class: "btn btn-outline-danger" %>
 <%else%>
 <%= link_to 'Track District', add_district_path(@district, type: "add"), method: :put, class: "btn btn-outline-success" %>
-<%end%>
+<%end%> -->
 <%= link_to "Back", districts_path, :class => "float-right btn btn-outline-secondary" %>
 
 <%else %>
