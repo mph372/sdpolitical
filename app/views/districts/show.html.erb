@@ -1,4 +1,4 @@
-<% if user_signed_in? %>
+
 <div class="wrapper container">
 <div class="row">
   <div class="col">
@@ -236,37 +236,38 @@
   <table class="table">
       <tbody>
         <% if @district.newsom_percent.present?%>
-        <tr>
-          <td class="no-border">2018 Gubernatorial</td>
-          <td class="no-border"><% if @district.gov_2018 > 0 %>
-          <span class="dem-text">Newsom</span>
-        <% else %>
-          <span class="gop-text">Cox</span>
-        <%end%> 
-          </td>
-          <td class="no-border"><% if @district.gov_2018 > 0 %>
-          <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
-        <% else %>
-          <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
-        <%end%> 
-          </td> 
-        <%end%>         
-        </tr>
+          <tr>
+            <td class="no-border">2018 Gubernatorial</td>
+            <td class="no-border"><% if @district.gov_2018 > 0 %>
+            <span class="dem-text">Newsom</span>
+          <% else %>
+            <span class="gop-text">Cox</span>
+          <%end%> 
+            </td>
+            <td class="no-border">
+            <% if @district.gov_2018 > 0 %>
+            <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+          <% else %>
+            <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+          <%end%> 
+            </td>   
+          </tr>
         <%end%>
         <%if @district.clinton_percent.present?%>
         <tr>
           <td>2016 Presidential</td>
-          <td><% if @district.pres_2016 > 0 %>
+          <td>
+          <% if @district.pres_2016 > 0 %>
           <span class="dem-text">Clinton</span>
-        <% else %>
+          <% else %>
           <span class="gop-text">Trump</span>
-        <%end%>
+         <%end%>
           </td>
           <td><% if @district.pres_2016 > 0 %>
           <span class="dem-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
-        <% else %>
+          <% else %>
           <span class="gop-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
-        
+          <%end%>
           </td>        
         </tr>
         <%end%>
@@ -407,10 +408,6 @@
 
 <%= link_to "Back", districts_path, :class => "float-right btn btn-outline-secondary" %>
 
-<%else %>
-  <p>Please Sign Up or Sign In to view the content.</p>
-  <%= link_to 'Sign up', new_user_registration_path %><br>
-  <%= link_to 'Sign in', new_user_session_path %>
-<% end %>
+
 </div>
 
