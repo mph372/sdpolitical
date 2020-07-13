@@ -235,66 +235,75 @@
   <div class="table">
   <table class="table">
       <tbody>
+        <% if @district.newsom_percent.present?%>
         <tr>
           <td class="no-border">2018 Gubernatorial</td>
-          <td class="no-border"><% if @district.registration_advantage > 0 %>
+          <td class="no-border"><% if @district.gov_2018 > 0 %>
           <span class="dem-text">Newsom</span>
         <% else %>
           <span class="gop-text">Cox</span>
         <%end%> 
           </td>
-          <td class="no-border"><% if @district.registration_advantage > 0 %>
+          <td class="no-border"><% if @district.gov_2018 > 0 %>
           <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
         <% else %>
           <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
         <%end%> 
-          </td>        
+          </td> 
+        <%end%>         
         </tr>
+        <%end%>
+        <%if @district.clinton_percent.present?%>
         <tr>
           <td>2016 Presidential</td>
-          <td><% if @district.registration_advantage > 0 %>
+          <td><% if @district.pres_2016 > 0 %>
           <span class="dem-text">Clinton</span>
         <% else %>
           <span class="gop-text">Trump</span>
         <%end%>
           </td>
-          <td><% if @district.registration_advantage > 0 %>
+          <td><% if @district.pres_2016 > 0 %>
           <span class="dem-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
         <% else %>
           <span class="gop-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
-        <%end%>
+        
           </td>        
         </tr>
+        <%end%>
+        <%if @district.brown_percent.present?%>
         <tr>
           <td>2014 Gubernatorial</td>
-          <td><% if @district.registration_advantage > 0 %>
+          <td><% if @district.gov_2014 > 0 %>
           <span class="dem-text">Brown</span>
         <% else %>
           <span class="gop-text">Kashkari</span>
         <%end%>
           </td>
-          <td><% if @district.registration_advantage > 0 %>
+          <td><% if @district.gov_2014 > 0 %>
           <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
         <% else %>
           <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
+        <%end%>
+        <% if @district.obama_percent.present? %>
         <tr>
           <td>2012 Presidential</td>
-          <td><% if @district.registration_advantage > 0 %>
+          <td><% if @district.pres_2012 > 0 %>
           <span class="dem-text">Obama</span>
         <% else %>
           <span class="gop-text">Romney</span>
         <%end%>
           </td>
-          <td><% if @district.registration_advantage > 0 %>
+          <td><% if @district.pres_2012 > 0 %>
           <span class="dem-pill float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
         <% else %>
           <span class="gop-pill float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
+        <%end%>
       </tbody>
   </table>
   </div>
