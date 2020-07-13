@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_10_204754) do
+ActiveRecord::Schema.define(version: 2020_07_13_010247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -220,6 +220,7 @@ ActiveRecord::Schema.define(version: 2020_07_10_204754) do
     t.boolean "incumbent_report"
     t.boolean "candidate_report", default: true
     t.float "loans_received"
+    t.boolean "officeholder_account", default: false
     t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["district_id"], name: "index_reports_on_district_id"
