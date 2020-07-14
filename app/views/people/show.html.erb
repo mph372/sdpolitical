@@ -45,7 +45,7 @@
                 <%end%></h5>
               <%end%>
               
-              <div class="row text-center text-md-left mb-2">
+              <div class="row text-center text-md-left mb-1">
               <% if @person.on_ballot? || @person.running_reelection? %>
                 <% if @person.running_reelection? %>
                   <div class="col-auto text-center text-md-left">  
@@ -60,7 +60,8 @@
                     <%end%>
                   </div>  
                   <%end%>
-                <div>  
+                 </div> 
+                 <div class="row ml-1 mt-0">
                 <% if @person.ballot_status == "Advanced to General"%>
                   <h6 class="advanced-general text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Lost in Primary"%>
@@ -76,7 +77,7 @@
                   <%end%>
                 <%end%>
                 </div>
-              </div>   
+                
               <div class="row mt-0">
                 <div class="col-auto">
                   <strong><small>Born:</small></strong>
@@ -514,7 +515,7 @@
         <% if report.candidate_report == true %>
         <tr>
           <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
-          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span><% if report.loans_received.present? %><br><small class="float-right">(Incl $<%= number_with_delimiter(report.loans_received, :delimiter => ',')%> in loans.)</small><%end%></td>
+          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span><% if report.loans_received& > 0 %><br><small class="float-right">(Incl $<%= number_with_delimiter(report.loans_received, :delimiter => ',')%> in loans.)</small><%end%></td>
           <td><span class="float-right red-pill">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td></span>
