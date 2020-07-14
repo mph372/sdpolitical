@@ -515,7 +515,7 @@
         <% if report.candidate_report == true %>
         <tr>
           <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
-          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span><% if report.loans_received& > 0 %><br><small class="float-right">(Incl $<%= number_with_delimiter(report.loans_received, :delimiter => ',')%> in loans.)</small><%end%></td>
+          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span><% if report.loans_received > 0 %><br><small class="float-right">(Incl $<%= number_with_delimiter(report.loans_received, :delimiter => ',')%> in loans.)</small><%end%></td>
           <td><span class="float-right red-pill">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td></span>
