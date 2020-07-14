@@ -60,7 +60,7 @@
                     <%end%>
                   </div>  
                   <%end%>
-                  
+                <div>  
                 <% if @person.ballot_status == "Advanced to General"%>
                   <h6 class="advanced-general text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
                   <%elsif @person.ballot_status == "Lost in Primary"%>
@@ -75,7 +75,7 @@
                   <h6 class="withdrew" text-center text-md-left><%= @person.ballot_status%></h6>
                   <%end%>
                 <%end%>
-                
+                </div>
               </div>   
               <div class="row mt-0">
                 <div class="col-auto">
@@ -98,7 +98,7 @@
                   <% end %>
                   <br><small><%= @person.term_expires %></small>
                   <% if @person.term? && @person.is_incumbent %>
-                  <br><small><%= "(Term Limited in #{@person.term})" %></small>
+                  <small><%= "(Term Limited in #{@person.term})" %></small>
                   <%end%><br>
                   <small>
                   <% if @person.congressional_district != nil %>
@@ -477,6 +477,7 @@
           <%elsif @person.running_reelection? %>
           <h6>Total Raised for <%= @person.incumbent_district.name %></h6>
           <%end%>
+          <% if @person.reports.where(:cycle => "2020", candidate_report: true ).sum(:loans_received) > 0 %><small>Including <%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:loans_received)) %> in Loans</small><%end%>
         </div>
       </div>
       <div class="col-lg px-1 text-center">
@@ -513,7 +514,7 @@
         <% if report.candidate_report == true %>
         <tr>
           <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
-          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
+          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span><% if report.loans_received.present? %><br><small class="float-right">(Incl $<%= number_with_delimiter(report.loans_received, :delimiter => ',')%> in loans.)</small><%end%></td>
           <td><span class="float-right red-pill">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
           <td><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td></span>
