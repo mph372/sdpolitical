@@ -19,7 +19,7 @@
           <%= f.select(:measure_id, Measure.all.collect { |v| [ "Measure #{v.letter}", v.id ] }, {:include_blank => true }, {  }) %>
           <%= f.form_group :support, label: { text: "Support or Oppose" }  do %>
             <%= f.radio_button :support, "Support" %> 
-            <%= f.radio_button :support, "Oppose" %> 
+            <%= f.radio_button :is_oppose, "Oppose" %> 
             <%end%>
       </div>  
 

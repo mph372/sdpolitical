@@ -361,7 +361,6 @@
             <th class="no-border"></th>
             <th class="no-border">Name</th>
             <th class="no-border">Age</th>
-            <th class="no-border">COH</th>
           <tr>
         </thead>
 
@@ -380,8 +379,7 @@
                   <%else%>
                   <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"dts-text" }%><br><small><%= person.incumbent_district.name %></small>
                   <%end%></td>
-                <td>Age <%= person.calculated_age %></td>
-                <td><strong><span class="green-pill">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></span></strong></td>
+                <td><%if person.birthdate.present? %><%= person.calculated_age %><%end%></td>
                 <%end%>
                 <%end%>
               <% end %>

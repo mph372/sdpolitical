@@ -34,8 +34,10 @@
                 <%end%>
                 <% if @committee.support? %>
                   (Support)
-                <%else%>
+                <%elsif @committee.is_oppose? %>
                   (Oppose)
+                <%else%>
+                (General Purposes Committees do not Oppose/Support specific candidates/measures)  
                 <%end%>
             </div>
             </div>
