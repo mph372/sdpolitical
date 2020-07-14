@@ -18,7 +18,7 @@
                     <br>
                     <br>
                     <div>
-                      <div class="gop-party-endorsed" style="display: inline-block;">&#10004 Party Endorsed</div>
+                      <div class="gop-party-endorsed" style="display: inline-block;">Party Endorsed</div>
                     </div>
                     <%end%>
                   <%elsif @person.party == "Democrat"%>
@@ -27,7 +27,7 @@
                     <br>
                     <br>
                     <div>
-                      <div class="dem-party-endorsed" style="display: inline-block">&#10004 Party Endorsed</div>
+                      <div class="dem-party-endorsed" style="display: inline-block">Party Endorsed</div>
                     </div>
                     <%end%>
                   <%else%>
@@ -97,13 +97,15 @@
                   <%if @person.birthplace? %>
                   <small>in <%= @person.birthplace %></small>
                   <% end %>
+                  <% if @person.term_expires.present? %>
                   <br><small><%= @person.term_expires %></small>
+                  <%end%>
                   <% if @person.term? && @person.is_incumbent %>
                   <small><%= "(Term Limited in #{@person.term})" %></small>
-                  <%end%><br>
+                  <%end%>
                   <small>
                   <% if @person.congressional_district != nil %>
-                  <%=  "CD-#{@person.congressional_district}" %>,
+                  <br><%=  "CD-#{@person.congressional_district}" %>,
                   <%end%>
                   <% if @person.senate_district != nil %>
                   <%= "SD-#{@person.senate_district}" %>,
@@ -163,8 +165,8 @@
             
       </div>
       <!--Start of Biography Section-->
-      <div class="row">
-        <div class="col m-3 mt-0">
+      <div class="row ml-2 mr-2">
+        <div class="col">
         <% if @person.bio.present? %>
         
         <strong>Biography:</strong>
@@ -364,6 +366,7 @@
                   <%elsif incumbent.party == "Democrat"%>
                   <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent, { :class =>"dem-text" }%>
                   <%else%>
+                  <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent, { :class =>"dts-text" }%>
                   <%end%><br><small>
                 <%if incumbent.is_incumbent? %>
                 <%= incumbent.title %>

@@ -70,6 +70,10 @@ font-style: normal !important;
   color: #0F609B
 }
 
+.dts-text {
+  color: #7069FA
+}
+
 .amended {
   font-style: italic;
 }
@@ -145,7 +149,8 @@ font-style: normal !important;
 
 .dem-party-endorsed {
   border-radius: 25px;
-  background: #D9E2EC;
+  border-style: solid;
+  border-width: 1px;
   padding: 1px 10px;
   color: #243B53;
   font-weight: 700 !important;
@@ -159,7 +164,8 @@ font-style: normal !important;
 }
 .gop-party-endorsed {
   border-radius: 25px;
-  background: #ffecec;
+  border-style: solid;
+  border-width: 1px;
   padding: 1px 10px;
   color: #824443;
   font-weight: 700 !important;

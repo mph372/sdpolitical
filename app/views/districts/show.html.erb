@@ -159,6 +159,7 @@
           <%elsif @district.incumbent.party == "Democrat"%>
           <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dem-text" }%><br><small><%= @district.incumbent.title %></small>
           <%else%>
+          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dts-text" }%><br><small><%= @district.incumbent.title %></small>
           <%end%></td>
           <td class="no-border d-none d-sm-block ">
           <% if @district.incumbent.ballot_status == "Advanced to General"%>
