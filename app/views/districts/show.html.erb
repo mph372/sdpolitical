@@ -348,7 +348,7 @@
     </ul>
   </div> 
 
-<% if @district.jurisdiction.name == "County of San Diego" || @district.jurisdiction.name == "California Legislature" || @district.jurisdiction.name == "Congress"%>
+<% if @district.jurisdiction.name == "San Diego County" || @district.jurisdiction.name == "California State Legislature" || @district.jurisdiction.name == "U.S. Congress"%>
   <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
     <div class="card-header">
       ELECTED OFFICIALS RESIDING IN DISTRICT
@@ -370,7 +370,7 @@
           <tr>
             <% if person.incumbent_district.present? %>
                 <% report = person.reports.most_recent %>
-                <%if person.senate_district.to_s == @district.district || person.assembly_district.to_s == @district.district || person.congressional_district.to_s == @district.district || person.supe_district.to_s == @district.district %>
+                <%if person.senate_district.to_s == @district.district.to_s || person.assembly_district.to_s == @district.district.to_s || person.congressional_district.to_s == @district.district.to_s || person.supe_district.to_s == @district.district.to_s %>
                 <td class="condensed-column"><%= image_tag person.image.url(:headshot), alt: 'headshot', :class => "avatar", size: "45x45"  %></td>
                 <td>
                   <% if person.party == "Republican" %>
@@ -378,6 +378,7 @@
                   <%elsif person.party == "Democrat"%>
                   <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"dem-text" }%><br><small><%= person.incumbent_district.name %></small>
                   <%else%>
+                  <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"dts-text" }%><br><small><%= person.incumbent_district.name %></small>
                   <%end%></td>
                 <td>Age <%= person.calculated_age %></td>
                 <td><strong><span class="green-pill">$<%= number_with_delimiter(report&.current_coh, :delimiter => ',') %></span></strong></td>
