@@ -47,12 +47,12 @@
                     <th>COH</th>
                   </tr>
                 </thead>
-                <% Report.where("period_begin = ?", Date.new(2020,1,19)).limit(10).order(current_coh: :DESC).each do |report|  %>
+                <% Report.where("period_begin = ?", Date.new(2020,1,19)).order(current_coh: :DESC).limit(10).each do |report|  %>
                 <tbody>
                   <tr>
                     <% if report.committee.present? %>
                     <td><%= link_to "#{report.committee.name}", report.committee  %><br><small><%= report.committee.jurisdiction.name %></td>
-                    <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
+                    <td><span class="float-right green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
                     <%end%>
                   <tr>
                   <%end%>
