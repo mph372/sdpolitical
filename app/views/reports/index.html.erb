@@ -47,7 +47,7 @@
                     <th>COH</th>
                   </tr>
                 </thead>
-                <% Report.where("period_begin = ?", Date.new(2020,1,19)).order(current_coh: :DESC).limit(10).each do |report|  %>
+                <% Report.where("period_begin = ?", Date.new(2020,1,19)).where("committee_id IS NOT NULL").order(current_coh: :DESC).limit(10).each do |report|  %>
                 <tbody>
                   <tr>
                     <% if report.committee.present? %>
