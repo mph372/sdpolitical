@@ -1,3 +1,4 @@
+<% if @person.on_ballot? %>
 <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
       <div class="card-header">
       DISTRICT STATS
@@ -94,3 +95,101 @@
         <%= link_to "View District", @person.district, :class => "btn btn-primary mr-2" %> 
     </div>   
 </div>
+<%elsif @person.running_reelection%>
+<div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
+      <div class="card-header">
+      DISTRICT STATS
+      </div>
+  <div class="card-text pl-4 pr-4">
+  <div class="table-responsive">
+  <table class="table">
+      <tbody>
+        <tr>
+        <td class="no-border">Reg Advantage</td>
+        <td class="no-border"></td>
+            <td class="text-nowrap no-border"><% if @person.incumbent_district.registration_advantage > 0 %>
+            <span class="float-right dem-pill">D +<%= number_with_precision(@person.incumbent_district.registration_advantage, precision: 2) %>%</span>
+            <% else %>
+            <span class="float-right gop-pill">R +<%= number_with_precision(@person.incumbent_district.absolute_registration_advantage, precision: 2) %>%</span>
+            <%end%>
+            </td>
+        </tr>
+        <% if @person.incumbent_district.newsom_percent.present?%>
+          <tr>
+            <td >2018 Gubernatorial</td>
+            <td ><% if @person.incumbent_district.gov_2018 > 0 %>
+            <span class="dem-text">Newsom</span>
+          <% else %>
+            <span class="gop-text">Cox</span>
+          <%end%> 
+            </td>
+            <td >
+            <% if @person.incumbent_district.gov_2018 > 0 %>
+            <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2018.abs, precision: 2) %>%</span>
+          <% else %>
+            <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2018.abs, precision: 2) %>%</span>
+          <%end%> 
+            </td>   
+          </tr>
+        <%end%>
+        <%if @person.incumbent_district.clinton_percent.present?%>
+        <tr>
+          <td>2016 Presidential</td>
+          <td>
+          <% if @person.incumbent_district.pres_2016 > 0 %>
+          <span class="dem-text">Clinton</span>
+          <% else %>
+          <span class="gop-text">Trump</span>
+         <%end%>
+          </td>
+          <td><% if @person.incumbent_district.pres_2016 > 0 %>
+          <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2016.abs, precision: 2) %>%</span>
+          <% else %>
+          <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2016.abs, precision: 2) %>%</span>
+          <%end%>
+          </td>        
+        </tr>
+        <%end%>
+        <%if @person.incumbent_district.brown_percent.present?%>
+        <tr>
+          <td>2014 Gubernatorial</td>
+          <td><% if @person.incumbent_district.gov_2014 > 0 %>
+          <span class="dem-text">Brown</span>
+        <% else %>
+          <span class="gop-text">Kashkari</span>
+        <%end%>
+          </td>
+          <td><% if @person.incumbent_district.gov_2014 > 0 %>
+          <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2014.abs, precision: 2) %>%</span>
+        <% else %>
+          <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2014.abs, precision: 2) %>%</span>
+        <%end%>
+          </td>        
+        </tr>
+        <%end%>
+        <% if @person.incumbent_district.obama_percent.present? %>
+        <tr>
+          <td>2012 Presidential</td>
+          <td><% if @person.incumbent_district.pres_2012 > 0 %>
+          <span class="dem-text">Obama</span>
+        <% else %>
+          <span class="gop-text">Romney</span>
+        <%end%>
+          </td>
+          <td><% if @person.incumbent_district.pres_2012 > 0 %>
+          <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2012.abs, precision: 2) %>%</span>
+        <% else %>
+          <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2012.abs, precision: 2) %>%</span>
+        <%end%>
+          </td>        
+        </tr>
+        <%end%>
+      </tbody>
+  </table>
+  </div>
+  </div>
+      <div class="card-footer">
+        <%= link_to "View District", @person.incumbent_district, :class => "btn btn-primary mr-2" %> 
+    </div>   
+</div>
+<%end%>

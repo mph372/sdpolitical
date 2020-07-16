@@ -281,11 +281,8 @@
           <li class="list-group-item">
               Contribution Limit:
               <div class="green-text heavy float-right"><strong>
-              <% if @person.incumbent_district.contribution_limit.present? %>        
-                $<%= number_with_delimiter(@person.incumbent_district.contribution_limit, delimiter: ",") %>
-              <%else%>
-                No Limit
-              <%end%></strong></div></li>
+              <div class="green-text heavy float-right"><%if @person.incumbent_district.contribution_limit == 0 || @person.incumbent_district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.contribution_limit, delimiter: ",") %><%end%>
+          </strong></div></li>
           <li class="list-group-item">Corporate Contributions:
               <% if @person.incumbent_district.corporate_contributions?%>
               <div class="green-text float-right"> <%= material_icon.check_circle %>
@@ -301,7 +298,7 @@
           <li class="list-group-item">
               <% if @person.incumbent_district.party_contributions?%>
               Party Contribution Limit:
-              <div class="green-text heavy float-right"><strong><%if @person.incumbent_district.party_contribution_limit == 0 %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %><%end%></strong>
+              <div class="green-text heavy float-right"><strong><%if @person.incumbent_district.party_contribution_limit == 0 || @person.incumbent_district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %><%end%></strong>
               <%else%>
               Party Contributions:
               <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
@@ -311,7 +308,7 @@
       </div> 
 
     </div>
-          <div class="col-lg-7">
+        <div class="col-lg-7">
         <%= render 'candidatedistrict'%>
       </div>
   </div> <!--Div to close row after headline to start section-->
