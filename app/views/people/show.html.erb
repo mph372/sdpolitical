@@ -5,8 +5,8 @@
   <div class="col-1">
   </div>
     <div class="col-10 m-2">
-      <div class="row bg-light shadow-sm bg-white rounded mt-1 p-3">
-        <div class="col-sm-3 m-1 p-2 text-center"  >
+      <div class="row bg-light shadow-sm bg-white section-border rounded mt-1 p-3">
+        <div class="col-sm-3 m-1 p-2 text-center "  >
           <% if @person.image.present? %>
           <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image shadow", size: "125x125"  %><br>
           <% else %>
@@ -203,7 +203,7 @@
 <br>
 
 <% if @person.incumbent_district.present? %>
-<div class="shadow-sm mb-3 p-3 bg-white rounded pb-3">
+<div class="shadow-sm mb-3 p-3 bg-white rounded section-border pb-3">
 <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left">Incumbent Info</h4>
 <!--Start of Incumbent Information Section-->
 <div class="row"> 
@@ -226,7 +226,7 @@
 
 
 <% if @person.on_ballot? || @person.running_reelection? %>
-<div class="shadow-sm mb-3 p-3 bg-white rounded ">
+<div class="shadow-sm mb-3 p-3 bg-white rounded section-border">
 <% if @person.on_ballot?%>
 <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= @person.district.name %> Campaign Info</h4>
 <% elsif @person.running_reelection? %>
