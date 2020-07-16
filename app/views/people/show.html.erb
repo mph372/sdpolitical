@@ -238,9 +238,27 @@
     
   </div>
 
+<%if @person.incumbent_district.present? %>
   <div class="row">
+    <% if @person.incumbent_district.at_large_district == false %>
     <%= render 'opponents' %>
+    <%else%>
+    <%= render 'atlargeopponents'%>
+    <%end%>
   </div>
+<%else%>  
+  <div class="row">
+    <% if @person.district.at_large_district == false %>
+    <%= render 'opponents' %>
+    <%else%>
+    <%= render 'atlargeopponents'%>
+    <%end%>
+  </div>
+<%end%>  
+
+
+
+
 <div class="container">
   <div class="row" > 
     <div class="col-lg-5">

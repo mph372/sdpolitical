@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_184200) do
+ActiveRecord::Schema.define(version: 2020_07_16_222045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,19 @@ ActiveRecord::Schema.define(version: 2020_07_14_184200) do
     t.boolean "pac_contributions"
     t.boolean "party_contributions"
     t.integer "party_contribution_limit"
+    t.boolean "at_large_district", default: false
+    t.integer "term_expires"
+    t.integer "measure_a_yes"
+    t.integer "measure_a_no"
+    t.integer "number_of_winners"
+    t.integer "registered_2018"
+    t.integer "voted_2018"
+    t.integer "registered_2016"
+    t.integer "voted_2016"
+    t.integer "registered_2014"
+    t.integer "voted_2014"
+    t.integer "registered_2012"
+    t.integer "voted_2012"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
   end
@@ -199,6 +212,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_184200) do
     t.string "ballot_status"
     t.text "bio"
     t.boolean "is_appointed"
+    t.boolean "running_at_large", default: false
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 

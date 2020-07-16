@@ -20,6 +20,7 @@
         <div class="col-md"> 
           <%= f.text_field :district, label: "District Number/Type" %>
         </div>
+
       </div>  
       <div class="row">
         <div class="col-md">
@@ -33,7 +34,7 @@
           <%= f.number_field :contribution_limit %>
         </div>  
         <div class="col-md">  
-          <%= f.number_field :party_contribution_limit, :disabled => true, id:"runningForPicker" %>
+          <%= f.number_field :party_contribution_limit %>
         </div>
       </div>
       <div class="row">
@@ -43,6 +44,18 @@
         <div class="col-md">  
           <%= f.select(:incumbent_id, Person.where(:is_incumbent => true).order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
         </div>
+        <div class="col-md">  
+           <%= f.select :term_expires, ['','2020', '2022'], {:include_blank => true}, label: "Ballot Cycle" %>  
+        </div>
+      </div>  
+        <div class="row">
+          <div class="col-md">  
+          <%= f.check_box :at_large_district, label: "More than one candidate can win?" %>
+          </div>
+        <div class="col-md"> 
+          <%= f.select :number_of_winners, ['','1','2', '3', '4', '5', '6'], label: "Number of Election Winners?"%>
+        </div>        
+      
       </div>
         <%= f.text_field :map_url, label: "Map Embed Link" %>
   </div>
@@ -73,7 +86,34 @@
           <%= f.number_field :kashkari_percent, label: "Kashkari %", step: :any %>
           <%= f.number_field :romney_percent, label: "Romney %", step: :any %>
         </div>  
-      
+      </div>  
+      <div class="row">
+        <div class="col-md "></div>
+        <div class="col-md">
+          <%= f.number_field :measure_a_yes, label: "Measure A Yes", step: :any %>
+        </div>
+        <div class="col-md ">
+          <%= f.number_field :measure_a_no, label: "Measure A No", step: :any %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md ">
+          <%= f.number_field :registered_2018, label: "Registered 2018", step: :any %>
+          <%= f.number_field :voted_2018, label: "Voted 2018", step: :any %>
+        </div>
+        <div class="col-md">
+          <%= f.number_field :registered_2016, label: "Registered 2016", step: :any %>
+          <%= f.number_field :voted_2016, label: "Voted 2016", step: :any %>
+        </div>
+        <div class="col-md ">
+          <%= f.number_field :registered_2014, label: "Registered 2014", step: :any %>
+          <%= f.number_field :voted_2014, label: "Voted 2014", step: :any %>          
+        </div>
+        <div class="col-md ">
+        <%= f.number_field :registered_2012, label: "Registered 2012", step: :any %>
+        <%= f.number_field :voted_2012, label: "Voted 2012", step: :any %>    
+        </div>
+      </div>
   </div>
 </div>
 

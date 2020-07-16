@@ -15,57 +15,7 @@
 <div class="wrapper container">    
 <div class="row">
   <div class="col-lg">
-      <div class="card shadow-sm mb-3 bg-white rounded border-primary" style="max-width: 100%;">
-          <div class="card-header">
-            INCUMBENT
-          </div>
-        <div class="row no-gutters">
-          <div class="col-auto d-flex  justify-content-center pl-4 mt-3" >
-            <% if @district.incumbent.present? %>
-            <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow", size: "100x100"  %></div>
-            <% else %>
-            <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div>
-            <%end%>
-          <div class="col-auto">
-            <div class="card-body">
-              <% if @district.incumbent.present? %>
-              <h4 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h4>
-              <h6 class="card-subtitle mb-2 text-muted"><%= @district.incumbent.title %></h6>
-              <%else%>
-              <h4 class="card-title">VACANT</h4>
-              <%end%>
-              <p class="card-text">
-              <%if @district.incumbent.present? %>
-              <div>
-                  <small class="heavy">Birthdate: </small><small><%if @district.incumbent.birthdate.present? %><%= @district.incumbent.birthdate.to_formatted_s(:long) %> (Age <%= @district.incumbent.calculated_age %>)<%else%><em>Unknown</em><%end%> 
-                  <%if @district.incumbent.birthplace? %>
-                  in <%= @district.incumbent.birthplace %>
-                  <% end %></small><br>
-                  <small class="heavy">Term Expires: </small><small><%= @district.incumbent.term_expires %></small>
-                  <% if @district.incumbent.term? %>
-                  <small><%= "(Term Limited in #{@district.incumbent.term})" %></small>
-                  <%end%>
-                  <%if @district.incumbent.congressional_district.present? || @district.incumbent.senate_district.present? || @district.incumbent.assembly_district.present? || @district.incumbent.supe_district.present? %>                  
-                  <br>
-                  <small class="heavy">Resides in: </small><%end%><% if @district.incumbent.congressional_district != nil %>
-                  <small><%=  "CD-#{@district.incumbent.congressional_district}" %>,</small>
-                  <%end%>
-                  <% if @district.incumbent.senate_district != nil %>
-                  <small><%= "SD-#{@district.incumbent.senate_district}" %>,</small>
-                  <%end%>
-                  <% if @district.incumbent.assembly_district != nil %>
-                  <small><%= "AD-#{@district.incumbent.assembly_district}" %>,</small>
-                  <%end%>
-                  <% if @district.incumbent.supe_district != nil %>
-                  <small><%= "BOS-#{@district.incumbent.supe_district}" %></small>
-                  <%end%>
-                </div>
-                <%end%>
-                </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= render 'incumbent' %>
 
       
       <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
@@ -122,112 +72,13 @@
 
 
 <div class="col-lg">
-<% if (@district.incumbent.present? && @district.incumbent.running_reelection == true) || @district.candidates.present? %>
-<div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
-  <div class="card-header text-uppercase">
-    candidates for this office
-  </div>
-  <div class="card-text pl-4 pr-4">
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-        <th></th>
-        <th></th>
-        <th>Candidate</th>
-        <th class="d-none d-sm-block ">Status</th>
-        <tr>
-      </thead>
-
-      <tbody>
-      <tr>
-        <% if @district.incumbent.present? %>
-        <% if @district.incumbent.running_reelection? %>
-        <% report = @district.incumbent.reports.most_recent %>
-        <td class="condensed-column  pt-4 pb-0">
-          <% if @district.incumbent.endorsed_republican? %>
-          <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
-          <%elsif @district.incumbent.endorsed_democrat?%>
-          <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
-          <%else%>
-          <%end%>
-          </td>
-          <td class="condensed-column"><%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
-        <td>
-          <% if @district.incumbent.party == "Republican" %>
-          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"gop-text" }%><br><small><%= @district.incumbent.title %></small>
-          <%elsif @district.incumbent.party == "Democrat"%>
-          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dem-text" }%><br><small><%= @district.incumbent.title %></small>
-          <%else%>
-          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dts-text" }%><br><small><%= @district.incumbent.title %></small>
-          <%end%></td>
-          <td class="no-border d-none d-sm-block ">
-          <% if @district.incumbent.ballot_status == "Advanced to General"%>
-          <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= @district.incumbent.ballot_status%></h6>
-          <%elsif @district.incumbent.ballot_status == "Lost in Primary"%>
-          <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= @district.incumbent.ballot_status%></h6>
-          <%elsif @district.incumbent.ballot_status == "Rumored"%>
-          <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= @district.incumbent.ballot_status%></h6>
-          <%elsif @district.incumbent.ballot_status == "Declared Candidacy"%>
-          <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= @district.incumbent.ballot_status%></h6>
-          <%elsif @district.incumbent.ballot_status == "On Ballot"%>
-          <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= @district.incumbent.ballot_status%></h6>
-          <%elsif @district.incumbent.ballot_status == "Withdrew"%>
-          <h6 class="withdrew text-center text-md-left" style="display: inline;"><%= @district.incumbent.ballot_status%></h6>
-          <%end%>
-          </td>
-      </tr>
-      <% end %>
-      <%end%>
-
-      <% @district.candidates.each do |candidate| %>
-      <tr>
-        <% if candidate.on_ballot? %>
-          <% report = candidate.reports.most_recent %>
-          
-          <td class="condensed-column pt-4 pb-0">
-          <% if candidate.endorsed_republican? %>
-          <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
-          <%elsif candidate.endorsed_democrat?%>
-          <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
-          <%else%>
-          <%end%>
-          </td>
-          <td class="condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "45x45"  %></td>
-          <td>
-          <% if candidate.party == "Republican" %>
-          <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
-          <%elsif candidate.party == "Democrat"%>
-          <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
-          <%else%>
-          <%end%></td>
-          <td class="d-none d-sm-block">
-          <% if candidate.ballot_status == "Advanced to General"%>
-          <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Lost in Primary"%>
-          <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Rumored"%>
-          <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Declared Candidacy"%>
-          <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "On Ballot"%>
-          <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Withdrew"%>
-          <h6 class="withdrew" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%end%>
-          </td>
-          <% end %>
-          <% end %>
-          
-      </tr>    
-      <small class="text-muted">Checkmark = Party Endorsement</small>
-      </tbody>
-      </div>
-      </table>
-    </div>
-  </div>
-</div>
+<% if @district.at_large_district == false %>
+<%= render 'districtcandidates'%>
+<% else %>
+<%= render 'atlargedistrictcandidates'%>
 <%end%>
+</div>
+
   <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
       <div class="card-header">
       PAST PERFORMANCE
@@ -236,6 +87,19 @@
   <div class="table">
   <table class="table">
       <tbody>
+      <% if @district.measure_a_result.present?%>
+          <tr>
+            <td class="no-border">2020 Measure A</td>
+            <td class="no-border"></td>
+            <td class="no-border">
+            <% if @district.measure_a_result > 0.5 %>
+            <span class="green-pill float-right">+<%= number_with_precision(@district.measure_a_result, precision: 2) %>%</span>
+          <% else %>
+            <span class="red-pill float-right">+<%= number_with_precision(@district.measure_a_result, precision: 2) %>%</span>
+          <%end%> 
+            </td>   
+          </tr>
+        <%end%>
         <% if @district.newsom_percent.present?%>
           <tr>
             <td class="no-border">2018 Gubernatorial</td>

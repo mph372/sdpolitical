@@ -10,6 +10,7 @@ class District < ApplicationRecord
   has_many :dashboards
   has_many :added_districts, through: :dashboards, source: :user
   has_many :expenditures
+
   
   def registration_advantage
     dem_voters - rep_voters
@@ -19,12 +20,12 @@ class District < ApplicationRecord
     registration_advantage*-1
   end
 
-  def other_voters_calculation
-    
-  end
-
   def gov_2018
     newsom_percent - cox_percent
+  end
+
+  def measure_a_result
+    (measure_a_yes / (measure_a_yes + measure_a_no))
   end
 
   def pres_2016
@@ -54,5 +55,7 @@ class District < ApplicationRecord
   def user_add_to_dashboard?
     user.dashboards.where(user: user, district: @district).any?
   end
+
+
 
 end
