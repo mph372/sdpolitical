@@ -24,10 +24,6 @@ class District < ApplicationRecord
     newsom_percent - cox_percent
   end
 
-  def measure_a_result
-    (measure_a_yes / (measure_a_yes + measure_a_no))
-  end
-
   def pres_2016
     clinton_percent - trump_percent
   end

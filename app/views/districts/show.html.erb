@@ -87,19 +87,6 @@
   <div class="table">
   <table class="table">
       <tbody>
-      <% if @district.measure_a_result.present?%>
-          <tr>
-            <td class="no-border">2020 Measure A</td>
-            <td class="no-border"></td>
-            <td class="no-border">
-            <% if @district.measure_a_result > 0.5 %>
-            <span class="green-pill float-right">+<%= number_with_precision(@district.measure_a_result, precision: 2) %>%</span>
-          <% else %>
-            <span class="red-pill float-right">+<%= number_with_precision(@district.measure_a_result, precision: 2) %>%</span>
-          <%end%> 
-            </td>   
-          </tr>
-        <%end%>
         <% if @district.newsom_percent.present?%>
           <tr>
             <td class="no-border">2018 Gubernatorial</td>
