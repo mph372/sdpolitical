@@ -53,9 +53,9 @@
             <td><% if district.incumbent.present? %><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %><br><small><%= district.incumbent.party %></small><%else%>Vacant<%end%></td>
             <td><%= district.incumbent&.term_expires %>
             <td class="text-nowrap"><% if district.registration_advantage > 0 %>
-                <span class="float-right dem-pill" style="color: #0015BC;">D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+                <span class="float-right dem-pill" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
                 <% else %>
-                <span class="float-right gop-pill" style="color: #DE0100;">R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
+                <span class="float-right gop-pill" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
                 <%end%>
             </td> 
           </tr>

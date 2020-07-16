@@ -1,0 +1,15 @@
+<div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
+      <div class="card-header">
+      INCUMBENT FACTS
+      </div>
+    <div class="bg-white p-3 mt-1">
+      <small class="heavy"><% if @person.is_appointed? %><%= "First Appointed as #{@person.title}:"%><%else%><%= "First Elected as #{@person.title}:"%><%end%></small><br>
+      <%= @person.first_elected.strftime("%B, %Y") %><br><br>
+      <small class="heavy"><%= "Profession Before Elected Office:" %></small><br>
+      <%= @person.professional_career %><br><br>
+      <small class="heavy"><%= "Prior Elected Office:"%></small><br>
+      <%= @person.prior_elected%><br><br>
+      <small class="heavy"><%= "Elected Official Salary:"%></small><br>
+      <%= number_to_currency(@person.salary)  %>  
+    </div>   
+</div>       

@@ -97,7 +97,7 @@ font-style: normal !important;
 .green-pill {
   border-radius: 25px;
   background: #d7f5e9;
-  padding: 1px 5px;
+  padding: 1px 20px;
   color: #17533f;
 }
 
@@ -141,9 +141,9 @@ font-style: normal !important;
 
 .dem-pill {
   border-radius: 25px;
-  background: #D9E2EC;
+  background: #1992D4;
   padding: 1px 20px;
-  color: #243B53;
+  color: white;
 
 }
 
@@ -158,9 +158,10 @@ font-style: normal !important;
 
 .gop-pill {
   border-radius: 25px;
-  background: #ffecec;
+  background: #AB091E;
   padding: 1px 20px;
-  color: #824443;
+  color: white;
+
 }
 .gop-party-endorsed {
   border-radius: 25px;
@@ -297,6 +298,13 @@ font-style: normal !important;
 .nounderline {
   text-decoration: none !important
 }
+
+.section-header {
+  background-color: #486581;
+  color: white;
+  font-weight: 600;
+}
+
 
  
  @import "rails_bootstrap_forms";

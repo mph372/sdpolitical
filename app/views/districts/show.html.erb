@@ -319,12 +319,9 @@
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
           Contribution Limit:
-          <div class="green-text heavy float-right"><strong>
-          <% if @district.contribution_limit.present? %>        
-            $<%= number_with_delimiter(@district.contribution_limit, delimiter: ",") %>
-          <%else%>
-            No Limit
-          <%end%></strong></div></li>
+          <div class="green-text heavy float-right">
+            <div class="green-text heavy float-right"><strong><%if @district.contribution_limit == 0 || @district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@district.contribution_limit, delimiter: ",") %><%end%>
+          </strong></div></li>
       <li class="list-group-item">Corporate Contributions:
           <% if @district.corporate_contributions?%>
           <div class="green-text float-right"> <%= material_icon.check_circle %>
@@ -340,7 +337,7 @@
       <li class="list-group-item">
           <% if @district.party_contributions?%>
           Party Contribution Limit:
-          <div class="green-text heavy float-right"><strong><%if @district.party_contribution_limit.present? == 0 %>No Limit<%else%>$<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %><%end%></strong>
+          <div class="green-text heavy float-right"><strong><%if @district.party_contribution_limit == 0 || @district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@district.party_contribution_limit, delimiter: ",") %><%end%></strong>
           <%else%>
           Party Contributions:
          <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
@@ -355,7 +352,7 @@
     </div>
     <div class="card-text pl-4 pr-4">
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="district-residents">
         <thead>
           <tr>
             <th class="no-border"></th>
@@ -411,3 +408,13 @@
 
 </div>
 
+
+<script>
+    $( document ).on('turbolinks:load', function() {
+    $('#districtresidents').DataTable( {
+      retrieve: true
+    });
+});
+
+
+</script>
