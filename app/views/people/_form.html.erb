@@ -65,7 +65,7 @@
           <div class="col">
             <%= f.form_group do %>
             <%= f.check_box  :on_ballot,  label: "Running for non-incumbent office", id:"runningFor"%>
-            <%= f.select(:district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {:include_blank => true, label: false} ) %>
+            <%= f.select(:district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true, label: false} ) %>
             <%end%>
           </div>
         </div>
