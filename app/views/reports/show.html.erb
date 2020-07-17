@@ -13,8 +13,8 @@
     Outstanding Debt:<br>
     </div>
     <div class="col-auto">
-    <% if @report.person.present? %><%= link_to "#{@report.person.first_name} #{@report.person.last_name}", @report.person %><%end%>
-    <% if @report.committee.present? %><%= link_to "#{@report.committee.name}", @report.committee %><%end%>
+    <% if @report.person.present? %><%= link_to "#{@report.person.first_name} #{@report.person.last_name}", @report.person %><br><%end%>
+    <% if @report.committee.present? %><%= link_to "#{@report.committee.name}", @report.committee %><br><%end%>
     <%= @report.report_filed.to_formatted_s(:long) %><%if @report.is_amended?%> (Amended)<%end%><br>
     <%= @report.period_begin.to_formatted_s(:long) %><br>
     <%= @report.period_end.to_formatted_s(:long) %>

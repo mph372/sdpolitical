@@ -1,0 +1,22 @@
+<% if @person.incumbent_district.present? %>
+    <div class="shadow-sm mb-3 p-3 bg-white rounded section-border pb-3">
+        <div class="container">
+            <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left">Incumbent Info</h4>
+            <!--Start of Incumbent Information Section-->
+            <div class="row"> 
+            <!--Incumbent Facts Card-->
+                <div class="col-lg-5 mb-2">
+                    <%= render 'incumbentfacts'%>
+                </div>
+            <!--Begins Incumbent Fundraising Data--> 
+                <div class="col-lg-7 mb-2">
+                    <%= render 'incumbentdistrict'%>
+                </div>
+            </div>
+            <% if @person.reports.where(incumbent_report: true).present? %>  
+            <%= render 'incumbentfundraising'%>
+            <%end%>
+        </div>
+    </div>
+<br>
+<%end%>

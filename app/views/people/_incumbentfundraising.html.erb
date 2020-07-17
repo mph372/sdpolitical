@@ -18,8 +18,8 @@
       </div>
     <div class="col-lg  text-center">
         <div class="bg-white p-3 ">
-        <h3 class="green-pill heavy"><%= number_to_currency(@person.reports.where(incumbent_report: true).order('period_end DESC').first.current_coh ) %></h3>
-        <h6>Most Recent Cash-On-Hand</h6><br>
+        <h3 class="green-pill heavy text-nowrap"><%= number_to_currency(@person.reports.where(incumbent_report: true).order('period_end DESC').first.current_coh ) %></h3>
+        <h6>Most Recent<br> Cash-On-Hand</h6>
         </div>
     </div>
   </div>

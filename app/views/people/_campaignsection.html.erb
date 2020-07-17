@@ -1,0 +1,14 @@
+
+
+    <% if @person.on_ballot?%>
+    <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= @person.district.name %> Campaign Info</h4>
+    <% elsif @person.running_reelection? %>
+    <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= @person.incumbent_district.name %> Campaign Info</h4>
+    <%end%>
+<%= render 'opponentssection'%>
+<%= render 'districtdata' %>
+<hr>
+<%= render 'fundraisingheader'%>
+<%= render 'fundraisingdata'%>
+<%= render 'expendituredata'%>
+

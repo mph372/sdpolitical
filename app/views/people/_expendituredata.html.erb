@@ -1,0 +1,58 @@
+<% if @person.expenditures.present? %> <!-- Start of candidate IE data, if available --> 
+  <hr>
+  <div class="row">
+    <div class="col">
+      <% if @person.on_ballot?%>
+       <h6 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.district.name} (2020 General)"%></h6>
+      <%elsif %>
+       <h6 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.incumbent_district.name} (2020 General)"%></h6>
+      <%end%>
+    </div>  
+  </div> 
+
+   
+ 
+  <div class="row">  
+    <div class="col-md-6 text-center">
+      <div class="bg-white border rounded shadow-sm p-3">
+        <h3 class="green-text heavy"><%= number_to_currency(@expenditures.where(:is_support => true).sum(:amount)) %></h3>
+        <h6>Total Spent in Support of <%= "#{@person.first_name} #{@person.last_name}"%></h6>
+      </div>
+    </div>
+    <div class="col-md-6 text-center">
+        <div class="bg-white border rounded shadow-sm p-3">
+        <h3 class="red-text heavy"><%= number_to_currency(@expenditures.where(:is_support => false).sum(:amount)) %></h3>
+        <h6>Total Spent in Opposition to <%= "#{@person.first_name} #{@person.last_name}"%></h6>
+        </div>
+    </div>
+  <div class="table-responsive p-2 mt-4">
+    <table class="table border shadow-sm p-2 bg-white" style="width:100%">
+      <thead class="thead-light rounded">
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Committee</th>
+        <th>Amount</th>
+        <th>Support/Oppose</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @expenditures.each do |expenditure| %>
+        <tr>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.expenditure_date.to_formatted_s(:long) %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.description %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= number_to_currency(expenditure.amount) %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
+          <% if expenditure.is_support? %>
+              Support
+              <%else%>
+              Oppose
+              <%end%></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%end%>

@@ -1,0 +1,62 @@
+  <div class="row p-2">
+    <% if @person.reports.where(candidate_report: true).present? %> <!--Beginning of "IF" statement for candidate financial data, if available -->
+      <div class="col-lg px-1 text-center">
+        <div class="bg-white border rounded shadow-sm p-3">
+          <h3 class="green-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)) %></h3>
+          <%if @person.on_ballot? %>
+          <h6>Total Raised <br>for <%= @person.district.name %></h6>
+          <%elsif @person.running_reelection? %>
+          <h6>Total Raised <br>for <%= @person.incumbent_district.name %></h6>
+          <%end%>
+          <% if @person.reports.where(:cycle => "2020", candidate_report: true ).sum(:loans_received) > 0 %><small>Including <%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:loans_received)) %> in Loans</small><%end%>
+        </div>
+      </div>
+      <div class="col-lg px-1 text-center">
+        <div class="bg-white border rounded shadow-sm p-3 ">
+        <h3 class="red-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)) %></h3>
+          <%if @person.on_ballot? %>
+        <h6>Total Spent <br>for <%= @person.district.name %></h6>
+          <%elsif @person.running_reelection? %>
+          <h6>Total Spent <br>for <%= @person.incumbent_district.name %></h6>
+          <%end%>
+      </div>
+  </div>
+  <div class="col-lg px-1 text-center">
+    <div class="bg-white border rounded shadow-sm p-3 ">
+    <h3 class="green-pill heavy"><%= number_to_currency(@person.reports.where(candidate_report: true).order('period_end DESC').first.current_coh ) %></h3>
+    <h6>Most Recent <br>Cash-On-Hand</h6>
+    </div>
+  </div>
+  <%end%>
+    <div class="table-responsive pb-2 pt-2">
+    <table class="table border shadow-sm bg-white p-2" style="width:100%">
+      <thead class="thead-light rounded">
+        <tr>
+          <th>REPORT DATE<br><small>PERIOD</small></th>
+          <th>RECEIPTS</th>
+          <th>DISBURSEMENTS</th>
+          <th>COH</th>
+          <th>DEBT</th>
+          <th>NET COH</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+      <% @reports.each do |report| %>
+        <% if report.candidate_report == true %>
+        <tr>
+          <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+          <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span><% if report.loans_received > 0 %><br><small class="float-right">(Incl $<%= number_with_delimiter(report.loans_received, :delimiter => ',')%> in loans.)</small><%end%></td>
+          <td><span class="float-right red-pill">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
+          <td><span class="float-right">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
+          <td><span class="float-right">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></td></span>
+          <td><span>$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span></td>
+        </tr>
+        <%end%>
+        
+      <% end %>
+    </tbody>
+    </table>
+    <small>* = Report is amended version</small>
+</div>  
+  </div>

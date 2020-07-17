@@ -1,0 +1,70 @@
+<div class="row" > 
+    <div class="col-lg-5">
+      <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
+        <div class="card-header">
+          CAMPAIGN FINANCE LIMITS
+        </div>
+        <% if @person.on_ballot? %>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+              Contribution Limit:
+              <div class="green-text heavy float-right">
+               <div class="green-text heavy float-right"><strong><%if @person.district.contribution_limit == 0 || @person.district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.district.contribution_limit, delimiter: ",") %><%end%></strong>
+            </div></li>
+          <li class="list-group-item">Corporate Contributions:
+              <% if @person.district.corporate_contributions?%>
+              <div class="green-text float-right"> <%= material_icon.check_circle %>
+              <%else%>
+              <div class="gop-text heavy float-right"> <%= material_icon.cancel %>
+              <%end%></li>
+          <li class="list-group-item">PAC Contributions:
+              <% if @person.district.pac_contributions?%>
+              <div class="green-text float-right"><%= material_icon.check_circle %>
+              <%else%>
+              <div class="gop-text float-right"><%= material_icon.cancel %>
+              <%end%></li>
+          <li class="list-group-item">
+              <% if @person.district.party_contributions?%>
+              Party Contribution Limit:
+              <div class="green-text heavy float-right"><strong><%if @person.district.party_contribution_limit == 0 || @person.district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.district.party_contribution_limit, delimiter: ",") %><%end%></strong>
+              <%else%>
+              Party Contributions:
+              <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
+              <%end%></li></li>
+        </ul>
+        <%elsif @person.running_reelection? %>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+              Contribution Limit:
+              <div class="green-text heavy float-right"><strong>
+              <div class="green-text heavy float-right"><%if @person.incumbent_district.contribution_limit == 0 || @person.incumbent_district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.contribution_limit, delimiter: ",") %><%end%>
+          </strong></div></li>
+          <li class="list-group-item">Corporate Contributions:
+              <% if @person.incumbent_district.corporate_contributions?%>
+              <div class="green-text float-right"> <%= material_icon.check_circle %>
+              <%else%>
+              <div class="gop-text heavy float-right"> <%= material_icon.cancel %>
+              <%end%></li>
+          <li class="list-group-item">PAC Contributions:
+              <% if @person.incumbent_district.pac_contributions?%>
+              <div class="green-text float-right"><%= material_icon.check_circle %>
+              <%else%>
+              <div class="gop-text float-right"><%= material_icon.cancel %>
+              <%end%></li>
+          <li class="list-group-item">
+              <% if @person.incumbent_district.party_contributions?%>
+              Party Contribution Limit:
+              <div class="green-text heavy float-right"><strong><%if @person.incumbent_district.party_contribution_limit == 0 || @person.incumbent_district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %><%end%></strong>
+              <%else%>
+              Party Contributions:
+              <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
+              <%end%></li></li>
+        </ul>
+        <%end%>
+      </div> 
+
+    </div>
+        <div class="col-lg-7">
+        <%= render 'candidatedistrict'%>
+      </div>
+  </div>

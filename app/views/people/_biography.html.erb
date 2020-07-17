@@ -1,0 +1,23 @@
+<!--Start of Biography Section-->
+      <div class="row ml-2 mr-2">
+        <div class="col">
+        <% if @person.bio.present? %>
+        
+        <strong>Biography:</strong>
+        <div>    
+          <% if @person.bio.length > 250 %>
+          <%= truncate(@person.bio, length: 250, :escape => false) %>
+          <%= link_to '...Read more', '', class: "read-more-#{@person.id}" %>
+          <script>
+          $('.read-more-<%= @person.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript h(@person.bio).gsub(/\n/, '</br>').html_safe %>')
+            })
+          </script>
+          <% else %>
+            <%= h(@person.bio).gsub(/\n/, '</br>').html_safe %>
+          <% end %>
+        </div>
+          <%end%>
+      </div>
+      </div>

@@ -69,7 +69,7 @@
                     <td><%= number_to_currency(expenditure.amount) %></td>
                     <% if expenditure.person.present?%>
                           <td><%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %></td>
-                          <td><%= link_to "#{expenditure.person.district.jurisdiction.name}", expenditure.person.district.jurisdiction  %></td>
+                          <td><%if expenditure.person.running_reelection? %><%= link_to "#{expenditure.person.incumbent_district.jurisdiction.name}", expenditure.person.incumbent_district.jurisdiction  %><%else%><%= link_to "#{expenditure.person.district.jurisdiction.name}", expenditure.person.district.jurisdiction  %><%end%></td>
                         <%else%>
                           <td><%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %></td>
                           <td><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></td>
