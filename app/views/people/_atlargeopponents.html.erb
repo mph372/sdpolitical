@@ -67,7 +67,7 @@
                 <% @person.district.jurisdiction.candidates.each do |candidate| %>
                 <% if candidate.district.term_expires.to_s == "2020" && candidate.district.at_large_district? %>
             <tr >
-              <% if candidate.former_candidate == false && candidate.on_ballot? || candidate.running_reelection? %>
+              <% if candidate.former_candidate == false && (candidate.on_ballot? || candidate.running_reelection?) %>
                 <% if candidate.id != @person.id %>
                 <% report = candidate.reports.most_recent %>
                 <td class="condensed-column pt-4 pb-0 no-border text-right">
@@ -128,6 +128,62 @@
           <tbody>             
             <% @person.incumbent_district.jurisdiction.incumbents.where(:running_reelection => true).each do |candidate| %>
             <% if candidate.incumbent_district.term_expires.to_s == "2020" && candidate.incumbent_district.at_large_district? %>
+            <tr >
+              <% if candidate.on_ballot? || candidate.running_reelection? %>
+                <% if candidate.id != @person.id %>
+                <% report = candidate.reports.order('period_end DESC').first %>
+                <td class="condensed-column pt-4 pb-0 no-border text-right">
+                <% if candidate.endorsed_republican? %>
+                <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
+                <%elsif candidate.endorsed_democrat?%>
+                <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
+                <%else%>
+                <%end%>
+                </td>
+                <td class="text-center no-border condensed-column"><% if candidate.image.present? %><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %>
+                <%else%>
+                <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div></td>
+                <%end%>
+                <td class="no-border">
+                  <% if candidate.party == "Republican" %>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%>
+                  <%elsif candidate.party == "Democrat"%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
+                  <%else%>
+                  <%end%><br><small>
+                <%if candidate.is_incumbent? %>
+                <%= candidate.title %>
+                <%else%>
+                <%= candidate.professional_career %>
+                <%end%></small></td>
+                <td class="d-none d-sm-block no-border">
+                <% if candidate.ballot_status == "Advanced to General"%>
+                <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
+                <%elsif candidate.ballot_status == "Lost in Primary"%>
+                <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
+                <%elsif candidate.ballot_status == "Rumored"%>
+                <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
+                <%elsif candidate.ballot_status == "Declared Candidacy"%>
+                <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
+                <%elsif candidate.ballot_status == "On Ballot"%>
+                <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
+                <%elsif candidate.ballot_status == "Withdrew"%>
+                <h6 class="withdrew" style="display: inline;"><%= candidate.ballot_status%></h6>
+                <%end%>
+                </td>
+                <% if candidate.reports.present?%>               
+                <td class="text-right no-border"><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
+                <%else%>
+                <td class="text-right no-border"><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
+                <%end%>
+                <% end %>
+                <%end%>
+            <% end %>
+            </tr>
+            <%end%>
+
+            <% @person.incumbent_district.jurisdiction.candidates.each do |candidate| %>
+            <% if candidate.district.term_expires.to_s == "2020" && candidate.district.at_large_district? %>
             <tr >
               <% if candidate.on_ballot? || candidate.running_reelection? %>
                 <% if candidate.id != @person.id %>
