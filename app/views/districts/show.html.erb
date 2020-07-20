@@ -44,7 +44,7 @@
   <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary" %>      
   <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' }, :class => "primary-blue btn" %> 
   <%end%>
-
+  <%= link_to "Download District (PDF)", district_path(@district, format: "pdf"), :class => "float-right btn btn-primary" %>
   <%= link_to "Back", districts_path, :class => "float-right btn btn-outline-secondary" %>
 </div>
 

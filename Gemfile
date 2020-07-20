@@ -47,6 +47,7 @@ gem "font-awesome-rails"
 gem 'stripe', '~> 5.22'
 gem 'figaro'
 gem 'fog-aws'
+gem 'prawn'
 
 
 # Reduces boot times through caching; required in config/boot.rb
