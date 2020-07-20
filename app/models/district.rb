@@ -52,6 +52,25 @@ class District < ApplicationRecord
     user.dashboards.where(user: user, district: @district).any?
   end
 
+  def measure_a_result
+    measure_a_yes.to_f / (measure_a_yes.to_f + measure_a_no.to_f) * 100
+  end
+
+  def turnout_2018
+    (voted_2018.to_f / registered_2018.to_f) * 100
+  end
+
+  def turnout_2016
+    (voted_2016.to_f / registered_2016.to_f) * 100
+  end
+
+  def turnout_2014
+    (voted_2014.to_f / registered_2014.to_f) * 100
+  end
+
+  def turnout_2012
+    (voted_2012.to_f / registered_2012.to_f) * 100
+  end
 
 
 end

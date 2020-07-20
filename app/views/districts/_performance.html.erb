@@ -6,16 +6,30 @@
   <div class="table-responsive">
   <table class="table">
       <tbody>
+      <% if @district.measure_a_yes.present?%>
+          <tr>
+            <td class="no-border">Measure A (2020)</td>
+            <td></td>
+            <td class="no-border">
+            <% if @district.measure_a_result > 50 %>
+            <span class="green-pill float-right"><%= number_with_precision(@district.measure_a_result.to_f, precision: 2) %>%</span>
+          <% else %>
+            <span class="red-pill float-right"><%= number_with_precision(@district.measure_a_result.to_f, precision: 2) %>%</span>
+          <%end%> 
+            </td>
+          </tr>
+        <%end%>
         <% if @district.newsom_percent.present?%>
           <tr>
-            <td class="no-border">2018 Gubernatorial</td>
-            <td class="no-border"><% if @district.gov_2018 > 0 %>
+            <td>2018 Gubernatorial <%if @district.registered_2018.present?%> <br><small>(Overall Turnout: <%= number_with_precision(@district.turnout_2018.abs, precision: 2) %>%)</small><%end%>
+            </td>
+            <td ><% if @district.gov_2018 > 0 %>
             <span class="dem-text">Newsom</span>
           <% else %>
             <span class="gop-text">Cox</span>
           <%end%> 
             </td>
-            <td class="no-border">
+            <td >
             <% if @district.gov_2018 > 0 %>
             <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
           <% else %>
@@ -26,7 +40,7 @@
         <%end%>
         <%if @district.clinton_percent.present?%>
         <tr>
-          <td>2016 Presidential</td>
+          <td>2016 Presidential <%if @district.registered_2016.present?%> <br><small>(Overall Turnout: <%= number_with_precision(@district.turnout_2016.abs, precision: 2) %>%)</small><%end%></td>
           <td>
           <% if @district.pres_2016 > 0 %>
           <span class="dem-text">Clinton</span>
@@ -44,7 +58,7 @@
         <%end%>
         <%if @district.brown_percent.present?%>
         <tr>
-          <td>2014 Gubernatorial</td>
+          <td>2014 Gubernatorial <%if @district.registered_2014.present?%> <br><small>(Overall Turnout: <%= number_with_precision(@district.turnout_2014.abs, precision: 2) %>%)</small><%end%></td>
           <td><% if @district.gov_2014 > 0 %>
           <span class="dem-text">Brown</span>
         <% else %>
@@ -61,7 +75,7 @@
         <%end%>
         <% if @district.obama_percent.present? %>
         <tr>
-          <td>2012 Presidential</td>
+          <td>2012 Presidential <%if @district.registered_2012.present?%> <br><small>(Overall Turnout: <%= number_with_precision(@district.turnout_2012.abs, precision: 2) %>%)</small><%end%></td>
           <td><% if @district.pres_2012 > 0 %>
           <span class="dem-text">Obama</span>
         <% else %>
