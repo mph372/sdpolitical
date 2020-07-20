@@ -37,7 +37,7 @@ class DistrictPDF < Prawn::Document
         if @district.registration_advantage > 0 
         text "Advantage:..... D +#{@district.registration_advantage.abs.truncate(2)}%"
         else
-        text "Advantage: R +#{@district.registration_advantage.abs.truncate(2)}%"
+        text "Advantage:..... R +#{@district.registration_advantage.abs.truncate(2)}%"
         end
     end
 
@@ -115,8 +115,15 @@ class DistrictPDF < Prawn::Document
         move_down 20
         if (@district.incumbent.present? && @district.incumbent.running_reelection == true) || @district.candidates.present?
             text "Candidates for this District/Office", style: :bold
+            if @district.incumbent.present? && @district.incumbent.running_reelection?
+                if @district.incumbent.reports.present?
+                text "#{@district.incumbent.first_name} #{@district.incumbent.last_name} (#{@district.incumbent.party}), #{@district.incumbent.ballot_status} - #{number_to_currency(@district.incumbent.reports.where(candidate_report: true).most_recent.current_coh)} COH"
+                else
+                text  "#{@district.incumbent.first_name} #{@district.incumbent.last_name} (#{@district.incumbent.party}), #{@district.incumbent.ballot_status} - $0.00 COH"
+                end
+            end
             @district.candidates.each do |candidate|
-                if candidate.on_ballot? && candidate.reports.present?
+                if candidate.on_ballot? && candidate.reports.where(candidate_report: true).present?
                 text "#{candidate.first_name} #{candidate.last_name} (#{candidate.party}), #{candidate.ballot_status} - #{number_to_currency(candidate.reports.where(candidate_report: true).most_recent.current_coh)} COH"
                 elsif candidate.on_ballot?
                 text  "#{candidate.first_name} #{candidate.last_name} (#{candidate.party}), #{candidate.ballot_status} - $0.00 COH"
