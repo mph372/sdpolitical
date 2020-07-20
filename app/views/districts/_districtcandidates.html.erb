@@ -79,9 +79,9 @@
           <%end%></td>
           <td class="d-none d-sm-block">
           <% if candidate.ballot_status == "Advanced to General"%>
-          <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
+          <h6 class="advanced-general container text-center text-md-left text-nowrap" style="display: inline;"><%= candidate.ballot_status%></h6>
           <%elsif candidate.ballot_status == "Lost in Primary"%>
-          <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
+          <h6 class="lost-primary text-center text-md-left text-nowrap" style="display: inline;"><%= candidate.ballot_status%></h6>
           <%elsif candidate.ballot_status == "Rumored"%>
           <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
           <%elsif candidate.ballot_status == "Declared Candidacy"%>
@@ -102,5 +102,6 @@
       </table>
     </div>
   </div>
-  <%end%>
   </div>
+  <%end%>
+  

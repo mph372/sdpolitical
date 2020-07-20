@@ -7,8 +7,12 @@
     <%end%>
 <%= render 'opponentssection'%>
 <%= render 'districtdata' %>
+
+<% if @person.reports.present? %>
 <hr>
 <%= render 'fundraisingheader'%>
 <%= render 'fundraisingdata'%>
+<%end%>
+
 <%= render 'expendituredata'%>
 
