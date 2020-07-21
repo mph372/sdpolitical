@@ -10,6 +10,7 @@ class District < ApplicationRecord
   has_many :dashboards
   has_many :added_districts, through: :dashboards, source: :user
   has_many :expenditures
+  acts_as_followable
 
   
   def registration_advantage

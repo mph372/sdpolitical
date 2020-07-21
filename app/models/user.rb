@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :districts
   has_many :dashboards
   has_many :dashboard_additions, through: :dashboards, source: :district  
+  acts_as_follower
   
   def subscribed?
     stripe_subscription_id?

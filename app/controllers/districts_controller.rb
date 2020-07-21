@@ -71,6 +71,18 @@ class DistrictsController < ApplicationController
     end
   end
 
+  def follow
+    @district = District.find(params[:id])
+    current_user.follow(@district)
+    redirect_to @district
+  end
+
+  def unfollow
+    @district = District.find(params[:id])
+    current_user.stop_following(@district)
+    redirect_to @district
+  end
+
   # DELETE /districts/1
   # DELETE /districts/1.json
   def destroy

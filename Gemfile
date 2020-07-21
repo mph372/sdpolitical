@@ -48,6 +48,8 @@ gem 'stripe', '~> 5.22'
 gem 'figaro'
 gem 'fog-aws'
 gem 'prawn'
+gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
+
 
 
 # Reduces boot times through caching; required in config/boot.rb

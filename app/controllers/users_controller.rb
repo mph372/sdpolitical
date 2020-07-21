@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :is_admin?
 
     def index
       @users = User.all
@@ -11,6 +12,12 @@ class UsersController < ApplicationController
       if @user.destroy
           redirect_to action: :index, notice: "User deleted."
       end
+    end
+
+    private
+
+    def is_admin?
+      redirect_to '/pricing', notice: "You do not have access this page!" unless current_user.admin? 
     end
 
   end
