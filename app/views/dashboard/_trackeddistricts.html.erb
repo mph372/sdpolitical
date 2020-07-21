@@ -1,0 +1,24 @@
+<div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
+      <div class="card-header">
+        My Tracked Districts
+      </div>
+<div class="table-responsive  bg-white rounded border-primary p-4">
+            <table class="table" id="districts">
+              <tbody>
+                <% @districts.each do |district| %>
+                  <tr>
+                    <td>
+                      <% if district.district == "At Large" %>
+                      <%= link_to "#{district.name}", district %>
+                      <%else%>
+                      <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
+                      <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
+                    </td>
+                    <td><%if district.term_expires.present? %><%= district.term_expires %><br><small>Election Cycle</small><%end%></td>
+                    <td><%= link_to "Stop Tracking", unfollow_district_path(district), :class => "float-right btn btn-outline-secondary" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          </div>

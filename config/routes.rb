@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :deadlines
   get 'pages/home'
   devise_for :users, controllers: {registrations: "registrations"}
   match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
   end
   resources :jurisdictions
   resources :subscriptions
+  resources :dashboard
   root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -11,13 +11,20 @@ class Person < ApplicationRecord
       order(report_filed: :desc).first
     end
 
+
+
   
   end
+
   mount_uploader :image, IncumbentUploader
 
   def calculated_age
     now = Time.now.utc.to_date
     now.year - birthdate.year - ((now.month > birthdate.month || (now.month == birthdate.month && now.day >= birthdate.day)) ? 0 : 1)
+  end
+
+  def next_birthday
+    calculated_age + 1
   end
 
   def calculated_tenure
@@ -28,6 +35,17 @@ class Person < ApplicationRecord
 
   def former_candidate
     ballot_status == "Withdrew" || ballot_status == "Lost in Primary"
+  end
+
+  before_save :update_birthdate_fields
+
+  private
+
+  def update_birthdate_fields
+    if birthdate_changed?
+      self.birth_month = birthdate ? birthdate.month : nil
+      self.birth_day = birthdate ? birthdate.day : nil
+    end
   end
 
 end

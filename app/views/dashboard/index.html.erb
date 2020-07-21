@@ -1,49 +1,21 @@
-<div class="container">
-  <div class="row">
-    <div class="col">  
-      <h1 class="primary-blue heavy"><%= current_user.first_name %>'s Dashboard</h1>
-      <br>
-          <div class="table-responsive shadow bg-white rounded border-primary p-4">
-            <table class="table" id="districts">
-
-              <tbody>
-                <% @dashboard_districts.each do |district| %>
-                  <tr>
-                    <td>
-                      <% if district.district == "At Large" %>
-                      <%= link_to "#{district.name}", district %>
-                      <%else%>
-                      <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
-                      <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
-                    </td>
-                    <td><%= link_to 'Stop Tracking', add_district_path(district, type: "remove"), method: :put, class: "btn btn-outline-danger" %></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="col">
-test
-        </div>
-    </div>
-
-
+<div class="container mt-3">
+<div class="dashboard-header border rounded p-4">
+  <h2 class="text-left-right heavy">
+    <span class="text-left">It's good to have you back</span>
+    <span class="dark-red-supporting"> <%= current_user.first_name %>!</span>
   </div>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Cash-On-Hand</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @dashboard_districts.each do |expenditure| %>
-      <tr>
-        <td></td>
-      </tr>
-      <%end%>
-    </tbody>
-  </table>
+<div>  
+  <div class="row pt-4">
+    <div class="col-md-6">  
+          <%= render 'trackeddistricts'%>
+          <%= render 'birthdays' %>
+    </div>
+    <div class="col-md-6">
+         <%= render 'deadlines'%>
+    </div>
+    <div class="col">
+     <%= render 'expenditures'%>
+    </div>
+    </div>
 </div>
+

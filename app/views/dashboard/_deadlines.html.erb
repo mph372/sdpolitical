@@ -1,0 +1,19 @@
+<div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
+      <div class="card-header">
+        UPCOMING DEADLINES
+      </div>
+    <div class="table-responsive p-3">
+      <table CLASS="table">
+
+        <tbody>
+            <% @deadlines.limit(5).each do |deadline| %>
+            <tr>
+                    <td><strong><%= deadline.title %></strong><br><small><%= deadline.description %> </small></td>
+                    <td><%=deadline.deadline_date.strftime("%B %-d") %></td>
+            </tr>
+            <%end%>
+        </tbody>
+        </table>
+        </div>
+      </div>
+    

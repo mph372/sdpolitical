@@ -74,14 +74,17 @@ class DistrictsController < ApplicationController
   def follow
     @district = District.find(params[:id])
     current_user.follow(@district)
+    flash[:notice] = "You are now following #{@district.jurisdiction.name} - #{@district.name}!"
     redirect_to @district
   end
 
   def unfollow
     @district = District.find(params[:id])
     current_user.stop_following(@district)
-    redirect_to @district
+    flash[:notice] = "You are no longer following #{@district.jurisdiction.name} - #{@district.name}!"
+    redirect_back(fallback_location: dashboard_index_path)
   end
+
 
   # DELETE /districts/1
   # DELETE /districts/1.json

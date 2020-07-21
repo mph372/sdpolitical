@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Deadlines</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Deadline date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @deadlines.each do |deadline| %>
+      <tr>
+        <td><%= deadline.title %></td>
+        <td><%= deadline.description %></td>
+        <td><%= deadline.deadline_date %></td>
+        <td><%= link_to 'Show', deadline %></td>
+        <td><%= link_to 'Edit', edit_deadline_path(deadline) %></td>
+        <td><%= link_to 'Destroy', deadline, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Deadline', new_deadline_path %>

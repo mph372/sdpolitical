@@ -132,6 +132,17 @@ font-style: normal !important;
   color: #824443;
 }
 
+.dashboard-header {
+  background: #D9E2EC;
+  overflow:auto;
+}
+
+.card .card-header {
+  background-color: #D9E2EC; 
+  border-color: transparent;
+  font-weight: 900;
+}
+
 .red-money-pill {
   border-radius: 25px;
   background: #ffecec;

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_150319) do
+ActiveRecord::Schema.define(version: 2020_07_21_175856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,14 @@ ActiveRecord::Schema.define(version: 2020_07_21_150319) do
   create_table "dashboards", force: :cascade do |t|
     t.integer "district_id"
     t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "deadlines", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.date "deadline_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -235,6 +243,8 @@ ActiveRecord::Schema.define(version: 2020_07_21_150319) do
     t.text "bio"
     t.boolean "is_appointed"
     t.boolean "running_at_large", default: false
+    t.integer "birth_day"
+    t.integer "birth_month"
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 
