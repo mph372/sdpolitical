@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :is_subscriber?
+  before_action :authorize_admin, except [:index, :show]
 
   # GET /reports
   # GET /reports.json

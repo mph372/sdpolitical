@@ -2,6 +2,7 @@ class DistrictsController < ApplicationController
   before_action :set_district, only: [:show, :edit, :update, :import, :destroy, :dashboard]
   before_action :authenticate_user!
   before_action :is_subscriber?
+  before_action :authorize_admin, except [:index, :show]
 
   # GET /districts
   # GET /districts.json
@@ -75,7 +76,7 @@ class DistrictsController < ApplicationController
     @district = District.find(params[:id])
     current_user.follow(@district)
     flash[:notice] = "You are now following #{@district.jurisdiction.name} - #{@district.name}!"
-    redirect_to @district
+    redirect_back(fallback_location: dashboard_index_path)
   end
 
   def unfollow

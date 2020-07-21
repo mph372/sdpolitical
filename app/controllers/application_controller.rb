@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
      redirect_to root_path
      end
 
+     def authorize_admin
+          redirect_to root_path, alert: 'Access Denied' unless current_user.admin?
+     end
+
     protected
 
          def configure_permitted_parameters

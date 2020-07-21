@@ -52,9 +52,9 @@
   <%= link_to "Download District (PDF)", district_path(@district, format: "pdf"), :class => "float-right btn btn-primary" %>
   <%= link_to "Back", districts_path, :class => "float-right btn btn-outline-secondary" %>
   <% if @current_user.following?(@district) %>
-    <%= link_to "Following", unfollow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
+    <%= link_to "Stop Tracking District", unfollow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
   <%elsif @current_user != @district %>
-    <%= link_to "Follow", follow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
+    <%= link_to "Track District", follow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
   <%end%>
 </div>
 
