@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_175856) do
+ActiveRecord::Schema.define(version: 2020_07_21_222426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,12 +51,12 @@ ActiveRecord::Schema.define(version: 2020_07_21_175856) do
     t.string "committee_type"
     t.bigint "candidate_id"
     t.bigint "measure_id"
-    t.string "support", default: "f"
     t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "person_id"
     t.boolean "is_oppose", default: false
+    t.boolean "is_support", default: false
     t.index ["candidate_id"], name: "index_committees_on_candidate_id"
     t.index ["jurisdiction_id"], name: "index_committees_on_jurisdiction_id"
     t.index ["measure_id"], name: "index_committees_on_measure_id"
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2020_07_21_175856) do
     t.float "amount"
     t.bigint "person_id"
     t.bigint "measure_id"
-    t.boolean "is_support"
+    t.boolean "is_support", default: false
     t.boolean "is_amendment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 2020_07_21_175856) do
     t.bigint "district_id"
     t.string "election_type"
     t.integer "election_cycle"
+    t.boolean "is_oppose", default: false
     t.index ["committee_id"], name: "index_expenditures_on_committee_id"
     t.index ["district_id"], name: "index_expenditures_on_district_id"
     t.index ["measure_id"], name: "index_expenditures_on_measure_id"

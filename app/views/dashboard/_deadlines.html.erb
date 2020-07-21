@@ -9,7 +9,7 @@
             <% @deadlines.limit(5).each do |deadline| %>
             <tr>
                     <td><strong><%= deadline.title %></strong><br><small><%= deadline.description %> </small></td>
-                    <td><%=deadline.deadline_date.strftime("%b %-d") %></td>
+                    <td class="text-nowrap"><%=deadline.deadline_date.strftime("%b %-d") %></td>
             </tr>
             <%end%>
         </tbody>

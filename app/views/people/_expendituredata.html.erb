@@ -21,10 +21,11 @@
     </div>
     <div class="col-md-6 text-center">
         <div class="bg-white border rounded shadow-sm p-3">
-        <h3 class="red-text heavy"><%= number_to_currency(@expenditures.where(:is_support => false).sum(:amount)) %></h3>
+        <h3 class="red-text heavy"><%= number_to_currency(@expenditures.where(:is_oppose => true).sum(:amount)) %></h3>
         <h6>Total Spent in Opposition to <%= "#{@person.first_name} #{@person.last_name}"%></h6>
         </div>
     </div>
+    <div class="col">
   <div class="table-responsive p-2 mt-4">
     <table class="table border shadow-sm p-2 bg-white" style="width:100%">
       <thead class="thead-light rounded">
@@ -54,5 +55,6 @@
         <% end %>
       </tbody>
     </table>
+  </div>
   </div>
   <%end%>

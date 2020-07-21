@@ -32,7 +32,7 @@
                 <%else%>
                   <% link_to "Measure #{@committee.measure}", @committee.measure%> 
                 <%end%>
-                <% if @committee.support? %>
+                <% if @committee.is_support? %>
                   (Support)
                 <%elsif @committee.is_oppose? %>
                   (Oppose)

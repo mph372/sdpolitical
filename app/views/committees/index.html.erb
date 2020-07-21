@@ -9,17 +9,16 @@
           <thead class="thead-light">
             <tr>
               <th>Name<br><small>Jurisdiction</small></th>
-              <th>Type</th>
               <th>Candidate or Measure</th>
               <th>Support/Oppose</th>
+              <th>Cash-on-Hand</th>
             </tr>
           </thead>
 
           <tbody>
             <% @committees.each do |committee| %>
               <tr>
-                <td><%= link_to "#{committee.name}", committee %><br><small><%= link_to "#{committee.jurisdiction.name}", committee.jurisdiction %></small></td>
-                <td><%= committee.committee_type %></td>
+                <td><%= link_to "#{committee.name}", committee %> (<%= committee.committee_type %>)<br><small><%= link_to "#{committee.jurisdiction.name}", committee.jurisdiction %></small></td>
                 <td> <% if committee.person.present? %>
                     <%= link_to "#{committee.person.first_name} #{committee.person.last_name}", committee.person %>
                     <%elsif committee.measure.present? %>
@@ -27,7 +26,8 @@
                     <%else%>
                     <%end%>
                 </td>
-                <td><%= committee.support %></td>
+                <td><%if committee.is_support?%>Support</td><%elsif committee.is_oppose?%>Oppose<%end%></td>
+                <td><span class="green-pill float-right"><% if committee.reports.present? %><%= number_to_currency(committee.reports.order('period_end DESC').first.current_coh ) %><%else%>$0.00<%end%></span></td>
               </tr>
             <% end %>
           </tbody>
