@@ -73,47 +73,52 @@
            <%= f.number_field :total_voters, label: "Registered Voters", step: :any %>
            <%= f.number_field :dem_percent, label: "Registered Democrat Voters", step: :any %>
            <%= f.number_field :rep_percent, label: "Registered GOP Voters", step: :any %>
+           <div class="row">
+            <div class="col-md">
+              <%= f.number_field :registered_2018, label: "Reg. 2018", step: :any %>
+              <%= f.number_field :registered_2016, label: "Reg. 2016", step: :any %>
+              <%= f.number_field :registered_2014, label: "Reg. 2014", step: :any %>
+              <%= f.number_field :registered_2012, label: "Reg. 2012", step: :any %>
+            </div>
+            <div class="col-md">
+              <%= f.number_field :voted_2018, label: "Voted 2018", step: :any %>
+              <%= f.number_field :voted_2016, label: "Voted 2016", step: :any %>
+              <%= f.number_field :voted_2014, label: "Voted 2014", step: :any %>          
+              <%= f.number_field :voted_2012, label: "Voted 2012", step: :any %>    
+            </div>
+           </div>
         </div>   
         <div class="col-md dem-text"> 
           <%= f.number_field :newsom_percent, label: "Newsom %", step: :any %>
           <%= f.number_field :clinton_percent, label: "Clinton %", step: :any %>
           <%= f.number_field :brown_percent, label: "Brown %", step: :any %>
           <%= f.number_field :obama_percent, label: "Obama %", step: :any %>
+          <%= f.number_field :measure_a_yes, label: "Measure A Yes", step: :any %>
+          <%= f.number_field :prop_6_yes, label: "Prop 6 Yes", step: :any %>
+          <%= f.number_field :prop_51_yes, label: "Prop 51 Yes", step: :any %>
+          <%= f.number_field :prop_62_yes, label: "Prop 62 Yes", step: :any %>
         </div>
         <div class="col-md gop-text">
           <%= f.number_field :cox_percent, label: "Cox %", step: :any %>
           <%= f.number_field :trump_percent, label: "Trump %", step: :any %>
           <%= f.number_field :kashkari_percent, label: "Kashkari %", step: :any %>
           <%= f.number_field :romney_percent, label: "Romney %", step: :any %>
+          <%= f.number_field :measure_a_no, label: "Measure A No", step: :any %>
+          <%= f.number_field :prop_6_no, label: "Prop 6 No", step: :any %>
+          <%= f.number_field :prop_51_no, label: "Prop 51 No", step: :any %>
+          <%= f.number_field :prop_62_no, label: "Prop 62 No", step: :any %>
         </div>  
       </div>  
       <div class="row">
         <div class="col-md "></div>
         <div class="col-md">
-          <%= f.number_field :measure_a_yes, label: "Measure A Yes", step: :any %>
+
         </div>
         <div class="col-md ">
-          <%= f.number_field :measure_a_no, label: "Measure A No", step: :any %>
+   
         </div>
       </div>
-      <div class="row">
-        <div class="col-md ">
-          <%= f.number_field :registered_2018, label: "Registered 2018", step: :any %>
-          <%= f.number_field :voted_2018, label: "Voted 2018", step: :any %>
-        </div>
-        <div class="col-md">
-          <%= f.number_field :registered_2016, label: "Registered 2016", step: :any %>
-          <%= f.number_field :voted_2016, label: "Voted 2016", step: :any %>
-        </div>
-        <div class="col-md ">
-          <%= f.number_field :registered_2014, label: "Registered 2014", step: :any %>
-          <%= f.number_field :voted_2014, label: "Voted 2014", step: :any %>          
-        </div>
-        <div class="col-md ">
-        <%= f.number_field :registered_2012, label: "Registered 2012", step: :any %>
-        <%= f.number_field :voted_2012, label: "Voted 2012", step: :any %>    
-        </div>
-      </div>
+      
   </div>
 </div>
 

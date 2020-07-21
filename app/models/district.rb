@@ -56,6 +56,22 @@ class District < ApplicationRecord
     measure_a_yes.to_f / (measure_a_yes.to_f + measure_a_no.to_f) * 100
   end
 
+  def prop_6_result
+    prop_6_yes.to_f / (prop_6_yes.to_f + prop_6_no.to_f) * 100
+  end
+
+  def prop_62_result
+    prop_62_yes.to_f / (prop_62_yes.to_f + prop_62_no.to_f) * 100
+  end
+
+  def prop_51_result
+    prop_51_yes.to_f / (prop_51_yes.to_f + prop_51_no.to_f) * 100
+  end
+
+  def turnout_2020
+    (voted_2020.to_f / registered_2020.to_f) * 100
+  end
+
   def turnout_2018
     (voted_2018.to_f / registered_2018.to_f) * 100
   end
@@ -70,6 +86,10 @@ class District < ApplicationRecord
 
   def turnout_2012
     (voted_2012.to_f / registered_2012.to_f) * 100
+  end
+
+  def average_turnout
+    (turnout_2018 + turnout_2016 + turnout_2014 + turnout_2012) / 4
   end
 
 

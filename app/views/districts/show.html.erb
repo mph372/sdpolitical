@@ -27,6 +27,11 @@
       <%end%>
       <%= render 'performance' %>  
       <%= render 'campaignfinance' %>
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
       <%= render 'electedofficials'%>
     </div>
   </div>
@@ -48,10 +53,9 @@
   <%= link_to "Back", districts_path, :class => "float-right btn btn-outline-secondary" %>
 </div>
 
-
-<script>
+    <script>
     $( document ).on('turbolinks:load', function() {
-    $('#districtresidents').DataTable( {
+    $('#district-residents').DataTable( {
       retrieve: true
     });
 });

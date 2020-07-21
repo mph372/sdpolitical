@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_222045) do
+ActiveRecord::Schema.define(version: 2020_07_21_140202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,14 @@ ActiveRecord::Schema.define(version: 2020_07_16_222045) do
     t.integer "voted_2014"
     t.integer "registered_2012"
     t.integer "voted_2012"
+    t.integer "registered_2020"
+    t.integer "voted_2020"
+    t.integer "prop_6_yes"
+    t.integer "prop_6_no"
+    t.integer "prop_51_yes"
+    t.integer "prop_51_no"
+    t.integer "prop_62_yes"
+    t.integer "prop_62_no"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
   end

@@ -7,7 +7,7 @@
       <div class="card-deck mb-3 text-center">
         <div class="card mb-4 box-shadow">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Monthly</h4>
+            <h4 class="my-0 font-weight-normal">Daily</h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title">$50 <small class="text-muted">/ mo</small></h1>
@@ -18,29 +18,11 @@
               <li>Help center access</li>
             </ul>
             <% if user_signed_in? %>
-            <%= link_to 'Start Monthly Plan', new_subscription_path(plan: "monthly", plan_id: Rails.application.credentials.monthly), class:"btn btn-lg btn-block btn-primary" %>
+            <%= link_to 'Start Daily Plan', new_subscription_path(plan: "Daily", plan_id: Rails.application.credentials.daily), class:"btn btn-lg btn-block btn-primary" %>
             <% else %>
             <%= link_to 'Subscribe', new_user_registration_path, class:"btn btn-lg btn-block btn-primary"  %>
             <%end%>
           </div>
         </div>
-        <div class="card mb-4 box-shadow">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Annual</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">$500 <small class="text-muted">/ yr</small></h1>
-            <ul class="list-unstyled mt-3 mb-4">
-              <li>30 users included</li>
-              <li>15 GB of storage</li>
-              <li>Phone and email support</li>
-              <li>Help center access</li>
-            </ul>
-            <% if user_signed_in? %>
-            <%= link_to 'Start Annual Plan', new_subscription_path(plan: "yearly", plan_id: Rails.application.credentials.yearly), class:"btn btn-lg btn-block btn-primary" %>
-            <% else %>
-            <%= link_to 'Subscribe', new_user_registration_path, class:"btn btn-lg btn-block btn-primary"  %>
-            <%end%>
-          </div>
-        </div>
+        
       </div>
