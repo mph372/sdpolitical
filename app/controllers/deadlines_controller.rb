@@ -1,6 +1,6 @@
 class DeadlinesController < ApplicationController
   before_action :set_deadline, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin, except [:index, :show]
+  before_action :authorize_admin, except: [:index, :show]
 
   # GET /deadlines
   # GET /deadlines.json

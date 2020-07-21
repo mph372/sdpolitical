@@ -2,7 +2,7 @@ class MeasuresController < ApplicationController
   before_action :set_measure, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :is_subscriber?
-  before_action :authorize_admin, except [:index, :show]
+  before_action :authorize_admin, except: [:index, :show]
 
   # GET /measures
   # GET /measures.json
