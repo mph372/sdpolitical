@@ -3,9 +3,16 @@
       Past Performance
       </div>
   <div class="card-text pl-4 pr-4">
+  <br>
+  
   <div class="table-responsive">
   <table class="table">
       <tbody>
+      <% if @district.average_turnout_eligible == true %>
+        <tr>
+          <td class="no-border pb-1 pt-1"><span class="heavy">Average Turnout: <%= @district.average_turnout.truncate(2) %>%</span> </td>
+        </tr>
+        <%end%>
         <% if @district.newsom_percent.present?%>
           <tr>
             <td class="no-border">2018 Gubernatorial <%if @district.registered_2018.present?%> <br><small>(Overall Turnout: <%= number_with_precision(@district.turnout_2018.abs, precision: 2) %>%)</small><%end%>
