@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_222426) do
+ActiveRecord::Schema.define(version: 2020_07_22_224949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,10 +253,10 @@ ActiveRecord::Schema.define(version: 2020_07_21_222426) do
     t.date "period_begin"
     t.date "period_end"
     t.date "report_filed"
-    t.integer "period_receipts"
-    t.integer "period_disbursements"
-    t.integer "current_coh"
-    t.integer "current_debt"
+    t.float "period_receipts"
+    t.float "period_disbursements"
+    t.float "current_coh"
+    t.float "current_debt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "candidate_id"
