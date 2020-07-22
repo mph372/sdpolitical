@@ -1,11 +1,11 @@
 <% if @district.jurisdiction.name == "San Diego County" || @district.jurisdiction.name == "California State Legislature" || @district.jurisdiction.name == "U.S. Congress"%>
   <div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
     <div class="card-header">
-      ELECTED OFFICIALS RESIDING IN DISTRICT
+      Elected Officials Residing in District
     </div>
     <div class="card-text pl-4 pr-4">
       <div class="table-responsive">
-          <table class="table" id="district-residents">
+          <table class="table" id="residents">
           <thead>
             <tr>
               <th class="no-border">Name</th>
@@ -13,15 +13,13 @@
               <th class="no-border">Term Expires</th>
               <th class="no-border">Tenure (in this office)</th>
               <th class="no-border">District Registration</th>
-            <tr>
+            </tr>
           </thead>
 
           <tbody>
             <% @people.each do |person| %>
             <tr>
               <% if person.incumbent_district.present? && (person.senate_district.to_s == @district.district.to_s || person.assembly_district.to_s == @district.district.to_s || person.congressional_district.to_s == @district.district.to_s || person.supe_district.to_s == @district.district.to_s) %>
-                  
-                  
                   <td>
                     <% if person.party == "Republican" %>
                     <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"gop-text" }%><br><small><%= person.incumbent_district.name %></small>
@@ -38,12 +36,20 @@
                         <% else %>
                         <strong><span style="color: #911111;">R +<%= number_with_precision(person.incumbent_district.registration_advantage.abs, precision: 2) %>%</span></strong>
                         <%end%> </td>
-                  
-                  <%end%>
-                <% end %>
-            </tr>
+                  <%end%>     
+                </tr>
+              <% end %>
           </tbody>
         </table>
     </div>
     <%end%>
 
+<script>
+    $( document ).on('turbolinks:load', function() {
+    $('#residents').DataTable( {
+      retrieve: true
+    });
+});
+
+
+</script>

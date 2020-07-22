@@ -18,8 +18,8 @@
           <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, {  }) %>
           <%= f.select(:measure_id, Measure.order('letter ASC').all.collect { |v| [ "Measure #{v.letter}", v.id ] }, {:include_blank => true }, {  }) %>
           <%= f.form_group :support, label: { text: "Support or Oppose" }  do %>
-            <%= f.radio_button :is_support, "Support" %> 
-            <%= f.radio_button :is_oppose, "Oppose" %> 
+            <%= f.radio_button :is_support, true,"Support" %> 
+            <%= f.radio_button :is_oppose, true, "Oppose" %> 
             <%end%>
       </div>  
 

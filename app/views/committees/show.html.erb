@@ -107,7 +107,7 @@
         <tbody>
           <% @reports.order('report_filed DESC').each do |report| %>
             <tr>
-              <td><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+              <td><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %><br><small class="text-nowrap"><%= "#{report.period_begin.strftime("%b-%d-%y")} - " %><%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
               <td>$ <%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></td>
               <td>$ <%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></td>
               <td><span class="green-pill">$ <%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
