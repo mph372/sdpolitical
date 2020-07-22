@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {registrations: "registrations"}
   match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
   resources :users, only: [:index]
-
+  get :search, controller: :main
   resources :expenditures
   resources :elections
   resources :people

@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/activerecord-hackery/ransack.git
+  revision: c9cc20de9e0f7bab92e0579c85bed64d614d23de
+  specs:
+    ransack (2.3.2)
+      activerecord (>= 5.2.1)
+      activesupport (>= 5.2.1)
+      i18n
+
+GIT
   remote: https://github.com/rweng/jquery-datatables-rails.git
   revision: d486b31b192a2924b1913e080ad23460e6b96d31
   specs:
@@ -333,6 +342,7 @@ DEPENDENCIES
   prawn
   puma (~> 3.11)
   rails (~> 5.2.4, >= 5.2.4.3)
+  ransack!
   rmagick
   sass-rails (~> 5.0)
   selenium-webdriver

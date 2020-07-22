@@ -17,6 +17,7 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap
+//= require jquery.easy-autocomplete
 //= require_tree .
 
 $(document).on('change', '#incumbentOffice', function(){
