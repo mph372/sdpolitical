@@ -1,5 +1,9 @@
 module DistrictsHelper
-    def user_add_to_dashboard? user, district 
-        user.dashboards.where(user: user, district: @district).any?
+    def measure_a_spread(district)
+    if district.measure_a_difference > 0
+        "#{spread.truncate(2)}% above countywide" 
+      elsif district.measure_a_difference < 0 
+        "#{spread.truncate(2)}% below countywide" 
+      end
     end
 end

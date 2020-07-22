@@ -19,9 +19,9 @@
                 <div class="col-md"><br>
                   <h6 class="card-subtitle text-muted">ADVANTAGE</h6>
                   <h5><% if @district.registration_advantage > 0 %>
-                        <strong><span style="color: #35469C;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span></strong>
+                        <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span></strong>
                         <% else %>
-                        <strong><span style="color: #911111;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span></strong>
+                        <strong><span class="text-nowrap" style="color: #911111;">R +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span></strong>
                         <%end%></h5>
                 </div>        
             </div>        

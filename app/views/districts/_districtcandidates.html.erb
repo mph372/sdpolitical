@@ -20,7 +20,7 @@
         <% if @district.incumbent.present? %>
         <% if @district.incumbent.running_reelection? %>
         <% report = @district.incumbent.reports.most_recent %>
-        <td class="condensed-column  pt-4 pb-0">
+        <td class="condensed-column  pt-4 pb-0 pr-2">
           <% if @district.incumbent.endorsed_republican? %>
           <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
           <%elsif @district.incumbent.endorsed_democrat?%>

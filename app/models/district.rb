@@ -93,5 +93,19 @@ class District < ApplicationRecord
     (turnout_2018 + turnout_2016 + turnout_2014 + turnout_2012) / 4
   end
 
+  def measure_a_difference
+    measure_a_result - 49.03
+  end
 
+  def prop_6_difference
+    prop_6_result - 43.18
+  end
+
+  def prop_62_difference
+    prop_62_result - 46.85
+  end
+
+  def prop_51_difference
+    prop_51_result - 55.18
+  end
 end

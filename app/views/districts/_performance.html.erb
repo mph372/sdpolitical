@@ -86,6 +86,11 @@
           <% else %>
             <span class="red-pill float-right"><%= number_with_precision(@district.measure_a_result.to_f, precision: 2) %>%</span>
           <%end%> 
+          <br><small class="float-right text-nowrap">(<% if @district.measure_a_difference > 0 %>
+                      <%= %"#{@district.measure_a_difference.abs.truncate(2)}% above Countywide" %>
+                      <% elsif @district.measure_a_difference < 0 %>
+                      <%= %"#{@district.measure_a_difference.abs.truncate(2)}% below Countywide" %>
+                      <%end%>) </small>
             </td>
           </tr>
         <%end%>
@@ -99,6 +104,11 @@
           <% else %>
             <span class="red-pill float-right"><%= number_with_precision(@district.prop_6_result.to_f, precision: 2) %>%</span>
           <%end%> 
+                    <br><small class="float-right text-nowrap">(<% if @district.prop_6_difference > 0 %>
+                      <%= %"#{@district.prop_6_difference.abs.truncate(2)}% above Statewide" %>
+                      <% elsif @district.prop_6_difference < 0 %>
+                      <%= %"#{@district.prop_6_difference.abs.truncate(2)}% below Statewide" %>
+                      <%end%>) </small>
             </td>
           </tr>
         <%end%>
@@ -112,6 +122,11 @@
           <% else %>
             <span class="red-pill float-right"><%= number_with_precision(@district.prop_51_result.to_f, precision: 2) %>%</span>
           <%end%> 
+                      <br><small class="float-right text-nowrap">(<% if @district.prop_51_difference > 0 %>
+                      <%= %"#{@district.prop_51_difference.abs.truncate(2)}% above Statewide" %>
+                      <% elsif @district.prop_51_difference < 0 %>
+                      <%= %"#{@district.prop_51_difference.abs.truncate(2)}% below Statewide" %>
+                      <%end%>) </small>
             </td>
           </tr>
         <%end%>
@@ -125,6 +140,11 @@
           <% else %>
             <span class="red-pill float-right"><%= number_with_precision(@district.prop_62_result.to_f, precision: 2) %>%</span>
           <%end%> 
+                      <br><small class="float-right text-nowrap">(<% if @district.prop_62_difference > 0 %>
+                      <%= %"#{@district.prop_62_difference.abs.truncate(2)}% above Statewide" %>
+                      <% elsif @district.prop_62_difference < 0 %>
+                      <%= %"#{@district.prop_62_difference.abs.truncate(2)}% below Statewide" %>
+                      <%end%>) </small>
             </td>
           </tr>
         <%end%>

@@ -20,7 +20,7 @@
         <% @district.jurisdiction.incumbents.where(:running_reelection => true).each do |incumbent| %>
         <% if incumbent.incumbent_district.term_expires.to_s == "2020" && incumbent.incumbent_district.at_large_district? %>
         <% report = incumbent.reports.most_recent %>
-        <td class="condensed-column  pt-4 pb-0">
+        <td class="condensed-column  pt-4 pb-0 pr-1">
           <% if incumbent.endorsed_republican? %>
           <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
           <%elsif incumbent.endorsed_democrat?%>
