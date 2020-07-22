@@ -10,6 +10,7 @@
                 <tr>
                   <th>INCUMBENT</th>
                   <th>OFFICE</th>
+                  <th>AVG. TURNOUT</th>
                   <th class="text-right">DEM%</th>
                   <th class="text-right">REP%</span></th>
                   <th class="text-right">ADVANTAGE</th>
@@ -37,6 +38,7 @@
                       <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
                     </td>
                     </td>
+                    <td><% if district.average_turnout_eligible == true %><%= district.average_turnout.truncate(2) %>%<%end%> </td>
                     <td><span class="float-right dem-text"><%= district.dem_voters.truncate(2) %>%</span></td>
                     <td><span class="float-right gop-text"><%= district.rep_voters.truncate(2) %>%</span></td>
                     <td class="text-nowrap"><% if district.registration_advantage > 0 %>

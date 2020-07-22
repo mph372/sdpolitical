@@ -108,4 +108,10 @@ class District < ApplicationRecord
   def prop_51_difference
     prop_51_result - 55.18
   end
+
+  def average_turnout_eligible
+    if voted_2018.present? && voted_2014.present? && voted_2016.present? && voted_2012.present?
+      return true 
+    end
+  end
 end
