@@ -4,6 +4,8 @@ document.addEventListener("turbolinks:load", function() {
     var options = {
       getValue: "name",
       
+
+
       url: function(phrase) {
         return "/search.json?q=" + phrase;
       },

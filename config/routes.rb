@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :deadlines
   get 'pages/home'
-  devise_for :users, controllers: {registrations: "registrations"}
+  devise_for :users, controllers: {registrations: "registrations", confirmations: 'confirmations'}
   match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
   resources :users, only: [:index]
   get :search, controller: :main

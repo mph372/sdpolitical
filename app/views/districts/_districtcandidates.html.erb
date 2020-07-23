@@ -1,5 +1,5 @@
 <% if (@district.incumbent.present? && @district.incumbent.running_reelection == true) || @district.candidates.present? %>
-<div class="card shadow-sm mb-3 bg-white rounded" style="max-width: 100%;">
+<div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
   <div class="card-header">
     Candidates for this Office <% if @district.number_of_winners.present? && @district.number_of_winners > 1 %><%= "(Top #{@district.number_of_winners} Win)" %><%end%>
   </div>

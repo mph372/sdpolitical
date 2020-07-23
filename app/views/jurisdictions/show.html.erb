@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row bg-light shadow-sm bg-white rounded mt-1 p-3">
+  <div class="row bg-light shadow-sm bg-white rounded primary-border mt-1 p-3">
     <div class="col">
       <div class="row p-1 m-1">
         <h2 class="primary-blue heavy"><%= @jurisdiction.name %></h2>
@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col">
           <% if @jurisdiction.map_url.present?%>
-          <div class="float-right ml-3 mb-2 p-2" style="clear: right;">
+          <div class="float-right ml-3 p-2" style="clear: right;">
           <%= content_tag(:iframe,'', width: 320, height: 320, src: "#{@jurisdiction.map_url}", :class => "float-right") %>
           <%end%>
           </div>
@@ -20,9 +20,9 @@
 <br>
 <hr>
 <br>
-<div class="container">
+<div class="container primary-border rounded p-3">
   <h5 class="dark-red-supporting heavy"> List of Offices & Districts </h5>
-  <div class="table-responsive shadow-sm bg-white rounded border-primary p-4">
+  <div class="table-responsive bg-white rounded border-primary p-4">
     <table class="table">
     <thead>
         <tr>

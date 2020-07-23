@@ -41,7 +41,7 @@ class SubscriptionsController < ApplicationController
 
     def destroy
       customer = Stripe::Customer.retrieve(current_user.stripe_id)
-      customer.subscriptions.retrieve(current_user.stripe_subscription_id).delete
+      customer.subscriptions.retrieve(current_user.stripe_subscription_id).delete(:at_period_end => true)
       current_user.update(stripe_subscription_id: nil)
       current_user.subscribed = false
   

@@ -1,8 +1,8 @@
 
-<div class="wrapper container">
-<div class="row">
-  <div class="col">
-    <h4 class="mb-0 mt-2 dark-red-supporting nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
+<div class="wrapper container ">
+<div class="row ">
+  <div class="col ">
+    <h4 class="mb-0 mt-2 header-text nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
     <h1 class="heavy text-responsive primary-blue"><%= @district.name %>  
     <%if @district.district != "At Large"%>
     <%= "- #{@district.district.to_i.ordinalize} District" %>

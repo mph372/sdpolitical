@@ -50,6 +50,7 @@ gem 'fog-aws'
 gem 'prawn'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
 gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'mailcatcher'
 
 
 

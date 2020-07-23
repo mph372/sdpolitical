@@ -26,8 +26,28 @@ body {
   font-size: 20px !important;
 }
 
+.logo {
+  width: 40px;
+  height: auto;
+}
+
+nav .navbar-nav li a{
+  color: #486581 !important;
+  font-weight: 600;
+  }
+
 .primary-blue {
   color: #486581
+}
+
+.header-text {
+  color: #74992E !important;
+}
+
+.primary-border {
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: #486581 !important;
 }
 
 .primary-header {

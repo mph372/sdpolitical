@@ -15,7 +15,6 @@
 //= require dataTables/jquery.dataTables
 //= require activestorage
 //= require turbolinks
-//= require bootstrap-sprockets
 //= require bootstrap
 //= require jquery.easy-autocomplete
 //= require_tree .
