@@ -61,16 +61,20 @@
           </ul>
 
           <ul class="navbar-nav float-right">  
-                        <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
+              <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
                 <%= form.text_field :q, placeholder: "Search People...", data: { behavior: "autocomplete" }, class: " form-control mr-sm-2" %>
                 <%= form.button "Search", class: "d-none" %>
               <% end %>
-              <li class="nav-item m-1">
-                <%= link_to 'Account', edit_user_registration_path, class: "nav-link" %>
-              </li>  
-              <li class="nav-item m-1 mr-5">
-                  <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "btn" %>
-              </li>   
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Hello, <%= current_user.first_name %>!
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/users/edit">My Account</a>
+              <a class="dropdown-item" href="/dashboard/">My Dashboard</a>
+              <a class="dropdown-item" href="/users/sign_out">Log Out</a>
+            </div>
+           </li>
           </ul>  
           <%elsif user_signed_in? %>
           <nav class="navbar navbar-expand-md navbar-light bg-light">
