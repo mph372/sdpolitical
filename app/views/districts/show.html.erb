@@ -17,7 +17,7 @@
     <div class="col-lg">
         <%= render 'incumbent' %>
         <%= render 'registration'%>
-        <% if @district.at_large_district == false %>
+        <% if @district.at_large_district == false && @district.map_url.present? %>
         <%= render 'map'%>
         <%end%>
     </div>
@@ -29,7 +29,7 @@
       <%end%>
       <%= render 'performance' %>  
       <%= render 'campaignfinance' %>
-              <% if @district.at_large_district == true %>
+              <% if @district.at_large_district == true && @district.map_url.present? %>
         <%= render 'map'%>
         <%end%>
     </div>
