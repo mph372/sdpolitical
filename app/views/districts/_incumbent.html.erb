@@ -15,8 +15,9 @@
               <div class="col-auto">
                 <div class="card-body">
                   <% if incumbent.present? %>
-                  <h4 class="card-title"> <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent %></h4>
-                  <h6 class="card-subtitle mb-2 text-muted"><%= incumbent.title %></h6>
+                  <h4 class="card-title"> <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent %> </h4>
+                  
+                  <h6 class="card-subtitle mb-2 text-muted"><%= "#{incumbent.title} (#{incumbent.party})" %></h6>
                   <%else%>
                   <h4 class="card-title">VACANT</h4>
                   <%end%>
@@ -70,7 +71,7 @@
             <div class="card-body">
               <% if @district.incumbent.present? %>
               <h4 class="card-title"> <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent %></h4>
-              <h6 class="card-subtitle mb-2 text-muted"><%= @district.incumbent.title %></h6>
+              <h6 class="card-subtitle mb-2 text-muted"><%= "#{@district.incumbent.title} (#{@district.incumbent.party})" %></h6>
               <%else%>
               <h4 class="card-title">VACANT</h4>
               <%end%>

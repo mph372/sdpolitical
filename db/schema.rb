@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_23_223211) do
+ActiveRecord::Schema.define(version: 2020_07_24_223353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_07_23_223211) do
     t.integer "prop_51_no"
     t.integer "prop_62_yes"
     t.integer "prop_62_no"
+    t.boolean "is_seat", default: false
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
   end

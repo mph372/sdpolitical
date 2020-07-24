@@ -4,10 +4,14 @@
   <div class="col ">
     <h4 class="mb-0 mt-2 header-text nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
     <h1 class="heavy text-responsive primary-blue"><%= @district.name %>  
-    <%if @district.district != "At Large"%>
+    <%if @district.district != "At Large" && @district.is_seat == false %>
     <%= "- #{@district.district.to_i.ordinalize} District" %>
-    <%else%>
+    <%elsif @district.is_seat %>
+    <%= "- Seat #{@district.district}"%>
     <%end%></h1>
+    <% if @district.at_large_district? %>
+    <p>(Term Expires: <%= @district.term_expires %>)</p>
+    <%end%>
   </div>
 </div>
 </div>     
