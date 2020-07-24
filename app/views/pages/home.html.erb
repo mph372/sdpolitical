@@ -2,14 +2,15 @@
 
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3  bg-white">
 <div class="row">
-  <div class="col-md-5 p-lg-4 my-5">
-    <h1 class="heavy">Welcome to<br> The Ballot Book</h1>
+  <div class="col-md-7 p-lg-3 my-auto order-md-2">
+    <%= image_tag 'logos/ballot.png', :class => "home-page-logo img-fluid"%>
+  </div>
+  <div class="col-md-5 p-lg-3 my-5 order-md-1">
+    <h1 class="heavy">Welcome to The Ballot Book</h1>
     <p class=" font-weight-normal">A comprehensive database of elected officials, districts, and campaign finance for all of San Diego County.</p>
     <a class="btn btn-primary" href="/users/sign_up">Sign Up Today</a>
   </div>
-  <div class="col-md-7 p-lg-4 my-auto">
-    <%= image_tag 'logos/ballot.png', :class => "home-page-logo img-fluid"%>
-  </div>
+
   </div>
 </div>
 
@@ -22,7 +23,7 @@
 
     <hr class="featurette-divider">
 
-    <div class="row featurette m-4 p-3">
+    <div class="row featurette p-3">
       <div class="col-md-7 my-auto">
         <h4 class="heavy primary-blue">Every Elected Official. Every Candidate. <span class="text-muted"></span></h4>
         <p class="font-weight-normal">In-depth information on every incumbent elected official and candidate in San Diego County, including biographical, contact, and campaign information.</p>

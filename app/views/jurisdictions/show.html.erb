@@ -40,7 +40,8 @@
           <% @jurisdiction.districts.order(:district).each do |district| %>
             <td><%= district.name %></td>
             <td><% if district.district == "At Large" %>
-                  <%= link_to "#{district.district}", district %></td>
+                  <%= link_to "#{district.district}", district %><% if district.term_expires.present? %><br><small>Term: <%= district.term_expires %></small><%end%></td>
+                  
                 <% else %>
                   <%= link_to "#{district.district.to_i.ordinalize} District", district %>
                 <%end%>

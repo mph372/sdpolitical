@@ -9,7 +9,7 @@
       <%= @person.professional_career %><br><br>
       <small class="heavy"><%= "Prior Elected Office:"%></small><br>
       <%= @person.prior_elected%><br><br>
-      <small class="heavy"><%= "Elected Official Salary:"%></small><br>
-      <%= number_to_currency(@person.salary)  %>  
+      <% if @person.salary.present? %><small class="heavy"><%= "Elected Official Salary:"%></small><br>
+      <%= number_to_currency(@person.salary)  %>  <%end%>
     </div>   
 </div>       

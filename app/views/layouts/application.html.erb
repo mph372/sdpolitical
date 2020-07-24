@@ -30,7 +30,7 @@
 
 <% if user_signed_in? && current_user.subscribed?  %>
   <nav class="navbar navbar-expand-lg navbar-light bg-white">
-      <a class="navbar-brand" href="#"><%= image_tag 'logos/ballot_logo_square.png', class: "logo" %></a>
+      <a class="navbar-brand"><%= image_tag 'logos/ballot_logo_square.png', class: "logo" %></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
       </button>
@@ -60,11 +60,13 @@
                 </li>
           </ul>
 
-          <ul class="navbar-nav float-right">  
+          <ul class="navbar-nav">  
+          <li>
               <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
                 <%= form.text_field :q, placeholder: "Search People...", data: { behavior: "autocomplete" }, class: " form-control mr-sm-2" %>
                 <%= form.button "Search", class: "d-none" %>
               <% end %>
+              </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Hello, <%= current_user.first_name %>!

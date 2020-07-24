@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_23_122905) do
+ActiveRecord::Schema.define(version: 2020_07_23_223211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(version: 2020_07_23_122905) do
     t.boolean "running_at_large", default: false
     t.integer "birth_day"
     t.integer "birth_month"
+    t.string "incumbent_committee_name"
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 

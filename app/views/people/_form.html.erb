@@ -79,6 +79,7 @@
           <div class="col">
            <%= f.select :ballot_status, ['','Rumored', 'Declared Candidacy', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary'] %></div>    
           </div>
+            <%= f.text_field :incumbent_committee_name, label: "Incumbent Committee Name (if present)"%>
             <%= f.text_field :campaign_website %>
         </div>          
     </div>
