@@ -39,12 +39,13 @@
           <tr>
           <% @jurisdiction.districts.order(:district).each do |district| %>
             <td><%= district.name %></td>
-            <td><% if district.district == "At Large" %>
-                  <%= link_to "#{district.district}", district %><% if district.term_expires.present? %><br><small>Term: <%= district.term_expires %></small><%end%></td>
-                  
-                <% else %>
-                  <%= link_to "#{district.district.to_i.ordinalize} District", district %>
-                <%end%>
+            <td>
+                <%if district.district != "At Large" && district.is_seat == false %>
+                <%= link_to "#{district.district.to_i.ordinalize} District", district %>
+                <%elsif district.is_seat %>
+                <%= link_to "Seat #{district.district}", district%>
+                <%end%></td>
+
                 <% if district.incumbent.present? %>
                 <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <%else%>
