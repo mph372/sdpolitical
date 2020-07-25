@@ -44,6 +44,8 @@
                 <%= link_to "#{district.district.to_i.ordinalize} District", district %>
                 <%elsif district.is_seat %>
                 <%= link_to "Seat #{district.district}", district%>
+                <% elsif district.district == "At Large" %>
+                <%= link_to "At Large", district%>
                 <%end%></td>
 
                 <% if district.incumbent.present? %>
