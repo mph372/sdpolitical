@@ -46,6 +46,7 @@
                 <%= link_to "Seat #{district.district}", district%>
                 <% elsif district.district == "At Large" %>
                 <%= link_to "At Large", district%>
+                  <%if district.at_large_district? %><br><small>Term Expires: <%= district.term_expires %> </small><%end%>
                 <%end%></td>
 
                 <% if district.incumbent.present? %>

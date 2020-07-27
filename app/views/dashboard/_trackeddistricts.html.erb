@@ -3,6 +3,7 @@
         My Tracked Districts
       </div>
 <div class="table-responsive  bg-white rounded border-primary p-4">
+    <% if @districts.present? %>
             <table class="table" id="districts">
               <tbody>
                 <% @districts.each do |district| %>
@@ -20,5 +21,9 @@
                 <% end %>
               </tbody>
             </table>
+                        <%else%>
+            <p>You currently aren't tracking any districts. To start tracking districts, simply click the "Track District" button at the bottom of any district page.</p>
+            <%end%>
           </div>
+
           </div>

@@ -12,6 +12,7 @@
 //
 //= require rails-ujs
 //= require jquery
+//= require jquery_ujs
 //= require dataTables/jquery.dataTables
 //= require activestorage
 //= require turbolinks

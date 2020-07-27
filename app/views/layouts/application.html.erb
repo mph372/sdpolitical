@@ -29,113 +29,13 @@
 
 
 <% if user_signed_in? && current_user.subscribed?  %>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white">
-      <a class="navbar-brand"><%= image_tag 'logos/ballot_logo_square.png', class: "logo" %></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                  <a class="nav-link" <%= link_to 'Home', page_path('home') %><span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link " href="/people/">People</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/jurisdictions">Jurisdictions</a>
-              </li>              
-              <li class="nav-item">
-                  <a class="nav-link" href="/districts">Districts</a>
-              </li>
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Campaign Finance
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/reports/">Campaign Finance Reports</a>
-                    <a class="dropdown-item" href="/committees/">Committees</a>
-                    <a class="dropdown-item" href="/expenditures/">Independent Expenditures</a>
-                  </div>
-                </li>
-          </ul>
-
-          <ul class="navbar-nav">  
-          <li>
-              <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
-                <%= form.text_field :q, placeholder: "Search People...", data: { behavior: "autocomplete" }, class: " form-control mr-sm-2" %>
-                <%= form.button "Search", class: "d-none" %>
-              <% end %>
-              </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Hello, <%= current_user.first_name %>!
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/users/edit">My Account</a>
-              <a class="dropdown-item" href="/dashboard/">My Dashboard</a>
-              <a class="dropdown-item" href="/users/sign_out">Log Out</a>
-            </div>
-           </li>
-          </ul>  
-          <%elsif user_signed_in? %>
-          <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" <%= link_to 'Home', page_path('home') %><span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">About</a>
-                    </li>
-                </ul>
-          <ul class="navbar-nav ">
-
-              <li class="nav-item m-1">
-                <%= link_to 'Account', edit_user_registration_path, class: "nav-link" %>
-              </li>  
-              <li class="nav-item m-1 mr-5">
-                  <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "btn" %>
-              </li>
-          </ul>
-
+   <%= render '/layouts/subscriber_nav' %>
+<%elsif user_signed_in? %>
+  <%= render '/layouts/signed_in_nav'%>
           <%else%>
-          <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" <%= link_to 'Home', page_path('home') %><span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">About</a>
-                    </li>
-                </ul>
-          <ul class="navbar-nav">
-          
-
-              <li class="nav-item m-1">
-                  <%= link_to 'Pricing', pricing_index_path, class: 'btn btn-outline-secondary' %>
-              </li> 
-              <li class="nav-item m-1">
-                  <%= link_to 'Subscribe', new_user_registration_path, :class => "btn btn-primary" %>
-              </li>
-              <li class="nav-item m-1">
-                  <%= link_to 'Login', new_user_session_path, :class => "btn btn-outline-primary" %>
-              </li>
-            </ul>
+           <%= render '/layouts/signed_out'%>
             <%end%>
-          
-          </ul>
-      </div>
-  </nav>
+
 
 </div>
 
@@ -149,4 +49,11 @@
     <br>
   </body>
   </div>
+
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2020 The Ballot Book </p>
+  </footer>
 </html>

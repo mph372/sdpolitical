@@ -3,6 +3,7 @@
       <div class="card-header">
         Upcoming Birthdays this Month
       </div>
+      <% if @birthdays.present? %>
     <div class="table-responsive p-3">
       <table CLASS="table">
 
@@ -24,6 +25,9 @@
         </tbody>
         </table>
         </div>
+        <%else%>
+        <p>There are no remaining birthdays for the month of <%= Date.today.strftime("%B") %>.</p>
+        <%end%>
       </div>
 
 

@@ -4,6 +4,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>User ID</th>
             <th>First Name</th>
             <th>Last Name </th>
             <th>E-Mail </th>
@@ -15,6 +16,7 @@
     <tbody>
          <% @users.each do |user| %>
         <tr>
+            <td><%=user.id%></td>
             <td><%=user.first_name%></td>
             <td><%=user.last_name%></td>
             <td><%=user.email%><br><%if user.subscribed?%><small class="badge badge-primary">Subscribed</small><%end%><%if user.admin?%>&nbsp<small class="badge badge-warning">Admin</small><%end%></td>
