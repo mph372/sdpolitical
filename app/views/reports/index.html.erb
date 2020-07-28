@@ -87,7 +87,7 @@
       </thead>
 
       <tbody>
-        <% @reports.each do |report| %>
+        <% @reports.order('report_filed DESC').each do |report| %>
           <tr>
             <% if report.person.present?%>
             <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %><br>
@@ -99,7 +99,7 @@
                 <%else%>
                 <td class=""><%= link_to "#{report.committee&.name}", report.committee  %>
                 <%end%></td>
-            <td class=""><%= link_to "#{report.report_filed.strftime("%b-%d-%y")}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+            <td class=""><%= link_to "#{report.report_filed.strftime("%y-%m-%d")}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
             <td class=""><span class="float-right green-text">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
             <td class=""><span class="float-right">$<% if report.loans_received.present? %><%= number_with_delimiter(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%></span></td>
             <td class=""><span class="float-right red-text">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
@@ -121,7 +121,8 @@
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#reports').DataTable( {
-      retrieve: true
+      retrieve: true, 
+      "order": [[ 1, "desc" ]]
     });
 });
 </script>

@@ -7,12 +7,7 @@
   <div class="table-responsive">
     <table class="table">
       <thead>
-        <tr>
-        <th></th>
-        <th></th>
-        <th>Candidate</th>
-        <th class="d-none d-sm-block ">Status</th>
-        <tr>
+
       </thead>
 
       <tbody>
@@ -28,7 +23,7 @@
           <%else%>
           <%end%>
           </td>
-          <td class="condensed-column"><%= image_tag incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+          <td class="condensed-column "><%= image_tag incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "65x65"  %></td>
         <td>
           <% if incumbent.party == "Republican" %>
           <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent, { :class =>"gop-text" }%><br><small><%= incumbent.title %></small>
@@ -36,22 +31,15 @@
           <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent, { :class =>"dem-text" }%><br><small><%= incumbent.title %></small>
           <%else%>
           <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent, { :class =>"dts-text" }%><br><small><%= incumbent.title %></small>
-          <%end%></td>
-          <td class="d-none d-sm-block ">
-          <% if incumbent.ballot_status == "Advanced to General"%>
-          <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-          <%elsif incumbent.ballot_status == "Lost in Primary"%>
-          <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-          <%elsif incumbent.ballot_status == "Rumored"%>
-          <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-          <%elsif incumbent.ballot_status == "Declared Candidacy"%>
-          <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-          <%elsif incumbent.ballot_status == "On Ballot"%>
-          <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-          <%elsif incumbent.ballot_status == "Withdrew"%>
-          <h6 class="withdrew text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
           <%end%>
+          <br><small class="primary-blue"><%= incumbent.ballot_status %></small></td>
           </td>
+          <td><% if incumbent.reports.present?%>     
+                <% report = incumbent.reports.most_recent %>          
+                <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
+                <%else%>
+                <td class="text-right "><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
+                <%end%> </td>
       </tr>
       <%end%>
       <%end%>
@@ -69,33 +57,25 @@
           <%else%>
           <%end%>
           </td>
-          <td class="condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "45x45"  %></td>
+          <td class="condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "65x65"  %></td>
           <td>
           <% if candidate.party == "Republican" %>
           <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
           <%elsif candidate.party == "Democrat"%>
           <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
           <%else%>
-          <%end%></td>
-          <td class="d-none d-sm-block">
-          <% if candidate.ballot_status == "Advanced to General"%>
-          <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Lost in Primary"%>
-          <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Rumored"%>
-          <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Declared Candidacy"%>
-          <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "On Ballot"%>
-          <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-          <%elsif candidate.ballot_status == "Withdrew"%>
-          <h6 class="withdrew" style="display: inline;"><%= candidate.ballot_status%></h6>
+          <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dts-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
           <%end%>
-          </td>
-          <% end %>
-          <% end %>
-          
+          <br><small class="primary-blue"><%= candidate.ballot_status %></small></td>
+                    <td><% if candidate.reports.present?%>     
+                <% report = candidate.reports.most_recent %>          
+                <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
+                <%else%>
+                <td class="text-right "><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
+                <%end%> </td>
+          <% end %> 
       </tr>    
+       <% end %>
       <%end%>
       <small class="text-muted">Checkmark = Party Endorsement</small>
       </tbody>

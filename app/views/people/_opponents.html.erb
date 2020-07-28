@@ -38,19 +38,7 @@
                 <%= incumbent.professional_career %>
                 <%end%></small></td>
                 <td class="d-none d-sm-block no-border">
-                <% if incumbent.ballot_status == "Advanced to General"%>
-                <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-                <%elsif incumbent.ballot_status == "Lost in Primary"%>
-                <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-                <%elsif incumbent.ballot_status == "Rumored"%>
-                <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-                <%elsif incumbent.ballot_status == "Declared Candidacy"%>
-                <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-                <%elsif incumbent.ballot_status == "On Ballot"%>
-                <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= incumbent.ballot_status%></h6>
-                <%elsif incumbent.ballot_status == "Withdrew"%>
-                <h6 class="withdrew" style="display: inline;"><%= incumbent.ballot_status%></h6>
-                <%end%>
+                <%= incumbent.ballot_status %>
                 </td>
                 <% if incumbent.reports.where(candidate_report: true).present?%>  
                 <% report = incumbent.reports %>             
@@ -84,6 +72,7 @@
                   <%elsif candidate.party == "Democrat"%>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
                   <%else%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}",candidate, { :class =>"dts-text" }%>
                   <%end%><br><small>
                 <%if candidate.is_incumbent? %>
                 <%= candidate.title %>
@@ -91,18 +80,7 @@
                 <%= candidate.professional_career %>
                 <%end%></small></td>
                 <td class="d-none d-sm-block no-border">
-                <% if candidate.ballot_status == "Advanced to General"%>
-                <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Lost in Primary"%>
-                <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Rumored"%>
-                <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Declared Candidacy"%>
-                <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "On Ballot"%>
-                <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Withdrew"%>
-                <h6 class="withdrew" style="display: inline;"><%= candidate.ballot_status%></h6>
+                <%= incumbent.ballot_status %>
                 <%end%>
                 </td>
                 <% if candidate.reports.present?%>               
@@ -154,19 +132,7 @@
                 <%= candidate.professional_career %>
                 <%end%></small></td>
                 <td class="d-none d-sm-block no-border">
-                <% if candidate.ballot_status == "Advanced to General"%>
-                <h6 class="advanced-general container text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Lost in Primary"%>
-                <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Rumored"%>
-                <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Declared Candidacy"%>
-                <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "On Ballot"%>
-                <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%elsif candidate.ballot_status == "Withdrew"%>
-                <h6 class="withdrew" style="display: inline;"><%= candidate.ballot_status%></h6>
-                <%end%>
+                <%= incumbent.ballot_status %>
                 </td>
                 <% if candidate.reports.present?%>               
                 <td class="text-right no-border"><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
