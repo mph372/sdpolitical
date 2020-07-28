@@ -31,12 +31,16 @@
                     <%end%>
                     <%end%>
                     <td>
-                      <% if district.district == "At Large" %>
-                      <%= link_to "#{district.name}", district %>
-                      <%else%>
-                      <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
-                      <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
-                    </td>
+                        <%if district.district != "At Large" && district.is_seat == false && district.is_area == false %>
+                        <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
+                        <%elsif district.is_seat %>
+                        <%= link_to "#{district.name} - Seat #{district.district}", district %>
+                        <%elsif district.is_area %>
+                        <%= link_to "#{district.name} - Trustee Area #{district.district}", district%>
+                        <%elsif district.district == "At Large" %>
+                        <%= link_to "#{district.name}", district%>
+                        <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
+
                     </td>
                     <td><% if district.average_turnout_eligible == true %><%= district.average_turnout.truncate(2) %>%<%end%> </td>
                     <td><span class="float-right dem-text"><%= district.dem_voters.truncate(2) %>%</span></td>
