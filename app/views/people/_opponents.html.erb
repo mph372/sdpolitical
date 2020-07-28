@@ -37,8 +37,8 @@
                 <%else%>
                 <%= incumbent.professional_career %>
                 <%end%></small></td>
-                <td class="d-none d-sm-block no-border">
-                <%= incumbent.ballot_status %>
+                <td class="d-none d-sm-block no-border primary-blue">
+                    Ballot Status: <strong> <%= incumbent.ballot_status %> </strong>
                 </td>
                 <% if incumbent.reports.where(candidate_report: true).present?%>  
                 <% report = incumbent.reports %>             
@@ -79,9 +79,8 @@
                 <%else%>
                 <%= candidate.professional_career %>
                 <%end%></small></td>
-                <td class="d-none d-sm-block no-border">
-                <%= incumbent.ballot_status %>
-                <%end%>
+                <td class="d-none d-sm-block no-border primary-blue">
+                    Ballot Status: <strong> <%= candidate.ballot_status %> </strong>
                 </td>
                 <% if candidate.reports.present?%>               
                 <td class="text-right no-border"><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
@@ -131,8 +130,8 @@
                 <%else%>
                 <%= candidate.professional_career %>
                 <%end%></small></td>
-                <td class="d-none d-sm-block no-border">
-                <%= incumbent.ballot_status %>
+                <td class="d-none d-sm-block no-border primary-blue">
+                    Ballot Status: <strong> <%= candidate.ballot_status %> </strong>
                 </td>
                 <% if candidate.reports.present?%>               
                 <td class="text-right no-border"><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
