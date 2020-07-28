@@ -109,6 +109,12 @@ class District < ApplicationRecord
     prop_51_result - 55.18
   end
 
+  def performance_eligible
+    if newsom_percent.present? || obama_percent.present? || brown_percent.present? || clinton_percent.present?
+      return true
+    end
+  end
+
   def average_turnout_eligible
     if voted_2018.present? && voted_2014.present? && voted_2016.present? && voted_2012.present?
       return true 

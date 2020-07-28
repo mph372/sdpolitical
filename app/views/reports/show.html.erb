@@ -25,7 +25,7 @@
     $<%= number_with_delimiter(@report.current_coh, :delimiter => ',') %><br>
     $<%= number_with_delimiter(@report.current_debt, :delimiter => ',') %>
     <br>
-    <%= link_to "Download Report", @report.pdf.url %>
+    <% if @report.pdf.url.present? %><%= link_to "Download Report", @report.pdf.url %><%end%>
     </div>
 
 

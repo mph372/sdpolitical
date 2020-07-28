@@ -33,7 +33,9 @@
       <% else %>
       <%= render 'atlargedistrictcandidates'%>
       <%end%>
+      <% if @district.performance_eligible == true %>
       <%= render 'performance' %>  
+      <%end%>
       <%= render 'campaignfinance' %>
               <% if @district.at_large_district == true && @district.map_url.present? %>
         <%= render 'map'%>

@@ -1,0 +1,39 @@
+<hr>
+      <h5 class="dark-red-supporting heavy">Expenditures</h5>
+      
+          <div class="table-responsive shadow-sm bg-white rounded primary-border p-4">
+            <table class="table">
+            <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Candidate / Measure</th>
+                  <th>District / Jurisdiction</th>
+                  <th>Support / Oppose</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @expenditures.order('expenditure_date DESC').each do |expenditure| %>
+                  <tr>
+                    <td><%= expenditure.expenditure_date.strftime("%b-%d-%y") %></td>
+                    <td><%= number_to_currency(expenditure.amount) %></td>
+                    <% if expenditure.person.present?%>
+                          <td><%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %></td>
+                          <td><%if expenditure.person.running_reelection? %><%= link_to "#{expenditure.person.incumbent_district.jurisdiction.name}", expenditure.person.incumbent_district.jurisdiction  %><%else%><%= link_to "#{expenditure.person.district.jurisdiction.name}", expenditure.person.district.jurisdiction  %><%end%></td>
+                        <%else%>
+                          <td><%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %></td>
+                          <td><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></td>
+                          <%end%>
+                    <td><% if expenditure.is_support?%>
+                        Support
+                        <%else%>
+                        Oppose
+                        <%end%></td>
+                    
+                  </tr>
+                <% end %>
+              </tbody>
+              </table>
+            
+          </div>
