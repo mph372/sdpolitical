@@ -24,6 +24,8 @@
     $<%= number_with_delimiter(@report.period_disbursements, :delimiter => ',') %><br>
     $<%= number_with_delimiter(@report.current_coh, :delimiter => ',') %><br>
     $<%= number_with_delimiter(@report.current_debt, :delimiter => ',') %>
+    <br>
+    <%= link_to "Download Report", @report.pdf.url %>
     </div>
 
 

@@ -26,12 +26,14 @@
         <%= f.number_field :current_debt, step: :any, label: "Debt", required: true %>
         </div>
       <div class="col">
-        <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, { :include_blank => true, :selected => params[:person_id]}, label: "Candidate:" ) %>
-        <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, { :include_blank => true, :selected => params[:committee_id] }, label: "Committee:" ) %>
+        <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true},  label: "Candidate:" ) %>
+        <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true }, label: "Committee:" ) %>
         <%= f.check_box :incumbent_report %>
         <%= f.check_box :candidate_report %>
         <%= f.check_box :is_amended, label: "Report is Amended" %>
         <%= f.check_box :officeholder_account, label: "Officeholder Account" %>
+        <br>
+        <%= f.file_field :pdf, { label: "Upload Report" } %>
       </div>  
     </div>
   </div>

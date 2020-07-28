@@ -77,11 +77,12 @@
           <th>Name<br><small>(Committee)</small></th>
           <th>Report Date</th>
           <th>Receipts</th>
-          <th>Loans Received</th>
-          <th>Disbursements</th>
+          <th>Loans</th>
+          <th>Expenses</th>
           <th>COH</th>
-          <th>DEBT</th>
-          <th>NET COH</th>
+          <th>Debt</th>
+          <th>Net COH</th>
+          <th>View</th>
         </tr>
       </thead>
 
@@ -105,6 +106,7 @@
             <td class=""><span class="float-right green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
             <td class=""><span class="float-right red-pill">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></span></td>
             <td class=""><%if report.net_coh < 0 %><span class="float-right gop-text">($<%= number_with_delimiter(report.net_coh, :delimiter => ',') %>)</span><%else%><span class="float-right">$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span><%end%></td>
+            <td class><% if report.pdf.url.present? %><%= link_to "View", report.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
           </tr>
         <% end %>
       </tbody>

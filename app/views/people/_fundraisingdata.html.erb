@@ -36,12 +36,13 @@
     <table class="table  bg-white p-4">
       <thead class="thead-light rounded">
         <tr>
-          <th>REPORT DATE<br><small>PERIOD</small></th>
-          <th>RECEIPTS</th>
-          <th>DISBURSEMENTS</th>
+          <th>Report Date<br><small>Period</small></th>
+          <th>Receipts</th>
+          <th>Expenses</th>
           <th>COH</th>
-          <th>DEBT</th>
-          <th>NET COH</th>
+          <th>Debt</th>
+          <th>Net COH</th>
+          <th>View</th>
         </tr>
       </thead>
       
@@ -55,6 +56,7 @@
           <td><span class="float-right"><%= number_to_currency(report.current_coh) %></span></td>
           <td><span class="float-right"><%= number_to_currency(report.current_debt) %></td></span>
           <td><span><%= number_to_currency(report.net_coh) %></span></td>
+          <td class><% if report.pdf.url.present? %><%= link_to "View", report.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
         </tr>
         <%end%>
         

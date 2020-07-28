@@ -4,6 +4,8 @@ class Report < ApplicationRecord
   delegate :incumbent_district, to: :person
   belongs_to :person, optional: true
 
+  mount_uploader :pdf, ReportUploader
+
   def net_coh
     current_coh - current_debt
   end

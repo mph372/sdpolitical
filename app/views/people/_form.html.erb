@@ -95,7 +95,7 @@
           <div class="col">
             <div class="row">
               <div class="col-auto">
-                <%= f.date_select :first_elected, include_blank: true,  :discard_day => true, start_year: 1990, :order => [:month, :year], end_year: Date.today.year %>
+                <%= f.date_select :first_elected, include_blank: true,  :discard_day => true, start_year: 1978, :order => [:month, :year], end_year: Date.today.year %>
               </div>
               <div class="col-auto">
                 <%= f.check_box :is_appointed, label: "Appointed"  %>
