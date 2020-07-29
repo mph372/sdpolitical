@@ -1,4 +1,4 @@
-  <%if @person.incumbent_district.present? %>
+  <%if @person.running_reelection? %>
     <div class="row">
       <% if @person.incumbent_district.at_large_district == false %>
       <%= render 'opponents' %>
@@ -6,7 +6,7 @@
       <%= render 'atlargeopponents'%>
       <%end%>
     </div>
-  <%else%>  
+  <%else %>  
     <div class="row">
       <% if @person.district.at_large_district == false %>
       <%= render 'opponents' %>

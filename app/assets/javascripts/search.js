@@ -3,7 +3,7 @@ document.addEventListener("turbolinks:load", function() {
   
     var options = {
       getValue: "name",
-      
+      adjustWidth: false,
 
 
       url: function(phrase) {
@@ -21,8 +21,11 @@ document.addEventListener("turbolinks:load", function() {
           $input.val("")
           Turbolinks.visit(url)
         }
-      }
+      },
+
     }
   
     $input.easyAutocomplete(options)
+
+
   });

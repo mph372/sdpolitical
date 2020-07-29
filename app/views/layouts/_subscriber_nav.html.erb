@@ -29,10 +29,10 @@
                 </li>
           </ul>
 
-          <ul class="navbar-nav">  
+          <ul class="navbar-nav navbar-right">  
           <li>
               <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
-                <%= form.text_field :q, placeholder: "Search People...", data: { behavior: "autocomplete" }, class: " form-control mr-sm-2" %>
+                <%= form.text_field :q, placeholder: "Search People...", data: { behavior: "autocomplete" }, class: " form-control mdb-autocomplete" %>
                 <%= form.button "Search", class: "d-none" %>
               <% end %>
               </li>

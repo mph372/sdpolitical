@@ -9,22 +9,16 @@
           <tr>
             <th>Letter</th>
             <th>Topic</th>
-            <th>Type</th>
-            <th>Origin</th>
             <th>Jurisdiction</th>
-            <th>Threshold</th>
           </tr>
         </thead>
 
         <tbody>
-          <% @measures.each do |measure| %>
+          <% @measures.order("letter ASC").each do |measure| %>
             <tr>
               <td><%= link_to "Measure #{measure.letter}", measure %></td>
               <td><%= measure.topic %></td>
-              <td><%= measure.measure_type %></td>
-              <td><%= measure.origin %></td>
               <td><%= measure.jurisdiction.name %></td>
-              <td><%= number_to_percentage(measure.threshold, precision: 2) %></td>
             </tr>
           <% end %>
         </tbody>
