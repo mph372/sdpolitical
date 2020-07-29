@@ -5,6 +5,6 @@ class ConfirmationsController < Devise::ConfirmationsController
 
     def after_confirmation_path_for(resource_name, resource)
         sign_in(resource)
-        # redirect_to '/pricing'
+        dashboard_index_path
     end
 end

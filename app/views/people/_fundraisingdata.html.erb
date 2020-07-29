@@ -32,11 +32,11 @@
     </div>
   </div>
   <%end%>
-    <div class="table-responsive pb-2 pt-2 mt-4 primary-border rounded">
-    <table class="table  bg-white p-4">
+  <div class="table-responsive p-2 mt-4">
+    <table class="table border shadow-sm p-2 bg-white" style="width:100%">
       <thead class="thead-light rounded">
         <tr>
-          <th>Report Date<br><small>Period</small></th>
+          <th>Report Date</th>
           <th>Receipts</th>
           <th>Expenses</th>
           <th>COH</th>
@@ -47,7 +47,7 @@
       </thead>
       
       <tbody>
-      <% @reports.each do |report| %>
+      <% @reports.order("report_filed DESC").each do |report| %>
         <% if report.candidate_report == true %>
         <tr>
           <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>

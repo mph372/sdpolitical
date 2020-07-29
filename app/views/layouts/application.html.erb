@@ -28,13 +28,13 @@
     <div class="container">
 
 
-<% if user_signed_in? && current_user.subscribed?  %>
+<% if user_signed_in? %>
    <%= render '/layouts/subscriber_nav' %>
 <%elsif user_signed_in? %>
   <%= render '/layouts/signed_in_nav'%>
-          <%else%>
-           <%= render '/layouts/signed_out'%>
-            <%end%>
+<%else%>
+<%= render '/layouts/signed_out'%>
+<%end%>
 
 
 </div>

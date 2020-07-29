@@ -43,9 +43,10 @@
                 <% if @person.running_reelection? %>
                   <div class="col-auto text-center text-md-left">  
                     <h6 class="nounderline dark-red-supporting heavy text-center text-md-left">Seeking Re-Election</h6>
+                    <span class="text-center text-md-left heavy primary-blue" style="display: inline;">(<%= @person.ballot_status%>)</span>
                   </div>
                   <%else%>  
-                  <div class="col-auto text-center text-md-left">
+                  <div class="col-auto text-center text-md-left mb-1">
                     <% if @person.former_candidate %>
                       <% if @person.district.district != "At Large" %>
                       <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, #{@person.district.district.to_i.ordinalize} District", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
@@ -59,23 +60,14 @@
                       <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} -  #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                       <%end%>
                     <%end%>
-                  </div>  
+                    <span class="text-center text-md-left heavy primary-blue" style="display: inline;">(<%= @person.ballot_status%>)</span>
+                    </div>  
                   <%end%>
                  </div> 
                  <div class="row ml-1 mt-0">
-                <% if @person.ballot_status == "Advanced to General"%>
-                  <h6 class="advanced-general text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
-                  <%elsif @person.ballot_status == "Lost in Primary"%>
-                  <h6 class="lost-primary text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
-                  <%elsif @person.ballot_status == "Rumored"%>
-                  <h6 class="rumored-candidate text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
-                  <%elsif @person.ballot_status == "Declared Candidacy"%>
-                  <h6 class="declared-candidacy text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
-                  <%elsif @person.ballot_status == "On Ballot"%>
-                  <h6 class="on-ballot text-center text-md-left" style="display: inline;"><%= @person.ballot_status%></h6>
-                  <%elsif @person.ballot_status == "Withdrew"%>
-                  <h6 class="withdrew" text-center text-md-left><%= @person.ballot_status%></h6>
-                  <%end%>
+
+                  
+                  
                 <%end%>
                 </div>
                 

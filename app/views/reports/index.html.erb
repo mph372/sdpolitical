@@ -100,12 +100,12 @@
                 <td class=""><%= link_to "#{report.committee&.name}", report.committee  %>
                 <%end%></td>
             <td class=""><%= link_to "#{report.report_filed.strftime("%y-%m-%d")}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
-            <td class=""><span class="float-right green-text">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
-            <td class=""><span class="float-right">$<% if report.loans_received.present? %><%= number_with_delimiter(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%></span></td>
-            <td class=""><span class="float-right red-text">$<%= number_with_delimiter(report.period_disbursements, :delimiter => ',') %></span></td>
-            <td class=""><span class="float-right green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
-            <td class=""><span class="float-right red-pill">$<%= number_with_delimiter(report.current_debt, :delimiter => ',') %></span></td>
-            <td class=""><%if report.net_coh < 0 %><span class="float-right gop-text">($<%= number_with_delimiter(report.net_coh, :delimiter => ',') %>)</span><%else%><span class="float-right">$<%= number_with_delimiter(report.net_coh, :delimiter => ',') %></span><%end%></td>
+            <td class=""><span class="float-right green-text"><%= number_to_currency(report.period_receipts) %></span></td>
+            <td class=""><span class="float-right"><% if report.loans_received.present? %><%= number_to_currency(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%></span></td>
+            <td class=""><span class="float-right red-text"><%= number_to_currency(report.period_disbursements) %></span></td>
+            <td class=""><span class="float-right green-pill"><%= number_to_currency(report.current_coh) %></span></td>
+            <td class=""><span class="float-right red-pill"><%= number_to_currency(report.current_debt) %></span></td>
+            <td class=""><%if report.net_coh < 0 %><span class="float-right gop-text">(<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right"><%= number_to_currency(report.net_coh) %></span><%end%></td>
             <td class><% if report.pdf.url.present? %><%= link_to "View", report.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
           </tr>
         <% end %>
