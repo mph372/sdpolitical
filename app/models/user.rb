@@ -4,9 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 
-  has_many :districts
-  has_many :dashboards
-  has_many :dashboard_additions, through: :dashboards, source: :district  
+  has_many :districts 
   acts_as_follower
   
   def subscribed?

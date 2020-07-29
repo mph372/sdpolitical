@@ -47,7 +47,7 @@ gem 'stripe', '~> 5.22'
 gem 'figaro'
 gem 'fog-aws'
 gem 'prawn'
-gem 'acts_as_follower', github: 'tcocca/acts_as_follower', branch: 'master'
+gem 'acts_as_follower', github: 'tcocca/acts_as_follower'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'gibbon', github: 'amro/gibbon'
 

@@ -1,8 +1,9 @@
 class DistrictsController < ApplicationController
+  
   before_action :set_district, only: [:show, :edit, :update, :import, :destroy, :dashboard]
-  before_action :authenticate_user!
   # before_action :is_subscriber?
-  before_action :authorize_admin, except: [:index, :show]
+  before_action :authenticate_user!
+  before_action :authorize_admin, except: [:index, :show, :follow, :unfollow]
 
   # GET /districts
   # GET /districts.json

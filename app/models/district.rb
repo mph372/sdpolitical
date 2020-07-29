@@ -6,9 +6,6 @@ class District < ApplicationRecord
   has_many :candidates, inverse_of: :district, class_name: 'Person'
   belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
   has_many :reports, through: :persons
-  belongs_to :user, optional: true
-  has_many :dashboards
-  has_many :added_districts, through: :dashboards, source: :user
   has_many :expenditures
   acts_as_followable
 

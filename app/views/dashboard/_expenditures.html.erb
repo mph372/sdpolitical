@@ -15,25 +15,27 @@
             </thead>
 
             <tbody>
-              <% @expenditures.each do |expenditure| %>
-                <tr>
-                  <td class=""><%= expenditure.expenditure_date.to_formatted_s(:long) %><% if expenditure.is_amendment? %>*<%end%></td>
-                  <td class=""><%= expenditure.description %></td>
-                  <td class=""><%= link_to expenditure.committee.name %></td>
-                  <td class=""><%= number_to_currency(expenditure.amount) %><br><small><% if expenditure.is_support? %>
-                      Support
-                      <%else%>
-                      Oppose
-                      <%end%></small></td>
-                  <td class="">
-                    <% if expenditure.person != nil %>
-                      <%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %> <br> <small><%= link_to "#{expenditure.person.district.name}", expenditure.person.district %> </small>
-                      <%else%>
-                      <%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %><br><small><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></small>
-                      <%end%>
-                  </td>
-                </tr>
-              <% end %>
+
+                <% @expenditures.each do |expenditure| %>
+                  <tr>
+                    <td class=""><%= expenditure.expenditure_date.to_formatted_s(:long) %><% if expenditure.is_amendment? %>*<%end%></td>
+                    <td class=""><%= expenditure.description %></td>
+                    <td class=""><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>
+                    <td class=""><%= number_to_currency(expenditure.amount) %><br><small><% if expenditure.is_support? %>
+                        Support
+                        <%else%>
+                        Oppose
+                        <%end%></small></td>
+                    <td class="">
+                        <% if expenditure.person != nil %>
+                        <%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %> <br> <small><%= link_to "#{expenditure.person.district.name}", expenditure.person.district %> </small>
+                        <%else%>
+                        <%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %><br><small><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></small>
+                        <%end%>
+                    </td>
+                  </tr>
+                  <% end %>
+
             </tbody>
           </table>
         </div>
