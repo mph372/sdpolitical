@@ -1,7 +1,7 @@
 class ExpendituresController < ApplicationController
   before_action :set_expenditure, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :is_subscriber?
+  # before_action :is_subscriber?
   before_action :authorize_admin, except: [:index, :show]
 
   # GET /expenditures
