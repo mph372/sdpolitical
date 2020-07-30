@@ -22,12 +22,13 @@
           <%= f.radio_button :is_support, true, label: "Support" %> 
           <%= f.radio_button :is_oppose, true, label: "Oppose" %> 
         <%end%>
+          <%= f.check_box :is_amendment, label: "Amended Form" %><br>
       </div>
     </div>
         <div class="row">
       <div class="col">
         <%= f.date_field :expenditure_date, value: Date.today %>
-        <%= f.check_box :is_amendment, label: "Amended Form" %>
+        <%= f.file_field :pdf, { label: "Upload Expenditure" } %>
       </div>
       <div class="col">
         <%= f.text_field :description %>

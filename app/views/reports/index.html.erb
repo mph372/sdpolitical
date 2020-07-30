@@ -8,7 +8,7 @@
     <div class="col-lg-6">
         <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
           <div class="card-header">
-              Top Candidate Fundraisers<br> (Period Ending Feb. 15, 2020)
+              Top Candidate Fundraisers<br> (Period Ending June 30, 2020)
           </div>
           <div class="table-responsive p-1">
             <table class="table table p-2 bg-white " style="width:100%">           
@@ -19,7 +19,7 @@
                       <th>Period Receipts</th>
                     </tr>
                   </thead>
-                  <% Report.where("candidate_report = ? AND period_begin = ?", true, Date.new(2020,1,19)).order(period_receipts: :DESC).limit(10).each do |report|  %>
+                  <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,6,30)).order(period_receipts: :DESC).limit(10).each do |report|  %>
                   <tbody>
                     <tr>
                       <td class="condensed-column text-center"><%= image_tag report.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
@@ -37,7 +37,7 @@
     <div class="col-lg-6">
       <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
         <div class="card-header">
-            Most-Funded Committees<br> (Period Ending Feb. 15, 2020)
+            Most-Funded Committees<br> (Period Ending June 30, 2020)
         </div>
         <div class="table-responsive p-1">
           <table class="table table p-2 bg-white" style="width:100%">           
@@ -47,7 +47,7 @@
                     <th>COH</th>
                   </tr>
                 </thead>
-                <% Report.where("period_begin = ?", Date.new(2020,1,19)).where("committee_id IS NOT NULL").order(current_coh: :DESC).limit(10).each do |report|  %>
+                <% Report.where("period_end = ?", Date.new(2020,6,30)).where("committee_id IS NOT NULL").order(current_coh: :DESC).limit(10).each do |report|  %>
                 <tbody>
                   <tr>
                     <% if report.committee.present? %>
@@ -99,7 +99,7 @@
                 <%else%>
                 <td class=""><%= link_to "#{report.committee&.name}", report.committee  %>
                 <%end%></td>
-            <td class=""><%= link_to "#{report.report_filed.strftime("%y-%m-%d")}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+            <td class=""><%= link_to "#{report.report_filed.strftime("%y-%m-%d")}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small><%if current_user.admin?%><br><small><%= link_to 'Edit', edit_report_path(report) %></small><%end%></td>
             <td class=""><span class="float-right green-text"><%= number_to_currency(report.period_receipts) %></span></td>
             <td class=""><span class="float-right"><% if report.loans_received.present? %><%= number_to_currency(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%></span></td>
             <td class=""><span class="float-right red-text"><%= number_to_currency(report.period_disbursements) %></span></td>

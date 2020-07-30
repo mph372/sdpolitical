@@ -16,7 +16,7 @@
             </div>
 
             <div class="col-auto">
-              <%= link_to @committee.jurisdiction.name %><br>
+              <%= link_to "#{@committee.jurisdiction.name}", committee.jurisdiction %><br>
               <%= @committee.committee_type %><br>
                 <% if @committee.person.present? %>
                   <%= link_to "#{@committee.person.first_name} #{@committee.person.last_name}", @committee.person %>

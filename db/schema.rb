@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_160750) do
+ActiveRecord::Schema.define(version: 2020_07_30_122610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_160750) do
     t.string "election_type"
     t.integer "election_cycle"
     t.boolean "is_oppose", default: false
+    t.string "pdf"
     t.index ["committee_id"], name: "index_expenditures_on_committee_id"
     t.index ["district_id"], name: "index_expenditures_on_district_id"
     t.index ["measure_id"], name: "index_expenditures_on_measure_id"

@@ -11,6 +11,7 @@
                 <th>Committee</th>
                 <th>Amount</th>
                 <th>Candidate / Measure</th>
+                <th>View</th>
               </tr>
             </thead>
 
@@ -33,6 +34,7 @@
                         <%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %><br><small><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></small>
                         <%end%>
                     </td>
+                    <td><% if expenditure.pdf.url.present? %><%= link_to "View", expenditure.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
                   </tr>
                   <% end %>
 

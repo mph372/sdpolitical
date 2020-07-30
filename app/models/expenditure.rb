@@ -3,6 +3,7 @@ class Expenditure < ApplicationRecord
   belongs_to :measure, optional: true
   belongs_to :committee
   belongs_to :district
+  mount_uploader :pdf, ExpenditureUploader
   
   def strip_trailing_zero(n)
     n.to_s.sub(/\.?0+$/, '')

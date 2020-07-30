@@ -36,6 +36,7 @@
         <th>Committee</th>
         <th>Amount</th>
         <th>Support/Oppose</th>
+        <th>View</th>
       </tr>
     </thead>
 
@@ -52,6 +53,7 @@
               <%else%>
               Oppose
               <%end%></td>
+          <td><% if expenditure.pdf.url.present? %><%= link_to "View", expenditure.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
         </tr>
         <% end %>
       </tbody>
