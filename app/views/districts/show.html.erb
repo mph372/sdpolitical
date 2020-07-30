@@ -11,7 +11,7 @@
     <%elsif @district.is_area %>
     <%= "- Trustee Area #{@district.district}"%>
     <%end%></h1>
-    <% if @district.at_large_district? %>
+    <% if @district.at_large_district? && current_user.admin? %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
   </div>

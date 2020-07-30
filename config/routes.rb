@@ -2,6 +2,13 @@ Rails.application.routes.draw do
   resources :deadlines
   get 'pages/home'
   devise_for :users, controllers: {registrations: "registrations", confirmations: 'confirmations'}
+  authenticated :user do
+    root 'dashboard#index', as: :authenticated_root
+  end
+  
+  unauthenticated :user do
+    root 'pages#home', as: :unauthenticated_root
+  end
   match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
   resources :users, only: [:index]
   get :search, controller: :main

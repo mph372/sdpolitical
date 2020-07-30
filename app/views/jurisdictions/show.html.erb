@@ -48,7 +48,7 @@
                   <%elsif district.district == "At Large" %>
                   <%= link_to "At Large", district%>
                   <%end%>
-                  <%if district.at_large_district? %><br><small>Term Expires: <%= district.term_expires %> </small><%end%>
+                  <%if district.at_large_district? && current_user.admin? %><br><small>Term Expires: <%= district.term_expires %> </small><%end%>
                 </td>
 
                 <% if district.incumbent.present? %>
