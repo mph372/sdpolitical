@@ -76,6 +76,7 @@
                   <%elsif candidate.party == "Democrat"%>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
                   <%else%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dts-text" }%>
                   <%end%><br><small>
                 <%if candidate.is_incumbent? %>
                 <%= candidate.title %>
@@ -121,6 +122,7 @@
                 <%elsif candidate.endorsed_democrat?%>
                 <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
                 <%else%>
+                
                 <%end%>
                 </td>
                 <td class="text-center condensed-column"><% if candidate.image.present? %><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "65x65"  %>
@@ -133,6 +135,7 @@
                   <%elsif candidate.party == "Democrat"%>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
                   <%else%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dts-text" }%>
                   <%end%><br><small>
                 <%if candidate.is_incumbent? %>
                 <%= candidate.title %>
@@ -180,6 +183,7 @@
                   <%elsif candidate.party == "Democrat"%>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
                   <%else%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dts-text" }%>
                   <%end%><br><small>
                 <%if candidate.is_incumbent? %>
                 <%= candidate.title %>

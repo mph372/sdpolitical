@@ -61,7 +61,7 @@
           <%elsif candidate.party == "Democrat"%>
           <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
           <%else%>
-          <%= link_to "#{candidate.first_name} #{candidate.last_name}",candidate, { :class =>"dts-text" }%><br><small><%= candidate.title %></small>
+          <%= link_to "#{candidate.first_name} #{candidate.last_name}",candidate, { :class =>"dts-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
           <%end%>
           <br><small class="primary-blue"><%= candidate.ballot_status %></small></td>
           </td>

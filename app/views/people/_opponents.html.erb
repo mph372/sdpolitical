@@ -129,6 +129,7 @@
                   <%elsif candidate.party == "Democrat"%>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
                   <%else%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dts-text" }%>
                   <%end%><br><small>
                 <%if candidate.is_incumbent? %>
                 <%= candidate.title %>
