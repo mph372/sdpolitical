@@ -20,16 +20,18 @@
                     </tr>
                   </thead>
                   <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,6,30)).order(period_receipts: :DESC).limit(10).each do |report|  %>
+                  
                   <tbody>
                     <tr>
                       <td class="condensed-column text-center"><%= image_tag report.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                       <td><% if report.person.running_reelection? %><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.incumbent_district.name %>
                       <%else%><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.district.name %><%end%></td>
                       <td><span class="float-right green-pill">$<%= number_with_delimiter(report.period_receipts, :delimiter => ',') %></span></td>
-                      <%end%>
-                    <tr>
                     
+                    <tr>
+                    <%end%>
                   </tbody>
+                  
             </table>
           </div>
         </div>
@@ -92,7 +94,7 @@
             <% if report.person.present?%>
             <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %><br>
                 <% if report.person.running_reelection || report.incumbent_report? %>
-                        <% if person.incumbent_committee_name.present? %>
+                        <% if report.person.incumbent_committee_name.present? %>
                         <small>(<%= report.person.incumbent_committee_name %>)</small>
                         <%else%>
                         <small>(<%= report.person.incumbent_district.name %>)</small>
