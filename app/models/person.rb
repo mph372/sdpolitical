@@ -67,7 +67,7 @@ class Person < ApplicationRecord
   end
 
   def current_cash_on_hand
-    if self.reports.present?
+    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
       return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.current_coh
     else
       return "$0.00"
@@ -75,7 +75,7 @@ class Person < ApplicationRecord
   end
 
   def current_net_coh
-    if self.reports.present?
+    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
       return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.net_coh
     else
       return "$0.00"
@@ -83,7 +83,7 @@ class Person < ApplicationRecord
   end
 
   def period_end
-    if self.reports.present?
+    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
       return self.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")
     else
       return "No Reports"

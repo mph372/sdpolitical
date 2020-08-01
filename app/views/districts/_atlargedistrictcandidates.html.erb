@@ -67,7 +67,7 @@
           <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dts-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
           <%end%>
           <br><small class="primary-blue"><%= candidate.ballot_status %></small></td>
-                    <td><% if candidate.reports.present?%>     
+                    <td><% if candidate.reports.where(:cycle => "2020", candidate_report: true ).present?%>     
                 <% report = candidate.reports.most_recent %>          
                 <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small><br><small> <%if report.net_coh < 0 %><span class="float-right gop-text">Net: (<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right">Net: <%= number_to_currency(report.net_coh) %></span></small><%end%></td>
                 <%else%>
