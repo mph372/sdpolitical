@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
         @deadlines = Deadline.all
         @incumbents = current_user.following_by_type('District').includes(:incumbent).collect{|u| u.incumbent}.flatten
 
-
+        
         
     end
 

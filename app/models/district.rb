@@ -16,6 +16,89 @@ class District < ApplicationRecord
      "#{self.name}"
     end
   end
+
+  def gov_2018_result
+    if self.newsom_percent.present?
+      if self.gov_2018 > 0
+          "Newsom +#{self.gov_2018.abs.truncate(2)}%" 
+      else
+          "Cox +#{self.gov_2018.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
+  def pres_2016_result
+    if self.clinton_percent.present?
+      if self.pres_2016 > 0
+          "Clinton +#{self.pres_2016.abs.truncate(2)}%" 
+      else
+          "Trump +#{self.pres_2016.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+  
+  def gov_2014_result
+    if self.brown_percent.present?
+      if self.gov_2014 > 0
+          "Brown +#{self.gov_2014.abs.truncate(2)}%" 
+      else
+          "Kashkari +#{self.gov_2014.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
+  def pres_2012_result
+    if self.obama_percent.present?
+      if self.pres_2012 > 0
+          "Obama +#{self.pres_2012.abs.truncate(2)}%" 
+      else
+          "Romney +#{self.pres_2012.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
+  
+
+
+  def contribution_limit_output
+    if self.contribution_limit == 0 || self.contribution_limit == nil
+       "No Limit"
+    else
+       "$#{self.contribution_limit}"
+    end
+  end
+
+  def corporate_contribution_output
+    if self.corporate_contributions?
+       "Allowed"
+    else
+       "Prohibited"
+    end
+  end
+
+  def party_contribution_limit_output
+    if self.party_contribution_limit == 0 || self.party_contribution_limit == nil
+       "No Limit"
+    else
+         "$#{self.party_contribution_limit}"
+    end
+  end
+
+  def pac_contribution_output
+    if self.pac_contributions?
+       "Allowed"
+    else
+         "Prohibited"
+    end
+  end
   
   def registration_advantage
     dem_voters - rep_voters

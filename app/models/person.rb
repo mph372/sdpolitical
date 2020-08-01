@@ -66,6 +66,33 @@ class Person < ApplicationRecord
     on_ballot == true || running_reelection == true
   end
 
+  def current_cash_on_hand
+    if self.reports.present?
+      return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.current_coh
+    else
+      return "$0.00"
+    end
+  end
+
+  def current_net_coh
+    if self.reports.present?
+      return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.net_coh
+    else
+      return "$0.00"
+    end
+  end
+
+  def period_end
+    if self.reports.present?
+      return self.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")
+    else
+      return "No Reports"
+    end
+  end
+
+  
+
+
   before_save :update_birthdate_fields
   before_save :update_district_field
 
@@ -87,5 +114,7 @@ class Person < ApplicationRecord
       self.district = nil
     end
   end
+
+  
 
 end

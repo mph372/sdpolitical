@@ -6,10 +6,14 @@ class DistrictPDF < Prawn::Document
         logo = "#{Rails.root}/app/assets/images/logos/ballot.png"
         image logo, :position => :center, :scale => 0.4
         district_header
-        if @district.at_large_district?
+        if @district.incumbent.present?
+            if @district.at_large_district?
             incumbent_atlarge
-        elsif @district.at_large_district == false
-        incumbent_not_atlarge
+            elsif @district.at_large_district == false
+            incumbent_not_atlarge
+            end
+        else
+            vacant_district
         end
         registration_table
         past_performance
@@ -17,9 +21,14 @@ class DistrictPDF < Prawn::Document
         if @district.at_large_district == false
         district_candidates
         else
-        at_large_district_candidates
+        atlarge_district_candidates
         end
     end
+
+    def vacant_district
+        text "Incumbent: VACANT"
+    end
+
 
     def district_header
         move_down 20
@@ -34,14 +43,16 @@ class DistrictPDF < Prawn::Document
         move_down 20
         text "Registration Breakdown", style: :bold
         move_down 5
-        text "Democrat:...... #{@district.dem_voters.truncate(2)}%"
-        text "Republican:.... #{@district.rep_voters.truncate(2)}%"
-        text "Other:............. #{@district.other_voters.truncate(2)}%"
-        if @district.registration_advantage > 0 
-        text "Advantage:..... D +#{@district.registration_advantage.abs.truncate(2)}%"
-        else
-        text "Advantage:..... R +#{@district.registration_advantage.abs.truncate(2)}%"
-        end
+        table ([
+            ["Democrat", "#{@district.dem_voters.truncate(2)}%"],
+            ["Republican", "#{@district.rep_voters.truncate(2)}%"],
+            ["Other", "#{@district.other_voters.truncate(2)}%"],
+            if @district.registration_advantage > 0 
+                ["Advantage", "D +#{@district.registration_advantage.abs.truncate(2)}%"]
+            else
+                ["Advantage", "R +#{@district.registration_advantage.abs.truncate(2)}%"]
+            end
+        ])
     end
 
     def incumbent_not_atlarge
@@ -59,108 +70,66 @@ class DistrictPDF < Prawn::Document
     def past_performance
         move_down 20
         text "Past Performance", style: :bold
-        if @district.newsom_percent.present?
-            if @district.gov_2018 > 0
-                text "2018 Governor: Newsom +#{@district.gov_2018.abs.truncate(2)}%" 
-            else
-                text "2018 Governor: Cox +#{@district.gov_2018.abs.truncate(2)}%"
-            end
-        end
-        if @district.clinton_percent.present?
-            if @district.pres_2016 > 0
-                text "2016 President: Clinton +#{@district.pres_2016.abs.truncate(2)}%" 
-            else
-                text "2016 President: Trump +#{@district.pres_2016.abs.truncate(2)}%"
-            end
-        end
-        if @district.brown_percent.present?
-            if @district.gov_2014 > 0
-                text "2014 Governor: Brown +#{@district.gov_2014.abs.truncate(2)}%" 
-            else
-                text "2014 Governor: Kashkari +#{@district.gov_2014.abs.truncate(2)}%"
-            end
-        end
-        if @district.obama_percent.present?
-            if @district.pres_2012 > 0
-                text "2016 President: Obama +#{@district.pres_2012.abs.truncate(2)}%" 
-            else
-                text "2016 President: Romney +#{@district.pres_2012.abs.truncate(2)}%"
-            end
-        end
+        table past_performance_rows, :cell_style => { :size => 10 }
+        
+
     end
+
+    def past_performance_rows
+        ([
+            ["2018 Governor", "#{@district.gov_2018_result}"],
+            ["2016 President", "#{@district.pres_2016_result}"],
+            ["2014 Governor", "#{@district.gov_2014_result}"],
+            ["2012 President", "#{@district.pres_2012_result}"],
+        ])
+    
+    end
+
 
     def campaign_finance
         move_down 20 
         text "Campaign Finance Rules", style: :bold
-        if @district.contribution_limit == 0 || @district.contribution_limit == nil
-            text "Contribution Limit: No Limit"
-        else
-            text "Contribution Limit: $#{@district.contribution_limit}"
-        end
-        if @district.corporate_contributions?
-            text "Corporate Contributions: Allowed"
-        else
-            text "Corporate Contributions: Prohibited"
-        end
-        if @district.pac_contributions?
-            text "PAC Contributions: Allowed"
-        else
-            text "PAC Contributions: Prohibited"
-        end
-        if @district.party_contribution_limit == 0 || @district.party_contribution_limit == nil
-            text "Party Contribution Limit: No Limit"
-        else
-            text "Party Contribution Limit: $#{@district.party_contribution_limit}"
-        end
+        table campaign_finance_rows, :cell_style => { :size => 10 }
+    end
+
+    def campaign_finance_rows
+        ([
+            ["Contribution Limit", "#{@district.contribution_limit_output}"],
+            ["Corporate Contributions", "#{@district.corporate_contribution_output}"],
+            ["PAC Contributions", "#{@district.pac_contribution_output}"],
+            ["Party Contribution Limit", "#{@district.party_contribution_limit_output}"],
+        ])
     end
 
     def district_candidates
         move_down 20
-        if (@district.incumbent.present? && @district.incumbent.running_reelection == true) || @district.candidates.present?
-            text "Candidates for this District/Office", style: :bold
-            if @district.incumbent.present? && @district.incumbent.running_reelection?
-                if @district.incumbent.reports.present?
-                text "#{@district.incumbent.first_name} #{@district.incumbent.last_name} (#{@district.incumbent.party}), #{@district.incumbent.ballot_status} - #{number_to_currency(@district.incumbent.reports.where(candidate_report: true).most_recent.current_coh)} COH"
-                else
-                text  "#{@district.incumbent.first_name} #{@district.incumbent.last_name} (#{@district.incumbent.party}), #{@district.incumbent.ballot_status} - $0.00 COH"
-                end
-            end
-            @district.candidates.each do |candidate|
-                if candidate.on_ballot? && candidate.reports.where(candidate_report: true).present?
-                text "#{candidate.first_name} #{candidate.last_name} (#{candidate.party}), #{candidate.ballot_status} - #{number_to_currency(candidate.reports.where(candidate_report: true).most_recent.current_coh)} COH"
-                elsif candidate.on_ballot?
-                text  "#{candidate.first_name} #{candidate.last_name} (#{candidate.party}), #{candidate.ballot_status} - $0.00 COH"
-                end
-            end
-        end
-    end
+        text "Current Candidates", style: :bold
+        table district_candidates_rows, :cell_style => { :size => 10 }
+    end 
 
-    def at_large_district_candidates
+    def atlarge_district_candidates
         move_down 20
-        if (@district.incumbent.present? && @district.incumbent.running_reelection == true) || @district.candidates.present?
-            text "Candidates for this District/Office", style: :bold
-            @district.jurisdiction.incumbents.where(:running_reelection => true).each do |incumbent|
-                if incumbent.incumbent_district.term_expires.to_s == "2020" && incumbent.incumbent_district.at_large_district?
-                    if incumbent.reports.present?
-                    text "#{incumbent.first_name} #{incumbent.last_name} (#{incumbent.party}), #{incumbent.ballot_status} - #{number_to_currency(incumbent.reports.where(candidate_report: true).most_recent.current_coh)} COH"
-                    else
-                    text  "#{incumbent.first_name} #{incumbent.last_name} (#{incumbent.party}), #{incumbent.ballot_status} - $0.00 COH"
-                    end
-                end
+        text "Current Candidates", style: :bold
+        table atlarge_district_candidates_rows, :cell_style => { :size => 10 }
+    end
 
-            end
-            @district.jurisdiction.candidates.each do |candidate|
-                if candidate.district.term_expires.to_s == "2020" && candidate.district.at_large_district?
-                    if candidate.on_ballot? && candidate.reports.present?
-                        text "#{candidate.first_name} #{candidate.last_name} (#{candidate.party}), #{candidate.ballot_status} - #{number_to_currency(candidate.reports.where(candidate_report: true).most_recent.current_coh)} COH"
-                        elsif candidate.on_ballot?
-                        text  "#{candidate.first_name} #{candidate.last_name} (#{candidate.party}), #{candidate.ballot_status} - $0.00 COH"
-                    end
-                end
-            end
+    def district_candidates_rows
 
+        [[ "Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH", "As of"]] +
+        @district.candidates.select{|c| c.former_candidate == false}.map do |candidate|
+            [ candidate.full_name, number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)), number_to_currency(candidate.current_cash_on_hand), number_to_currency(candidate.current_net_coh), candidate.period_end]
         end
     end
+
+    def atlarge_district_candidates_rows
+
+            [["Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH", "As of"]] +
+            @district.jurisdiction.candidates.select{|c| c.former_candidate == false }.select{|c| c.district.at_large_district == true }.select{|c| c.is_candidate == true }.map do |candidate|
+                [candidate.full_name, number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)), number_to_currency(candidate.current_cash_on_hand), number_to_currency(candidate.current_net_coh), candidate.period_end]
+            end
+    end
+
+    
 
     
 

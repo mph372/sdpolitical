@@ -18,10 +18,8 @@ class PeopleController < ApplicationController
       format.pdf do
         pdf = Prawn::Document.new
         pdf = DashboardPDF.new(@candidates)
-        send_data pdf.render, filename: "dashboard.pdf",
-                              type: "application/pdf",
-                              disposition: "inline"
-  
+        send_data pdf.render, @filename = "NewFileName.pdf",
+                              type: "application/pdf"
       end
     end
   end
