@@ -56,7 +56,7 @@
                     <td class="green-text text-right"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)) %></td>
                     <td class="red-text text-right"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)) %></td>          
                     <td class="text-right "><span class="green-pill"><%= number_to_currency(report.order('period_end DESC').first.current_coh) %></span></td>
-                    <td class=""><%if report.order('period_end DESC').first.net_coh < 0 %><span class="float-right gop-text">(<%= number_to_currency(report.order('period_end DESC').first.net_coh) %>)</span><%else%><span class="float-right"><%= number_to_currency(report.net_coh) %></span><%end%></td>
+                    <td class=""><%if candidate.reports.order('period_end DESC').first.net_coh < 0 %><span class="float-right gop-text">(<%= number_to_currency(candidate.reports.order('period_end DESC').first.net_coh) %>)</span><%else%><span class="float-right"><%= candidate.reports.order('period_end DESC').first.net_coh %></span><%end%></td>
                     <%else%>
                     <td class="green-text text-right">$0.00</td>
                     <td class="red-text text-right">$0.00</td>          
@@ -65,40 +65,7 @@
                     <%end%>
                   </tr>
                 <%end%>
-                <% @incumbents.each do |candidate| %>
-                <% if candidate.running_reelection?%>
-                  <tr>
-                    <td class=""><%= candidate.incumbent_district.jurisdiction.name%></td>
-                    <td class="">
-                        
-                        <%if candidate.incumbent_district.district != "At Large" && candidate.incumbent_district.is_seat == false && candidate.incumbent_district.is_area == false %>
-                        <%= link_to "#{candidate.incumbent_district.name} - #{candidate.incumbent_district.district.to_i.ordinalize} District", candidate.incumbent_district %>
-                        <%elsif candidate.incumbent_district.is_seat %>
-                        <%= link_to "#{candidate.incumbent_district.name} - Seat #{candidate.incumbent_district.district}", candidate.incumbent_district %>
-                        <%elsif candidate.incumbent_district.is_area %>
-                        <%= link_to "#{candidate.incumbent_district.name} - Trustee Area #{candidate.incumbent_district.district}", candidate.incumbent_district%>
-                        <%elsif candidate.incumbent_district.district == "At Large" %>
-                        <%= link_to "#{candidate.incumbent_district.name}", candidate.incumbent_district%>
-                        <%end%>
-                    
-                    </td>
-
-                    <td class=""><%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate %></td>
-                    <%if candidate.reports.present? %>
-                    <% report = candidate.reports %>   
-                    <td class="green-text text-right"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)) %></td>
-                    <td class="red-text text-right"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)) %></td>          
-                    <td class="text-right "><span class="green-pill"><%= number_to_currency(report.order('period_end DESC').first.current_coh) %></span></td>
-                    <td class=""><%if report.order('period_end DESC').first.net_coh < 0 %><span class="float-right gop-text">(<%= number_to_currency(report.order('period_end DESC').first.net_coh) %>)</span><%else%><span class="float-right"><%= number_to_currency(report.order('period_end DESC').first.net_coh) %></span><%end%></td>
-                    <%else%>
-                    <td class="green-text text-right">$0.00</td>
-                    <td class="red-text text-right">$0.00</td>          
-                    <td class="text-right"><span class="green-pill">$0.00</span></td>
-                    <td class="text-right"><span>$0.00</span></td>
-                    <%end%>
-                  </tr>
-                <%end%>
-                <% end %>  
+                
             </tbody>
           </table>
         </div>

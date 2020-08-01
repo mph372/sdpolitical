@@ -3,11 +3,11 @@ class DashboardController < ApplicationController
     def index
         @districts = current_user.following_by_type('District')
         @expenditures = current_user.following_by_type('District').includes(:expenditures).collect{|u| u.expenditures}.flatten
-        @candidates = current_user.following_by_type('District').includes(:candidates, :incumbent).collect{|u| u.candidates}.collect{|u| u.incumbent}.flatten
+        @candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
         @birthdays = Person.where(birth_month: Time.zone.now.month).order(:birth_day)
         @deadlines = Deadline.all
         @incumbents = current_user.following_by_type('District').includes(:incumbent).collect{|u| u.incumbent}.flatten
-        @people = @candidates << @incumbents
+
 
         respond_to do |format|
             format.html
