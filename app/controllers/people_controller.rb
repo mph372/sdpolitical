@@ -9,6 +9,7 @@ class PeopleController < ApplicationController
   def index
     @people = Person.all
     @reports = Report.all.order(report_filed: :desc)
+    @districts = current_user.following_by_type('District')
 
     @candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
 
