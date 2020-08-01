@@ -3,6 +3,8 @@ class DistrictPDF < Prawn::Document
     def initialize(district)
         super()
         @district = district
+        logo = "#{Rails.root}/app/assets/images/logos/ballot.png"
+        image logo, :position => :center, :scale => 0.4
         district_header
         if @district.at_large_district?
             incumbent_atlarge
@@ -20,6 +22,7 @@ class DistrictPDF < Prawn::Document
     end
 
     def district_header
+        move_down 20
         if @district.district != "At Large"
         text "#{@district.jurisdiction.name}, #{@district.name} - #{@district.district.to_i.ordinalize} District", size: 15, style: :bold 
         else
@@ -158,6 +161,8 @@ class DistrictPDF < Prawn::Document
 
         end
     end
+
+    
 
 
 end

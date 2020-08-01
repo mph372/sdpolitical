@@ -9,41 +9,10 @@
 
 
       <tbody>
-      <tr>
-        <% if @district.incumbent.present? %>
-        <% if @district.incumbent.running_reelection? %>
-        <% report = @district.incumbent.reports.most_recent %>
-        <td class="condensed-column  pt-4 pb-0 pr-2">
-          <% if @district.incumbent.endorsed_republican? %>
-          <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
-          <%elsif @district.incumbent.endorsed_democrat?%>
-          <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
-          <%else%>
-          <%end%>
-          </td>
-          <td class="condensed-column"><%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "65x65"  %></td>
-        <td>
-          <% if @district.incumbent.party == "Republican" %>
-          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"gop-text" }%><br><small><%= @district.incumbent.title %></small>
-          <%elsif @district.incumbent.party == "Democrat"%>
-          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dem-text" }%><br><small><%= @district.incumbent.title %></small>
-          <%else%>
-          <%= link_to "#{@district.incumbent.first_name} #{@district.incumbent.last_name}", @district.incumbent, { :class =>"dts-text" }%><br><small><%= @district.incumbent.title %></small>
-          <%end%><br><small class="primary-blue"><%= @district.incumbent.ballot_status %></small></td>
-          </td>
-          <td><% if @district.incumbent.reports.present?%>     
-                <% report = @district.incumbent.reports.most_recent %>          
-                <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
-                <%else%>
-                <td class="text-right "><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
-                <%end%> </td>
-      </tr>
-      <% end %>
-      <%end%>
 
       <% @district.candidates.each do |candidate| %>
       <tr>
-        <% if candidate.on_ballot? %>
+        <% if candidate.is_candidate %>
           <% report = candidate.reports.most_recent %>
           
           <td class="condensed-column pt-4 pb-0">
@@ -67,7 +36,7 @@
           </td>
           <td><% if candidate.reports.present?%>     
                 <% report = candidate.reports.most_recent %>          
-                <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small></td>
+                <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small><br><small> <%if report.net_coh < 0 %><span class="float-right gop-text">Net: (<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right">Net: <%= number_to_currency(report.net_coh) %></span></small><%end%></td>
                 <%else%>
                 <td class="text-right "><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
                 <%end%> </td>

@@ -37,7 +37,12 @@ class Person < ApplicationRecord
     ballot_status == "Withdrew" || ballot_status == "Lost in Primary"
   end
 
+  def is_candidate
+    on_ballot == true || running_reelection == true
+  end
+
   before_save :update_birthdate_fields
+  before_save :update_district_field
 
   private
 
@@ -45,6 +50,16 @@ class Person < ApplicationRecord
     if birthdate_changed?
       self.birth_month = birthdate ? birthdate.month : nil
       self.birth_day = birthdate ? birthdate.day : nil
+    end
+  end
+
+  
+  def update_district_field
+    if running_reelection == true
+      self.district = self.incumbent_district
+    end
+    if running_reelection == false && is_incumbent == true && on_ballot == false
+      self.district = nil
     end
   end
 
