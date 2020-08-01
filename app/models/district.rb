@@ -9,6 +9,13 @@ class District < ApplicationRecord
   has_many :expenditures
   acts_as_followable
 
+  def district_name
+    if self.district != "At Large" 
+     "#{self.name}, #{self.district.to_i.ordinalize} District"
+    else
+     "#{self.name}"
+    end
+  end
   
   def registration_advantage
     dem_voters - rep_voters

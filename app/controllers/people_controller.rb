@@ -9,6 +9,20 @@ class PeopleController < ApplicationController
   def index
     @people = Person.all
     @reports = Report.all.order(report_filed: :desc)
+
+    @candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = Prawn::Document.new
+        pdf = DashboardPDF.new(@candidates)
+        send_data pdf.render, filename: "dashboard.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+  
+      end
+    end
   end
 
   # GET /people/1

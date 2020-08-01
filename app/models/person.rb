@@ -17,7 +17,31 @@ class Person < ApplicationRecord
   
   end
 
+  def self.to_csv
+    CSV.generate do |csv|
+        csv << column_names
+        all.each do |candidate|
+            csv << candidate.attributes.values_at(*column_name)
+        end
+    end
+  end
+
   mount_uploader :image, IncumbentUploader
+
+  def full_name
+    first_name + " " + last_name
+  end
+
+  def district_name
+    if self.district.district != "At Large" 
+    puts "#{self.district.jurisdiction.name} - #{self.district.name}, #{self.district.district.to_i.ordinalize} District"
+    else
+    puts "#{self.district.jurisdiction.name} - #{self.district.name}"
+    end
+  end
+
+
+
 
   def calculated_age
     now = Time.now.utc.to_date

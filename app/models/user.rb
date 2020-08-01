@@ -11,6 +11,10 @@ class User < ApplicationRecord
     stripe_subscription_id?
   end
 
+  def full_name
+    first_name + " " + last_name
+  end
+
   after_create :subscribe_user_to_mailing_list
 
 
