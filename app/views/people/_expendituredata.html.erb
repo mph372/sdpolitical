@@ -1,4 +1,4 @@
-<% if @person.expenditures.present? %> <!-- Start of candidate IE data, if available --> 
+<% if @person.expenditures.present? || @person.committees.present? %> <!-- Start of candidate IE data, if available --> 
   <hr>
   <div class="container">
   <div class="row">
@@ -11,24 +11,42 @@
     </div>  
   </div> 
 
-   
- 
-  <div class="row">  
-    <div class="col-md-6 text-center">
-      <div class="bg-white border rounded shadow-sm p-3">
-        <h3 class="green-text heavy"><%= number_to_currency(@expenditures.where(:is_support => true).sum(:amount)) %></h3>
-        <h6>Total Spent in Support of <%= "#{@person.first_name} #{@person.last_name}"%></h6>
+  <%if @person.committees.present? %>
+  <div class="row">
+    <div class="col">
+      <%= render 'committees'%>
+    </div>
+  </div> 
+  <%end%> 
+  <%if @person.expenditures.present? %> 
+ <div style="width:100%;">
+      <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+            Aggregate Independent Expenditures for/against <%= "#{@person.first_name} #{@person.last_name}" %>
+        </div>
+    <div class="row">  
+      <div class="col-md-6 text-center">
+        <div class="bg-white  p-3">
+          <h3 class="green-text heavy"><%= number_to_currency(@expenditures.where(:is_support => true).sum(:amount)) %></h3>
+          <h6>Total Spent in Support of <%= "#{@person.first_name} #{@person.last_name}"%></h6>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+          <div class="bg-white  p-3">
+          <h3 class="red-text heavy"><%= number_to_currency(@expenditures.where(:is_oppose => true).sum(:amount)) %></h3>
+          <h6>Total Spent in Opposition to <%= "#{@person.first_name} #{@person.last_name}"%></h6>
+          </div>
       </div>
     </div>
-    <div class="col-md-6 text-center">
-        <div class="bg-white border rounded shadow-sm p-3">
-        <h3 class="red-text heavy"><%= number_to_currency(@expenditures.where(:is_oppose => true).sum(:amount)) %></h3>
-        <h6>Total Spent in Opposition to <%= "#{@person.first_name} #{@person.last_name}"%></h6>
+  </div>  
+   <div style="width:100%;">
+      <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+            Itemized Independent Expenditures for/against <%= "#{@person.first_name} #{@person.last_name}" %>
         </div>
-    </div>
     <div class="col">
-  <div class="table-responsive p-2 mt-4">
-    <table class="table border shadow-sm p-2 bg-white" style="width:100%">
+  <div class="table-responsive  mt-4">
+    <table class="table bg-white" style="width:100%">
       <thead class="thead-light rounded">
       <tr>
         <th>Date</th>
@@ -58,6 +76,9 @@
         <% end %>
       </tbody>
     </table>
+  </div>
+  </div>
+  <%end%>
   </div>
   </div>
   </div>

@@ -16,7 +16,11 @@
               <tbody>
                 <% @expenditures.order('expenditure_date DESC').each do |expenditure| %>
                   <tr>
+                  <% if current_user.admin?%>
+                    <td><%= link_to "#{expenditure.expenditure_date.strftime("%b-%d-%y")}", expenditure %></td>
+                  <%else%>
                     <td><%= expenditure.expenditure_date.strftime("%b-%d-%y") %></td>
+                    <%end%>
                     <td><%= number_to_currency(expenditure.amount) %></td>
                     <% if expenditure.person.present?%>
                           <td><%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %></td>

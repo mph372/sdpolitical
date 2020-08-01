@@ -20,7 +20,7 @@
 
   <tbody>
     <% @people.each do |person| %>
-      
+      <% if person.district.present? || person.incumbent_district.present? %>
       <% report = person.reports.most_recent %>
       <tr>
         <td><%= link_to "#{person.last_name}, #{person.first_name}", person %><% if person.is_incumbent? && person.incumbent_district.present? %>*<%end%></td>
@@ -46,7 +46,7 @@
             <%else%>
             $0.00</span><%end%></td>
       </tr>
-      
+      <%end%>
     <% end %>
   </tbody>
 </table>

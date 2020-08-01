@@ -1,0 +1,54 @@
+<div style="width:100%;">
+      <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+            Specifically Formed Committees Dedicated to Supporting/Opposing <%= "#{@person.first_name} #{@person.last_name}" %>
+        </div>
+        <div class="table-responsive p-1">
+            <table class="table table p-2 bg-white" style="width:100%">
+                <tbody>
+                    <% @person.committees.each do |committee| %>
+                    <tr>
+                        <td> <%= link_to "#{committee.name}", committee %> </td>
+                        <td><% if committee.is_support %><span class="green-text heavy">Support</span><%elsif committee.is_oppose %><span class="red-text heavy">Oppose</span><%end%></td>
+                        <%if committee.reports.present? %>
+                        <% report = committee.reports %> 
+                            <td class="text-right"><span class="green-text"><%= number_to_currency(report.where(:cycle => "2020").sum(:period_receipts)) %></span><br><small><%= "(Raised since #{report.order(:period_begin).first.period_begin.strftime("%m/%d/%Y")})" %></small></td>
+                            <td class=" text-right"><span class="red-text"><%= number_to_currency(report.where(:cycle => "2020").sum(:period_disbursements)) %></span><br><small><%= "(Spent through #{report.order(:period_end).last.period_end.strftime("%m/%d/%Y")})" %></small></td>            
+                            <td class="text-right"><span class="green-pill"><%= number_to_currency(report.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small></td>
+                        <%else%>
+                        <td class="text-right"><span class="green-text">$0.00</span><br><small>Raised</small></td>
+                        <td class="text-right"><span class="red-text">$0.00</span><br><small>Spent</small></td>
+                        <td class="text-right"><span class="green-pill">$0.00</span><br><small>Cash-on-Hand</small></td>
+                        <%end%>
+                    </tr>
+                    <%end%>
+                </tbody>
+            </table>
+        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>  
+</div>
