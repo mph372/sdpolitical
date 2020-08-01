@@ -6,6 +6,7 @@ class DashboardPDF < Prawn::Document
         logo = "#{Rails.root}/app/assets/images/logos/ballot.png"
         image logo, :position => :center, :scale => 0.4
         text "Campaign Finance Report", size: 15, style: :bold
+        text "Generated on #{Time.now.strftime('%m-%d-%Y')}"
         line_items
         end
 
