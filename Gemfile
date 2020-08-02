@@ -51,7 +51,7 @@ gem 'acts_as_follower', github: 'tcocca/acts_as_follower'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'gibbon', github: 'amro/gibbon'
 gem 'prawn-table'
-
+gem 'meta-tags'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

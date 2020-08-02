@@ -10,6 +10,9 @@ class PeopleController < ApplicationController
     @people = Person.all
     @reports = Report.all.order(report_filed: :desc)
     @districts = current_user.following_by_type('District')
+
+    set_meta_tags title: 'Candidates & Elected Officials',
+    site: 'The Ballot Book'
     
     @district_candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
     @atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
@@ -32,6 +35,9 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
     @reports = @person.reports.order(period_end: :desc)
     @expenditures = @person.expenditures.order(expenditure_date: :desc)
+
+    set_meta_tags title: @person.full_name,
+                  site: 'The Ballot Book'
   end
 
   # GET /people/new

@@ -17,6 +17,10 @@ class District < ApplicationRecord
     end
   end
 
+  def full_district_name
+    "#{self.jurisdiction.name} - #{self.district_name}"
+  end
+
   def gov_2018_result
     if self.newsom_percent.present?
       if self.gov_2018 > 0

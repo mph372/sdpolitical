@@ -8,11 +8,15 @@ class ReportsController < ApplicationController
   # GET /reports.json
   def index
     @reports = Report.all
+    set_meta_tags title: 'Campaign Finance Reports',
+    site: 'The Ballot Book'
   end
 
   # GET /reports/1
   # GET /reports/1.json
   def show
+    set_meta_tags title: @report.report_name,
+    site: 'The Ballot Book'
   end
 
   # GET /reports/new

@@ -8,12 +8,18 @@ class JurisdictionsController < ApplicationController
   # GET /jurisdictions.json
   def index
     @jurisdictions = Jurisdiction.all
+
+    set_meta_tags title: 'Jurisdictions',
+    site: 'The Ballot Book'
   end
 
   # GET /jurisdictions/1
   # GET /jurisdictions/1.json
   def show
     @measures = @jurisdiction.measures
+
+    set_meta_tags title: @jurisdiction.name,
+    site: 'The Ballot Book'
   end
 
   # GET /jurisdictions/new

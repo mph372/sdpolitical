@@ -8,6 +8,8 @@ class CommitteesController < ApplicationController
   # GET /committees.json
   def index
     @committees = Committee.all
+    set_meta_tags title: 'Committees',
+    site: 'The Ballot Book'
   end
 
   # GET /committees/1
@@ -16,6 +18,8 @@ class CommitteesController < ApplicationController
     @committee = Committee.find(params[:id])
     @reports = @committee.reports
     @expenditures = @committee.expenditures
+    set_meta_tags title: @committee.name,
+                  site: 'The Ballot Book'
   end
 
   # GET /committees/new

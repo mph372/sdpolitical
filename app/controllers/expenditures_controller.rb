@@ -8,11 +8,16 @@ class ExpendituresController < ApplicationController
   # GET /expenditures.json
   def index
     @expenditures = Expenditure.all
+
+    set_meta_tags title: 'Expenditures',
+    site: 'The Ballot Book'
   end
 
   # GET /expenditures/1
   # GET /expenditures/1.json
   def show
+    set_meta_tags title: 'View Expenditure',
+        site: 'The Ballot Book'
   end
 
   # GET /expenditures/new

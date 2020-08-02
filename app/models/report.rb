@@ -28,6 +28,9 @@ class Report < ApplicationRecord
     end
   end
 
+  def report_name
+    "#{self.period_begin} - #{self.period_end} Report for #{self.person.full_name}"
+  end
 
 
 

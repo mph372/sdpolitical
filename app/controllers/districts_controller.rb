@@ -9,7 +9,8 @@ class DistrictsController < ApplicationController
   # GET /districts.json
   def index
     @districts = District.all
-
+    set_meta_tags title: 'Districts',
+        site: 'The Ballot Book'
     
   end
 
@@ -18,6 +19,10 @@ class DistrictsController < ApplicationController
   # GET /districts/1
   # GET /districts/1.json
   def show
+
+  set_meta_tags title: @district.full_district_name,
+                site: 'The Ballot Book'
+
     @district = District.find(params[:id])
     @incumbents = @district.incumbent
     @candidates = @district.candidates

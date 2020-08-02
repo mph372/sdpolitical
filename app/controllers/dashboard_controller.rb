@@ -11,6 +11,8 @@ class DashboardController < ApplicationController
 
         @candidates = @district_candidates + @atlarge_candidates
         
+        set_meta_tags title: 'My Dashboard',
+        site: 'The Ballot Book'
         
     end
 
