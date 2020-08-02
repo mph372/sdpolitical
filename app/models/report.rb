@@ -28,6 +28,27 @@ class Report < ApplicationRecord
     end
   end
 
+  def report_name
+    if self.person.present?
+    "#{self.period_begin} - #{self.period_end} Report for #{self.person.full_name}"
+    elsif self.committee.present?
+      "#{self.period_begin} - #{self.period_end} Report for #{self.committee.name}"
+    end
+  end
+
+
+  before_save :prevent_candidate_report
+
+  private
+
+  def prevent_candidate_report
+    if self.committee.present?
+      self.candidate_report = false
+      self.incumbent_report = false
+    end
+  end
+
+  
 
 
 
