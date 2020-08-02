@@ -10,8 +10,10 @@ class PeopleController < ApplicationController
     @people = Person.all
     @reports = Report.all.order(report_filed: :desc)
     @districts = current_user.following_by_type('District')
-
-    @candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
+    
+    @district_candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
+    @atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
+    @candidates = @district_candidates + @atlarge_candidates
 
     respond_to do |format|
       format.html

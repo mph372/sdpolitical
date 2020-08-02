@@ -90,6 +90,15 @@ class Person < ApplicationRecord
     end
   end
 
+  def incumbent_district_display
+    if self.incumbent_district != "At Large" && self.incumbent_district.is_seat == false && self.incumbent_district.is_area == false 
+     "- #{self.incumbent_district.district.to_i.ordinalize} District" 
+    elsif self.incumbent_district.is_seat 
+     "- Seat #{self.incumbent_district.district}"
+    elsif self.incumbent_district.is_area 
+     "- Trustee Area #{self.incumbent_district.district}"
+    end
+  end
   
 
 

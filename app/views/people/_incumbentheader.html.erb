@@ -31,10 +31,12 @@
             <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name}" %></strong></h1>
               <% if @person.incumbent_district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction, :class => "nounderline" %> - 
-                <% if @person.incumbent_district.district != "At Large" %>
+                <% if @person.incumbent_district.district != "At Large" && @person.incumbent_district.is_seat == false && @person.incumbent_district.is_area == false %>
                 <%= link_to "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize} District", @person.incumbent_district, :class => "nounderline" %> 
-                <%else%>
-                <%= link_to "#{@person.title}", @person.incumbent_district, :class => "nounderline" %>
+                <% elsif @person.incumbent_district.is_seat %>
+                <%= link_to "#{@person.title}, Seat #{@person.incumbent_district.district}", @person.incumbent_district, :class => "nounderline" %>
+                <%elsif @person.incumbent_district.is_area %>
+                <%= link_to "#{@person.title}, Trustee Area #{@person.incumbent_district.district}", @person.incumbent_district, :class => "nounderline" %>
                 <%end%></h5>
               <%end%>
               

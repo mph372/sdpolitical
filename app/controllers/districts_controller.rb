@@ -29,8 +29,8 @@ class DistrictsController < ApplicationController
         pdf = Prawn::Document.new
         pdf = DistrictPDF.new(@district)
         send_data pdf.render, filename: "#{@district.jurisdiction.name}_#{@district.name}_#{@district.district}.pdf",
-                              type: "application/pdf",
-                              disposition: "inline"
+                              type: "application/pdf"
+                              
 
       end
     end

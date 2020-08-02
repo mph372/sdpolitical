@@ -19,7 +19,7 @@
                       <th>Period Receipts</th>
                     </tr>
                   </thead>
-                  <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,6,30)).order(period_receipts: :DESC).limit(10).each do |report|  %>
+                  <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,6,30)).order(period_receipts: :DESC).limit(15).each do |report|  %>
                   
                   <tbody>
                     <tr>
