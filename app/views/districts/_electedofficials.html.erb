@@ -12,6 +12,7 @@
               <th class="no-border">Age</th>
               <th class="no-border">Term Expires</th>
               <th class="no-border">Tenure (in this office)</th>
+              <th class="no-border">Voters Represented</th>
               <th class="no-border">District Registration</th>
             </tr>
           </thead>
@@ -33,6 +34,7 @@
                   <td><%if person.birthdate.present? %><%= person.calculated_age %><%end%></td>
                   <td><%= person.term_expires %></td>
                   <td><% if person.first_elected.present? %><% if person.calculated_tenure == 1%><%= person.calculated_tenure %> year<%else%><%= person.calculated_tenure %> years<%end%><%end%></td>
+                  <td><%= number_with_delimiter(person.incumbent_district.total_voters, :delimiter => ',') %></td>
                   <td><% if person.incumbent_district.registration_advantage > 0 %>
                         <strong><span style="color: #35469C;">D +<%= number_with_precision(person.incumbent_district.registration_advantage.abs, precision: 2) %>%</span></strong>
                         <% else %>

@@ -6,11 +6,13 @@
       <table CLASS="table">
 
         <tbody>
-            <% @deadlines.limit(5).each do |deadline| %>
+            <% @deadlines.each do |deadline| %>
+            <%if deadline.deadline_date.past? == false%>
             <tr>
                     <td><strong><%= deadline.title %></strong><br><small><%= deadline.description %> </small></td>
                     <td class="text-nowrap"><%=deadline.deadline_date.strftime("%b %-d") %></td>
             </tr>
+            <%end%>
             <%end%>
         </tbody>
         </table>

@@ -104,6 +104,30 @@ class Person < ApplicationRecord
     self.birth_day >= Time.zone.now.day.to_i
   end
 
+  def party_abbreviation
+    if self.party == "Republican"
+      "(R)"
+    elsif self.party == "Democrat"
+      "(D)"
+    elsif self.party == "Declined to State"
+      "(DTS)"
+    elsif self.party == "Green"
+      "(GREEN)"
+    elsif self.party == "Peace & Freedom"
+      "(P & F)"
+    elsif self.party == "Libertarian"
+      "(LIB)"
+    elsif self.party == "Reform"
+      "(REF)"
+    elsif self.party == "Natural Law"
+      "(NL)"
+    elsif self.party == "American Independent"
+      "(AIP)"      
+    else
+      "(Unknown)"    
+    end
+  end
+
 
   before_save :update_birthdate_fields
   before_save :update_district_field

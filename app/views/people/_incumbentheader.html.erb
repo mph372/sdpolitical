@@ -1,34 +1,22 @@
 <div class="row bg-light shadow-sm bg-white section-border rounded mt-1 p-3">
-        <div class="col-sm-3 m-1 p-2 text-center "  >
+        <div class="col-sm-3 m-1 p-2 text-center my-auto"  >
           <% if @person.image.present? %>
-          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image shadow", size: "125x125"  %><br>
+          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image shadow", size: "200x200"  %><br>
           <% else %>
           <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div><br>
           <%end%>
-            <h6 class="text-center"><% if @person.party == "Republican" %>
-                  <span class="gop-pill text-center"><%= @person.party %></span> 
-                    <% if @person.endorsed_republican? %>
-                    <br>
-                    <br>
-                    <div>
-                      <div class="gop-party-endorsed" style="display: inline-block;">Party Endorsed</div>
-                    </div>
-                    <%end%>
-                  <%elsif @person.party == "Democrat"%>
-                  <div class="dem-pill text-center" style="display: inline;"><%= @person.party %></div>
-                    <% if @person.endorsed_democrat? %>
-                    <br>
-                    <br>
-                    <div>
-                      <div class="dem-party-endorsed" style="display: inline-block">Party Endorsed</div>
-                    </div>
-                    <%end%>
-                  <%else%>
-                  <%= @person.party %>
-                  <%end%> </h6>
+            
+                    
         </div>
         <div class="col-md m-1 p-2">
-            <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name}" %></strong></h1>
+            <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong>
+            <% if @person.endorsed_republican? %>
+                <span class="gop-text"><%= material_icon.check_circle %></span>
+                <%elsif @person.endorsed_democrat?%>
+                <span class="dem-text"><%= material_icon.check_circle %></span>
+                <%else%>
+                <%end%>
+            </h1>
               <% if @person.incumbent_district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction, :class => "nounderline" %> - 
                 <% if @person.incumbent_district.district != "At Large" && @person.incumbent_district.is_seat == false && @person.incumbent_district.is_area == false %>

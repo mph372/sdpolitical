@@ -12,12 +12,12 @@
                   <h6 class="card-subtitle text-muted" >REP</h6>
                   <h5><%= @district.rep_voters.truncate(2) %>%</h5>
                 </div>
-                <div class="col-md d-none d-xl-block" style="color: #627D98;"><br>
+                <div class="col-md " style="color: #627D98;"><br>
                   <h6 class="card-subtitle text-muted" >OTHER</h6>
                   <h5><%= @district.other_voters.truncate(2) %>%</h5>
                 </div>
                 <div class="col-md"><br>
-                  <h6 class="card-subtitle text-muted">ADVANTAGE</h6>
+                  <h6 class="card-subtitle text-muted text-nowrap">ADVANTAGE</h6>
                   <h5><% if @district.registration_advantage > 0 %>
                         <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(@district.registration_advantage.abs, precision: 2) %>%</span></strong>
                         <% else %>
