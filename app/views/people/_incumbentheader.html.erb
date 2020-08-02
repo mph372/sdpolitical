@@ -1,7 +1,7 @@
 <div class="row bg-light shadow-sm bg-white section-border rounded mt-1 p-3">
         <div class="col-sm-3 m-1 p-2 text-center my-auto"  >
           <% if @person.image.present? %>
-          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image shadow", size: "200x200"  %><br>
+          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image img-fluid shadow", size: "200x200"  %><br>
           <% else %>
           <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div><br>
           <%end%>
@@ -25,6 +25,8 @@
                 <%= link_to "#{@person.title}, Seat #{@person.incumbent_district.district}", @person.incumbent_district, :class => "nounderline" %>
                 <%elsif @person.incumbent_district.is_area %>
                 <%= link_to "#{@person.title}, Trustee Area #{@person.incumbent_district.district}", @person.incumbent_district, :class => "nounderline" %>
+                <% elsif @person.incumbent_district.district == "At Large" %>
+                <%= link_to "#{@person.title}", @person.incumbent_district, :class => "nounderline" %>
                 <%end%></h5>
               <%end%>
               
