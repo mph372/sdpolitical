@@ -19,7 +19,7 @@
                       <th>Period Receipts</th>
                     </tr>
                   </thead>
-                  <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,6,30)).order(period_receipts: :DESC).limit(15).each do |report|  %>
+                  <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,6,30)).order(period_receipts: :DESC).limit(14).each do |report|  %>
                   
                   <tbody>
                     <tr>
@@ -89,9 +89,10 @@
       </thead>
 
       <tbody>
-        <% @reports.order('report_filed DESC').each do |report| %>
+        <% @reports.each do |report| %>
+          <% if report.person.present?%>
           <tr>
-            <% if report.person.present?%>
+            
             <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %><br>
                 <% if report.person.running_reelection || report.incumbent_report? %>
                         <% if report.person.incumbent_committee_name.present? %>

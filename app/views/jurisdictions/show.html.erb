@@ -3,18 +3,21 @@
       <div class="row p-1 m-1">
         <h2 class="primary-blue heavy"><%= @jurisdiction.name %></h2>
       </div>
-      <div class="row">
-        <div class="col">
-          <% if @jurisdiction.map_url.present?%>
-          <div class="float-right ml-3 p-2" style="clear: right;">
-          <%= content_tag(:iframe,'', width: 320, height: 320, src: "#{@jurisdiction.map_url}", :class => "float-right") %>
-          <%end%>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5">
+            <% if @jurisdiction.map_url.present?%>
+            <%= render 'map' %>
+            <%end%>
           </div>
-          <p class="p-2"><%=  h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %> </p>
+          <div class="col-lg-7">
+            <%= render 'data'%>
+          </div>
+        </div>
         </div>
     </div> 
   </div>   
-</div>
+
  
 <br>
 <hr>
@@ -118,6 +121,6 @@
 <%= link_to 'Back', jurisdictions_path, :class => "float-right btn btn-outline-secondary text-right" %> 
 </div>
     
-
+</div>
 
 </div>

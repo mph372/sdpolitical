@@ -100,6 +100,9 @@ class Person < ApplicationRecord
     end
   end
   
+  def is_birth_month
+    self.birth_day >= Time.zone.now.day.to_i
+  end
 
 
   before_save :update_birthdate_fields

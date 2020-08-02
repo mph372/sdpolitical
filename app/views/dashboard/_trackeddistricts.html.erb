@@ -8,14 +8,17 @@
               <tbody>
                 <% @districts.each do |district| %>
                   <tr>
-                    <td>
-                      <% if district.district == "At Large" %>
-                      <%= link_to "#{district.name}", district %>
-                      <%else%>
-                      <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
-                      <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
+                    <td><small class="text-muted"><%= district.jurisdiction.name %></small><br>
+                      <%if district.district != "At Large" && district.is_seat == false && district.is_area == false %>
+                        <%= link_to "#{district.name} - #{district.district.to_i.ordinalize} District", district %>
+                        <%elsif district.is_seat %>
+                        <%= link_to "#{district.name} - Seat #{district.district}", district %>
+                        <%elsif district.is_area %>
+                        <%= link_to "#{district.name} - Trustee Area #{district.district}", district%>
+                        <%elsif district.district == "At Large" %>
+                        <%= link_to "#{district.name}", district%>
+                        <%end%>
                     </td>
-                    <td><%if district.term_expires.present? %><%= district.term_expires %><br><small>Election Cycle</small><%end%></td>
                     <td><%= link_to "Stop Tracking", unfollow_district_path(district), :class => "float-right btn btn-outline-secondary" %></td>
                   </tr>
                 <% end %>

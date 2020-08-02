@@ -10,7 +10,7 @@
         <tbody>
             <% @birthdays.limit(5).each do |person| %>
             <tr>
-                    <%if person.birth_day >= Time.zone.now.day.to_i %>
+                    
                     <td class="condensed-column"><%= image_tag person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                     <td><strong><%= link_to "#{person.first_name} #{person.last_name}", person %></strong><br><small><% if person.incumbent_district.present? %><%= "#{person.title}, #{person.incumbent_district.jurisdiction.name}"%><%elsif person.on_ballot? %>Candidate for <%= "#{person.district.jurisdiction.name}, #{person.district.name}" %><%end%></small></td>
                     <td><%= person.birthdate.strftime("%B %d") %><br><small class="text-nowrap"><%= person.next_birthday %> years old<small></td>
@@ -19,7 +19,7 @@
                         <%= fa_icon "envelope" %><br>
                     <% end %> 
                   <%end%>  </td>
-                  <%end%>
+                
             </tr>
             <%end%>
         </tbody>

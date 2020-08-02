@@ -1,0 +1,12 @@
+  <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+    <div class="card-header">
+      Jurisdiction Info
+    </div>
+        <div class="card-body">
+        <% if @jurisdiction.description.present?%>
+        <p class="p-2"><%=  h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %> </p> 
+        <%else%>
+        <p><em>Jurisdiction information not yet available.</em></p>    
+        <%end%>    
+        </div>      
+  </div>
