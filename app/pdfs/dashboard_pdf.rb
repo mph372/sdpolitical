@@ -33,7 +33,7 @@ class DashboardPDF < Prawn::Document
 
     def line_item_rows
         [["Jurisdiction", "District", "Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH", "As of"]] +
-        @candidates.select{|c| c.former_candidate == false}.map do |candidate|
+        @candidates.select{|c| c.former_candidate == false}.uniq.map do |candidate|
             [candidate.district.jurisdiction.name, candidate.district.district_name, candidate.full_name, number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)), number_to_currency(candidate.current_cash_on_hand), number_to_currency(candidate.current_net_coh), candidate.period_end]
         end
     end

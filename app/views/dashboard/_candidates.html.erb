@@ -18,7 +18,7 @@
 
             <tbody>
 
-                <% @candidates.each do |candidate| %>
+                <% @candidates.uniq.each do |candidate| %>
                   <tr>
                     <% if candidate.former_candidate == false %>
                     <td class=""><%= candidate.district.jurisdiction.name%></td>
