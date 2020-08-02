@@ -10,12 +10,7 @@
         </div>
         <div class="col-md m-1 p-2">
             <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong>
-            <% if @person.endorsed_republican? %>
-                <span class="gop-text"><%= material_icon.check_circle %></span>
-                <%elsif @person.endorsed_democrat?%>
-                <span class="dem-text"><%= material_icon.check_circle %></span>
-                <%else%>
-                <%end%>
+            
             </h1>
               <% if @person.incumbent_district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction, :class => "nounderline" %> - 

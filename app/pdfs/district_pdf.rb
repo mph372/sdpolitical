@@ -4,7 +4,7 @@ class DistrictPDF < Prawn::Document
         super()
         @district = district
         logo = "#{Rails.root}/app/assets/images/logos/ballot.png"
-        image logo, :position => :center, :scale => 0.4
+        image logo, :position => :center, :scale => 0.25
         district_header
         if @district.incumbent.present?
             if @district.at_large_district?
@@ -23,6 +23,13 @@ class DistrictPDF < Prawn::Document
         else
         atlarge_district_candidates
         end
+        string = "Generated on #{Time.now.strftime('%m-%d-%Y')}"
+        # Green page numbers 1 to 11
+            options = { :at => [bounds.right - 150, 0],
+            :width => 150,
+            :align => :right,
+            :size => 10 }
+            number_pages string, options
     end
 
     def vacant_district

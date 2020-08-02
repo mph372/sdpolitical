@@ -14,7 +14,7 @@
                         <% report = committee.reports %> 
                             <td class="text-right"><span class="green-text"><%= number_to_currency(report.where(:cycle => "2020").sum(:period_receipts)) %></span><br><small class="text-nowrap"><%= "(Raised since #{report.order(:period_begin).first.period_begin.strftime("%m/%d/%Y")})" %></small></td>
                             <td class=" text-right"><span class="red-text"><%= number_to_currency(report.where(:cycle => "2020").sum(:period_disbursements)) %></span><br><small class="text-nowrap"><%= "(Spent through #{report.order(:period_end).last.period_end.strftime("%m/%d/%Y")})" %></small></td>            
-                            <td class="text-right"><span class="green-pill"><%= number_to_currency(report.order('period_end DESC').first.current_coh) %></span><br><small class="text-nowrap">Cash-on-Hand</small><br><small class="text-nowrap"><%= number_to_currency(report.order('period_end DESC').first.net_coh) %> </small></td>
+                            <td class="text-right"><span class="green-pill"><%= number_to_currency(report.order('period_end DESC').first.current_coh) %></span><br><small class="text-nowrap">Cash-on-Hand</small></td>
                         <%else%>
                         <td class="text-right"><span class="green-text">$0.00</span><br><small class="text-nowrap">Raised</small></td>
                         <td class="text-right"><span class="red-text">$0.00</span><br><small class="text-nowrap">Spent</small></td>
