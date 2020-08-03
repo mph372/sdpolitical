@@ -90,6 +90,30 @@ class Person < ApplicationRecord
     end
   end
 
+  def period_begin
+    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
+      return self.reports.where(candidate_report: true).order(:period_end).last.period_begin.strftime("%m/%d/%Y")
+    else
+      return "No Reports"
+    end
+  end
+
+  def period_raised
+    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
+      return self.reports.where(candidate_report: true).order(:period_end).last.period_receipts
+    else
+      return "0.00"
+    end
+  end
+
+  def period_spent
+    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
+      return self.reports.where(candidate_report: true).order(:period_end).last.period_disbursements
+    else
+      return "No Reports"
+    end
+  end
+
   def incumbent_district_display
     if self.incumbent_district != "At Large" && self.incumbent_district.is_seat == false && self.incumbent_district.is_area == false 
      "- #{self.incumbent_district.district.to_i.ordinalize} District" 

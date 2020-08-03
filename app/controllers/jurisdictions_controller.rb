@@ -11,6 +11,8 @@ class JurisdictionsController < ApplicationController
 
     set_meta_tags title: 'Jurisdictions',
     site: 'The Ballot Book'
+
+    
   end
 
   # GET /jurisdictions/1
@@ -20,6 +22,18 @@ class JurisdictionsController < ApplicationController
 
     set_meta_tags title: @jurisdiction.name,
     site: 'The Ballot Book'
+
+    @candidates = @jurisdiction.candidates
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = Prawn::Document.new
+        pdf = JurisdictionPDF.new(@candidates)
+        send_data pdf.render, filename: "#{@jurisdiction.name}_campaign_finance_report-#{Time.now.strftime('%Y-%m-%d_')}.pdf",
+                              type: "application/pdf"
+      end
+    end
   end
 
   # GET /jurisdictions/new
