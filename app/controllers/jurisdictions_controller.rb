@@ -23,7 +23,7 @@ class JurisdictionsController < ApplicationController
     set_meta_tags title: @jurisdiction.name,
     site: 'The Ballot Book'
 
-    @candidates = @jurisdiction.candidates
+    @candidates = @jurisdiction.candidates.order(:district)
 
     respond_to do |format|
       format.html
