@@ -27,7 +27,7 @@
         </div>
       <div class="col">
         <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true},  label: "Candidate:" ) %>
-        <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true }, label: "Committee:" ) %>
+        <%= f.select(:committee_id, Committee.order('name ASC').all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true }, label: "Committee:" ) %>
         <%= f.check_box :incumbent_report %>
         <%= f.check_box :candidate_report %>
         <%= f.check_box :is_amended, label: "Report is Amended" %>
