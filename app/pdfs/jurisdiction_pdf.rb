@@ -9,7 +9,6 @@ class JurisdictionPDF < Prawn::Document
         move_down 20
         text "Campaign Finance Report for #{@jurisdiction}", size: 15, style: :bold
         recent_fundraising
-        aggregate_fundraising
         string = "Generated on #{Time.now.strftime('%m-%d-%Y')}"
     # Green page numbers 1 to 11
         options = { :at => [bounds.right - 150, 0],
@@ -34,15 +33,15 @@ class JurisdictionPDF < Prawn::Document
     end
 
     def aggregate_fundraising_rows
-        [["District", "Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH", "As of"]] +
+        [["Office", "Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH", "As of"]] +
         @candidates.select{|c| c.former_candidate == false}.uniq.map do |candidate|
-            [candidate.district.district_name, candidate.full_name, number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)), number_to_currency(candidate.current_cash_on_hand), number_to_currency(candidate.current_net_coh), candidate.period_end]
+            [candidate.district.jurisdiction_district_name, candidate.full_name, number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)), number_to_currency(candidate.current_cash_on_hand), number_to_currency(candidate.current_net_coh), candidate.period_end]
         end
     end
 
     def recent_fundraising_rows
-        [["District", "Name", "Period Begin", "Period End", "Raised this Period", "Spent this Period"]] +
+        [["Office", "Name", "Begin", "End", "Raised this Period", "Spent this Period", "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH"]] +
         @candidates.select{|c| c.former_candidate == false}.uniq.map do |candidate|
-            [candidate.district.district_name, candidate.full_name, candidate.period_begin, candidate.period_end, number_to_currency(candidate.period_raised), number_to_currency(candidate.period_spent)]
+            [candidate.district.jurisdiction_district_name, candidate.full_name, candidate.period_begin, candidate.period_end, number_to_currency(candidate.period_raised), number_to_currency(candidate.period_spent), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)), number_to_currency(candidate.current_cash_on_hand), number_to_currency(candidate.current_net_coh)]
         end
     end

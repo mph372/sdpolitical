@@ -17,6 +17,14 @@ class District < ApplicationRecord
     end
   end
 
+  def jurisdiction_district_name
+    if self.district != "At Large" 
+     "#{self.name} (#{self.district})"
+    else
+     "#{self.name}"
+    end
+  end
+
   def full_district_name
     "#{self.jurisdiction.name} - #{self.district_name}"
   end

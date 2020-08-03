@@ -84,7 +84,7 @@ class Person < ApplicationRecord
 
   def period_end
     if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")
+      return self.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%y")
     else
       return "No Reports"
     end
@@ -92,7 +92,7 @@ class Person < ApplicationRecord
 
   def period_begin
     if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(candidate_report: true).order(:period_end).last.period_begin.strftime("%m/%d/%Y")
+      return self.reports.where(candidate_report: true).order(:period_end).last.period_begin.strftime("%m/%d/%y")
     else
       return "No Reports"
     end
