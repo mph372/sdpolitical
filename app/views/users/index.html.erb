@@ -1,6 +1,8 @@
 
 <div class="container">
+
 <div class="table-responsive shadow bg-white rounded border-primary p-4">
+<div class="mb-3"> Total Users: <%= @users.count %></div>
 <table class="table">
     <thead>
         <tr>
@@ -14,7 +16,7 @@
     <thead>
 
     <tbody>
-         <% @users.each do |user| %>
+         <% @users.order('id ASC').each do |user| %>
         <tr>
             <td><%=user.id%></td>
             <td><%=user.first_name%></td>
