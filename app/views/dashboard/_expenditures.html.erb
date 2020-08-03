@@ -2,6 +2,7 @@
       <div class="card-header">
         Tracked Expenditures
       </div>
+      <% if @expenditures.present? %>
         <div class="table-responsive shadow bg-white rounded  p-4">
           <table class="table" id="expenditures">
             <thead class="thead-light">
@@ -40,6 +41,9 @@
 
             </tbody>
           </table>
+          <%else%>
+          <p class="p-3">There have not yet been any independent expenditures made within the districts you are tracking.</p>
+          <%end%>
         </div>
 
 

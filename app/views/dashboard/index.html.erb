@@ -13,11 +13,12 @@
     <div class="col-md-6">
          <%= render 'deadlines'%>
     </div>
+    <% if @districts.present? %>
     <div class="col">
       <%= render 'candidates'%>
      <%= render 'expenditures'%>
     </div>
-
+    <%end%>
     </div>
 
 
