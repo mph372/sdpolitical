@@ -10,7 +10,9 @@
             <th>First Name</th>
             <th>Last Name </th>
             <th>E-Mail </th>
-            <th>Created At </th>
+            <th>Created</th>
+            <th>Login Count</th>
+            <th>Last Login</th>
             <th>Delete</th>
         </tr>
     <thead>
@@ -22,7 +24,9 @@
             <td><%=user.first_name%></td>
             <td><%=user.last_name%></td>
             <td><%=user.email%><br><%if user.subscribed?%><small class="badge badge-primary">Subscribed</small><%end%><%if user.admin?%>&nbsp<small class="badge badge-warning">Admin</small><%end%></td>
-            <td><%=user.created_at%></td>
+            <td><%=user.created_at.strftime("%m/%d/%y")%></td>
+            <td><%=user.sign_in_count %></td>
+            <td><% if user.last_sign_in_at.present? %><%=user.last_sign_in_at.strftime("%m/%d/%y at %I:%M%p") %><%end%></td>
             <td><%= link_to "Delete User", admin_destroy_user_path(user), method: :delete, data: { confirm: "Are you sure? This cannot be un-done!" } %></td>
         </tr>
 
