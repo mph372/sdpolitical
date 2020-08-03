@@ -8,7 +8,7 @@
       <table CLASS="table">
 
         <tbody>
-            <% @birthdays.limit(5).each do |person| %>
+            <% @birthdays.limit(7).each do |person| %>
             <tr>
                     
                     <td class="condensed-column"><%= image_tag person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>

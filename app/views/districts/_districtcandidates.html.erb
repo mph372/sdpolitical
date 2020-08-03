@@ -36,7 +36,7 @@
           </td>
           <td><% if candidate.reports.where(:cycle => "2020", candidate_report: true ).present?%>     
                 <% report = candidate.reports.most_recent %>          
-                <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_to_currency(report.current_coh) %></span><br><small>Cash-on-Hand</small><br><small> <%if report.net_coh < 0 %><span class="float-right gop-text">Net: (<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right">Net: <%= number_to_currency(report.net_coh) %></span></small><%end%></td>
+                <td class="text-right "><span class="green-pill" style="display: inline;"><%= number_to_currency(report.current_coh) %></span><br><small>Cash-on-Hand</small><br><small> <%if report.net_coh < 0 %><span class="float-right gop-text">Net: (<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right">Net: <%= number_to_currency(report.net_coh) %></span></small><%end%></td>
                 <%else%>
                 <td class="text-right "><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
                 <%end%> </td>

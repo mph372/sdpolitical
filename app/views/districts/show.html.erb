@@ -11,10 +11,12 @@
     <%elsif @district.is_area %>
     <%= "- Trustee Area #{@district.district}"%>
     <%end%></h1>
+
     <% if @district.at_large_district? && current_user.admin? %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
   </div>
+
 </div>
 </div>     
     <br>
@@ -68,6 +70,8 @@
   <%elsif current_user != @district %>
     <%= link_to "Track District", follow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
   <%end%>
+  <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-right align-bottom mt-auto mr-4", :target => "_blank"%>
+
 </div>
 
  

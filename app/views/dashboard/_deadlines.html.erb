@@ -10,7 +10,7 @@
             <%if deadline.deadline_date.past? == false%>
             <tr>
                     <td><strong><%= deadline.title %></strong><br><small><%= deadline.description %> </small></td>
-                    <td class="text-nowrap"><%=deadline.deadline_date.strftime("%b %-d") %></td>
+                    <td class="text-nowrap"><%=deadline.deadline_date.strftime("%b %-d") %><br><small> <%= deadline.countdown %> Days </small></td>
             </tr>
             <%end%>
             <%end%>
