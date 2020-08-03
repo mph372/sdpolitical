@@ -70,7 +70,7 @@ class Person < ApplicationRecord
     if self.reports.where(:cycle => "2020", candidate_report: true ).present?
       return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.current_coh
     else
-      return "$0.00"
+      return "0.00"
     end
   end
 
@@ -78,7 +78,7 @@ class Person < ApplicationRecord
     if self.reports.where(:cycle => "2020", candidate_report: true ).present?
       return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.net_coh
     else
-      return "$0.00"
+      return "0.00"
     end
   end
 
