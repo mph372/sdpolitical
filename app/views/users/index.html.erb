@@ -2,8 +2,8 @@
 <div class="container">
 
 <div class="table-responsive shadow bg-white rounded border-primary p-4">
-<div class="mb-3"> Total Users: <%= @users.count %></div>
-<table class="table">
+<div class="mb-3"> Total Users: <%= @users.count %> (<%= @users.where.not(confirmed_at: nil).count %> Confirmed)</div>
+<table class="table" id="users">
     <thead>
         <tr>
             <th>User ID</th>
@@ -20,7 +20,7 @@
     <tbody>
          <% @users.order('id ASC').each do |user| %>
         <tr>
-            <td><%=user.id%></td>
+            <td><%=user.id%><%if user.confirmed_at.nil?%>*<%end%></td>
             <td><%=user.first_name%></td>
             <td><%=user.last_name%></td>
             <td><%=user.email%><br><%if user.subscribed?%><small class="badge badge-primary">Subscribed</small><%end%><%if user.admin?%>&nbsp<small class="badge badge-warning">Admin</small><%end%></td>
@@ -37,3 +37,12 @@
 </table>
 </div>
 </div>
+
+<script>
+    $( document ).on('turbolinks:load', function() {
+    $('#users').DataTable( {
+      retrieve: true, 
+      "order": [[ 1, "desc" ]]
+    });
+});
+</script>

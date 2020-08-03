@@ -15,6 +15,12 @@ class User < ApplicationRecord
     first_name + " " + last_name
   end
 
+  def user_confirmed
+    if self.confirmed_at.present?
+      return true
+    end
+  end
+
   after_create :subscribe_user_to_mailing_list
 
 
