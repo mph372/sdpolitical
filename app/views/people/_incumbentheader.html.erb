@@ -37,13 +37,17 @@
                   <div class="col-auto text-center text-md-left mb-1">
                     <% if @person.former_candidate %>
                       <% if @person.district.district != "At Large" %>
-                      <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, #{@person.district.district.to_i.ordinalize} District", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                      <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                       <%else%>
                       <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                       <%end%>
                     <%else%>  
                       <% if @person.district.district != "At Large" %>
-                      <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, #{@person.district.district.to_i.ordinalize} District", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                          <% if @person.district.district == "A" || @person.district.district == "B" || @person.district.district == "C" || @person.district.district == "D" || @person.district.district == "E" %>
+                          <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, Area #{@person.district.district}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>
+                           <%else%>
+                          <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, #{@person.district.district.to_i.ordinalize} District", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                          <%end%>
                       <%else%>
                       <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} -  #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                       <%end%>
