@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :updates
   resources :deadlines
   get 'pages/home'
   devise_for :users, controllers: {registrations: "registrations", confirmations: 'confirmations'}

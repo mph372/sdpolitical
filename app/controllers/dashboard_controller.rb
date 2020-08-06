@@ -9,6 +9,8 @@ class DashboardController < ApplicationController
         @incumbents = current_user.following_by_type('District').includes(:incumbent).collect{|u| u.incumbent}.flatten
         @atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
 
+        @updates = Update.all
+
         @candidates = @district_candidates + @atlarge_candidates
         
         set_meta_tags title: 'My Dashboard',
