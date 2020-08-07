@@ -20,7 +20,7 @@
     <tbody>
          <% @users.order('id ASC').each do |user| %>
         <tr>
-            <td><%=user.id%><%if user.confirmed_at.nil?%>*<%end%></td>
+            <td><%=user.id.to_s.rjust(2, '0')%><%if user.confirmed_at.nil?%>*<%end%></td>
             <td><%=user.first_name%></td>
             <td><%=user.last_name%></td>
             <td><%=user.email%><br><%if user.subscribed?%><small class="badge badge-primary">Subscribed</small><%end%><%if user.admin?%>&nbsp<small class="badge badge-warning">Admin</small><%end%></td>
@@ -42,7 +42,7 @@
     $( document ).on('turbolinks:load', function() {
     $('#users').DataTable( {
       retrieve: true, 
-      "order": [[ 1, "desc" ]]
+      "order": [[ 0, "desc" ]]
     });
 });
 </script>
