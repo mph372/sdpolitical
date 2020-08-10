@@ -7,7 +7,7 @@ class MeasuresController < ApplicationController
   # GET /measures
   # GET /measures.json
   def index
-    @measures = Measure.all
+    @measures = Measure.order(:letter).all
 
     set_meta_tags title: 'Ballot Measures',
     site: 'The Ballot Book'

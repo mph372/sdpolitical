@@ -1,9 +1,9 @@
 <div class="container">
-  <div class="row">
+  <div class="row ">
     <div class="col">  
       <h1>Measures</h1>
       <br>
-      <div class="table-responsive shadow bg-white rounded border-primary p-4">
+      <div class="table-responsive rounded primary-border p-4 shadow-sm">
       <table class="table " id="measures">
         <thead class="thead-light">
           <tr>
@@ -16,9 +16,9 @@
         <tbody>
           <% @measures.order("letter ASC").each do |measure| %>
             <tr>
-              <td><%= link_to "Measure #{measure.letter}", measure %></td>
+              <td class="text-nowrap"><%= link_to "Measure #{measure.letter}", measure %></td>
               <td><%= measure.topic %></td>
-              <td><%= measure.jurisdiction.name %></td>
+              <td class="text-nowrap"><%= link_to "#{measure.jurisdiction.name}", measure.jurisdiction %></td>
             </tr>
           <% end %>
         </tbody>
@@ -29,11 +29,3 @@
 <%= link_to 'New Measure', new_measure_path, :class => "btn btn-primary mr-2" %>
 <%end%>    
 
-<script>
-    $( document ).on('turbolinks:load', function() {
-    $('#measures').DataTable( {
-      dom: 'rtip', 
-      retrieve: true
-    });
-});
-</script>
