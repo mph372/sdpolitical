@@ -3,29 +3,39 @@
     <div class="col">
 
       <div class="row">
-        <h2 class="primary-blue heavy">Measure <%= @measure.letter %> </h2><br>
-        <h4>(<%= @measure.topic %>)</h4><br>
-        <h6><%= link_to "#{@measure.jurisdiction.name}", @measure.jurisdiction %></h6>
+        <div class="col">
+          <h2 class="primary-blue heavy">Measure <%= @measure.letter %> </h2>
+          <h5><%= @measure.topic %></h5>
+          <h6><%= link_to "#{@measure.jurisdiction.name}", @measure.jurisdiction %></h6>
+        </div>
       </div>
-      <br>
+      <hr>
       <div class="row">
-        <strong>Measure Summary:</strong><br>
-        <p><%= @measure.text %></p><br>
+        <div class="col">
+        <strong>Measure Ballot Summary:</strong>
+        <p><%= @measure.text %></p>
+        </div>
       </div>
       <div class="row mb-4">
+        <div class="col">
         <% if @measure.pdf.url.present? %><%= link_to "Download Full Measure", @measure.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%>
+        </div>
       </div>
 
       <div class="row">  
-        <div class="col-auto p-0">
+        <div class="col-auto">
             <strong>Type:</strong><br>
             <strong>Origin:</strong><br>
-            <strong>Required Vote Threshold:</strong>
+            <strong>Required Vote Threshold:</strong><br>
+            <%if @measure.gop_support.present? %><br><strong class="gop-text">Republican Party:</strong><%end%>
+            <%if @measure.dem_support.present? %><br><strong class="dem-text">Democratic Party:</strong><%end%>
         </div>
         <div class="col-auto">
           <%= @measure.measure_type %><br>
           <%= @measure.origin %><br>
           <%= number_to_percentage(@measure.threshold, precision: 2) %><br>
+          <%if @measure.gop_support.present? %><br><%= @measure.gop_support %><%end%>
+          <%if @measure.dem_support.present? %><br><%= @measure.dem_support %><%end%>
         </div>
       </div>
 

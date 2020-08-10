@@ -4,4 +4,6 @@ class Measure < ApplicationRecord
 
   mount_uploader :pdf, MeasureUploader
 
+
+
 end

@@ -76,7 +76,7 @@ class MeasuresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def measure_params
-      params.require(:measure).permit(:letter, :text, :topic, :measure_type, :origin, :jurisdiction_id, :threshold, :pdf)
+      params.require(:measure).permit(:letter, :text, :topic, :measure_type, :origin, :jurisdiction_id, :threshold, :pdf, :gop_support, :dem_support)
     end
     
     def is_subscriber?
