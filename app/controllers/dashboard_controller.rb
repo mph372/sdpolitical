@@ -9,7 +9,7 @@ class DashboardController < ApplicationController
         @incumbents = current_user.following_by_type('District').includes(:incumbent).collect{|u| u.incumbent}.flatten
         @atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
 
-        @updates = Update.all
+        @updates = Update.all.limit(3)
 
         @candidates = @district_candidates + @atlarge_candidates
         
