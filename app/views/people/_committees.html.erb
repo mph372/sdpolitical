@@ -7,6 +7,7 @@
             <table class="table table p-2 bg-white" style="width:100%">
                 <tbody>
                     <% @person.committees.each do |committee| %>
+                    <% if committee.is_active? %>
                     <tr>
                         <td> <%= link_to "#{committee.name}", committee %> </td>
                         <td><% if committee.is_support %><span class="green-text heavy">Support</span><%elsif committee.is_oppose %><span class="red-text heavy">Oppose</span><%end%></td>
@@ -21,6 +22,7 @@
                         <td class="text-right"><span class="green-pill">$0.00</span><br><small class="text-nowrap">Cash-on-Hand</small></td>
                         <%end%>
                     </tr>
+                    <%end%>
                     <%end%>
                 </tbody>
             </table>

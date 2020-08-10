@@ -25,6 +25,7 @@
     
   </div>
   <%= f.text_area :text %>  
+  <%= f.file_field :pdf, { label: "Upload Text" } %>
   <%= f.submit %>
   <br><br>
 <%= link_to 'Back', measures_path, :class => "btn btn-outline-primary" %>
