@@ -58,7 +58,11 @@
 
   <!-- FOOTER -->
   <footer class="container mt-3">
-    <p class="float-right"><a href="#">Back to top</a></p>
+    <p class="float-right">                    
+      <%= link_to "https://twitter.com/TheBallotBook", target: :_blank, :class => "nounderline"  do %>
+      <%= fa_icon "twitter" %>
+      <% end %>
+      | <a href="#">Back to top</a></p>
     <p>&copy; 2020 The Ballot Book | Questions or Suggestions? <%= mail_to 'theballotbook@theballotbook.com', 'Send Us an E-Mail' %> </p>
   </footer>
 </html>
