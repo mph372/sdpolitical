@@ -75,7 +75,7 @@
   </div>
 </div>  
 <br>
-<% if @jurisdiction.measures.present? %>
+<% if @jurisdiction.measures.present? && current_user.admin? %>
 <hr>
 <h5 class="dark-red-supporting heavy">Current Ballot Measures</h5>
 <div class="container primary-border rounded p-3">
