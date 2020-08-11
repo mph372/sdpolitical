@@ -20,8 +20,8 @@
               <%= @committee.committee_type %><br>
                 <% if @committee.person.present? %>
                   <%= link_to "#{@committee.person.first_name} #{@committee.person.last_name}", @committee.person %>
-                <%else%>
-                  <% link_to "Measure #{@committee.measure}", @committee.measure%> 
+                <%elsif @committee.measure.present? %>
+                  <%= link_to "Measure #{@committee.measure.letter}", @committee.measure%> 
                 <%end%>
                 <% if @committee.is_support? %>
                   (Support)
