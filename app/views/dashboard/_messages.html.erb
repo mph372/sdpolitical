@@ -3,7 +3,7 @@
         Latest Updates
       </div>
 
-            <% @updates.each do |update| %>
+            <% @updates.order('created_at DESC').each do |update| %>
            <div class="container px-4">
             <div class="row">
                 <div class="col">
