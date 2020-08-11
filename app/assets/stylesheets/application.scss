@@ -142,6 +142,12 @@ font-style: normal !important;
   
 }
 
+.followers {
+  position: relative;
+  top: 100%;
+  transform: translateY(-100%); 
+}
+
 .red-performance-pill {
   border-radius: 25px;
   background: #ffecec;

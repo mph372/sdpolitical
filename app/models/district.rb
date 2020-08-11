@@ -17,6 +17,16 @@ class District < ApplicationRecord
     end
   end
 
+  def district_followers
+    if self.followers.count == 0
+      "Nobody is tracking this district"
+    elsif self.followers.count == 1
+      "One person is tracking this district"
+    else
+      "#{self.followers.count} people are tracking this district"
+    end
+  end
+
   def jurisdiction_district_name
     if self.district != "At Large" 
      "#{self.name} (#{self.district})"

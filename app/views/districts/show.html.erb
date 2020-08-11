@@ -1,7 +1,7 @@
 
 <div class="wrapper container ">
 <div class="row ">
-  <div class="col ">
+  <div class="col">
     <h4 class="mb-0 mt-2 header-text nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
     <h1 class="heavy text-responsive primary-blue"><%= @district.name %>  
     <%if @district.district != "At Large" && @district.is_seat == false && @district.is_area == false %>
@@ -15,6 +15,9 @@
     <% if @district.at_large_district? && current_user.admin? %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
+  </div>
+  <div class="col">
+    <div class="float-right followers"><small><%= @district.district_followers %></small></div>
   </div>
 
 </div>
