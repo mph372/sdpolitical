@@ -285,6 +285,8 @@ GEM
     ruby2_keywords (0.0.2)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
+    safe_target_blank (1.0.2)
+      rails
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -399,6 +401,7 @@ DEPENDENCIES
   rails (~> 5.2.4, >= 5.2.4.3)
   ransack!
   rmagick
+  safe_target_blank
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form

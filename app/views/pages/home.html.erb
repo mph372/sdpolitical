@@ -13,7 +13,7 @@
 <div class="row">
   <div class="col-md-7 p-lg-3 my-auto order-md-2">
     <div class="embed-responsive embed-responsive-16by9">
-      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/kF4f9AgB6IA" allowfullscreen></iframe>
+      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/kF4f9AgB6IA" allowfullscreen, title="Welcome to The Ballot Book Video"></iframe>
     </div>
   </div>
   <div class="col-md-5 p-lg-3 my-5 order-md-1">
@@ -41,7 +41,7 @@
         <a class="primary-blue heavy mb-2" href="/pages/sample_person">View Sample</a>
       </div>
       <div class="col-md-5 p-3">
-        <div class="shadow p-3"><%= image_tag 'scott_peters.gif', :class=> "homepage-images img-fluid"%></div>
+        <div class="shadow p-3"><%= image_tag '/scott_peters_sample.png', :class=> "homepage-images img-fluid", alt: 'Sample Candidate'%></div>
       </div>
     </div>
 
@@ -54,7 +54,7 @@
         <a class="primary-blue heavy" href="/pages/sample_district">View Sample</a>
       </div>
       <div class="col-md-5 order-md-1 p-3"">
-        <div class="shadow p-3"><%= image_tag 'district_52.gif', :class=> "homepage-images img-fluid"%></div>
+        <div class="shadow p-3"><%= image_tag '/52nd_district_sample.png', :class=> "homepage-images img-fluid", alt: 'Sample District'%></div>
       </div>
     </div>
 
@@ -66,7 +66,7 @@
         <p class="font-weight-normal">Campaign finance data for every elected official, candidate, and Political Action Committee throughout the county -- including regularly updated independent expenditure data.</p>
       </div>
       <div class="col-md-5">
-        <div class="shadow p-3 shadow"><%= image_tag 'fundraising_data.png', :class=> "homepage-images img-fluid " %></div>
+        <div class="shadow p-3 shadow"><%= image_tag 'fundraising_data.png', :class=> "homepage-images img-fluid ", alt: 'Campaign Finance Example' %></div>
       </div>
     </div>
 

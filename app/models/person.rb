@@ -152,6 +152,20 @@ class Person < ApplicationRecord
     end
   end
 
+  def description
+    if incumbent_district.present?
+      if running_reelection == true
+      "#{self.full_name} currently serves as #{self.title} with the #{self.incumbent_district.jurisdiction.name}. #{self.last_name} is currently running for re-election."
+      elsif running_reelection == false && on_ballot == true
+        "#{self.full_name} currently serves as #{self.title} with the #{self.incumbent_district.jurisdiction.name}. #{self.last_name} is currently running for #{self.district.name}, #{self.district.jurisdiction.name}."
+      else
+        "#{self.full_name} currently serves as #{self.title} with the #{self.incumbent_district.jurisdiction.name}."
+      end
+    elsif on_ballot == true
+      "#{self.full_name} is a candidate for #{self.district.name}, #{self.district.jurisdiction.name}."
+    end
+  end
+
 
   before_save :update_birthdate_fields
   before_save :update_district_field
