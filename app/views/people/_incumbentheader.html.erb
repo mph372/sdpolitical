@@ -108,14 +108,14 @@
                 <div class="col" style="color: #1992D4;">
                   <% if @person.is_incumbent? %>
                       <%if @person.official_website.present? %>
-                        <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue" do %>
+                        <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' } do %>
                             <%= fa_icon "desktop" %>&nbsp
                       <%end%>       
                     <% end %>
                         
                   <%else%>
                     <% if @person.campaign_website.present?%>
-                      <%= link_to @person.campaign_website, target: :_blank, :class => "nounderline primary-blue" do %>
+                      <%= link_to @person.campaign_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' }  do %>
                       <%= fa_icon "desktop" %>  
                       <%end%>
                     <%end%> 
@@ -123,21 +123,21 @@
                   <%end%>    
                   
                   <%if @person.email.present?%>
-                    <%= mail_to @person.email, target: :_blank, :class => "nounderline"  do %>
+                    <%= mail_to @person.email, target: :_blank, :class => "nounderline", aria: { label: 'Send E-Mail' }   do %>
                         <%= fa_icon "envelope" %>
                     <% end %>
                   &nbsp  
                   <%end%>  
                   
                   <%if @person.twitter.present? %>
-                    <%= link_to "https://www.twitter.com/" + @person.twitter, target: :_blank, :class => "nounderline"  do %>
+                    <%= link_to "https://www.twitter.com/" + @person.twitter, target: :_blank, :class => "nounderline", aria: { label: 'View Twitter Page' }   do %>
                         <%= fa_icon "twitter" %>
                     <% end %>
                   &nbsp  
                   <%end%>
                   
                   <% if @person.facebook.present? %>
-                    <%= link_to "https://www.facebook.com/" + @person.facebook, target: :_blank, :class => "nounderline"  do %>
+                    <%= link_to "https://www.facebook.com/" + @person.facebook, target: :_blank, :class => "nounderline", aria: { label: 'View Facebook Page' }   do %>
                         <%= fa_icon "facebook" %>
                     <% end %>
                   &nbsp

@@ -53,6 +53,7 @@ gem 'gibbon', github: 'amro/gibbon'
 gem 'prawn-table'
 gem 'meta-tags'
 gem 'safe_target_blank'
+gem 'heroku-deflater', :group => :production
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

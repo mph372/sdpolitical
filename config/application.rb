@@ -14,7 +14,7 @@ module Sdpolitical
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
-
+    config.middleware.use Rack::Deflater
     config.time_zone = "Pacific Time (US & Canada)"
     # the framework and any gems in your application.
   end

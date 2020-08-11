@@ -21,7 +21,9 @@ class DistrictsController < ApplicationController
   def show
 
   set_meta_tags title: @district.full_district_name,
-                site: 'The Ballot Book'
+                site: 'The Ballot Book',
+                description: @district.description,
+                keywords: @district.keywords
 
     @district = District.find(params[:id])
     @incumbents = @district.incumbent

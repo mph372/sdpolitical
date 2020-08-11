@@ -229,4 +229,16 @@ class District < ApplicationRecord
       return true 
     end
   end
+
+  def description
+    if incumbent.present?
+      "#{self.jurisdiction.name}, #{self.district_name} is currently represented by #{incumbent.title} #{incumbent.full_name}."
+    else
+      "#{self.jurisdiction.name}, #{self.district_name} is currently vacant."
+    end
+  end
+
+  def keywords
+    "#{self.jurisdiction.name}, #{self.district_name}"
+  end
 end

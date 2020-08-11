@@ -38,7 +38,8 @@ class PeopleController < ApplicationController
 
     set_meta_tags title: @person.full_name,
                   site: 'The Ballot Book',
-                  description: @person.description
+                  description: @person.description,
+                  keywords: @person.keywords
   end
 
   # GET /people/new

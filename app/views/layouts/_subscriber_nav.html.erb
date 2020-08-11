@@ -18,7 +18,7 @@
                   <a class="nav-link" href="/districts">Districts</a>
               </li>
               <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria="Campaign Finance">
                     Campaign Finance
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -32,7 +32,7 @@
           <ul class="navbar-nav navbar-right">  
           <li>
               <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
-                <%= form.text_field :q, placeholder: "Search People...", data: { behavior: "autocomplete" }, class: " form-control mdb-autocomplete" %>
+                <%= form.text_field :q, placeholder: "Search People...", data: { behavior: "autocomplete" }, class: " form-control mdb-autocomplete", aria: { label: 'Search for Candidates and Elected Officials' }  %>
                 <%= form.button "Search", class: "d-none" %>
               <% end %>
               </li>

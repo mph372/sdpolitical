@@ -166,6 +166,21 @@ class Person < ApplicationRecord
     end
   end
 
+  def keywords
+    "#{self.full_name}, #{}"
+    if incumbent_district.present?
+      if running_reelection == true
+      "#{self.full_name}, #{self.incumbent_district.name}, #{self.incumbent_district.jurisdiction.name}"
+      elsif running_reelection == false && on_ballot == true
+        "#{self.full_name}, #{self.incumbent_district.name}, #{self.district.name}"
+      else
+        "#{self.full_name}, #{self.incumbent_district.name}"
+      end
+    elsif on_ballot == true
+      "#{self.full_name}, #{self.district.name}."
+    end
+  end
+
 
   before_save :update_birthdate_fields
   before_save :update_district_field
