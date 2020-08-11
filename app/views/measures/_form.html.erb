@@ -15,7 +15,7 @@
       <div class="col">
         <%= f.text_field :letter %>
         <%= f.select :origin, ['Citizens', 'Legislative'], {:include_blank => true} %>
-        <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ "#{v.name}", v.id ] }, {}, { "data-placeholder": "Select Jurisdiction" }) %>
+        <%= f.select(:jurisdiction_id, Jurisdiction.all.order(:name).collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
         <%= f.select :gop_support, ['Support', 'Oppose', 'No Position'], {:include_blank => true, label: "GOP Support"} %>
       </div>
       <div class="col">
