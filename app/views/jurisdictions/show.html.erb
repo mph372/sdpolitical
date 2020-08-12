@@ -75,7 +75,7 @@
   </div>
 </div>  
 <br>
-<% if @jurisdiction.measures.present? && current_user.admin? %>
+<% if @jurisdiction.measures.present? %>
 <hr>
 <h5 class="dark-red-supporting heavy">Current Ballot Measures</h5>
 <div class="container primary-border rounded p-3">
@@ -95,7 +95,7 @@
       <tbody>
         <% @measures.each do |measure| %>
         <tr> 
-          <td><%= link_to "Measure #{measure.letter}", measure.letter %> </td>
+          <td><%= link_to "Measure #{measure.letter}", measure %> </td>
           <td><%= measure.topic %></td>
           <td><%= measure.measure_type %></td>
           <td><%= measure.origin %></td>     

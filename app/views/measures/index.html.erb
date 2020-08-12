@@ -7,18 +7,18 @@
       <table class="table " id="measures">
         <thead class="thead-light">
           <tr>
+            <th>Jurisdiction</th>
             <th>Letter</th>
             <th>Topic</th>
-            <th>Jurisdiction</th>
           </tr>
         </thead>
 
         <tbody>
           <% @measures.order("letter ASC").each do |measure| %>
             <tr>
+              <td class="text-nowrap"><%= link_to "#{measure.jurisdiction.name}", measure.jurisdiction %></td>
               <td class="text-nowrap"><%= link_to "Measure #{measure.letter}", measure %></td>
               <td><%= measure.topic %></td>
-              <td class="text-nowrap"><%= link_to "#{measure.jurisdiction.name}", measure.jurisdiction %></td>
             </tr>
           <% end %>
         </tbody>
