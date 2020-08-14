@@ -142,6 +142,13 @@
                     <% end %>
                   &nbsp
                   <%end%>  
+
+                  <% if @person.linkedin_url.present? %>
+                    <%= link_to "#{@person.linkedin_url}", target: :_blank, :class => "nounderline", aria: { label: 'View LinkedIn Profile' }   do %>
+                        <%= fa_icon "linkedin" %>
+                    <% end %>
+                  &nbsp
+                  <%end%>  
                  <% if @person.phone.present? %> 
                     <p class="nounderline primary-blue m-0"><%= number_to_phone(@person.phone) %></p>
                   <%end%>

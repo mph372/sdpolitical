@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_10_233816) do
+ActiveRecord::Schema.define(version: 2020_08_14_152751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,6 +253,7 @@ ActiveRecord::Schema.define(version: 2020_08_10_233816) do
     t.integer "birth_day"
     t.integer "birth_month"
     t.string "incumbent_committee_name"
+    t.string "linkedin_url"
     t.index ["district_id"], name: "index_people_on_district_id"
   end
 
