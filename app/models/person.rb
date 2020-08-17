@@ -67,7 +67,7 @@ class Person < ApplicationRecord
   end
 
   def incumbent_asterisk
-    if is_incumbent == true || running_reelection == true
+    if is_incumbent == true && running_reelection == true
       "*"
     else
     end
