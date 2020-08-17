@@ -322,6 +322,8 @@ GEM
     skinny (0.2.2)
       eventmachine (~> 1.0)
       thin
+    sort-by-alphabet (0.2.6)
+      activesupport (>= 2.3)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -408,6 +410,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver
   simple_form
+  sort-by-alphabet
   spring
   spring-watcher-listen (~> 2.0.0)
   stripe (~> 5.22)

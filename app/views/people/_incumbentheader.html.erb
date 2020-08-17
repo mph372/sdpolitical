@@ -106,20 +106,20 @@
               </div>
               <div class="row mt-2 d-flex align-items-start">
                 <div class="col" style="color: #1992D4;">
-                  <% if @person.is_incumbent? %>
-                      <%if @person.official_website.present? %>
-                        <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' } do %>
-                            <%= fa_icon "desktop" %>&nbsp
-                      <%end%>       
-                    <% end %>
-                        
-                  <%else%>
-                    <% if @person.campaign_website.present?%>
+                  <% if @person.campaign_website.present? %>
                       <%= link_to @person.campaign_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' }  do %>
                       <%= fa_icon "desktop" %>  
                       <%end%>
-                    <%end%> 
+                     
+                        
+                  <%elsif @person.official_website.present?%>
+                    
+                      <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' }  do %>
+                      <%= fa_icon "desktop" %>  
+                      <%end%>
+                    
                   &nbsp   
+                  <%else%>
                   <%end%>    
                   
                   <%if @person.email.present?%>

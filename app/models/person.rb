@@ -66,6 +66,13 @@ class Person < ApplicationRecord
     on_ballot == true || running_reelection == true
   end
 
+  def incumbent_asterisk
+    if is_incumbent == true || running_reelection == true
+      "*"
+    else
+    end
+  end
+
   def current_cash_on_hand
     if self.reports.where(:cycle => "2020", candidate_report: true ).present?
       return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.current_coh

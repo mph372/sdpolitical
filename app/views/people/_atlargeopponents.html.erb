@@ -32,11 +32,11 @@
                 <td class="text-center  condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <td class="">
                   <% if candidate.party == "Republican" %>
-                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"gop-text" }%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}", candidate, { :class =>"gop-text" }%>
                   <%elsif candidate.party == "Democrat"%>
-                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dem-text" }%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}", candidate, { :class =>"dem-text" }%>
                   <%else%>
-                  <%= link_to "#{candidate.first_name} #{candidate.last_name}", candidate, { :class =>"dts-text" }%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}", candidate, { :class =>"dts-text" }%>
                   <%end%><br><small>
                 <%if candidate.is_incumbent? %>
                 <%= candidate.title %>
@@ -60,7 +60,7 @@
       
             </tr>
             <%end%>
-            <small class="text-muted ml-2">Checkmark = Party Endorsement</small>
+            <small class="text-muted ml-2">Checkmark = Party Endorsement | * = Incumbent(s)</small>
           </tbody>
         </table>
       </div>
