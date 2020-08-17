@@ -12,7 +12,11 @@ document.addEventListener("turbolinks:load", function() {
       categories: [
         {
           listLocation: "people",
-
+          header: "<strong>People</strong>",
+        },
+        {
+          listLocation: "jurisdictions",
+          header: "<strong>Jurisdictions</strong>",
         }
       ],
       list: {
