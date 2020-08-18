@@ -3,8 +3,20 @@
       Jurisdiction Info
     </div>
         <div class="card-body">
+
         <% if @jurisdiction.description.present?%>
-        <p class="p-2"><%=  h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %> </p> 
+          <% if @jurisdiction.description.length > 950 %>
+            <%= truncate(@jurisdiction.description, length: 950, :escape => false) %>
+            <%= link_to '...Read more', '', class: "read-more-#{@jurisdiction.id}" %>
+            <script>
+            $('.read-more-<%= @jurisdiction.id %>').on('click', function(e) {
+              e.preventDefault()
+              $(this).parent().html('<%= escape_javascript h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %>')
+              })
+            </script>
+            <% else %>
+              <%= h(@jurisdiction.description).gsub(/\n/, '</br>').html_safe %>
+            <% end %>
         <%else%>
         <p><em>Jurisdiction information not yet available.</em></p>    
         <%end%>    

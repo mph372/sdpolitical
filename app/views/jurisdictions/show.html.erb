@@ -21,7 +21,7 @@
  
 <br>
 <hr>
-<% if @jurisdiction.registration_history.present? && current_user.admin? %>
+<% if @jurisdiction.registration_history.present? %>
 <div class="row">
     <div class="col">
       <%= render 'registration_history'%>
