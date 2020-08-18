@@ -21,6 +21,13 @@
  
 <br>
 <hr>
+<% if @jurisdiction.registration_history.present? && current_user.admin? %>
+<div class="row">
+    <div class="col">
+      <%= render 'registration_history'%>
+    </div>
+</div>
+<%end%>
 <br>
 <div class="container primary-border rounded p-3">
   <h5 class="dark-red-supporting heavy"> List of Offices & Districts </h5>

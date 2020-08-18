@@ -1,0 +1,144 @@
+<p id="notice"><%= notice %></p>
+
+<div id="registration_history"></div>
+
+<p>
+  <strong>2012 Advanrage:</strong>
+  <%= @registration_history.registration_advantage_2012 %>
+</p>
+
+<p>
+  <strong>Total 2012:</strong>
+  <%= @registration_history.total_2012 %>
+</p>
+
+<p>
+  <strong>Total 2014:</strong>
+  <%= @registration_history.total_2014 %>
+</p>
+
+<p>
+  <strong>Total 2016:</strong>
+  <%= @registration_history.total_2016 %>
+</p>
+
+<p>
+  <strong>Total 2018:</strong>
+  <%= @registration_history.total_2018 %>
+</p>
+
+<p>
+  <strong>Total 2020:</strong>
+  <%= @registration_history.total_2020 %>
+</p>
+
+
+
+<p>
+  <strong>Gop 2012:</strong>
+  <%= @registration_history.gop_2012_percent.truncate(2) %>%
+</p>
+
+<p>
+  <strong>Other 2012:</strong>
+  <%= @registration_history.other_2012_percent.truncate(2) %>%
+</p>
+
+<p>
+  <strong>Gop 2014:</strong>
+  <%= @registration_history.gop_2014 %>
+</p>
+
+<p>
+  <strong>Gop 2016:</strong>
+  <%= @registration_history.gop_2016 %>
+</p>
+
+<p>
+  <strong>Gop 2018:</strong>
+  <%= @registration_history.gop_2018 %>
+</p>
+
+<p>
+  <strong>Gop 2020:</strong>
+  <%= @registration_history.gop_2020 %>
+</p>
+
+
+
+<p>
+  <strong>Dem 2012:</strong>
+  <%= @registration_history.dem_2012_percent.truncate(2) %>%
+</p>
+
+<p>
+  <strong>Dem 2014:</strong>
+  <%= @registration_history.dem_2014 %>
+</p>
+
+<p>
+  <strong>Dem 2016:</strong>
+  <%= @registration_history.dem_2016 %>
+</p>
+
+<p>
+  <strong>Dem 2018:</strong>
+  <%= @registration_history.dem_2018 %>
+</p>
+
+<p>
+  <strong>Dem 2020:</strong>
+  <%= @registration_history.dem_2020 %>
+</p>
+
+<p>
+  <strong>District:</strong>
+  <%= @registration_history.district.district_name %>
+</p>
+
+<p>
+  <strong>Jurisdiction:</strong>
+  <%= @registration_history.jurisdiction %>
+</p>
+
+<%= link_to 'Edit', edit_registration_history_path(@registration_history) %> |
+<%= link_to 'Back', registration_histories_path %>
+
+<script>
+var data = [
+      { y: '2012', a: <%= @registration_history.dem_2012_percent.truncate(2) %>, b: <%= @registration_history.gop_2012_percent.truncate(2) %>, c: <%= @registration_history.other_2012_percent.truncate(2) %>, d: <%= @registration_history.registration_advantage_2012 %> },
+      { y: '2014', a: <%= @registration_history.dem_2014_percent.truncate(2) %>, b: <%= @registration_history.gop_2014_percent.truncate(2) %>, c: <%= @registration_history.other_2014_percent.truncate(2) %>, d: <%= @registration_history.registration_advantage_2014 %> },
+      { y: '2016', a: <%= @registration_history.dem_2016_percent.truncate(2) %>, b: <%= @registration_history.gop_2016_percent.truncate(2) %>, c: <%= @registration_history.other_2016_percent.truncate(2) %>, d: <%= @registration_history.registration_advantage_2016 %> },
+      { y: '2018', a: <%= @registration_history.dem_2018_percent.truncate(2) %>, b: <%= @registration_history.gop_2018_percent.truncate(2) %>, c: <%= @registration_history.other_2018_percent.truncate(2) %>, d: <%= @registration_history.registration_advantage_2018 %> },
+      { y: '2020', a: <%= @registration_history.dem_2020_percent.truncate(2) %>, b: <%= @registration_history.gop_2020_percent.truncate(2) %>, c: <%= @registration_history.other_2020_percent.truncate(2) %>, d: <%= @registration_history.registration_advantage_2020 %> },
+    ],
+    config = {
+      data: data,
+      xkey: 'y',
+      ykeys: ['a', 'b', 'c'],
+      labels: ['Dem %', 'GOP %', 'Other %', 'Advantage'],
+      fillOpacity: 0.6,
+      hideHover: 'auto',
+      behaveLikeLine: true,
+      resize: true,
+      pointFillColors:['#ffffff'],
+      pointStrokeColors: ['black'],
+      lineColors:['#0F609B','#A61B1B', '#7069FA']
+  };
+
+config.element = 'registration_history';
+Morris.Line(config);
+
+config.element = 'stacked';
+config.stacked = true;
+Morris.Bar(config);
+Morris.Donut({
+  element: 'pie-chart',
+  data: [
+    {label: "Friends", value: 30},
+    {label: "Allies", value: 15},
+    {label: "Enemies", value: 45},
+    {label: "Neutral", value: 10}
+  ]
+});
+</script>

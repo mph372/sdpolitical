@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :registration_histories
   resources :updates
   resources :deadlines
   get 'pages/home'

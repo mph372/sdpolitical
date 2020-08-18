@@ -61,7 +61,14 @@
         </div>        
       
       </div>
-        <%= f.text_field :map_url, label: "Map Embed Link" %>
+        <div class="row">
+          <div class="col">
+              <%= f.text_field :map_url, label: "Map URL" %>
+          </div>
+          <div class="col">
+            <%= f.select(:registration_history_id, RegistrationHistory.order(:name).all.collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true, label: false} ) %>    
+          </div>
+        </div>
   </div>
 </div>
 

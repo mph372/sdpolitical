@@ -1,0 +1,48 @@
+
+    <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+        Registration History
+        </div>
+        <div id="registration_history"></div>
+    </div>    
+
+
+
+<script>
+var data = [
+      { y: '2012', a: <%= @district.registration_history.dem_2012_percent.truncate(2) %>, b: <%= @district.registration_history.gop_2012_percent.truncate(2) %>, c: <%= @district.registration_history.other_2012_percent.truncate(2) %> },
+      { y: '2014', a: <%= @district.registration_history.dem_2014_percent.truncate(2) %>, b: <%= @district.registration_history.gop_2014_percent.truncate(2) %>, c: <%= @district.registration_history.other_2014_percent.truncate(2) %> },
+      { y: '2016', a: <%= @district.registration_history.dem_2016_percent.truncate(2) %>, b: <%= @district.registration_history.gop_2016_percent.truncate(2) %>, c: <%= @district.registration_history.other_2016_percent.truncate(2) %> },
+      { y: '2018', a: <%= @district.registration_history.dem_2018_percent.truncate(2) %>, b: <%= @district.registration_history.gop_2018_percent.truncate(2) %>, c: <%= @district.registration_history.other_2018_percent.truncate(2) %> },
+      { y: '2020', a: <%= @district.registration_history.dem_2020_percent.truncate(2) %>, b: <%= @district.registration_history.gop_2020_percent.truncate(2) %>, c: <%= @district.registration_history.other_2020_percent.truncate(2) %> },
+    ],
+    config = {
+      data: data,
+      xkey: 'y',
+      ykeys: ['a', 'b', 'c'],
+      labels: ['Dem %', 'GOP %', 'Other %'],
+      fillOpacity: 0.6,
+      hideHover: 'auto',
+      behaveLikeLine: true,
+      resize: true,
+      pointFillColors:['#ffffff'],
+      pointStrokeColors: ['black'],
+      lineColors:['#0F609B','#A61B1B', '#7069FA']
+  };
+
+config.element = 'registration_history';
+Morris.Line(config);
+
+config.element = 'stacked';
+config.stacked = true;
+Morris.Bar(config);
+Morris.Donut({
+  element: 'pie-chart',
+  data: [
+    {label: "Friends", value: 30},
+    {label: "Allies", value: 15},
+    {label: "Enemies", value: 45},
+    {label: "Neutral", value: 10}
+  ]
+});
+</script>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_14_152751) do
+ActiveRecord::Schema.define(version: 2020_08_18_183606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,8 +127,10 @@ ActiveRecord::Schema.define(version: 2020_08_14_152751) do
     t.integer "prop_62_no"
     t.boolean "is_seat", default: false
     t.boolean "is_area", default: false
+    t.bigint "registration_history_id"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
+    t.index ["registration_history_id"], name: "index_districts_on_registration_history_id"
   end
 
   create_table "elections", force: :cascade do |t|
@@ -187,6 +189,8 @@ ActiveRecord::Schema.define(version: 2020_08_14_152751) do
     t.text "description"
     t.string "map_url"
     t.string "jurisdiction_type"
+    t.bigint "registration_history_id"
+    t.index ["registration_history_id"], name: "index_jurisdictions_on_registration_history_id"
   end
 
   create_table "measures", force: :cascade do |t|
@@ -255,6 +259,31 @@ ActiveRecord::Schema.define(version: 2020_08_14_152751) do
     t.string "incumbent_committee_name"
     t.string "linkedin_url"
     t.index ["district_id"], name: "index_people_on_district_id"
+  end
+
+  create_table "registration_histories", force: :cascade do |t|
+    t.integer "total_2012"
+    t.integer "total_2014"
+    t.integer "total_2016"
+    t.integer "total_2018"
+    t.integer "total_2020"
+    t.integer "gop_2012"
+    t.integer "gop_2014"
+    t.integer "gop_2016"
+    t.integer "gop_2018"
+    t.integer "gop_2020"
+    t.integer "dem_2012"
+    t.integer "dem_2014"
+    t.integer "dem_2016"
+    t.integer "dem_2018"
+    t.integer "dem_2020"
+    t.bigint "district_id"
+    t.bigint "jurisdiction_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_registration_histories_on_district_id"
+    t.index ["jurisdiction_id"], name: "index_registration_histories_on_jurisdiction_id"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -353,13 +382,17 @@ ActiveRecord::Schema.define(version: 2020_08_14_152751) do
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
   add_foreign_key "committees", "people"
+  add_foreign_key "districts", "registration_histories"
   add_foreign_key "elections", "districts"
   add_foreign_key "expenditures", "committees"
   add_foreign_key "expenditures", "districts"
   add_foreign_key "expenditures", "measures"
   add_foreign_key "expenditures", "people"
+  add_foreign_key "jurisdictions", "registration_histories"
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "people", "districts"
+  add_foreign_key "registration_histories", "districts"
+  add_foreign_key "registration_histories", "jurisdictions"
   add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "committees"
   add_foreign_key "reports", "districts"

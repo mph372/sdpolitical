@@ -19,6 +19,8 @@
 //= require bootstrap
 //= require jquery.easy-autocomplete
 //= require_tree .
+//= require raphael
+//= require morris
 
 $(document).on('change', '#incumbentOffice', function(){
     debugger;

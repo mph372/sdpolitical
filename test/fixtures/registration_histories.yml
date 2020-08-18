@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total_2010: 1
+  total_2012: 1
+  total_2014: 1
+  total_2016: 1
+  total_2018: 1
+  total_2020: 1
+  gop_2010: 1
+  gop_2012: 1
+  gop_2014: 1
+  gop_2016: 1
+  gop_2018: 1
+  gop_2020: 1
+  dem_2010: 1
+  dem_2012: 1
+  dem_2014: 1
+  dem_2016: 1
+  dem_2018: 1
+  dem_2020: 1
+  district: one
+  jurisdiction: one
+
+two:
+  total_2010: 1
+  total_2012: 1
+  total_2014: 1
+  total_2016: 1
+  total_2018: 1
+  total_2020: 1
+  gop_2010: 1
+  gop_2012: 1
+  gop_2014: 1
+  gop_2016: 1
+  gop_2018: 1
+  gop_2020: 1
+  dem_2010: 1
+  dem_2012: 1
+  dem_2014: 1
+  dem_2016: 1
+  dem_2018: 1
+  dem_2020: 1
+  district: two
+  jurisdiction: two

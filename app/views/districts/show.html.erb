@@ -47,6 +47,13 @@
         <%end%>
     </div>
   </div>
+  <% if @district.registration_history.present? && current_user.admin? %>
+  <div class="row">
+    <div class="col">
+      <%= render 'registration_history'%>
+    </div>
+  </div>
+  <%end%>
   <div class="row">
     <div class="col">
       <%= render 'electedofficials'%>

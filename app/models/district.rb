@@ -7,6 +7,7 @@ class District < ApplicationRecord
   belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
   has_many :reports, through: :persons
   has_many :expenditures
+  belongs_to :registration_history, optional: true
   acts_as_followable
 
   def district_name

@@ -16,6 +16,7 @@
  *= require font-awesome
  *= require easy-autocomplete
  *= require easy-autocomplete.themes
+ *= require morris
  */
 
 body {
@@ -390,6 +391,7 @@ font-style: normal !important;
  
  @import "rails_bootstrap_forms";
  @import "bootstrap";
+ @import 'morrisjs-rails';
  @import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Roboto&display=swap');
  @import url("https://use.typekit.net/suq4glw.css");
  @import url("https://use.typekit.net/suq4glw.css");
