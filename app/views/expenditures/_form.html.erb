@@ -1,6 +1,10 @@
 <div class="container bg-white shadow-sm border rounded mt-2">
 <%= bootstrap_form_for(@expenditure, label_errors: true) do |f| %>
-
+<% if @expenditure.errors.any? %>
+    <% @expenditures.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
 
 
 <div class="row p-3">
@@ -10,17 +14,17 @@
   <div class="col-md-9">
     <div class="row">
       <div class="col">
-        <%= f.select(:committee_id, Committee.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Committee" }) %>
+        <%= f.select(:committee_id, Committee.order(:name).all.collect { |v| [ v.name, v.id ] }, {:include_blank => true, :selected => params[:committee_id]}, { "data-placeholder": "Select Committee" }) %>
         <%= f.select(:district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {:include_blank => true}, label: "District where expenditure occurred") %>
         <%= f.select :election_type, ['General', 'Primary', 'Special'], :selected => 'General' %>
         <%= f.select :election_cycle, ['2016','2018','2020',], :selected => '2020' %>
       </div>
       <div class="col">
-        <%= f.select(:person_id, Person.all.collect { |v| [ "#{v.first_name} #{v.last_name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Candidate" }) %>
+        <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name} ", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Candidate" }) %>
         <%= f.select(:measure_id, Measure.all.collect { |v| [ "Measure #{v.letter}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Measure" }) %>
           <%= f.form_group :support, label: { text: "Support or Oppose" }  do %>
-          <%= f.radio_button :is_support, true, label: "Support" %> 
-          <%= f.radio_button :is_oppose, true, label: "Oppose" %> 
+          <%= f.check_box :is_support, label: "Support" %> 
+          <%= f.check_box :is_oppose, label: "Oppose" %> 
         <%end%>
           <%= f.check_box :is_amendment, label: "Amended Form" %><br>
       </div>

@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-md">
         <%= f.text_field :name, label: "Commitee Name" %> 
-        <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
+        <%= f.select(:jurisdiction_id, Jurisdiction.order(:name).all.collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true}, { "data-placeholder": "Select Jurisdiction" }) %>
         <%= f.select :committee_type, ['General Purpose', 'Primarily Formed'], :include_blank => true %>
         <%= f.check_box :is_active %>
       </div>

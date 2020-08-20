@@ -29,7 +29,7 @@
                     <% if expenditure.person != nil %>
                       <%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %>
                       <%else%>
-                      <%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %>
+                      <%if expenditure.measure.present? %><%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %><%end%>
                       <%end%>
                       <br>
                   <small><% if expenditure.is_support? %>
