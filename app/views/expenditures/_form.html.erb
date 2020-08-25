@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col">
         <%= f.select(:committee_id, Committee.order(:name).all.collect { |v| [ v.name, v.id ] }, {:include_blank => true, :selected => params[:committee_id]}, { "data-placeholder": "Select Committee" }) %>
-        <%= f.select(:district_id, District.all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {:include_blank => true}, label: "District where expenditure occurred") %>
+        <%= f.select(:district_id, District.order(:jurisdiction_id)all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district})", v.id ] }, {:include_blank => true}, label: "District where expenditure occurred") %>
         <%= f.select :election_type, ['General', 'Primary', 'Special'], :selected => 'General' %>
         <%= f.select :election_cycle, ['2016','2018','2020',], :selected => '2020' %>
       </div>
