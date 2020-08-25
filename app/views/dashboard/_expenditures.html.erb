@@ -4,7 +4,7 @@
       </div>
       <% if @expenditures.present? %>
         <div class="table-responsive shadow bg-white rounded  p-4">
-          <table class="table" id="expenditures">
+          <table class="table" id="dashboard-expenditures">
             <thead class="thead-light">
               <tr>
                 <th>Expenditure Date</th>
@@ -18,7 +18,7 @@
 
             <tbody>
 
-                <% @expenditures.each do |expenditure| %>
+                <% @expenditures.uniq.each do |expenditure| %>
                   <tr>
                     <td class=""><%= expenditure.expenditure_date.to_formatted_s(:long) %><% if expenditure.is_amendment? %>*<%end%></td>
                     <td class=""><%= expenditure.description %></td>
@@ -37,8 +37,7 @@
                     </td>
                     <td><% if expenditure.pdf.url.present? %><%= link_to "View", expenditure.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
                   </tr>
-                  <% end %>
-
+                <% end %>
             </tbody>
           </table>
           <%else%>
@@ -48,3 +47,14 @@
 
 
 </div>
+
+      <script>
+          $( document ).on('turbolinks:load', function() {
+          $('#dashboard-expenditures').DataTable( {
+            retrieve: true,
+            "order": [[ 0, "desc" ]],
+            ordering:  false,
+            "dom": 'rtp'
+          });
+      });
+      </script>

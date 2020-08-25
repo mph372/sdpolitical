@@ -6,13 +6,16 @@ class District < ApplicationRecord
   has_many :candidates, inverse_of: :district, class_name: 'Person'
   belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
   has_many :reports, through: :persons
-  has_many :expenditures
   belongs_to :registration_history, optional: true
   acts_as_followable
 
   def district_name
     if self.district != "At Large" 
+      if self.at_large_district == false
      "#{self.name}, #{self.district.to_i.ordinalize} District"
+     else
+      "#{self.name}"
+     end
     else
      "#{self.name}"
     end

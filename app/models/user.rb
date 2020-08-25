@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :dashboardable and :omniauthable
+  before_create :add_unsubscribe_hash
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
@@ -21,6 +22,8 @@ class User < ApplicationRecord
     end
   end
 
+
+
   after_create :subscribe_user_to_mailing_list
 
 
@@ -28,6 +31,12 @@ class User < ApplicationRecord
 
   def subscribe_user_to_mailing_list
     SubscribeUserToMailingListJob.perform_later(self)
+  end
+
+  private
+
+  def add_unsubscribe_hash
+    self.unsubscribe_hash = SecureRandom.hex
   end
 
 end

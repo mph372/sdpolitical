@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'emails/unsubscribe'
   resources :registration_histories
   resources :updates
   resources :deadlines
@@ -7,6 +8,8 @@ Rails.application.routes.draw do
   authenticated :user do
     root 'dashboard#index', as: :authenticated_root
   end
+
+  match "users/unsubscribe/:unsubscribe_hash" => "emails#unsubscribe", as: "unsubscribe", via: :all
   
   unauthenticated :user do
     root 'pages#home', as: :unauthenticated_root

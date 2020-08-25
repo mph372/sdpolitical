@@ -1,0 +1,13 @@
+<p>Hi <%= @user.first_name %>,</p>
+
+<p>An independent expenditure has been made in <strong><%= link_to "#{@expenditure.person.district.jurisdiction.name} - #{@expenditure.person.district.district_name}", @expenditure.person.district, target: :_blank  %>:</strong></p>
+
+<p><strong>Committee:</strong> <%= link_to "#{@expenditure.committee.name}", @expenditure.committee %> </p>
+<p><strong>Candidate:</strong> <%= link_to "#{@expenditure.person.full_name}", @expenditure.person, target: :_blank %> (<%= @expenditure.support_or_oppose %>)</p>
+<p><strong>Description:</strong> <%= @expenditure.description %> </p>
+<p><strong>Amount:</strong> <%= number_to_currency(@expenditure.amount) %> </p>
+<p><strong>Date:</strong> <%= @expenditure.expenditure_date %> </p>
+
+<p><%= link_to "View Expenditure", expenditure_url(@expenditure), target: :_blank %></p>
+
+<%= render "shared/unsubscribe_link" %>
