@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   has_many :districts 
+  has_many :notifications, foreign_key: :recipient_id
   acts_as_follower
   
   def subscribed?

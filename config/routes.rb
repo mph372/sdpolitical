@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root 'dashboard#index', as: :authenticated_root
   end
-
+  
   match "users/unsubscribe/:unsubscribe_hash" => "emails#unsubscribe", as: "unsubscribe", via: :all
   
   unauthenticated :user do
@@ -34,6 +34,11 @@ Rails.application.routes.draw do
   resources :jurisdictions
   resources :subscriptions
   resources :dashboard
+  resources :notifications do
+    collection do
+      post :mark_as_read
+    end
+  end
   root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

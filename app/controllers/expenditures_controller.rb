@@ -36,10 +36,16 @@ class ExpendituresController < ApplicationController
 
     respond_to do |format|
       if @expenditure.save
-
+        # Create E-Mail Notification
         if @expenditure.tracked_expenditure == true && current_user.notify_when_new_expenditure?
           ExpenditureMailer.with(user: current_user, expenditure: @expenditure).tracked_expenditure.deliver
         end
+
+        # Create app notification
+        if @expenditure.tracked_expenditure == true 
+          Notification.create(recipient: current_user, notifiable: @expenditure)
+        end
+
         format.html { redirect_to @expenditure, notice: 'Expenditure was successfully created.' }
         format.json { render :show, status: :created, location: @expenditure }
       else

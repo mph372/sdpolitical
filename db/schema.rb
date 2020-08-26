@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_180806) do
+ActiveRecord::Schema.define(version: 2020_08_25_233700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -207,6 +207,15 @@ ActiveRecord::Schema.define(version: 2020_08_25_180806) do
     t.string "gop_support"
     t.string "dem_support"
     t.index ["jurisdiction_id"], name: "index_measures_on_jurisdiction_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "recipient_id"
+    t.datetime "read_at"
+    t.integer "notifiable_id"
+    t.string "notifiable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "other_districts", force: :cascade do |t|
