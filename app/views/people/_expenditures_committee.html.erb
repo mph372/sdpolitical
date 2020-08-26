@@ -1,0 +1,41 @@
+<div style="width:100%;">
+    <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+            Aggregate Expenditures by Committee Supporting/Opposing <%= "#{@person.first_name} #{@person.last_name}" %>
+        </div>
+        <div class="table-responsive p-3">
+            <table class="table bg-white table-sm" style="width:100%">
+            <thead class="thead-light rounded">
+            <tr>
+                <th>Committee</th>
+                <th>Total Support</th>
+                <th>Total Oppose</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% @expenditures.collect{|u| u.committee}.flatten.uniq.each do |committee| %>
+                <tr>
+                <td><%= link_to "#{committee.name}", committee %></td>
+                <td><% if committee.expenditures.where(:is_support => true).where(person: @person).sum(:amount) > 0 %><span class="green-text "><%= number_to_currency(committee.expenditures.where(:is_support => true).where(person: @person).sum(:amount)) %></span><% end %></td>
+                <td><% if committee.expenditures.where(:is_oppose => true).where(person: @person).sum(:amount) > 0 %><span class="red-text "><%= number_to_currency(committee.expenditures.where(:is_oppose => true).where(person: @person).sum(:amount)) %></span><% end %></td>
+                </tr>
+                <% end %>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td><strong>Totals</strong></td>
+                    <td><span class="green-text heavy"><%= number_to_currency(@expenditures.where(:is_support => true).sum(:amount)) %></span></td>
+                    <td><span class="red-text heavy"><%= number_to_currency(@expenditures.where(:is_oppose => true).sum(:amount)) %></span></td>
+                </tr>
+            </tfoot>
+            </table>
+        </div>
+    </div>
+</div>        
+
+
+
+
+

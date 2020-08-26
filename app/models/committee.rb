@@ -6,6 +6,10 @@ class Committee < ApplicationRecord
   has_many :expenditures
 
   def aggregate_support
-    @committee.expenditures.where(:is_support => true).sum(:amount)
+    "#{self.expenditures.where(:is_support => true).sum(:amount)}"
+  end
+
+  def aggregate_oppose
+    "#{self.expenditures.where(:is_oppose => true).sum(:amount)}"
   end
 end

@@ -190,6 +190,7 @@ class Person < ApplicationRecord
 
 
 
+
   before_save :update_birthdate_fields
   before_save :update_district_field
 
