@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_25_233700) do
+ActiveRecord::Schema.define(version: 2020_08_26_153443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -384,6 +384,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_233700) do
     t.string "last_sign_in_ip"
     t.boolean "notify_when_new_expenditure", default: true
     t.string "unsubscribe_hash"
+    t.boolean "notify_when_new_report", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -1,8 +1,10 @@
 class Report < ApplicationRecord
   belongs_to :committee, optional: true
   delegate :district, to: :person
+  delegate :jurisdiction, to: :person
   delegate :incumbent_district, to: :person
   belongs_to :person, optional: true
+  cattr_accessor :current_user
 
   mount_uploader :pdf, ReportUploader
 
@@ -34,6 +36,22 @@ class Report < ApplicationRecord
     elsif self.committee.present?
       "#{self.period_begin} - #{self.period_end} Report for #{self.committee.name}"
     end
+  end
+
+  def district_followers
+    district_followers = []
+    if self.district.at_large_district == false
+      self.district.followers.each do |follower|
+      district_followers << follower
+      end
+    elsif self.district.at_large_district == true
+      self.district.jurisdiction.districts.each do |district|
+        district.followers.each do |follower|
+        district_followers << follower
+        end
+      end
+    end
+    return district_followers
   end
 
 

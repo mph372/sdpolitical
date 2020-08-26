@@ -17,15 +17,22 @@ class Expenditure < ApplicationRecord
     end
   end
 
-  def tracked_expenditure
-    @atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
-    @district_candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
-    @candidates = @district_candidates + @atlarge_candidates
-    @expenditures = @candidates.collect{|u| u.expenditures}.flatten
-
-    if @expenditures.include?(self)
-      true
+  def district_followers
+    district_followers = []
+    if self.person.present?
+      if self.person.district.at_large_district == false
+        self.person.district.followers.each do |follower|
+        district_followers << follower
+        end
+      elsif self.person.district.at_large_district == true
+        self.person.district.jurisdiction.districts.each do |district|
+          district.followers.each do |follower|
+          district_followers << follower
+          end
+        end
+      end
     end
+    return district_followers
   end
 
 end

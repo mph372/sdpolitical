@@ -8,6 +8,6 @@
 <p><strong>Amount:</strong> <%= number_to_currency(@expenditure.amount) %> </p>
 <p><strong>Date:</strong> <%= @expenditure.expenditure_date %> </p>
 
-<p><%= link_to "View Expenditure", expenditure_url(@expenditure), target: :_blank %></p>
+<% if @expenditure.pdf.url.present? %><p><%= link_to "Download Expenditure PDF", @expenditure.pdf.url, target: :_blank %></p><%end%>
 
-<%= render "shared/unsubscribe_link" %>
+<%= render "shared/unsubscribe_link", subscription_type: "tracked_expenditure" %>

@@ -8,6 +8,7 @@ class District < ApplicationRecord
   has_many :reports, through: :persons
   belongs_to :registration_history, optional: true
   acts_as_followable
+  cattr_accessor :current_user
 
   def district_name
     if self.district != "At Large" 
@@ -18,6 +19,24 @@ class District < ApplicationRecord
      end
     else
      "#{self.name}"
+    end
+  end
+
+  def user_following
+    if current_user.following?(self)
+      true
+    end
+  end
+
+  def tracked_district
+    if user_following
+      true
+    end
+    if self.at_large_district? 
+      @districts = self.jurisdiction.districts.all
+      if @districts.any? { |district| district.user_following == true }
+        true
+      end
     end
   end
 

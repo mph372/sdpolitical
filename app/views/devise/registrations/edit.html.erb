@@ -37,10 +37,14 @@
                 input_html: { autocomplete: "current-password" } %>
   </div>
 
-  <div class="h3">E-Mail Preferences</div>
+  <h4>E-Mail Preferences for Tracked Districts</h4>
   <div class="mb-6">
   <%= f.check_box :notify_when_new_expenditure %>
-  <%= f.label :notify_when_new_expenditure %>
+  <%= f.label "Notify me of new independent expenditures"  %>
+  </div>
+   <div class="mb-6">
+  <%= f.check_box :notify_when_new_report%>
+  <%= f.label "Notify me of new candidate Reports" %>
   </div>
 
   <div class="form-actions">

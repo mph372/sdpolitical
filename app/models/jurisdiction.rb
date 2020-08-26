@@ -4,6 +4,7 @@ class Jurisdiction < ApplicationRecord
     has_many :candidates, through: :districts
     has_many :expenditures, through: :districts
     has_many :incumbents, through: :districts
+    has_many :reports, through: :candidates
     has_many :committees
     belongs_to :registration_history, optional: true
 end
