@@ -115,7 +115,7 @@
 </div>
 <%end%>
 <br>
-<% if @jurisdiction.committees.present? %>
+<% if @jurisdiction.committees.present? && current_user.subscribed? %>
 <%= render 'committees'%>
 <%end%>
 <br>

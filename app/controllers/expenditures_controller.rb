@@ -1,7 +1,7 @@
 class ExpendituresController < ApplicationController
   before_action :set_expenditure, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  # before_action :is_subscriber?
+  before_action :is_subscriber?
   before_action :authorize_admin, except: [:index, :show]
 
   # GET /expenditures
@@ -39,7 +39,7 @@ class ExpendituresController < ApplicationController
         if @expenditure.person.present?
           # Create E-Mail Notification
             @expenditure.district_followers.uniq.each do |user|
-            if user.notify_when_new_expenditure? 
+            if user.notify_when_new_expenditure? && user.subscribed?
               ExpenditureMailer.with(user: user, expenditure: @expenditure).tracked_expenditure.deliver
             end
           end

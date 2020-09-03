@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
     before_action :authenticate_user!
+    before_action :is_subscriber?
     def index
         @districts = current_user.following_by_type('District')
         @updates = Update.all.limit(3)

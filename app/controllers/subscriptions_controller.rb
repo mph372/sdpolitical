@@ -1,8 +1,14 @@
 class SubscriptionsController < ApplicationController
     layout "subscribe"
     before_action :authenticate_user!, except: [:new, :create]
+
+
     
     def new
+
+      set_meta_tags title: 'Subscribe',
+      site: 'The Ballot Book'
+      
         if user_signed_in? && current_user.subscribed?
             redirect_to root_path, notice: "You are already a subscriber"
         end
@@ -41,10 +47,17 @@ class SubscriptionsController < ApplicationController
 
     def destroy
       customer = Stripe::Customer.retrieve(current_user.stripe_id)
-      customer.subscriptions.retrieve(current_user.stripe_subscription_id).delete(:at_period_end => true)
-      current_user.update(stripe_subscription_id: nil)
-      current_user.subscribed = false
+      customer_subscription = customer.subscriptions.retrieve(current_user.stripe_subscription_id)
+      Stripe::Subscription.update(
+        customer_subscription.id,
+        {
+          cancel_at_period_end: true
+        }
+      )
+      current_user.update(subscription_display: "You have cancelled your account. You will remain a subscriber until your current billing period ends.")
+      current_user.update(cancellation_pending: true)
   
-      redirect_to root_path, notice: "Your subscription has been cancelled."
+  
+      redirect_to '/users/edit', notice: "You have cancelled your account. You will remain a subscriber until your current billing period ends."
     end
 end

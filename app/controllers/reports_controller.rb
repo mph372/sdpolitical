@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   before_action :set_report, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  # before_action :is_subscriber?
+  before_action :is_subscriber?
   before_action :authorize_admin, except: [:index, :show]
 
   # GET /reports
@@ -38,7 +38,7 @@ class ReportsController < ApplicationController
       if @report.save
         if @report.person.present?
           @report.district_followers.uniq.each do |user|
-            if user.notify_when_new_report? 
+            if user.notify_when_new_report? && user.subscribed?
               ReportMailer.with(user: user, report: @report).tracked_report.deliver
             end
           end

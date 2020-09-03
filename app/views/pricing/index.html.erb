@@ -1,24 +1,71 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4">Pricing</h1>
-      <p class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
     </div>
 
     <div class="container">
-      <div class="card-deck mb-3 text-center">
+    <div class="card-deck mb-3 ">
+      
         <div class="card mb-4 box-shadow">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Daily</h4>
+            <h4 class="my-0 font-weight-normal text-center">Free</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">$50 <small class="text-muted">/ mo</small></h1>
+            <h1 class="card-title pricing-card-title text-center">$0 <small class="text-muted">/ month</small></h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>20 users included</li>
-              <li>10 GB of storage</li>
-              <li>Priority email support</li>
-              <li>Help center access</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Elected Official/Candidate</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Ballot Measures</li>
+              <li><span class="red-text"><%= material_icon.cancel %></span> Detailed District information</li>
+              <li><span class="red-text"><%= material_icon.cancel %></span> Campaign finance report data</li>
+              <li><span class="red-text"><%= material_icon.cancel %></span> Independent expenditure data</li>
+              <li><span class="red-text"><%= material_icon.cancel %></span> Dashboard and district tracking</li>
             </ul>
             <% if user_signed_in? %>
-            <%= link_to 'Start Daily Plan', new_subscription_path(plan: "Daily", plan_id: Rails.application.credentials.daily), class:"btn btn-lg btn-block btn-primary" %>
+            <%= link_to 'Continue Free Plan', "/pages/home", class:"btn btn-lg btn-block btn-outline-primary" %>
+            <% else %>
+            <%= link_to 'Sign up for free', new_user_registration_path, class:"btn btn-lg btn-block btn-outline-primary"  %>
+            <%end%>
+          </div>
+        </div>
+
+      
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal text-center">Monthly</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title text-center">$30 <small class="text-muted">/ month</small></h1>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Elected Official/Candidate</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Ballot Measures</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Detailed District information</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Campaign finance report data</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Independent expenditure data</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Dashboard and district tracking</li>
+            </ul>
+            <% if user_signed_in? %>
+            <%= link_to 'Start Monthy Plan', new_subscription_path(plan: "Monthly", plan_id: Rails.application.credentials.monthly), class:"btn btn-lg btn-block btn-primary" %>
+            <% else %>
+            <%= link_to 'Subscribe', new_user_registration_path, class:"btn btn-lg btn-block btn-primary"  %>
+            <%end%>
+          </div>
+        </div>
+ 
+        <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal text-center">Annual</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title text-center">$300 <small class="text-muted">/ year</small></h1>
+            <ul class="list-unstyled mt-3 mb-4 ">
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Elected Official/Candidate</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Ballot Measures</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Detailed District information</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Campaign finance report data</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Independent expenditure data</li>
+              <li><span class="green-text"><%= material_icon.check_circle %></span> Dashboard and district tracking</li>
+            </ul>
+            <% if user_signed_in? %>
+            <%= link_to 'Start Annual Plan', new_subscription_path(plan: "Annual", plan_id: Rails.application.credentials.yearly), class:"btn btn-lg btn-block btn-primary" %>
             <% else %>
             <%= link_to 'Subscribe', new_user_registration_path, class:"btn btn-lg btn-block btn-primary"  %>
             <%end%>
@@ -26,3 +73,4 @@
         </div>
         
       </div>
+       </div>

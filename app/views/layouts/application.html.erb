@@ -33,7 +33,7 @@
     <div class="container">
 
 
-<% if user_signed_in? %>
+<% if user_signed_in? && current_user.subscribed? %>
    <%= render '/layouts/subscriber_nav' %>
 <%elsif user_signed_in? %>
   <%= render '/layouts/signed_in_nav'%>

@@ -43,7 +43,7 @@
   </div>    
 </div>  
   <hr>
-  <% if @measure.committees.present? %>
+  <% if @measure.committees.present? && current_user.subscribed? %>
   <div class="container">
   <div class="row rounded primary-border p-4 shadow-sm mb-3">
   <h5 class="dark-red-supporting heavy">Committees Supporting / Opposing Measure <%= @measure.letter %></h5>

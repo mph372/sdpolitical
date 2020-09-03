@@ -30,4 +30,8 @@ class ApplicationController < ActionController::Base
               devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:first_name, :last_name, :email, :password, :current_password, :notify_when_new_expenditure, :notify_when_new_report)}
          end
 
+
+         def is_subscriber?
+          redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
+        end
 end

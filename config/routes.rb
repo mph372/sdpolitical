@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
   get 'emails/unsubscribe'
   resources :registration_histories
   resources :updates

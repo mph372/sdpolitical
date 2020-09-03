@@ -5,6 +5,11 @@
     <% elsif @person.running_reelection? %>
     <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= @person.incumbent_district.name %> Campaign Info</h4>
     <%end%>
+
+    <% if current_user.subscribed == true %>
+      
+      
+
     <div class="col-lg">
     <%= render 'opponentssection'%>
     
@@ -18,4 +23,8 @@
 <%end%>
 
 <%= render 'expendituredata'%>
+
+<%else%>
+<%= render 'shared/subscription_required' %>
+<%end%>
 

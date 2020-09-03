@@ -58,28 +58,38 @@
     </div>
     
     <div class="col-md m-3">
-    <!--
+    
         <% if current_user.subscribed? %>
             <div class="card-on-file">
-              <h3 class="t">Thank you for being a subscriber</h3>
+              <h3>Thank you for being a subscriber</h3>
               <hr />
               <p>Your current card:</p>
               <div> **** **** **** <%= current_user.card_last4 %></div>
               <div>Expires <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
 
-              <% if current_user.subscribed? %>
-              <p><%= link_to "Cancel Subscription", subscription_path(current_user), method: :delete, data: { confirm: "Are you sure?" }, class: "use-different-card" %></p>
-              <% else %>
+              <br>
+              <% if current_user.subscribed? && current_user.cancellation_pending == false %>
+              <p><%= link_to "Cancel Subscription", subscription_path(current_user), method: :delete, data: { confirm: "Are you sure?" }, class: "use-different-card btn btn-outline-primary" %></p>
+              <% elsif current_user.subscribed? && current_user.cancellation_pending == true %>
+              <%= current_user.subscription_display %>
+              
+              
+              
+              
+              <% elsif current_user.subscribed == false %>
+                
                 <p> You are not currently subscribed. <%= link_to 'Sign up', pricing_index_path %>
               <% end %>
           <% else %>
-          <div><mark>You still need to subscribe to access the features of this site!</mark></div>
+          <h3>Subscription Status</h3>
+          <div><mark>You still need to subscribe to access the full features of this site!</mark></div>
+          
           <div><%= link_to 'Subscribe', pricing_index_path, :class => "btn btn-primary mt-3" %></div>
           <%end%>
             </div>
         </div>
       </div>
-    -->
+   
     </div>
     
   </div>

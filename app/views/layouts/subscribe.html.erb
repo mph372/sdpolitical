@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sdpolitical</title>
+    <title>The Ballot Book | Pricing</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -18,24 +18,41 @@
     <%= tag :meta, name: "stripe-key", content: Rails.application.credentials.stripe_publishable_key %>
   </head>
 
-  <body class="bg-light">
+  <body class="bg-white">
   
     <% flash.each do |type, msg| %>
       <div class="alert alert-info">
         <%= msg %>
       </div>
     <% end %>
-<div class="container">
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
-  </nav>
-</div>
+<div class=container>
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+      <a class="navbar-brand"><%= image_tag 'logos/ballot_logo_square.png', class: "logo", alt: 'The Ballot Book Logo' %></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                  <a class="nav-link" <%= link_to 'Home', page_path('home') %><span class="sr-only">(current)</span></a>
+              </li>
+             
+          </ul>
 
-    
+          <ul class="navbar-nav">  
+<li >
+              <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+            
+           </li>
+          </ul> 
+    </div>
+</nav>
+  
         
     
 
     <%= yield %>
     <br>
   </body>
+  </div>
 </html>

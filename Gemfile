@@ -57,6 +57,7 @@ gem 'heroku-deflater', :group => :production
 gem "sort-by-alphabet"
 gem 'morrisjs-rails'
 gem 'raphael-rails'
+gem 'stripe_event'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
