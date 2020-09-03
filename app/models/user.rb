@@ -10,7 +10,7 @@ class User < ApplicationRecord
   acts_as_follower
   
   def subscribed?
-    stripe_subscription_id?
+    stripe_subscription_id? || free_account?
   end
 
   def full_name
