@@ -17,6 +17,7 @@ class MeasuresController < ApplicationController
   # GET /measures/1.json
   def show
     @committees = @measure.committees
+    @expenditures = @measure.expenditures
   end
 
   # GET /measures/new

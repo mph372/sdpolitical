@@ -1,0 +1,37 @@
+<div style="width:100%;">
+    <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <h5 class="dark-red-supporting heavy pt-4 pl-4">Itemized Expenditures Supporting/Opposing <%= "Measure #{@measure.letter}" %></h5>
+        <div class="table-responsive p-3">
+            <table class="table bg-white" style="width:100%">
+            <thead class="thead-white rounded">
+      <tr>
+        <th>Date</th>
+        <th>Committee</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Support/Oppose</th>
+        <th>View</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @expenditures.each do |expenditure| %>
+        <tr>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.expenditure_date.to_formatted_s(:long) %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.description %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= number_to_currency(expenditure.amount) %></td>
+          <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>">
+          <% if expenditure.is_support? %>
+              Support
+              <%else%>
+              Oppose
+              <%end%></td>
+          <td><% if expenditure.pdf.url.present? %><%= link_to "View", expenditure.pdf.url, :class => "btn btn-primary btn-sm", target: :_blank %><%end%></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  

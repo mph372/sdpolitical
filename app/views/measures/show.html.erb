@@ -43,10 +43,11 @@
   </div>    
 </div>  
   <hr>
-  <% if @measure.committees.present? && current_user.subscribed? %>
+<% if current_user.subscribed? %>  
+  <% if @measure.committees.present? %>
   <div class="container">
   <div class="row rounded primary-border p-4 shadow-sm mb-3">
-  <h5 class="dark-red-supporting heavy">Committees Supporting / Opposing Measure <%= @measure.letter %></h5>
+  <h5 class="dark-red-supporting heavy">Committees Dedicated to Supporting / Opposing Measure <%= @measure.letter %></h5>
   <div class="table-responsive">
     <table class="table border-primary shadow-sm bg-white p-2">
       <thead>
@@ -81,6 +82,12 @@
   </div>
   <%end%>
 
+<% if @measure.expenditures.present? %>
+<%= render 'expenditures_committee'%>
+<%= render 'expenditures'%>
+<%end%>
+
+<%end%>
 <% if current_user.admin? %>
 <%= link_to 'Edit', edit_measure_path(@measure) %> |
 <%= link_to 'Delete Measure', @measure, method: :delete, data: { confirm: 'Are you sure?' } %> |

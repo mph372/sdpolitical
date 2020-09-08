@@ -2,7 +2,7 @@
 <h3 class="primary-blue heavy text-responsive"><%= @committee.name %></h3>
 
           <div class="row">
-            <div class="col-auto">
+            <div class="col">
               <strong>Jurisdiction:</strong><br>
               <strong>Committee Type:</strong><br>
               <% if @committee.committee_type == "Primarily Formed" %>
@@ -15,7 +15,7 @@
               <%end%>
             </div>
 
-            <div class="col-auto">
+            <div class="col">
               <%= link_to "#{@committee.jurisdiction.name}", @committee.jurisdiction %><br>
               <%= @committee.committee_type %><br>
                 <% if @committee.person.present? %>
@@ -27,7 +27,7 @@
                   (Support)
                 <%elsif @committee.is_oppose? %>
                   (Oppose)
-                <%else%>
+                <%elsif @committee.committee_type == "General Purpose"%>
                 (General Purposes Committees do not Oppose/Support specific candidates/measures)  
                 <%end%>
             </div>

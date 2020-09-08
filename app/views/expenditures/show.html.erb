@@ -1,7 +1,24 @@
-<% if user_signed_in? %>
+<% if user_signed_in? && current_user.subscribed? %>
+<div class="rounded primary-border p-4 m-3 shadow-sm">
+<h5 class="primary-blue heavy">View Independent Expenditure</h5>
+<br>
 <p>
   <strong>Expenditure date:</strong>
   <%= @expenditure.expenditure_date %>
+</p>
+
+<p>
+  <strong>Committee:</strong>
+  <%= link_to "#{@expenditure.committee.name}", @expenditure.committee %>
+</p>
+
+<p>
+  <strong>Recipient:</strong>
+  <% if @expenditure.person.present? %>
+  <%= link_to "#{@expenditure.person.full_name}", @expenditure.person %>
+  <% elsif @expenditure.measure.present? %>
+  <%= link_to "Measure #{@expenditure.measure.letter}", @expenditure.measure %>
+  <%end%>
 </p>
 
 <p>
@@ -19,14 +36,21 @@
 
 
 <p>
-  <strong>Is support:</strong>
-  <%= @expenditure.is_support %>
+  <strong>Support/Oppose: </strong>
+  <%if @expenditure.is_support == true %>Support<%elsif @expenditure.is_support == false %>Oppose<%end%>
 </p>
 
-<p>
-  <strong>Is amendment:</strong>
-  <%= @expenditure.is_amendment %>
-</p>
+
+  
+  <% if @expenditure.is_amendment == true %>
+  <p><em>This expenditure report is amended.</em></p>
+
+  <%end%>
+
+  <% if @expenditure.pdf.url.present? %><%= link_to "Download Report", @expenditure.pdf.url %><%end%>
+
+</div>
+
 <% if current_user.admin? %>
 <%= link_to 'Edit', edit_expenditure_path(@expenditure) %> |
 <%= link_to 'Delete Expenditure', @expenditure, method: :delete, data: { confirm: 'Are you sure?' } %> |
