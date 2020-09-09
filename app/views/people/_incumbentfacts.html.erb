@@ -4,7 +4,7 @@
       </div>
     <div class="bg-white p-3 mt-1">
       <small class="heavy"><% if @person.is_appointed? %><%= "First Appointed as #{@person.title}:"%><%else%><%= "First Elected as #{@person.title}:"%><%end%></small><br>
-      <%= @person.first_elected.strftime("%B, %Y") %><br><br>
+      <%if @person.first_elected.present?%><%= @person.first_elected.strftime("%B, %Y") %><%end%><br><br>
       <small class="heavy"><%= "Profession Before Elected Office:" %></small><br>
       <%= @person.professional_career %><br><br>
       <small class="heavy"><%= "Prior Elected Office:"%></small><br>
