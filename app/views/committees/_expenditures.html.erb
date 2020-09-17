@@ -6,9 +6,10 @@
             <thead>
                 <tr>
                   <th>Date</th>
-                  <th>Amount</th>
                   <th>Candidate / Measure</th>
                   <th>District / Jurisdiction</th>
+                  <th>Amount</th>
+                  <th>Description</th>
                   <th>Support / Oppose</th>
                 </tr>
               </thead>
@@ -21,7 +22,7 @@
                   <%else%>
                     <td><%= expenditure.expenditure_date.strftime("%b-%d-%y") %></td>
                     <%end%>
-                    <td><%= number_to_currency(expenditure.amount) %></td>
+                    
                     <% if expenditure.person.present?%>
                           <td><%= link_to "#{expenditure.person.first_name} #{expenditure.person.last_name}", expenditure.person %></td>
                           <td><%if expenditure.person.running_reelection? %><%= link_to "#{expenditure.person.incumbent_district.jurisdiction.name}", expenditure.person.incumbent_district.jurisdiction  %><%else%><%= link_to "#{expenditure.person.district.jurisdiction.name}", expenditure.person.district.jurisdiction  %><%end%></td>
@@ -29,6 +30,8 @@
                           <td><%= link_to "Measure #{expenditure.measure.letter}", expenditure.measure %></td>
                           <td><%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %></td>
                           <%end%>
+                    <td><%= number_to_currency(expenditure.amount) %></td>
+                    <td><%= expenditure.description %></td>
                     <td><% if expenditure.is_support?%>
                         Support
                         <%else%>
