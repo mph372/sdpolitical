@@ -10,9 +10,9 @@ class Expenditure < ApplicationRecord
   end
 
   def support_or_oppose
-    if self.is_support = true
+    if self.is_support == true
       "Support"
-    elsif self.is_oppose = true
+    elsif self.is_oppose == true
       "Oppose"
     end
   end
