@@ -21,7 +21,7 @@
             <tbody>
               <% @expenditures.each do |expenditure| %>
                 <tr>
-                  <td class=""><%= expenditure.expenditure_date.to_formatted_s(:long) %><% if expenditure.is_amendment? %>*<%end%><%if current_user.admin?%><br><small><%= link_to 'Edit', edit_expenditure_path(expenditure) %></small><%end%></td>
+                  <td class=""><%= expenditure.expenditure_date.strftime("%y-%m-%d") %><% if expenditure.is_amendment? %>*<%end%><%if current_user.admin?%><br><small><%= link_to 'Edit', edit_expenditure_path(expenditure) %></small><%end%></td>
                   <td class=""><%= expenditure.description %></td>
                   <td class=""><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>
                   <td class=""><%= number_to_currency(expenditure.amount) %></td>
@@ -70,7 +70,8 @@
       <script>
           $( document ).on('turbolinks:load', function() {
           $('#expenditures').DataTable( {
-            retrieve: true
+            retrieve: true,
+            "order": [[ 0, "desc" ]]
           });
       });
       </script>

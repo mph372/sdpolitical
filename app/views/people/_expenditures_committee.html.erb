@@ -26,8 +26,8 @@
             <tfoot>
                 <tr>
                     <td><strong>Totals</strong></td>
-                    <td><span class="green-text heavy"><%= number_to_currency(@expenditures.where(:is_support => true).sum(:amount)) %></span></td>
-                    <td><span class="red-text heavy"><%= number_to_currency(@expenditures.where(:is_oppose => true).sum(:amount)) %></span></td>
+                    <td><span class="green-text heavy text-right"><%= number_to_currency(@expenditures.where(:is_support => true).sum(:amount)) %></span></td>
+                    <td><span class="red-text heavy text-right"><%= number_to_currency(@expenditures.where(:is_oppose => true).sum(:amount)) %></span></td>
                 </tr>
             </tfoot>
             </table>

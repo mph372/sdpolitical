@@ -14,9 +14,6 @@
                     <%= render 'incumbentdistrict'%>
                 </div>
             </div>
-            <% if @person.reports.where(incumbent_report: true).present? %>  
-            <%= render 'incumbentfundraising'%>
-            <%end%>
         </div>
     </div>
 <br>

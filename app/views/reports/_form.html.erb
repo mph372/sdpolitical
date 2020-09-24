@@ -8,11 +8,11 @@
   <div class="col-md-9">
     <div class="row">
       <div class="col">
-      <%= f.date_field :period_begin, required: true %>
-      <%= f.date_field :period_end, required: true %>
+      <%= f.date_field :period_begin, required: true, value: Date.new(2020,7,1) %>
+      <%= f.date_field :period_end, required: true, value: Date.new(2020,9,19) %>
       </div>
       <div class="col">
-      <%= f.date_field :report_filed, required: true %>
+      <%= f.date_field :report_filed, required: true, value: Date.today.strftime("%Y-%m-%d") %>
       <%= f.select :cycle, ['2018', '2020', '2022'], :selected => '2020', required: true %>
       </div>
     </div>
