@@ -3,6 +3,7 @@
     <div class="col">
       <%= render 'header'%>
       <% if @committee.expenditures.present? %>
+        <%= render 'aggregate_expenditures'%>
         <%= render 'expenditures'%>
       <%end%>
       <% if @committee.reports.present? %>

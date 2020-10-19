@@ -1,0 +1,24 @@
+<div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+            Top-Spending Committees by Independent Expenditures<br> (November 2020 Election)
+        </div>
+        <div class="table-responsive p-1">
+          <table class="table table p-2 bg-white" style="width:100%">           
+                <thead class="thead-light">
+                  <tr>
+                    <th>Committee<br></th>
+                    <th>COH</th>
+                  </tr>
+                </thead>
+                <% Committee.select('SUM(total_days) as tot').order('tot desc').limit(10).each do |committee|  %> 
+                <tbody>
+                  <tr>
+                    
+                    <td><%= link_to "#{committee.name}", committee  %><br><small><%= committee.jurisdiction.name %></td>
+                    <td><span class="float-right green-pill"><%= number_to_currency(committee.aggregate_expenditures) %></span></td>
+                    
+                  <tr>
+                  <%end%>
+                </tbody>
+          </table>
+        </div>

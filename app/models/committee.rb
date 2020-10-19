@@ -12,4 +12,8 @@ class Committee < ApplicationRecord
   def aggregate_oppose
     "#{self.expenditures.where(:is_oppose => true).sum(:amount)}"
   end
+
+  def aggregate_expenditures
+    self.expenditures.sum(:amount)
+  end
 end
