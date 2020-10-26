@@ -8,7 +8,7 @@
     <div class="col-lg-6">
         <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
           <div class="card-header">
-              Top Candidate Fundraisers<br> (Period Ending September 19, 2020)
+              Top Candidate Fundraisers<br> (Period Ending October 17, 2020)
           </div>
           <div class="table-responsive p-1">
             <table class="table table p-2 bg-white " style="width:100%">           
@@ -19,7 +19,7 @@
                       <th>Period Receipts</th>
                     </tr>
                   </thead>
-                  <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,9,19)).order(period_receipts: :DESC).limit(14).each do |report|  %>
+                  <% Report.where("candidate_report = ? AND period_end = ?", true, Date.new(2020,10,17)).order(period_receipts: :DESC).limit(14).each do |report|  %>
                   
                   <tbody>
                     <tr>
@@ -39,7 +39,7 @@
     <div class="col-lg-6">
       <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
         <div class="card-header">
-            Most-Funded Committees<br> (Period Ending September 19, 2020)
+            Most-Funded Committees<br> (Period Ending October 17, 2020)
         </div>
         <div class="table-responsive p-1">
           <table class="table table p-2 bg-white" style="width:100%">           
@@ -49,7 +49,7 @@
                     <th>COH</th>
                   </tr>
                 </thead>
-                <% Report.where("period_end = ?", Date.new(2020,9,19)).where("committee_id IS NOT NULL").order(current_coh: :DESC).limit(10).each do |report|  %>
+                <% Report.where("period_end = ?", Date.new(2020,10,17)).where("committee_id IS NOT NULL").order(current_coh: :DESC).limit(10).each do |report|  %>
                 <tbody>
                   <tr>
                     <% if report.committee.present? %>
