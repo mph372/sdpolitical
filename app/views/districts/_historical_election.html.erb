@@ -8,9 +8,10 @@
     <table class="table-sm table bg-white " >
       <thead>
         <tr>
-          <th class="pl-4">Name</th>
-          <th>Vote Count</th>
-          <th>Vote Percent</th>
+          <th style="width: 40%" class="pl-4">Name</th>
+          <th style="width: 10%">Votes</th>
+          <th style="width: 10%">Vote %</th>
+          <th style="width: 40%">Vote Share</th>
         </tr>
       </thead>
       
@@ -22,7 +23,8 @@
           <%else%>
           <%= "#{candidate.first_name} #{candidate.last_name}" %>
           <%end%></td>
-          <td><%= number_with_delimiter(candidate.votes, :delimiter => ',') %> <span class="font-weight-bold">(<%= candidate.vote_share %>)</span> </td>
+          <td><%= number_with_delimiter(candidate.votes, :delimiter => ',') %> <span ></span> </td>
+          <td class="font-weight-bold"><%= candidate.vote_share %></td>
           <td class="pr-4">
           <div class="progress">
             <div class="progress-bar" role="progressbar" style="width: <%= candidate.vote_share %>;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
