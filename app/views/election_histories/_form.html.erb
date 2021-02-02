@@ -1,3 +1,8 @@
+<% if @election_history.errors.any? %>
+  <% @election_history.errors.full_messages.each do |message|%>\
+  <h3><%= message %> </h3>
+  <%end%>
+<%end%>
 
 <%= bootstrap_form_for(@election_history, label_errors: true) do |f| %>
   

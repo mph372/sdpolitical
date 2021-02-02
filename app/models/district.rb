@@ -6,6 +6,8 @@ class District < ApplicationRecord
   has_many :candidates, inverse_of: :district, class_name: 'Person'
   belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
   has_many :reports, through: :persons
+  has_many :election_histories
+  has_many :historical_candidates, through: :election_histories
   belongs_to :registration_history, optional: true
   acts_as_followable
   cattr_accessor :current_user

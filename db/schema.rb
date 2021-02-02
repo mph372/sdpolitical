@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_01_201051) do
+ActiveRecord::Schema.define(version: 2021_02_02_005602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,8 +201,10 @@ ActiveRecord::Schema.define(version: 2021_02_01_201051) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "people_id"
+    t.bigint "person_id"
     t.index ["election_history_id"], name: "index_historical_candidates_on_election_history_id"
     t.index ["people_id"], name: "index_historical_candidates_on_people_id"
+    t.index ["person_id"], name: "index_historical_candidates_on_person_id"
   end
 
   create_table "jurisdictions", force: :cascade do |t|
@@ -434,6 +436,7 @@ ActiveRecord::Schema.define(version: 2021_02_01_201051) do
   add_foreign_key "expenditures", "measures"
   add_foreign_key "expenditures", "people"
   add_foreign_key "historical_candidates", "election_histories"
+  add_foreign_key "historical_candidates", "people"
   add_foreign_key "historical_candidates", "people", column: "people_id"
   add_foreign_key "jurisdictions", "registration_histories"
   add_foreign_key "measures", "jurisdictions"

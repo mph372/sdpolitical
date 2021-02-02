@@ -4,7 +4,7 @@
   <div class="col-md-9">
     <div class="row">
       <div class="col">
-        <%= f.select(:person, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
+        <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true }) %>
       </div>
       <div class="col">
         <%= f.text_field :first_name %>
@@ -16,6 +16,7 @@
         <%= f.number_field :votes %>
       </div>
     </div>
+    <%= f.select(:election_history_id, ElectionHistory.all.collect { |v| [ v.id ] }, {:selected => params[:election_history_id],:include_blank => true, hidden: true} ) %>
     <%= f.check_box :is_winner %>
       <div class="form-actions">
     <%= f.submit %>

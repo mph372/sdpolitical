@@ -71,6 +71,6 @@ class ElectionHistoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def election_history_params
-      params.require(:election_history).permit(:cycle, :election_type, :election_date, :number_winners, :total_votes, :district_id, historical_candidates_attributes: [:election_history_id, :first_name, :last_name, :votes, :is_winner, :created_at, :update_birthdate_fields, :person_id, :person])
+      params.require(:election_history).permit(:cycle, :election_type, :election_date, :number_winners, :total_votes, :district_id, historical_candidates_attributes: [:election_history_id, :first_name, :last_name, :votes, :is_winner, :created_at, :update_birthdate_fields, :person_id, :person, :id, :_destroy])
     end
 end
