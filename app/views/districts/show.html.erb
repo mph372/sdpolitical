@@ -69,7 +69,8 @@
 
   <%= link_to "Add Candidate", new_person_path(:district_id => @district.id), 
         :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
-
+  <%= link_to "Add Election History", new_election_history_path(:district_id => @district.id), 
+          :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
   <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary" %>      
   <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' }, :class => "primary-blue btn" %> 
   <%end%>

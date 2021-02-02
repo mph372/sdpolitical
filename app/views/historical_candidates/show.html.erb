@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Election history:</strong>
+  <%= @historical_candidate.election_history %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @historical_candidate.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @historical_candidate.last_name %>
+</p>
+
+<p>
+  <strong>Votes:</strong>
+  <%= @historical_candidate.votes %>
+</p>
+
+<p>
+  <strong>Is winner:</strong>
+  <%= @historical_candidate.is_winner %>
+</p>
+
+<%= link_to 'Edit', edit_historical_candidate_path(@historical_candidate) %> |
+<%= link_to 'Back', historical_candidates_path %>

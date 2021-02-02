@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :historical_candidates
+  resources :election_histories
   mount StripeEvent::Engine, at: '/stripe-webhooks'
   get 'emails/unsubscribe'
   resources :registration_histories

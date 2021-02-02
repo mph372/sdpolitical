@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_03_204009) do
+ActiveRecord::Schema.define(version: 2021_02_01_201051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,9 +128,23 @@ ActiveRecord::Schema.define(version: 2020_09_03_204009) do
     t.boolean "is_seat", default: false
     t.boolean "is_area", default: false
     t.bigint "registration_history_id"
+    t.float "biden_percent"
+    t.float "trump20_percent"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
     t.index ["registration_history_id"], name: "index_districts_on_registration_history_id"
+  end
+
+  create_table "election_histories", force: :cascade do |t|
+    t.integer "cycle"
+    t.string "election_type"
+    t.date "election_date"
+    t.integer "number_winners"
+    t.integer "total_votes"
+    t.bigint "district_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_election_histories_on_district_id"
   end
 
   create_table "elections", force: :cascade do |t|
@@ -176,6 +190,19 @@ ActiveRecord::Schema.define(version: 2020_09_03_204009) do
     t.index ["followable_type", "followable_id"], name: "index_follows_on_followable_type_and_followable_id"
     t.index ["follower_id", "follower_type"], name: "fk_follows"
     t.index ["follower_type", "follower_id"], name: "index_follows_on_follower_type_and_follower_id"
+  end
+
+  create_table "historical_candidates", force: :cascade do |t|
+    t.bigint "election_history_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.integer "votes"
+    t.boolean "is_winner"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "people_id"
+    t.index ["election_history_id"], name: "index_historical_candidates_on_election_history_id"
+    t.index ["people_id"], name: "index_historical_candidates_on_people_id"
   end
 
   create_table "jurisdictions", force: :cascade do |t|
@@ -267,7 +294,9 @@ ActiveRecord::Schema.define(version: 2020_09_03_204009) do
     t.integer "birth_month"
     t.string "incumbent_committee_name"
     t.string "linkedin_url"
+    t.bigint "historical_candidates_id"
     t.index ["district_id"], name: "index_people_on_district_id"
+    t.index ["historical_candidates_id"], name: "index_people_on_historical_candidates_id"
   end
 
   create_table "registration_histories", force: :cascade do |t|
@@ -398,14 +427,18 @@ ActiveRecord::Schema.define(version: 2020_09_03_204009) do
   add_foreign_key "committees", "measures"
   add_foreign_key "committees", "people"
   add_foreign_key "districts", "registration_histories"
+  add_foreign_key "election_histories", "districts"
   add_foreign_key "elections", "districts"
   add_foreign_key "expenditures", "committees"
   add_foreign_key "expenditures", "districts"
   add_foreign_key "expenditures", "measures"
   add_foreign_key "expenditures", "people"
+  add_foreign_key "historical_candidates", "election_histories"
+  add_foreign_key "historical_candidates", "people", column: "people_id"
   add_foreign_key "jurisdictions", "registration_histories"
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "people", "districts"
+  add_foreign_key "people", "historical_candidates", column: "historical_candidates_id"
   add_foreign_key "registration_histories", "districts"
   add_foreign_key "registration_histories", "jurisdictions"
   add_foreign_key "reports", "candidates"

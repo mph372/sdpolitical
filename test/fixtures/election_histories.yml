@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cycle: 1
+  election_type: MyString
+  election_date: 2021-02-01
+  number_winners: 1
+  total_votes: 1
+  district: one
+
+two:
+  cycle: 1
+  election_type: MyString
+  election_date: 2021-02-01
+  number_winners: 1
+  total_votes: 1
+  district: two

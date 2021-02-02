@@ -3,6 +3,7 @@ class Person < ApplicationRecord
   has_one :incumbent_district, inverse_of: :incumbent, class_name: "District", required: false, foreign_key: "incumbent_id"
   has_many :expenditures
   has_many :committees
+  has_many :historical_candidate
  
 
 

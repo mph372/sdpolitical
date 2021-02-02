@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cycle:</strong>
+  <%= @election_history.cycle %>
+</p>
+
+<p>
+  <strong>Election type:</strong>
+  <%= @election_history.election_type %>
+</p>
+
+<p>
+  <strong>Election date:</strong>
+  <%= @election_history.election_date %>
+</p>
+
+<p>
+  <strong>Number winners:</strong>
+  <%= @election_history.number_winners %>
+</p>
+
+<p>
+  <strong>Total votes:</strong>
+  <%= @election_history.total_votes %>
+</p>
+
+<p>
+  <strong>District:</strong>
+  <%= @election_history.district %>
+</p>
+
+<%= render 'candidates_table' %>
+<%= link_to "Add Candidate", new_historical_candidate_path(:election_history_id => @election_history.id), 
+          :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
+<%= link_to 'Edit', edit_election_history_path(@election_history) %> |
+<%= link_to 'Back', election_histories_path %>

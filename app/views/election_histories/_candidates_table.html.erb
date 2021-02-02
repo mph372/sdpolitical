@@ -1,0 +1,22 @@
+<div class="table-responsive p-2 mt-4">
+    <table class="table bg-white" style="width:100%">
+      <thead class="thead-light rounded">
+        <tr>
+          <th>First Name</th>
+            <th>Last Name</th>
+            <th>Vote Count</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+      <% @election_history.historical_candidates.each do |candidate| %>
+        <tr>
+          <td><%= candidate.first_name %></td>
+          <td><%= candidate.last_name %></td>
+          <td><%= candidate.votes %></td>
+        </tr>
+       
+        
+      <% end %>
+    </tbody>
+    </table>
