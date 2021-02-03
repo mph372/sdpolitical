@@ -25,7 +25,7 @@
         <td><%= election_history.total_votes %></td>
         <td><%= election_history.district %></td>
         <td><%= link_to 'Show', election_history %></td>
-        <td><%= link_to 'Edit', edit_election_history_path(election_history) %></td>
+        <td><%= link_to 'Edit', edit_election_history_path(election_history, :election_date => election_history.election_date, :district_id => election_history.district_id) %></td>
         <td><%= link_to 'Destroy', election_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

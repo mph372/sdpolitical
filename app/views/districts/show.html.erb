@@ -47,27 +47,39 @@
         <%end%>
     </div>
   </div>
-  <% if @district.registration_history.present? %>
+  
+  
+  
+<% if @district.registration_history.present? %>
   <div class="row">
     <div class="col">
       <%= render 'registration_history'%>
     </div>
   </div>
-  <%end%>
+<%end%>
   <div class="row">
     <div class="col">
       <%= render 'electedofficials'%>
     </div>
   </div>
-</div>
-</div>
 
-<% if @district.election_histories.present? %> 
-  <div class="row">
-    <div class="col">
-     <%= render 'historical_election' %> 
-    </div>   
-  </div>
+
+<%if @district.at_large_district == false %>
+  <% if @district.election_histories.present? %> 
+    <div class="row">
+      <div class="col">
+      <%= render 'historical_election' %> 
+      </div>   
+    </div>
+  <% end %>
+<%else%>
+  <% if @district.jurisdiction.election_histories.present? %> 
+    <div class="row">
+      <div class="col">
+      <%= render 'historical_election_atlarge' %> 
+      </div>   
+    </div>
+  <%end%>
 <%end%>
 
   

@@ -24,6 +24,7 @@ class JurisdictionsController < ApplicationController
     site: 'The Ballot Book'
 
     @candidates = @jurisdiction.candidates.sort_by{|a| [a.district.name, a.district.district]}
+    @election_histories = @jurisdiction.election_histories 
 
     respond_to do |format|
       format.html

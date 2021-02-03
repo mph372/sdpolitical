@@ -4,7 +4,7 @@ class HistoricalCandidatesController < ApplicationController
   # GET /historical_candidates
   # GET /historical_candidates.json
   def index
-    @historical_candidates = HistoricalCandidate.all
+    @historical_candidates = HistoricalCandidate.all.order(votes: :desc).
   end
 
   # GET /historical_candidates/1

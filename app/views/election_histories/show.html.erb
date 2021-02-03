@@ -27,11 +27,10 @@
 
 <p>
   <strong>District:</strong>
-  <%= @election_history.district %>
+  <%= link_to "#{@election_history.district.jurisdiction.name} - #{@election_history.district.name} #{@election_history.district.district}", @election_history.district %>
 </p>
 
 <%= render 'candidates_table' %>
-<%= link_to "Add Candidate", new_historical_candidate_path(:election_history_id => @election_history.id), 
-          :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
-<%= link_to 'Edit', edit_election_history_path(@election_history) %> |
+
+<%= link_to 'Edit Election History', edit_election_history_path(@election_history), :class => "btn btn-primary mr-2" %> |
 <%= link_to 'Back', election_histories_path %>
