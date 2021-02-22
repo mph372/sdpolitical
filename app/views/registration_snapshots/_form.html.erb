@@ -1,0 +1,36 @@
+
+<%= bootstrap_form_for(@registration_snapshot) do |f| %>
+  <% if @registration_snapshot.errors.any? %>
+    <% @registration_snapshot.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="form-inputs">
+        <%= f.date_field :snapshot_date, required: true, value: (f.object.new_record? ? 
+    Date.today.strftime("%Y-%m-%d") : f.object.snapshot_date) %> 
+        
+        <%= f.number_field :registered_dem, label: "Registered Democrats" %>
+        <%= f.number_field :registered_rep, label: "Registered Republicans" %>
+        <%= f.number_field :total_registered, label: "Total Registered" %>
+        
+      </div>
+      <div class="col-md"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <%= f.select(:statistical_datum_id, StatisticalDatum.all.collect { |v| [ "#{v.district.jurisdiction.name} - #{v.district.name} #{v.district.district}", v.id ] }) %>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <div class="form-actions">
+    <%= f.submit %>
+  </div>
+<% end %>

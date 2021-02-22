@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  snapshot_date: 2021-02-05
+  total_registered: 1
+  registered_dem: 1
+  registered_rep: 1
+  registered_other: 1
+  StatisticalData: one
+
+two:
+  snapshot_date: 2021-02-05
+  total_registered: 1
+  registered_dem: 1
+  registered_rep: 1
+  registered_other: 1
+  StatisticalData: two

@@ -2,14 +2,14 @@
 <div class="wrapper container ">
 <div class="row ">
   <div class="col">
-    <h5 class="mb-0 mt-2 header-text nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
-    <h3 class="heavy text-nowrap primary-blue"><%= @district.name %>  
+    <h3 class="mb-0 mt-2 header-text text-nowrap nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
+    <h1 class="heavy text-nowrap primary-blue"><%= @district.name %>  <br>
     <%if @district.district != "At Large" && @district.is_seat == false && @district.is_area == false %>
-    <%= "- #{@district.district.to_i.ordinalize} District" %>
+    <%= "#{@district.district.to_i.ordinalize} District" %>
     <%elsif @district.is_seat %>
-    <%= "- Seat #{@district.district}"%>
+    <%= "Seat #{@district.district}"%>
     <%elsif @district.is_area %>
-    <%= "- Trustee Area #{@district.district}"%>
+    <%= "Trustee Area #{@district.district}"%>
     <%end%></h1>
 
     <% if @district.at_large_district? && current_user.admin? %>
@@ -17,7 +17,7 @@
     <%end%>
   </div>
   <div class="col">
-    <div class="float-right followers"><small><%= @district.district_followers %></small></div>
+    <% if current_user.admin? %><div class="float-right followers"><small><%= @district.district_followers %></small></div><%end%>
   </div>
 
 </div>
@@ -25,30 +25,40 @@
     <br>
 <div class="wrapper container">    
   <div class="row">
+    <div class="col">
+    <%= render 'incumbent' %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <% if @district.at_large_district == false %>
+      <%= render 'districtcandidates'%>
+      <% else %>
+      <%= render 'atlargedistrictcandidates'%>
+      <%end%>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-lg">
-        <%= render 'incumbent' %>
+        
         <%= render 'registration'%>
         <% if @district.at_large_district == false && @district.map_url.present? %>
         <%= render 'map'%>
         <%end%>
     </div>
     <div class="col-lg">
-      <% if @district.at_large_district == false %>
-      <%= render 'districtcandidates'%>
-      <% else %>
-      <%= render 'atlargedistrictcandidates'%>
-      <%end%>
+      
       <% if @district.performance_eligible == true %>
       <%= render 'performance' %>  
       <%end%>
       <%= render 'campaignfinance' %>
-              <% if @district.at_large_district == true && @district.map_url.present? %>
+        <% if @district.at_large_district == true && @district.map_url.present? %>
         <%= render 'map'%>
         <%end%>
     </div>
   </div>
   
-  
+
   
 <% if @district.registration_history.present? %>
   <div class="row">
@@ -63,6 +73,13 @@
     </div>
   </div>
 
+<% if @district.statistical_datum.present? %>
+  <div class="row">
+    <div class="col">
+      <%= render 'district_data'%>
+    </div>
+  </div>
+<%end%>  
 
 <%if @district.at_large_district == false %>
   <% if @district.election_histories.present? %> 
@@ -90,7 +107,8 @@
         :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
   <%= link_to "Add Election History", new_election_history_path(:district_id => @district.id), 
           :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
-  <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary" %>      
+  <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary" %>
+  <%= link_to 'Add Statistical Data', new_statistical_datum_path(:district_id => @district.id), :class => "btn btn-primary mr-2" %>      
   <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' }, :class => "primary-blue btn" %> 
   <%end%>
   <%= link_to "Download District (PDF)", district_path(@district, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>

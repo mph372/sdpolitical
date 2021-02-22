@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+
+
+
+<div class="p-2">
+  <div class="shadow-sm">
+    <table class="table table-sm">
+        <thead class="thead-light">
+        <th>Total Voters</th>
+        <th>DEM</th>
+        <th>REP</th>
+        <th>OTHER</th>
+      </thead>
+
+      <tbody>
+        <td><%= number_with_delimiter(@registration_snapshot.total_registered, :delimiter => ',') %></td>
+        <td><%= number_with_precision(@registration_snapshot.democrat_percentage, precision: 2) %></td>
+        <td><%= number_with_precision(@registration_snapshot.republican_percentage, precision: 2) %></td>
+        <td><%= number_with_precision(@registration_snapshot.other_percentage, precision: 2) %></td>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_registration_snapshot_path(@registration_snapshot) %> |
+<%= link_to 'Back', registration_snapshots_path %>

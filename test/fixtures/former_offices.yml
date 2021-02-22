@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  district: one
+  elected: false
+  appointed: false
+  start_year: 2021-02-10
+  end_year: 2021-02-10
+  person: one
+
+two:
+  district: two
+  elected: false
+  appointed: false
+  start_year: 2021-02-10
+  end_year: 2021-02-10
+  person: two

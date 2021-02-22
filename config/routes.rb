@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :former_offices
+  resources :registration_snapshots
+  resources :statistical_data
   resources :historical_candidates
   resources :election_histories
   mount StripeEvent::Engine, at: '/stripe-webhooks'

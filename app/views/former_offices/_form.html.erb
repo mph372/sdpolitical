@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@former_office) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :district %>
+    <%= f.input :elected %>
+    <%= f.input :appointed %>
+    <%= f.input :start_year %>
+    <%= f.input :end_year %>
+    <%= f.association :person %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

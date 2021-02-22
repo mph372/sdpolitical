@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Statistical Data</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>District</th>
+      <th>Jurisdiction</th>
+      <th>District year</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @statistical_data.each do |statistical_datum| %>
+      <tr>
+        <td><%= statistical_datum.district %></td>
+        <td><%= statistical_datum.jurisdiction %></td>
+        <td><%= statistical_datum.district_year %></td>
+        <td><%= link_to 'Show', statistical_datum %></td>
+        <td><%= link_to 'Edit', edit_statistical_datum_path(statistical_datum) %></td>
+        <td><%= link_to 'Destroy', statistical_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Statistical Datum', new_statistical_datum_path %>

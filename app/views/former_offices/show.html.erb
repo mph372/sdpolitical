@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>District:</strong>
+  <%= @former_office.district %>
+</p>
+
+<p>
+  <strong>Elected:</strong>
+  <%= @former_office.elected %>
+</p>
+
+<p>
+  <strong>Appointed:</strong>
+  <%= @former_office.appointed %>
+</p>
+
+<p>
+  <strong>Start year:</strong>
+  <%= @former_office.start_year %>
+</p>
+
+<p>
+  <strong>End year:</strong>
+  <%= @former_office.end_year %>
+</p>
+
+<p>
+  <strong>Person:</strong>
+  <%= @former_office.person %>
+</p>
+
+<%= link_to 'Edit', edit_former_office_path(@former_office) %> |
+<%= link_to 'Back', former_offices_path %>

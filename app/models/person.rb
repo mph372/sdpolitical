@@ -4,6 +4,7 @@ class Person < ApplicationRecord
   has_many :expenditures
   has_many :committees
   has_many :historical_candidate
+  has_many :former_offices
  
 
 
@@ -189,6 +190,13 @@ class Person < ApplicationRecord
     end
   end
 
+  def person_title
+    if is_incumbent? 
+      title 
+    else
+      professional_career
+    end
+  end
 
 
 

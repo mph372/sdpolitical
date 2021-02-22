@@ -8,9 +8,12 @@ class District < ApplicationRecord
   has_many :reports, through: :persons
   has_many :election_histories
   has_many :historical_candidates, through: :election_histories
+  has_one :statistical_datum
+  has_many :registration_snapshots, through: :statistical_data
   belongs_to :registration_history, optional: true
   acts_as_followable
   cattr_accessor :current_user
+  belongs_to :former_office
 
   def district_name
     if self.district != "At Large" 

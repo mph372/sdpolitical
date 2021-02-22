@@ -32,5 +32,5 @@
 
 <%= render 'candidates_table' %>
 
-<%= link_to 'Edit Election History', edit_election_history_path(@election_history), :class => "btn btn-primary mr-2" %> |
+<%= link_to 'Edit', edit_election_history_path(@election_history, :election_date => @election_history.election_date, :district_id => @election_history.district_id), :class => "btn btn-primary mr-2" %> |
 <%= link_to 'Back', election_histories_path %>

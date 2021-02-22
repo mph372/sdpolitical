@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_005602) do
+ActiveRecord::Schema.define(version: 2021_02_22_182748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,19 @@ ActiveRecord::Schema.define(version: 2021_02_02_005602) do
     t.index ["follower_type", "follower_id"], name: "index_follows_on_follower_type_and_follower_id"
   end
 
+  create_table "former_offices", force: :cascade do |t|
+    t.bigint "district_id"
+    t.boolean "elected"
+    t.boolean "appointed"
+    t.date "start_year"
+    t.date "end_year"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_former_offices_on_district_id"
+    t.index ["person_id"], name: "index_former_offices_on_person_id"
+  end
+
   create_table "historical_candidates", force: :cascade do |t|
     t.bigint "election_history_id"
     t.string "first_name"
@@ -326,6 +339,18 @@ ActiveRecord::Schema.define(version: 2021_02_02_005602) do
     t.index ["jurisdiction_id"], name: "index_registration_histories_on_jurisdiction_id"
   end
 
+  create_table "registration_snapshots", force: :cascade do |t|
+    t.date "snapshot_date"
+    t.integer "total_registered"
+    t.integer "registered_dem"
+    t.integer "registered_rep"
+    t.integer "registered_other"
+    t.bigint "statistical_datum_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["statistical_datum_id"], name: "index_registration_snapshots_on_statistical_datum_id"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.date "period_begin"
     t.date "period_end"
@@ -351,6 +376,51 @@ ActiveRecord::Schema.define(version: 2021_02_02_005602) do
     t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["district_id"], name: "index_reports_on_district_id"
     t.index ["person_id"], name: "index_reports_on_person_id"
+  end
+
+  create_table "statistical_data", force: :cascade do |t|
+    t.bigint "district_id"
+    t.bigint "jurisdiction_id"
+    t.integer "district_year"
+    t.integer "measure_a_yes"
+    t.integer "measure_a_no"
+    t.integer "number_of_winners"
+    t.integer "registered_2018"
+    t.integer "voted_2018"
+    t.integer "registered_2016"
+    t.integer "voted_2016"
+    t.integer "registered_2014"
+    t.integer "voted_2014"
+    t.integer "registered_2012"
+    t.integer "voted_2012"
+    t.integer "registered_2020"
+    t.integer "voted_2020"
+    t.integer "prop_6_yes"
+    t.integer "prop_6_no"
+    t.integer "prop_51_yes"
+    t.integer "prop_51_no"
+    t.integer "prop_62_yes"
+    t.integer "prop_62_no"
+    t.integer "prop_15_yes"
+    t.integer "prop_15_no"
+    t.integer "prop_16_yes"
+    t.integer "prop_16_no"
+    t.integer "prop_21_yes"
+    t.integer "prop_21_no"
+    t.float "obama_2012"
+    t.float "romney_2012"
+    t.float "trump_2016"
+    t.float "clinton_2016"
+    t.float "trump_2020"
+    t.float "biden_2020"
+    t.float "newsom_2018"
+    t.float "cox_2018"
+    t.float "brown_2014"
+    t.float "kashkari_2014"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_statistical_data_on_district_id"
+    t.index ["jurisdiction_id"], name: "index_statistical_data_on_jurisdiction_id"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -435,6 +505,8 @@ ActiveRecord::Schema.define(version: 2021_02_02_005602) do
   add_foreign_key "expenditures", "districts"
   add_foreign_key "expenditures", "measures"
   add_foreign_key "expenditures", "people"
+  add_foreign_key "former_offices", "districts"
+  add_foreign_key "former_offices", "people"
   add_foreign_key "historical_candidates", "election_histories"
   add_foreign_key "historical_candidates", "people"
   add_foreign_key "historical_candidates", "people", column: "people_id"
@@ -444,9 +516,12 @@ ActiveRecord::Schema.define(version: 2021_02_02_005602) do
   add_foreign_key "people", "historical_candidates", column: "historical_candidates_id"
   add_foreign_key "registration_histories", "districts"
   add_foreign_key "registration_histories", "jurisdictions"
+  add_foreign_key "registration_snapshots", "statistical_data"
   add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "committees"
   add_foreign_key "reports", "districts"
   add_foreign_key "reports", "people"
+  add_foreign_key "statistical_data", "districts"
+  add_foreign_key "statistical_data", "jurisdictions"
   add_foreign_key "taggings", "tags"
 end

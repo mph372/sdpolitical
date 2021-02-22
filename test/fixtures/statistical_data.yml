@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  district: one
+  jurisdiction: one
+  district_year: 1
+
+two:
+  district: two
+  jurisdiction: two
+  district_year: 1

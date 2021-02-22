@@ -29,6 +29,8 @@ class DistrictsController < ApplicationController
     @incumbents = @district.incumbent
     @candidates = @district.candidates
     @people = Person.all
+    @statistical_datum = @district.statistical_datum
+    
 
     respond_to do |format|
       format.html

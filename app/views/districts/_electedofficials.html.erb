@@ -4,15 +4,16 @@
       Elected Officials Residing in District
     </div>
     <div class="card-text">
-      <div class="table-responsive">
-          <table class="table table-sm" id="residents">
+    <div class="m-3">
+      <div class="table">
+          <table class="table table-sm" id="residents" style="width:100%">
           <thead>
             <tr>
               <th class="no-border pl-4">Name</th>
               <th class="no-border">Age</th>
-              <th class="no-border">Term Expires</th>
-              <th class="no-border">Tenure (in this office)</th>
-              <th class="no-border">Voters Represented</th>
+              <th class="no-border d-none d-lg-table-cell">Term Expires</th>
+              <th class="no-border d-none d-lg-table-cell">Tenure (in this office)</th>  
+              <th class="no-border d-none d-lg-table-cell">Voters Represented</th>
               <th class="no-border">District Registration</th>
             </tr>
           </thead>
@@ -32,9 +33,9 @@
                     <%= link_to "#{person.first_name} #{person.last_name}", person, { :class =>"dts-text" }%><br><small><%= person.incumbent_district.name %></small>
                     <%end%></td>
                   <td><%if person.birthdate.present? %><%= person.calculated_age %><%end%></td>
-                  <td><%= person.term_expires %></td>
-                  <td><% if person.first_elected.present? %><% if person.calculated_tenure == 1%><%= person.calculated_tenure %> year<%else%><%= person.calculated_tenure %> years<%end%><%end%></td>
-                  <td><%= number_with_delimiter(person.incumbent_district.total_voters, :delimiter => ',') %></td>
+                  <td class="d-none d-lg-table-cell"><%= person.term_expires %></td>
+                  <td class="d-none d-lg-table-cell"><% if person.first_elected.present? %><% if person.calculated_tenure == 1%><%= person.calculated_tenure %> year<%else%><%= person.calculated_tenure %> years<%end%><%end%></td>
+                  <td class="d-none d-lg-table-cell"><%= number_with_delimiter(person.incumbent_district.total_voters, :delimiter => ',') %></td>
                   <td><% if person.incumbent_district.registration_advantage > 0 %>
                         <strong><span style="color: #35469C;">D +<%= number_with_precision(person.incumbent_district.registration_advantage.abs, precision: 2) %>%</span></strong>
                         <% else %>
@@ -46,13 +47,15 @@
               <% end %>
           </tbody>
         </table>
+        </div>
     </div>
     <%end%>
 
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#residents').DataTable( {
-      retrieve: true
+      retrieve: true,
+      "dom": 'l<t>p'
     });
 });
 

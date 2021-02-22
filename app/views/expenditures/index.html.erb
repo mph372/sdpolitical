@@ -5,7 +5,7 @@
       <br>
       <div class="panel panel-default">
         <div class="table-responsive shadow bg-white rounded primary-border p-4">
-          <table class="table" id="expenditures">
+          <table class="table table-sm" id="expenditures">
             <thead class="thead-light">
               <tr>
                 <th>Expenditure Date</th>
@@ -13,7 +13,6 @@
                 <th>Committee</th>
                 <th>Amount</th>
                 <th>Candidate / Measure</th>
-                <th>Office / Jurisdiction</th>
                 <th>View</th>
               </tr>
             </thead>
@@ -21,7 +20,7 @@
             <tbody>
               <% @expenditures.each do |expenditure| %>
                 <tr>
-                  <td class=""><%= expenditure.expenditure_date.strftime("%y-%m-%d") %><% if expenditure.is_amendment? %>*<%end%><%if current_user.admin?%><br><small><%= link_to 'Edit', edit_expenditure_path(expenditure) %></small><%end%></td>
+                  <td class=""><%= expenditure.expenditure_date.strftime("%y-%m-%d") %><% if expenditure.is_amendment? %>*<%end%><%if current_user.admin?%><br><small><%= link_to 'Edit', edit_expenditure_path(expenditure, :committee_id => expenditure.committee_id) %> </small><%end%></td>
                   <td class=""><%= expenditure.description %></td>
                   <td class=""><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>
                   <td class=""><%= number_to_currency(expenditure.amount) %></td>
@@ -38,17 +37,9 @@
                       Oppose
                       <%end%></small>  
                   </td>
-                  <td class="">
-                  <% if expenditure.person.present?%>
-                  <%= link_to "#{expenditure.person.district.name}", expenditure.person.district %>
-                  <%end%>
-                  <% if expenditure.measure.present? %>
-                  <%= link_to "#{expenditure.measure.jurisdiction.name}", expenditure.measure.jurisdiction %>
-                  <%end%>
-                        
-                  </td>
                   
-                  <td><% if expenditure.pdf.url.present? %><%= link_to "View", expenditure.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
+                  
+                  <td><% if expenditure.pdf.url.present? %><%= link_to "View", expenditure.pdf.url, :class => "btn btn-primary btn-sm", target: :_blank %><%end%></td>
                 </tr>
               <% end %>
             </tbody>
