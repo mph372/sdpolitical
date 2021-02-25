@@ -23,7 +23,7 @@
         <td><%= former_office.appointed %></td>
         <td><%= former_office.start_year %></td>
         <td><%= former_office.end_year %></td>
-        <td><%= former_office.person %></td>
+        <td><%= "#{former_office.person.full_name}" %></td>
         <td><%= link_to 'Show', former_office %></td>
         <td><%= link_to 'Edit', edit_former_office_path(former_office) %></td>
         <td><%= link_to 'Destroy', former_office, method: :delete, data: { confirm: 'Are you sure?' } %></td>

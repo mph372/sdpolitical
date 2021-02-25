@@ -32,6 +32,7 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.json
   def show
+    @former_office = FormerOffice.new
     @person = Person.find(params[:id])
     @reports = @person.reports.order(period_end: :desc)
     @expenditures = @person.expenditures.order(expenditure_date: :desc)

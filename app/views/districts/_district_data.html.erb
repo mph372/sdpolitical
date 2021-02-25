@@ -1,12 +1,13 @@
 <% if @district.at_large_district == true %>
 <% registration_snapshot = RegistrationSnapshot.all.order("snapshot_date desc").limit(1).find_by(statistical_datum_id: @district.jurisdiction.statistical_datum)%>
-<% statistical_datum = @district.jurisdiction.statistical_datum %>
+<% statistical_datum = StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction) %>
 <% elsif @district.at_large_district == false %>
 <% registration_snapshot = RegistrationSnapshot.all.order("snapshot_date desc").limit(1).find_by(statistical_datum_id: @district.statistical_datum)%>
 <% statistical_datum = @district.statistical_datum %>
 <%end%>
 <hr>
 <div class="h3">District Data</div>
+    <% if registration_snapshot.present? %>
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
         <div class="card-header">
         Current Registration Data
@@ -34,6 +35,7 @@
             </tbody>
         </table>
     </div>
+    <%end%>
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <table class="table table-sm ">
         <div class="card-header">
@@ -49,83 +51,83 @@
 
       <tbody>
 
-        <% if @statistical_datum.biden_2020.present? %>
+        <% if statistical_datum.biden_2020 != nil %>
         <tr>
           <td class="pl-4">2020 Presidential</td>
-          <td class="d-none d-lg-table-cell">Biden - <%= @statistical_datum.biden_2020 %>%</td>
-          <td class="d-none d-lg-table-cell">Trump - <%= @statistical_datum.trump_2020 %>%</td>
+          <td class="d-none d-lg-table-cell">Biden - <%= statistical_datum.biden_2020 %>%</td>
+          <td class="d-none d-lg-table-cell">Trump - <%= statistical_datum.trump_2020 %>%</td>
           <td>
-              <% if @statistical_datum.winner_2020 > 0 %>
-                <span class="dem-text font-weight-bold">D +<%= number_with_precision(@statistical_datum.winner_2020.abs, precision: 2) %>%</span>
+              <% if statistical_datum.winner_2020 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2020.abs, precision: 2) %>%</span>
               <% else %>
-                <span class="rep-text font-weight-bold">R +<%= number_with_precision(@statistical_datum.winner_2020.abs, precision: 2) %>%</span>
+                <span class="rep-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2020.abs, precision: 2) %>%</span>
               <%end%> 
           </td>       
-          <td><%= number_with_precision(@statistical_datum.turnout_2020, precision: 2) %>%</td>
+          <td><%= number_with_precision(statistical_datum.turnout_2020, precision: 2) %>%</td>
         </tr>
         <%end%>
 
-        <% if @statistical_datum.newsom_2018.present? %>
+        <% if statistical_datum.newsom_2018.present? %>
         <tr>
           <td class="pl-4">2018 Gubernatorial</td>
-          <td class="d-none d-lg-table-cell">Newsom - <%= @statistical_datum.newsom_2018 %>%</td>
-          <td class="d-none d-lg-table-cell">Cox - <%= @statistical_datum.cox_2018 %>%</td>
+          <td class="d-none d-lg-table-cell">Newsom - <%= statistical_datum.newsom_2018 %>%</td>
+          <td class="d-none d-lg-table-cell">Cox - <%= statistical_datum.cox_2018 %>%</td>
           <td>
-              <% if @statistical_datum.winner_2018 > 0 %>
-                <span class="dem-text font-weight-bold">D +<%= number_with_precision(@statistical_datum.winner_2018.abs, precision: 2) %>%</span>
+              <% if statistical_datum.winner_2018 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2018.abs, precision: 2) %>%</span>
               <% else %>
-                <span class="rep-text font-weight-bold">R +<%= number_with_precision(@statistical_datum.winner_2018.abs, precision: 2) %>%</span>
+                <span class="rep-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2018.abs, precision: 2) %>%</span>
               <%end%> 
           </td> 
-          <td><%= number_with_precision(@statistical_datum.turnout_2018, precision: 2) %>%</td>
+          <td><%= number_with_precision(statistical_datum.turnout_2018, precision: 2) %>%</td>
         </tr>
         <%end%>
 
-        <% if @statistical_datum.clinton_2016.present? %>
+        <% if statistical_datum.clinton_2016.present? %>
         <tr>
           <td class="pl-4">2016 Presidential</td>
-          <td class="d-none d-lg-table-cell">Clinton - <%= @statistical_datum.clinton_2016 %>%</td>
-          <td class="d-none d-lg-table-cell">Trump - <%= @statistical_datum.trump_2016 %>%</td>
+          <td class="d-none d-lg-table-cell">Clinton - <%= statistical_datum.clinton_2016 %>%</td>
+          <td class="d-none d-lg-table-cell">Trump - <%= statistical_datum.trump_2016 %>%</td>
           <td>
-              <% if @statistical_datum.winner_2016 > 0 %>
-                <span class="dem-text font-weight-bold">D +<%= number_with_precision(@statistical_datum.winner_2016.abs, precision: 2) %>%</span>
+              <% if statistical_datum.winner_2016 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2016.abs, precision: 2) %>%</span>
               <% else %>
-                <span class="rep-text font-weight-bold">R +<%= number_with_precision(@statistical_datum.winner_2016.abs, precision: 2) %>%</span>
+                <span class="rep-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2016.abs, precision: 2) %>%</span>
               <%end%> 
           </td>       
-          <td><%= number_with_precision(@statistical_datum.turnout_2016, precision: 2) %>%</td>
+          <td><%= number_with_precision(statistical_datum.turnout_2016, precision: 2) %>%</td>
         </tr>
         <%end%>
 
-        <% if @statistical_datum.brown_2014.present? %>
+        <% if statistical_datum.brown_2014.present? %>
         <tr>
           <td class="pl-4">2014 Gubernatorial</td>
-          <td class="d-none d-lg-table-cell">Brown - <%= @statistical_datum.brown_2014 %>%</td>
-          <td class="d-none d-lg-table-cell">Kashkari - <%= @statistical_datum.kashkari_2014 %>%</td>
+          <td class="d-none d-lg-table-cell">Brown - <%= statistical_datum.brown_2014 %>%</td>
+          <td class="d-none d-lg-table-cell">Kashkari - <%= statistical_datum.kashkari_2014 %>%</td>
           <td>
-              <% if @statistical_datum.winner_2014 > 0 %>
-                <span class="dem-text font-weight-bold">D +<%= number_with_precision(@statistical_datum.winner_2014.abs, precision: 2) %>%</span>
+              <% if statistical_datum.winner_2014 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2014.abs, precision: 2) %>%</span>
               <% else %>
-                <span class="rep-text font-weight-bold">R +<%= number_with_precision(@statistical_datum.winner_2014.abs, precision: 2) %>%</span>
+                <span class="rep-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2014.abs, precision: 2) %>%</span>
               <%end%> 
           </td>       
-          <td><%= number_with_precision(@statistical_datum.turnout_2014, precision: 2) %>%</td>
+          <td><%= number_with_precision(statistical_datum.turnout_2014, precision: 2) %>%</td>
         </tr>
         <%end%>
 
-        <% if @statistical_datum.obama_2012.present? %>
+        <% if statistical_datum.obama_2012.present? %>
         <tr>
           <td class="pl-4">2012 Presidential</td>
-          <td class="d-none d-lg-table-cell">Obama - <%= @statistical_datum.obama_2012 %>%</td>
-          <td class="d-none d-lg-table-cell">Romney - <%= @statistical_datum.romney_2012 %>%</td>
+          <td class="d-none d-lg-table-cell">Obama - <%= statistical_datum.obama_2012 %>%</td>
+          <td class="d-none d-lg-table-cell">Romney - <%= statistical_datum.romney_2012 %>%</td>
           <td>
-              <% if @statistical_datum.winner_2012 > 0 %>
-                <span class="dem-text font-weight-bold">D +<%= number_with_precision(@statistical_datum.winner_2012.abs, precision: 2) %>%</span>
+              <% if statistical_datum.winner_2012 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2012.abs, precision: 2) %>%</span>
               <% else %>
-                <span class="rep-text font-weight-bold">R +<%= number_with_precision(@statistical_datum.winner_2012.abs, precision: 2) %>%</span>
+                <span class="rep-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2012.abs, precision: 2) %>%</span>
               <%end%> 
           </td>       
-          <td><%= number_with_precision(@statistical_datum.turnout_2012, precision: 2) %>%</td>
+          <td><%= number_with_precision(statistical_datum.turnout_2012, precision: 2) %>%</td>
         </tr>
         <%end%>
 
@@ -150,96 +152,96 @@
 
 
 
-        <% if @statistical_datum.prop_51_yes.present? %>
+        <% if statistical_datum.prop_51_yes.present? %>
           <tr>
-            <td class="pl-4">Prop 51 (2016)</td>
-            <td><%= number_with_precision(@statistical_datum.prop_51_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(@statistical_datum.prop_51_no_result.abs, precision: 2) %>%</td>
+            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_51,_Public_School_Facility_Bonds_(2016)" target="_blank">Prop 51 (2016)</a></td>
+            <td><%= number_with_precision(statistical_datum.prop_51_yes_result.abs, precision: 2) %>%</td>
+            <td><%= number_with_precision(statistical_datum.prop_51_no_result.abs, precision: 2) %>%</td>
             <td>
-              <% if @statistical_datum.prop_51_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(@statistical_datum.prop_51_difference.to_f, precision: 2) %>%</span>
+              <% if statistical_datum.prop_51_yes_result > 50 %>
+                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_51_difference.to_f, precision: 2) %>%</span>
               <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(@statistical_datum.prop_51_difference.to_f, precision: 2) %>%</span>
+                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_51_difference.to_f, precision: 2) %>%</span>
               <%end%>
             </td>
             <td></td>
           </tr>
         <%end%>
 
-        <% if @statistical_datum.prop_62_yes.present? %>
+        <% if statistical_datum.prop_62_yes.present? %>
           <tr>
-            <td class="pl-4">Prop 62 (2016)</td>
-            <td><%= number_with_precision(@statistical_datum.prop_62_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(@statistical_datum.prop_62_no_result.abs, precision: 2) %>%</td>
+            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_62,_Repeal_of_the_Death_Penalty_(2016)" target="_blank">Prop 62 (2016)</a></td>
+            <td><%= number_with_precision(statistical_datum.prop_62_yes_result.abs, precision: 2) %>%</td>
+            <td><%= number_with_precision(statistical_datum.prop_62_no_result.abs, precision: 2) %>%</td>
             <td>
-              <% if @statistical_datum.prop_62_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(@statistical_datum.prop_62_difference.to_f, precision: 2) %>%</span>
+              <% if statistical_datum.prop_62_yes_result > 50 %>
+                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_62_difference.to_f, precision: 2) %>%</span>
               <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(@statistical_datum.prop_62_difference.to_f, precision: 2) %>%</span>
+                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_62_difference.to_f, precision: 2) %>%</span>
               <%end%>
             </td>
             <td></td>
           </tr>
         <%end%>
 
-        <% if @statistical_datum.prop_6_yes.present? %>
+        <% if statistical_datum.prop_6_yes.present? %>
           <tr>
-            <td class="pl-4">Prop 6 (2018)</td>
-            <td><%= number_with_precision(@statistical_datum.prop_6_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(@statistical_datum.prop_6_no_result.abs, precision: 2) %>%</td>
+            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_6,_Voter_Approval_for_Future_Gas_and_Vehicle_Taxes_and_2017_Tax_Repeal_Initiative_(2018)" target="_blank">Prop 6 (2018)</a></td>
+            <td><%= number_with_precision(statistical_datum.prop_6_yes_result.abs, precision: 2) %>%</td>
+            <td><%= number_with_precision(statistical_datum.prop_6_no_result.abs, precision: 2) %>%</td>
             <td>
-              <% if @statistical_datum.prop_6_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(@statistical_datum.prop_6_difference.to_f, precision: 2) %>%</span>
+              <% if statistical_datum.prop_6_yes_result > 50 %>
+                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_6_difference.to_f, precision: 2) %>%</span>
               <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(@statistical_datum.prop_6_difference.to_f, precision: 2) %>%</span>
+                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_6_difference.to_f, precision: 2) %>%</span>
               <%end%>
             </td>
             <td></td>
           </tr>
         <%end%>      
 
-        <% if @statistical_datum.prop_15_yes.present? %>
+        <% if statistical_datum.prop_15_yes.present? %>
           <tr>
-            <td class="pl-4">Prop 15 (2020)</td>
-            <td><%= number_with_precision(@statistical_datum.prop_15_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(@statistical_datum.prop_15_no_result.abs, precision: 2) %>%</td>
+            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_15,_Tax_on_Commercial_and_Industrial_Properties_for_Education_and_Local_Government_Funding_Initiative_(2020)" target="_blank">Prop 15 (2020)</a></td>
+            <td><%= number_with_precision(statistical_datum.prop_15_yes_result.abs, precision: 2) %>%</td>
+            <td><%= number_with_precision(statistical_datum.prop_15_no_result.abs, precision: 2) %>%</td>
             <td>
-              <% if @statistical_datum.prop_15_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(@statistical_datum.prop_15_difference.to_f, precision: 2) %>%</span>
+              <% if statistical_datum.prop_15_yes_result > 50 %>
+                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_15_difference.to_f, precision: 2) %>%</span>
               <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(@statistical_datum.prop_15_difference.to_f, precision: 2) %>%</span>
+                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_15_difference.to_f, precision: 2) %>%</span>
               <%end%>
             </td>
             <td></td>
           </tr>
         <%end%>
 
-        <% if @statistical_datum.prop_16_yes.present? %>
+        <% if statistical_datum.prop_16_yes.present? %>
           <tr>
-            <td class="pl-4">Prop 16 (2020)</td>
-            <td><%= number_with_precision(@statistical_datum.prop_16_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(@statistical_datum.prop_16_no_result.abs, precision: 2) %>%</td>
+            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_16,_Repeal_Proposition_209_Affirmative_Action_Amendment_(2020)" target="_blank">Prop 16 (2020)</a></td>
+            <td><%= number_with_precision(statistical_datum.prop_16_yes_result.abs, precision: 2) %>%</td>
+            <td><%= number_with_precision(statistical_datum.prop_16_no_result.abs, precision: 2) %>%</td>
             <td>
-              <% if @statistical_datum.prop_16_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(@statistical_datum.prop_16_difference.to_f, precision: 2) %>%</span>
+              <% if statistical_datum.prop_16_yes_result > 50 %>
+                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_16_difference.to_f, precision: 2) %>%</span>
               <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(@statistical_datum.prop_16_difference.to_f, precision: 2) %>%</span>
+                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_16_difference.to_f, precision: 2) %>%</span>
               <%end%>
             </td>
             <td></td>
           </tr>
         <%end%>   
 
-        <% if @statistical_datum.prop_21_yes.present? %>
+        <% if statistical_datum.prop_21_yes.present? %>
           <tr>
-            <td class="pl-4">Prop 21 (2020)</td>
-            <td><%= number_with_precision(@statistical_datum.prop_21_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(@statistical_datum.prop_21_no_result.abs, precision: 2) %>%</td>
+            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_21,_Local_Rent_Control_Initiative_(2020)" target="_blank">Prop 21 (2020)</a></td>
+            <td><%= number_with_precision(statistical_datum.prop_21_yes_result.abs, precision: 2) %>%</td>
+            <td><%= number_with_precision(statistical_datum.prop_21_no_result.abs, precision: 2) %>%</td>
             <td>
-              <% if @statistical_datum.prop_21_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(@statistical_datum.prop_21_difference.to_f, precision: 2) %>%</span>
+              <% if statistical_datum.prop_21_yes_result > 50 %>
+                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_21_difference.to_f, precision: 2) %>%</span>
               <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(@statistical_datum.prop_21_difference.to_f, precision: 2) %>%</span>
+                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_21_difference.to_f, precision: 2) %>%</span>
               <%end%>
             </td>
             <td></td>
@@ -253,3 +255,8 @@
 
 
 
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>

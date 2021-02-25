@@ -28,7 +28,7 @@ class FormerOfficesController < ApplicationController
 
     respond_to do |format|
       if @former_office.save
-        format.html { redirect_to @former_office, notice: 'Former office was successfully created.' }
+        format.html { redirect_to @former_office.person, notice: 'Former office was successfully created.' }
         format.json { render :show, status: :created, location: @former_office }
       else
         format.html { render :new }

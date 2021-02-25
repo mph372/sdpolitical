@@ -15,7 +15,7 @@
         <% if candidate.is_candidate %>
           <% report = candidate.reports.most_recent %>
 
-          <td><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "100x100"  %></td>
+          <td><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "75x75"  %></td>
           <td>
             <% if candidate.party == "Republican" %>
             <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"gop-text text-nowrap" }%><br><small><%= candidate.person_title %></small>

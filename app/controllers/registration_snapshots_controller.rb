@@ -1,5 +1,7 @@
 class RegistrationSnapshotsController < ApplicationController
   before_action :set_registration_snapshot, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_admin, except: [:show]
+  before_action :authenticate_user!
 
   # GET /registration_snapshots
   # GET /registration_snapshots.json

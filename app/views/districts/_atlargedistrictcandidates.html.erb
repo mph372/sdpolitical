@@ -12,71 +12,83 @@
 
       <tbody>
       <tr>
-        <% @district.jurisdiction.incumbents.where(:running_reelection => true).each do |incumbent| %>
-        <% if incumbent.incumbent_district.term_expires.to_s == "2020" && incumbent.incumbent_district.at_large_district? %>
-        <% report = incumbent.reports.most_recent %>
-        <td class="condensed-column  pt-4 pb-0 pr-1">
-          <% if incumbent.endorsed_republican? %>
-          <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
-          <%elsif incumbent.endorsed_democrat?%>
-          <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
-          <%else%>
-          <%end%>
-          </td>
-          <td class="condensed-column "><%= image_tag incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "65x65"  %></td>
-        <td>
-          <% if incumbent.party == "Republican" %>
-          <%= link_to "#{incumbent.first_name} #{incumbent.last_name}#{incumbent.incumbent_asterisk}", incumbent, { :class =>"gop-text" }%><br><small><%= incumbent.title %></small>
-          <%elsif incumbent.party == "Democrat"%>
-          <%= link_to "#{incumbent.first_name} #{incumbent.last_name}#{incumbent.incumbent_asterisk}", incumbent, { :class =>"dem-text" }%><br><small><%= incumbent.title %></small>
-          <%else%>
-          <%= link_to "#{incumbent.first_name} #{incumbent.last_name}#{incumbent.incumbent_asterisk}", incumbent, { :class =>"dts-text" }%><br><small><%= incumbent.title %></small>
-          <%end%>
-          <br><small class="primary-blue"><%= incumbent.ballot_status %></small></td>
-          </td>
-          <td><% if incumbent.reports.present?%>     
-                <% report = incumbent.reports.most_recent %>          
-                <td class="text-right "><span class="green-pill" style="display: inline;">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span><br><small>Cash-on-Hand</small><br><small> <%if report.net_coh < 0 %><span class="float-right gop-text">Net: (<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right">Net: <%= number_to_currency(report.net_coh) %></span></small><%end%></td>
-                <%else%>
-                <td class="text-right "><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
-                <%end%> </td>
-      </tr>
-      <%end%>
-      <%end%>
-       <% @district.jurisdiction.candidates.each do |candidate| %>
-      <% if candidate.district.term_expires.to_s == "2020" && candidate.district.at_large_district? %>
-      <tr>
-        <% if candidate.on_ballot? %>
+        <% @district.jurisdiction.incumbents.where(:running_reelection => true).each do |candidate| %>
+          <% if candidate.incumbent_district.term_expires.to_s == "2020" && candidate.incumbent_district.at_large_district? %>
           <% report = candidate.reports.most_recent %>
-          
-          <td class="condensed-column pt-4 pb-0">
-          <% if candidate.endorsed_republican? %>
-          <div class=""><span class="gop-text"><%= material_icon.check_circle %></div>
-          <%elsif candidate.endorsed_democrat?%>
-          <div class=""><span class="dem-text"><%= material_icon.check_circle %></div>
-          <%else%>
-          <%end%>
-          </td>
-          <td class="condensed-column"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "65x65"  %></td>
-          <td>
-          <% if candidate.party == "Republican" %>
-          <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"gop-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
-          <%elsif candidate.party == "Democrat"%>
-          <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"dem-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
-          <%else%>
-          <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"dts-text" }%><br><small><% if candidate.is_incumbent? %><%= candidate.title %><%else%><%=candidate.professional_career %><%end%></small>
-          <%end%>
-          <br><small class="primary-blue"><%= candidate.ballot_status %></small></td>
-                    <td><% if candidate.reports.where(:cycle => "2020", candidate_report: true ).present?%>     
-                <% report = candidate.reports.most_recent %>          
-                <td class="text-right "><span class="green-pill" style="display: inline;"><%= number_to_currency(report.current_coh) %></span><br><small>Cash-on-Hand</small><br><small> <%if report.net_coh < 0 %><span class="float-right gop-text">Net: (<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right">Net: <%= number_to_currency(report.net_coh) %></span></small><%end%></td>
+            <td><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "75x75"  %></td>
+            <td>
+              <% if candidate.party == "Republican" %>
+              <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"gop-text text-nowrap" }%><br><small><%= candidate.person_title %></small>
+              <%elsif candidate.party == "Democrat"%>
+              <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"dem-text text-nowrap" }%> <% if candidate.endorsed_republican? %>
+                <span class="gop-text">&#10004;</span>
+                <%elsif candidate.endorsed_democrat?%>
+                <span class="dem-text">&#10004;</span>
                 <%else%>
-                <td class="text-right "><span class="green-pill" style="display: inline;">$0.00</span><br><small>Cash-on-Hand</small></td>
-                <%end%> </td>
-          <% end %> 
-      </tr>    
-       <% end %>
+                <%end%><br><small><%= candidate.person_title %></small>
+              <%else%>
+              <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}",candidate, { :class =>"dts-text text-nowrap" }%><br><small><%= candidate.person_title %></small>
+              <%end%>
+
+              <br><small class="d-none d-lg-table-cell primary-blue"><%= candidate.ballot_status %></small>
+            </td>
+                      <%if candidate.reports.where(:cycle => "2020", candidate_report: true ).present? %>
+                      <% report = candidate.reports %>   
+                      <td class="d-none d-lg-table-cell text-right"><span class="green-text"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)) %></span><br><small>Raised this cycle</small><br><small><%= "(Since #{candidate.reports.where(candidate_report: true).order(:period_begin).first.period_begin.strftime("%m/%d/%Y")})" %></small></td>
+                      <td class="d-none d-lg-table-cell text-right"><span class="red-text"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)) %></span><br><small>Spent this cycle</small><br><small><%= "(Through #{candidate.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")})" %></small></td>          
+                      <td class="text-right "><span class="green-text heavy"><%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small><br><small><%if report.where(candidate_report: true).order('period_end DESC').first.net_coh < 0 %><span class="float-right red-text">Net: (<%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %>)<%else%><span class="float-right green-text">Net: <%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %><%end%></small></td>
+                      <%else%>
+                      <td class="d-none d-lg-table-cell green-text text-right">$0.00<br><small>Raised this cycle</small><br><small></td>
+                      <td class="d-none d-lg-table-cell red-text text-right">$0.00<br><small>Spent this cycle</small></td>          
+                      <td class="text-right"><span class="green-text heavy">$0.00</span><br><small>Cash-on-Hand</small></td>
+                      <%end%>
+          <%end%>
+          </tr>  
+        <%end%>    
+        
+
+    <% @district.jurisdiction.candidates.each do |candidate| %>
+    
+      <% if candidate.district.term_expires.to_s == "2020" && candidate.district.at_large_district? %>
+      
+        <% if candidate.on_ballot? %>
+        
+          <% report = candidate.reports.most_recent %>
+          <tr>
+          <td><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "75x75"  %></td>
+          <td>
+            <% if candidate.party == "Republican" %>
+            <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"gop-text text-nowrap" }%><br><small><%= candidate.person_title %></small>
+            <%elsif candidate.party == "Democrat"%>
+            <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}", candidate, { :class =>"dem-text text-nowrap" }%> <% if candidate.endorsed_republican? %>
+              <span class="gop-text">&#10004;</span>
+              <%elsif candidate.endorsed_democrat?%>
+              <span class="dem-text">&#10004;</span>
+              <%else%>
+              <%end%><br><small><%= candidate.person_title %></small>
+            <%else%>
+            <%= link_to "#{candidate.first_name} #{candidate.last_name}#{candidate.incumbent_asterisk}",candidate, { :class =>"dts-text text-nowrap" }%><br><small><%= candidate.person_title %></small>
+            <%end%>
+
+            <br><small class="d-none d-lg-table-cell primary-blue"><%= candidate.ballot_status %></small>
+          </td>
+          
+          <%if candidate.reports.where(:cycle => "2020", candidate_report: true ).present? %>
+                    <% report = candidate.reports %>   
+                    <td class="d-none d-lg-table-cell text-right"><span class="green-text"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)) %></span><br><small>Raised this cycle</small><br><small><%= "(Since #{candidate.reports.where(candidate_report: true).order(:period_begin).first.period_begin.strftime("%m/%d/%Y")})" %></small></td>
+                    <td class="d-none d-lg-table-cell text-right"><span class="red-text"><%= number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)) %></span><br><small>Spent this cycle</small><br><small><%= "(Through #{candidate.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")})" %></small></td>          
+                    <td class="text-right "><span class="green-text heavy"><%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small><br><small><%if report.where(candidate_report: true).order('period_end DESC').first.net_coh < 0 %><span class="float-right red-text">Net: (<%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %>)<%else%><span class="float-right green-text">Net: <%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %><%end%></small></td>
+                    <%else%>
+                    <td class="d-none d-lg-table-cell green-text text-right">$0.00<br><small>Raised this cycle</small><br><small></td>
+                    <td class="d-none d-lg-table-cell red-text text-right">$0.00<br><small>Spent this cycle</small></td>          
+                    <td class="text-right"><span class="green-text heavy">$0.00</span><br><small>Cash-on-Hand</small></td>
+                    <%end%>
+            </tr>         
+        <% end %>
+        
       <%end%>
+      <%end%>   
+      
       <small class="text-muted">Checkmark = Party Endorsement</small>
       </tbody>
       </div>

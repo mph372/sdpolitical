@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_22_182748) do
+ActiveRecord::Schema.define(version: 2021_02_25_001354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 2021_02_22_182748) do
     t.bigint "registration_history_id"
     t.float "biden_percent"
     t.float "trump20_percent"
+    t.bigint "former_office_id"
+    t.index ["former_office_id"], name: "index_districts_on_former_office_id"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
     t.index ["registration_history_id"], name: "index_districts_on_registration_history_id"
@@ -196,11 +198,11 @@ ActiveRecord::Schema.define(version: 2021_02_22_182748) do
     t.bigint "district_id"
     t.boolean "elected"
     t.boolean "appointed"
-    t.date "start_year"
-    t.date "end_year"
     t.bigint "person_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "start_year"
+    t.integer "end_year"
     t.index ["district_id"], name: "index_former_offices_on_district_id"
     t.index ["person_id"], name: "index_former_offices_on_person_id"
   end
@@ -498,6 +500,7 @@ ActiveRecord::Schema.define(version: 2021_02_22_182748) do
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
   add_foreign_key "committees", "people"
+  add_foreign_key "districts", "former_offices"
   add_foreign_key "districts", "registration_histories"
   add_foreign_key "election_histories", "districts"
   add_foreign_key "elections", "districts"

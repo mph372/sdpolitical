@@ -15,6 +15,7 @@
     <% if @district.at_large_district? && current_user.admin? %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
+  <%= render 'map'%>
   </div>
   <div class="col">
     <% if current_user.admin? %><div class="float-right followers"><small><%= @district.district_followers %></small></div><%end%>
@@ -42,9 +43,7 @@
     <div class="col-lg">
         
         <%= render 'registration'%>
-        <% if @district.at_large_district == false && @district.map_url.present? %>
-        <%= render 'map'%>
-        <%end%>
+
     </div>
     <div class="col-lg">
       
@@ -52,9 +51,6 @@
       <%= render 'performance' %>  
       <%end%>
       <%= render 'campaignfinance' %>
-        <% if @district.at_large_district == true && @district.map_url.present? %>
-        <%= render 'map'%>
-        <%end%>
     </div>
   </div>
   
@@ -73,7 +69,7 @@
     </div>
   </div>
 
-<% if @district.statistical_datum.present? %>
+<% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
   <div class="row">
     <div class="col">
       <%= render 'district_data'%>
@@ -101,24 +97,54 @@
 
   
 <div class="container">
+
+<div class="row">
   <% if current_user.admin? %>
+  <div class="col-md-6 border border-warning p-3">
+    
 
-  <%= link_to "Add Candidate", new_person_path(:district_id => @district.id), 
-        :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
-  <%= link_to "Add Election History", new_election_history_path(:district_id => @district.id), 
-          :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
-  <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary" %>
-  <%= link_to 'Add Statistical Data', new_statistical_datum_path(:district_id => @district.id), :class => "btn btn-primary mr-2" %>      
-  <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' }, :class => "primary-blue btn" %> 
-  <%end%>
-  <%= link_to "Download District (PDF)", district_path(@district, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>
+    <%= link_to "Add Candidate", new_person_path(:district_id => @district.id), 
+          :class => "btn btn-primary btn-sm", :action => "new", :method => :get %>
+    <%= link_to "Add Election History", new_election_history_path(:district_id => @district.id), 
+            :class => "btn btn-primary btn-sm", :action => "new", :method => :get %>
+    <% if @district.at_large_district == false%>
+    <%= link_to 'Add Statistical Data', new_statistical_datum_path(:district_id => @district.id), :class => "btn btn-primary btn-sm" %>      
+    <%else @district.at_large_district == true %>  
+    <%= link_to 'Add Statistical Data', new_statistical_datum_path(:jurisdiction_id => @district.jurisdiction.id), :class => "btn btn-primary btn-sm" %> 
+    <%end%>
 
-  <% if current_user.following?(@district) %>
-    <%= link_to "Stop Tracking District", unfollow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
-  <%elsif current_user != @district %>
-    <%= link_to "Track District", follow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
-  <%end%>
-  <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-right align-bottom mt-auto mr-4", :target => "_blank"%>
+
+
+      <div class="row mt-2">
+        <div class="col">
+          <% if @district.at_large_district == false%>
+          <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(district_id: @district)), :class => "btn btn-primary btn-sm" %>      
+          <%else @district.at_large_district == true %>  
+          <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction)), :class => "btn btn-primary btn-sm" %> 
+          <%end%>        
+           <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary btn-sm" %>
+    
+    <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' }, :class => "primary-blue btn btn-sm" %> 
+        </div>
+      </div>
+    <%else%>
+    <div class="col-md-6">
+    <%end%>
+    </div>
+    <div class="col-md-6">
+        <%= link_to "Download District (PDF)", district_path(@district, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>
+
+      <% if current_user.following?(@district) %>
+        <%= link_to "Stop Tracking District", unfollow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
+      <%elsif current_user != @district %>
+        <%= link_to "Track District", follow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
+      <%end%>
+      <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-right align-bottom mt-auto mr-4", :target => "_blank"%>
+    </div>
+  </div>     
+</div>
+  
+ 
 
 </div>
 

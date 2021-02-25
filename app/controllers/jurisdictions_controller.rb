@@ -25,6 +25,7 @@ class JurisdictionsController < ApplicationController
 
     @candidates = @jurisdiction.candidates.sort_by{|a| [a.district.name, a.district.district]}
     @election_histories = @jurisdiction.election_histories 
+    @statistical_datum = @jurisdiction.statistical_datum
 
     respond_to do |format|
       format.html

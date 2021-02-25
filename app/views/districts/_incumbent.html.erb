@@ -1,19 +1,25 @@
 <% if @district.at_large_district? %>
+<h4>Incumbents</h4>
+<div class="row">
+
 <% @district.jurisdiction.incumbents.each do |incumbent| %>
   <% if incumbent.incumbent_district.at_large_district? %>
-    <div class="card shadow-sm mb-3 bg-white rounded border-primary" style="max-width: 100%;">
-              <div class="card-header">
-                Incumbent
-              </div>
-            <div class="row no-gutters">
-              <div class="col-auto d-flex  justify-content-center pl-4 mt-3" >
+    <div class="col-md">
+    <div class="card shadow-sm mb-3 bg-white rounded border-primary incumbent-card" style="max-width: 100%;">
+            
+            <div class="row my-2">
+              
+                <div class="mx-auto mt-2">
                 <% if incumbent.present? %>
-                <%= image_tag incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar text-center shadow", size: "100x100"  %></div>
+                <%= image_tag incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar mx-auto text-center shadow incumbent-card", size: "150x150"  %></div>
                 <% else %>
-                <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div>
+                <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "150x150"  %></div>
                 <%end%>
-              <div class="col-auto">
-                <div class="card-body">
+                
+             </div>
+             <div class="row mt-2">   
+              
+                <div class="mx-auto">
                   <% if incumbent.present? %>
                   <h4 class="card-title"> <%= link_to "#{incumbent.first_name} #{incumbent.last_name}", incumbent %> </h4>
                   
@@ -21,40 +27,49 @@
                   <%else%>
                   <h4 class="card-title">VACANT</h4>
                   <%end%>
-                  <p class="card-text">
+                  <div class="card-body mx-auto">
                     <%if incumbent.present? %>
-                      <div>
-                          <small class="heavy">Birthdate: </small><small><%if incumbent.birthdate.present? %><%= incumbent.birthdate.to_formatted_s(:long) %> (Age <%= incumbent.calculated_age %>)<%else%><em>Unknown</em><%end%> 
-                          <%if incumbent.birthplace? %>
-                          in <%= incumbent.birthplace %>
-                          <% end %></small><br>
-                          <small class="heavy">Term Expires: </small><small><%= incumbent.term_expires %></small>
-                          <% if incumbent.term? %>
-                          <small><%= "(Term Limited in #{incumbent.term})" %></small>
-                          <%end%>
-                          <%if incumbent.congressional_district.present? || incumbent.senate_district.present? || incumbent.assembly_district.present? || incumbent.supe_district.present? %>                  
-                          <br>
-                          <small class="heavy">Resides in: </small><%end%><% if incumbent.congressional_district != nil %>
-                          <small><%=  "CD-#{incumbent.congressional_district}" %>,</small>
-                          <%end%>
-                          <% if @district.incumbent.senate_district != nil %>
-                          <small><%= "SD-#{incumbent.senate_district}" %>,</small>
-                          <%end%>
-                          <% if @district.incumbent.assembly_district != nil %>
-                          <small><%= "AD-#{incumbent.assembly_district}" %>,</small>
-                          <%end%>
-                          <% if @district.incumbent.supe_district != nil %>
-                          <small><%= "BOS-#{incumbent.supe_district}" %></small>
-                          <%end%>
-                      </div>
+                    <table class="table table-sm">
+                    <tr>
+                      <td class="heavy small">Birthdate:</td>
+                      <td class="small"><%if @district.incumbent.birthdate.present? %><%= @district.incumbent.birthdate.to_formatted_s(:long) %> (Age <%= @district.incumbent.calculated_age %>)<%else%><em>Unknown</em><%end%></td>
+                    </tr>
+                    <tr>
+                      <td class="heavy small">Term Expires:</td>
+                      <td class="small">
+                        <%= @district.incumbent.term_expires %><% if @district.incumbent.term? %>
+                        <%= "(Term Limited in #{@district.incumbent.term})" %>
+                        <%end%>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="heavy small">Resides In:</td>
+                      <td class="small"><% if @district.incumbent.congressional_district != nil %>
+                            <%=  "CD-#{@district.incumbent.congressional_district}" %>,
+                            <%end%>
+                            <% if @district.incumbent.senate_district != nil %>
+                            <%= "SD-#{@district.incumbent.senate_district}" %>,
+                            <%end%>
+                            <% if @district.incumbent.assembly_district != nil %>
+                            <%= "AD-#{@district.incumbent.assembly_district}" %>,
+                            <%end%>
+                            <% if @district.incumbent.supe_district != nil %>
+                            <%= "BOS-#{@district.incumbent.supe_district}" %>
+                            <%end%>
+                      </td>
+                    </tr>
+                  </table>
                       <%end%>
-                  </p>
-                </div>
+                  </div>
+                
               </div>
             </div>
       </div>
     <%end%>
+    </div>
   <%end%>
+  
+</div>  
 <%elsif @district.at_large_district == false %>
   <div class="card shadow-sm mb-3 bg-white rounded border-primary" style="max-width: 100%;">
           <div class="card-header">
@@ -66,7 +81,7 @@
             <% if @district.incumbent.present? %>
             <%= image_tag @district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar mx-auto d-block shadow", size: "350x350"  %></div>
             <% else %>
-            <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar mx-auto d-block shadow", size: "300x300"  %></div>
+            <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar mx-auto d-block shadow", size: "350x350"  %></div>
             <%end%>
             </div>
             

@@ -98,7 +98,7 @@
                         <% if report.person.incumbent_committee_name.present? %>
                         <small>(<%= report.person.incumbent_committee_name %>)</small>
                         <%else%>
-                        <small>(<%= report.person.incumbent_district.name %>)</small>
+                        <small>(<%= report.person.incumbent_district&.name %>)</small>
                         <%end%>
                       <%else%>           
                       <small>(<%= report.person.district&.name %>)</small>

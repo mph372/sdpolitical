@@ -1,18 +1,41 @@
-
-<%= simple_form_for(@former_office) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
+<%= bootstrap_form_for(@former_office, label_errors: true) do |f| %>
+  <% if @former_office.errors.any? %>
+    <% @former_office.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
   <div class="form-inputs">
-    <%= f.association :district %>
-    <%= f.input :elected %>
-    <%= f.input :appointed %>
-    <%= f.input :start_year %>
-    <%= f.input :end_year %>
-    <%= f.association :person %>
+    
+<div class="container">
+  <div class="row">
+    <div class="col"><%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true},  label: "Person:" ) %></div>
+    <div class="col">
+    <%= fields_for :district, @former_office.district do |district_fields| %>
+    <%= district_fields.select(:former_office_id, District.all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.former_office_id ] }, {:include_blank => true}) %>
+    <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+    <%= f.check_box :elected, { checked: true } %>
+    <%= f.check_box  :appointed %>    
+    </div>
+    <div class="col">
+      <%= f.select :start_year, (Time.zone.now.year - 50)..(Time.zone.now.year) %>
+    </div>
+    <div class="col">
+      <%= f.select :end_year, (Time.zone.now.year - 50)..(Time.zone.now.year) %>
+    </div>
+  </div>
+</div>
+    
+    
+    
   </div>
 
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+
+
