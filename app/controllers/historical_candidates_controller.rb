@@ -1,5 +1,7 @@
 class HistoricalCandidatesController < ApplicationController
   before_action :set_historical_candidate, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :authorize_admin, except: [:index, :show]
 
   # GET /historical_candidates
   # GET /historical_candidates.json
@@ -71,4 +73,5 @@ class HistoricalCandidatesController < ApplicationController
     def historical_candidate_params
       params.require(:historical_candidate).permit(:election_history_id, :first_name, :last_name, :votes, :is_winner, :person, :people_id)
     end
+  end
 end
