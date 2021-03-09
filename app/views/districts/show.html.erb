@@ -39,6 +39,7 @@
       <%end%>
     </div>
   </div>
+  <% if @district.district_data == false %>
   <div class="row">
     <div class="col-lg">
         
@@ -50,11 +51,16 @@
       <% if @district.performance_eligible == true %>
       <%= render 'performance' %>  
       <%end%>
-      <%= render 'campaignfinance' %>
+      
     </div>
   </div>
+  <%end%>
   
-
+<div class="row">
+  <div class="col">
+    <%= render 'campaignfinance' %>
+  </div>
+</div>
   
 <% if @district.registration_history.present? %>
   <div class="row">
@@ -68,6 +74,12 @@
       <%= render 'electedofficials'%>
     </div>
   </div>
+
+<div class="row">
+    <div class="col">
+      <%= render 'former_offices'%>
+    </div>
+  </div>  
 
 <% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
   <div class="row">

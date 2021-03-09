@@ -18,12 +18,12 @@
 
     <% if @person.on_ballot? || @person.running_reelection? %>
 
-      <div class="shadow-sm mb-3 p-3 bg-white rounded section-border">
-      <div class="container">
+      <div class=" mb-3 bg-white  ">
+      
 
       <%= render 'campaignsection'%>
 
-      </div>
+      
       </div>
 
     <%end%>
@@ -31,13 +31,14 @@
     <div class="container">
         <div class="row">
       <div class="col">
+        
         <%= render 'historical_election' %> 
       </div>   
     </div>
     <%end%>
     </div>
     <div class="container">
-
+    <%= render 'former_offices' %> 
 
     <%= render 'admin'%>
     </div>

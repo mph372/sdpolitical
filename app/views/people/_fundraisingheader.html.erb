@@ -1,9 +1,9 @@
-  <div class="row mt-1 mb-1">
+  <div class="row mt-1">
     <div class="col">
     <% if @person.on_ballot? && @person.reports.where(candidate_report: true).present? %>
-      <h6 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= "#{@person.first_name} #{@person.last_name} for #{@person.district.name} Fundraising" %><% if @person.reports.present? %> <%= "(Since #{@person.reports.where(candidate_report: true).order(:period_begin).first.period_begin.to_formatted_s(:long)})" %><%end%></h6>    
+      <h6 class="section-header p-2 border rounded  text-center text-md-left"><%= "#{@person.first_name} #{@person.last_name} for #{@person.district.name} Fundraising" %><% if @person.reports.present? %> <%= "(Since #{@person.reports.where(candidate_report: true).order(:period_begin).first.period_begin.to_formatted_s(:long)})" %><%end%></h6>    
     <%elsif @person.running_reelection?%>
-      <h6 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= "#{@person.first_name} #{@person.last_name} for #{@person.incumbent_district.name} Fundraising" %><% if @person.reports.present? %> <%= "(Since #{@person.reports.where(candidate_report: true).order(:period_begin).first.period_begin.to_formatted_s(:long)})" %><%end%></h6>    
+      <h6 class="section-header p-2 border rounded text-center text-md-left"><%= "#{@person.first_name} #{@person.last_name} for #{@person.incumbent_district.name} Fundraising" %><% if @person.reports.present? %> <%= "(Since #{@person.reports.where(candidate_report: true).order(:period_begin).first.period_begin.to_formatted_s(:long)})" %><%end%></h6>    
     <%end%>
     </div>
   </div>  

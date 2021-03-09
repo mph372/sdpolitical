@@ -7,6 +7,7 @@ class Jurisdiction < ApplicationRecord
     has_many :reports, through: :candidates
     has_many :committees
     has_many :election_histories, through: :districts 
+    has_many :former_offices, through: :districts 
     belongs_to :registration_history, optional: true
     has_many :statistical_datum
 end

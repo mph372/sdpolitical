@@ -1,0 +1,28 @@
+<% if @person.former_offices.present? %>
+<div class="h3">Prior Elected Offices</div>
+<div class="card shadow-sm mb-3 bg-white rounded primary-border">
+    <table class="table table-sm bg-white" >
+      <thead class="card-header">
+        <tr>
+          <th class="pl-4">Office</th>
+          <th>Years Served</th>
+          <% if current_user.admin? %><th></th><%end%>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% @person.former_offices.each do |former_office| %>
+        <% @district = District.find_by_id(former_office.district_id) %>
+        <tr>
+            
+          <td class="pl-4"><%= link_to "#{@district.full_district_name}", @district %></td>
+          <td><%= former_office.start_year %> - <%= former_office.end_year %> </td>
+        <% if current_user.admin? %><td><%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> </td> <%end%>
+        </tr>
+       
+        
+      <% end %>
+        </tbody>
+    </table>
+    </div>
+    <%end%>

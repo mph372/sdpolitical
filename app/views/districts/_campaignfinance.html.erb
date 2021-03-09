@@ -10,15 +10,15 @@
           </strong></div></li>
       <li class="list-group-item">Corporate Contributions:
           <% if @district.corporate_contributions?%>
-          <div class="green-text float-right"> <%= material_icon.check_circle %>
+          <div class="green-text float-right"> Allowed
           <%else%>
-          <div class="gop-text heavy float-right"> <%= material_icon.cancel %>
+          <div class="gop-text heavy float-right"> Prohibited
           <%end%></li>
       <li class="list-group-item">PAC Contributions:
           <% if @district.pac_contributions?%>
-          <div class="green-text float-right"><%= material_icon.check_circle %>
+          <div class="green-text float-right">Allowed
           <%else%>
-          <div class="gop-text float-right"><%= material_icon.cancel %>
+          <div class="gop-text heavy float-right">Prohibited
           <%end%></li>
       <li class="list-group-item">
           <% if @district.party_contributions?%>

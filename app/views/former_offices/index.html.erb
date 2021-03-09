@@ -17,8 +17,13 @@
 
   <tbody>
     <% @former_offices.each do |former_office| %>
+      <% @district = District.find_by_id(former_office.district_id) %>
       <tr>
-        <td><%= former_office.district %></td>
+
+        <td>
+          <%= @district.full_district_name %>
+ 
+        </td>
         <td><%= former_office.elected %></td>
         <td><%= former_office.appointed %></td>
         <td><%= former_office.start_year %></td>

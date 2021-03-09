@@ -11,9 +11,10 @@ class District < ApplicationRecord
   has_many :statistical_datum
   has_many :registration_snapshots, through: :statistical_data
   belongs_to :registration_history, optional: true
+  has_many :former_offices
   acts_as_followable
   cattr_accessor :current_user
-  belongs_to :former_office, optional: true
+  
 
   def district_name
     if self.district != "At Large" 
@@ -269,4 +270,15 @@ class District < ApplicationRecord
   def keywords
     "#{self.jurisdiction.name}, #{self.district_name}"
   end
+
+  def district_data
+    if at_large_district? && self.jurisdiction.statistical_datum.present?
+      true
+    elsif statistical_datum.present?
+      true
+    else
+      false
+    end
+  end
+
 end

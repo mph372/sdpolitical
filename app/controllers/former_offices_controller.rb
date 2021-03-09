@@ -15,6 +15,7 @@ class FormerOfficesController < ApplicationController
   # GET /former_offices/new
   def new
     @former_office = FormerOffice.new
+    @former_office.build_district
   end
 
   # GET /former_offices/1/edit
@@ -25,6 +26,7 @@ class FormerOfficesController < ApplicationController
   # POST /former_offices.json
   def create
     @former_office = FormerOffice.new(former_office_params)
+     
 
     respond_to do |format|
       if @former_office.save
@@ -42,7 +44,7 @@ class FormerOfficesController < ApplicationController
   def update
     respond_to do |format|
       if @former_office.update(former_office_params)
-        format.html { redirect_to @former_office, notice: 'Former office was successfully updated.' }
+        format.html { redirect_to @former_office.person, notice: 'Former office was successfully updated.' }
         format.json { render :show, status: :ok, location: @former_office }
       else
         format.html { render :edit }
@@ -56,7 +58,7 @@ class FormerOfficesController < ApplicationController
   def destroy
     @former_office.destroy
     respond_to do |format|
-      format.html { redirect_to former_offices_url, notice: 'Former office was successfully destroyed.' }
+      format.html { redirect_to @former_office.person, notice: 'Former office was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +71,7 @@ class FormerOfficesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def former_office_params
-      params.require(:former_office).permit(:district_id, :elected, :appointed, :start_year, :end_year, :person_id)
+      params.require(:former_office).permit(:elected, :appointed, :start_year, :end_year, :person_id, :district_id)
     end
+
 end

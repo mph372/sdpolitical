@@ -4,16 +4,12 @@
       <li><%= message %></li>
     <% end %>
   <% end %>
-  <div class="form-inputs">
-    
-<div class="container">
+ 
+
   <div class="row">
-    <div class="col"><%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true},  label: "Person:" ) %></div>
+    <div><%= f.hidden_field :person_id, :value => @person.id %></div>
     <div class="col">
-    <%= fields_for :district, @former_office.district do |district_fields| %>
-    <%= district_fields.select(:former_office_id, District.all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.former_office_id ] }, {:include_blank => true}) %>
-    <% end %>
-    </div>
+    <%= f.select(:district_id, District.all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true}) %></div>
   </div>
   <div class="row">
     <div class="col">
@@ -21,20 +17,20 @@
     <%= f.check_box  :appointed %>    
     </div>
     <div class="col">
-      <%= f.select :start_year, (Time.zone.now.year - 50)..(Time.zone.now.year) %>
+      <%= f.select :start_year, (Time.zone.now.year - 50)..(Time.zone.now.year), {:selected => '2020'} %>
     </div>
     <div class="col">
-      <%= f.select :end_year, (Time.zone.now.year - 50)..(Time.zone.now.year) %>
+      <%= f.select :end_year, (Time.zone.now.year - 50)..(Time.zone.now.year), {:selected => '2020'} %>
     </div>
   </div>
-</div>
+
     
     
     
-  </div>
+  
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.submit "Add Former Office" %>
   </div>
 <% end %>
 

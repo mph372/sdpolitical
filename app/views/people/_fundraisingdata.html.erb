@@ -1,4 +1,4 @@
-  <div class="container">
+
   <div class="row p-2">
     <% if @person.reports.where(candidate_report: true).present? %> <!--Beginning of "IF" statement for candidate financial data, if available -->
     <div style="width:100%;">
@@ -44,15 +44,15 @@
 
 
 <div style="width:100%;">
-<div class="card shadow-sm mb-3 bg-white rounded primary-border" >
+<div class="card shadow-sm bg-white rounded primary-border" >
   <div class="card-header">
       Campaign Finance Reports for <%= "#{@person.first_name} #{@person.last_name}" %>
   </div>
-  <div class="table-responsive p-2 mt-4">
-    <table class="table bg-white" style="width:100%">
-      <thead class="thead-light rounded">
+  <div class="table">
+    <table class="table table-sm bg-white" style="width:100%">
+      <thead class="">
         <tr>
-          <th>Report Date</th>
+          <th class="pl-4">Report Date</th>
           <th class="text-right">Receipts</th>
           <th class="text-right">Expenses</th>
           <th  class="text-right">COH</th>
@@ -66,7 +66,7 @@
       <% @reports.order("report_filed DESC").each do |report| %>
         <% if report.candidate_report == true %>
         <tr>
-          <td><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
+          <td  class="pl-4"><%= link_to "#{report.report_filed.to_formatted_s(:long)}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} - #{report.period_end.strftime("%b-%d-%y")}" %></small></td>
           <td><span class="float-right green-text"><%= number_to_currency(report.period_receipts) %><% if report.loans_received.present? %></span><% if report.loans_received != 0 %><br><small class="float-right text-nowrap">(Incl <%= number_to_currency(report.loans_received)%> in loans.)</small><%end%><%end%></td>
           <td><span class="float-right red-text"><%= number_to_currency(report.period_disbursements) %></span></td>
           <td><span class="float-right green-pill"><%= number_to_currency(report.current_coh) %></span></td>
@@ -79,9 +79,8 @@
       <% end %>
     </tbody>
     </table>
-    <small class="p-4">* = Report is amended version</small>
+    <small class="pl-4">* = Report is amended version</small>
 </div> 
-</div>
 </div>
 </div>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_001354) do
+ActiveRecord::Schema.define(version: 2021_02_25_224650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,13 @@ ActiveRecord::Schema.define(version: 2021_02_25_001354) do
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
     t.index ["registration_history_id"], name: "index_districts_on_registration_history_id"
+  end
+
+  create_table "districts_former_offices", id: false, force: :cascade do |t|
+    t.bigint "district_id"
+    t.bigint "former_office_id"
+    t.index ["district_id"], name: "index_districts_former_offices_on_district_id"
+    t.index ["former_office_id"], name: "index_districts_former_offices_on_former_office_id"
   end
 
   create_table "election_histories", force: :cascade do |t|
