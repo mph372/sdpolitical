@@ -5,21 +5,17 @@
           <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image img-fluid shadow", size: "200x200"  %><br>
           <% else %>
           <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div><br>
-          <%end%>
-            
-                    
+          <%end%>     
         </div>
         <div class="col-md m-1 p-2">
-            <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong>
-            
-            </h1>
+            <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong></h1>
               <% if @person.incumbent_district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction, :class => "nounderline" %> - 
                 <% if @person.incumbent_district.district != "At Large" && @person.incumbent_district.is_seat == false && @person.incumbent_district.is_area == false %>
                 <%= link_to "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize} District", @person.incumbent_district, :class => "nounderline" %> 
                 <% elsif @person.incumbent_district.is_seat %>
                 <%= link_to "#{@person.title}, Seat #{@person.incumbent_district.district}", @person.incumbent_district, :class => "nounderline" %>
-                <%elsif @person.incumbent_district.is_area %>
+                <% elsif @person.incumbent_district.is_area %>
                 <%= link_to "#{@person.title}, Trustee Area #{@person.incumbent_district.district}", @person.incumbent_district, :class => "nounderline" %>
                 <% elsif @person.incumbent_district.district == "At Large" %>
                 <%= link_to "#{@person.title}", @person.incumbent_district, :class => "nounderline" %>
@@ -31,15 +27,14 @@
                 <% if @person.running_reelection? %>
                   <div class="col-auto text-center text-md-left">  
                     <h6 class="nounderline dark-red-supporting heavy text-center text-md-left">Seeking Re-Election</h6>
-                    <span class="text-center text-md-left heavy primary-blue" style="display: inline;">(<%= @person.ballot_status%>)</span>
                   </div>
-                  <%else%>  
+                <%else%>  
                   <div class="col-auto text-center text-md-left mb-1">
                     <% if @person.former_candidate %>
                       <% if @person.district.district != "At Large" %>
-                      <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                        <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                       <%else%>
-                      <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                        <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                       <%end%>
                     <%else%>  
                       <% if @person.district.district != "At Large" %>
@@ -49,19 +44,14 @@
                           <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, #{@person.district.district.to_i.ordinalize} District", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                           <%end%>
                       <%else%>
-                      <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} -  #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
+                        <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} -  #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
                       <%end%>
                     <%end%>
-                    <span class="text-center text-md-left heavy primary-blue" style="display: inline;">(<%= @person.ballot_status%>)</span>
-                    </div>  
+                  </div>  
                   <%end%>
-                 </div> 
-                 <div class="row ml-1 mt-0">
-
-                  
-                  
+                 
                 <%end%>
-                </div>
+              </div> 
                 
               <div class="row mt-0">
                 <div class="col-auto">
@@ -69,7 +59,7 @@
                   <% if @person.is_incumbent? %>
                   <br><strong><small>Term Expires:</small></strong><br>
                   <%end%>
-                  <%if @person.congressional_district.present? || @person.senate_district.present? || @person.assembly_district.present? || @person.supe_district.present? %>
+                  <%if @person.resides_in_present %>
                   <small>Resides in:</small>
                   <%end%>
                 </div>
@@ -82,7 +72,7 @@
                   <%if @person.birthplace? %>
                   <small>in <%= @person.birthplace %></small>
                   <% end %>
-                  <% if @person.term_expires.present? %>
+                  <% if @person.is_incumbent? && @person.term_expires.present? %>
                   <br><small><%= @person.term_expires %></small>
                   <%end%>
                   <% if @person.term? && @person.is_incumbent %>
@@ -102,25 +92,25 @@
                   <%= "BOS-#{@person.supe_district}" %>
                   <%end%></small>
                 </div>
-              
               </div>
+              
               <div class="row mt-2 d-flex align-items-start">
                 <div class="col" style="color: #1992D4;">
                   <% if @person.campaign_website.present? %>
                       <%= link_to @person.campaign_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' }  do %>
                       <%= fa_icon "desktop" %>  
-                      <%end%>
+                    <%end%>
                      
                         
-                  <%elsif @person.official_website.present?%>
+                    <%elsif @person.official_website.present?%>
                     
                       <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' }  do %>
                       <%= fa_icon "desktop" %>  
                       <%end%>
                     
-                  &nbsp   
-                  <%else%>
-                  <%end%>    
+                    &nbsp   
+                    <%else%>
+                    <%end%>    
                   
                   <%if @person.email.present?%>
                     <%= mail_to @person.email, target: :_blank, :class => "nounderline", aria: { label: 'Send E-Mail' }   do %>
@@ -152,6 +142,8 @@
                  <% if @person.phone.present? %> 
                     <p class="nounderline primary-blue m-0"><%= number_to_phone(@person.phone) %></p>
                   <%end%>
-                  </div>
-            </div>     
+                </div>     
+            </div> 
+            <%= render 'biography'%>  
       </div>
+      

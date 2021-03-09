@@ -1,15 +1,13 @@
 <% if @person.expenditures.present? || @person.committees.present? %> <!-- Start of candidate IE data, if available --> 
   <hr>
-  <div class="container">
-  <div class="row">
-    <div class="col">
+
+
       <% if @person.on_ballot?%>
-       <h6 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.district.name} (2020 General)"%></h6>
+       <h5><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.district.name} (2020 General)"%></h5>
       <%elsif %>
-       <h6 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.incumbent_district.name} (2020 General)"%></h6>
+       <h5><%= "Independent Expenditures For/Against #{@person.first_name} #{@person.last_name} for #{@person.incumbent_district.name} (2020 General)"%></h5>
       <%end%>
-    </div>  
-  </div> 
+
 
   <%if @person.committees.present? %>
   <div class="row">
@@ -60,9 +58,8 @@
   </div>
   </div>
   <%end%>
-  </div>
-  </div>
-  </div>
+  
+  
   <%end%>
 
   <script>

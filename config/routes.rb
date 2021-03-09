@@ -25,7 +25,10 @@ Rails.application.routes.draw do
   get :search, controller: :main
   resources :expenditures
   resources :elections
-  resources :people
+  resources :people do 
+    resources :reports, only:
+    [:index]
+  end
   resources :committees
   resources :measures
   resources :pricing, only: [:index]

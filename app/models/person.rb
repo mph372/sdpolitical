@@ -75,6 +75,10 @@ class Person < ApplicationRecord
     end
   end
 
+  def resides_in_present
+    congressional_district != nil && senate_district != nil && assembly_district != nil && supe_district != nil
+  end
+
   def current_cash_on_hand
     if self.reports.where(:cycle => "2020", candidate_report: true ).present?
       return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.current_coh
@@ -198,6 +202,10 @@ class Person < ApplicationRecord
     end
   end
 
+  def is_current_cycle
+    reports.where(candidate_report: true).present? && (reports.where(:cycle => "2022").present? || reports.where(:cycle => "2021").present?)
+  end
+
 
 
   before_save :update_birthdate_fields
@@ -222,6 +230,7 @@ class Person < ApplicationRecord
     end
   end
 
-  
+
+
 
 end

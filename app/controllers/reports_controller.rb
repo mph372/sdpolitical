@@ -7,10 +7,17 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.all
+    if params[:person_id]
+      @reports = Person.find(params[:person_id]).reports
+    else
+      @reports = Report.all
+    end
+    
     set_meta_tags title: 'Campaign Finance Reports',
     site: 'The Ballot Book'
   end
+
+
 
   # GET /reports/1
   # GET /reports/1.json

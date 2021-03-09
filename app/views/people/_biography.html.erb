@@ -1,8 +1,7 @@
 <!--Start of Biography Section-->
-      <div class="row ml-2 mr-2">
-        <div class="col">
+
         <% if @person.bio.present? %>
-        
+        <br>
         <strong>Biography:</strong>
         <div>    
           <% if @person.bio.length > 250 %>
@@ -19,5 +18,3 @@
           <% end %>
         </div>
           <%end%>
-      </div>
-      </div>

@@ -2,9 +2,10 @@
 <div class="container">
 
     <div class="row">
-      <h1 class="primary-blue heavy m-4">Campaign Finance Reports</h1>
+      <h3 class="primary-blue heavy m-4"><% if params[:person_id] %><%= Person.find(params[:person_id]).full_name %> - Historical Campaign Finance Reports <%else%>Campaign Finance Reports <%end%></h3>
     </div>
       <div class="row">
+    <% unless params[:person_id] %>  
     <div class="col-lg-6">
         <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
           <div class="card-header">
@@ -36,6 +37,7 @@
           </div>
         </div>
     </div>
+    
     <div class="col-lg-6">
       <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
         <div class="card-header">
@@ -63,6 +65,7 @@
         </div>
       </div>
   </div>
+  <%end%>
 </div>  
     
 
@@ -73,17 +76,15 @@
 <br>
 <div class="panel panel-default">
   <div class="table-responsive shadow bg-white rounded primary-border p-4">
-    <table class="table" id="reports">
+    <table class="table table-sm" id="reports">
       <thead class="thead-light">
         <tr>
           <th>Name<br><small>(Committee)</small></th>
-          <th>Report Date</th>
-          <th>Receipts</th>
-          <th>Loans</th>
-          <th>Expenses</th>
-          <th>COH</th>
-          <th>Debt</th>
-          <th>Net COH</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th class="text-right">Receipts</th>
+          <th class="text-right">Expenses</th>
+          <th class="text-right">Cash on Hand</th>
           <th>View</th>
         </tr>
       </thead>
@@ -93,7 +94,7 @@
           <% if report.person.present?%>
           <tr>
             
-            <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %><br>
+            <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %></small><%if current_user.admin?%> - <%= link_to 'Edit', edit_report_path(report) %><%end%><br>
                 <% if report.person.running_reelection || report.incumbent_report? %>
                         <% if report.person.incumbent_committee_name.present? %>
                         <small>(<%= report.person.incumbent_committee_name %>)</small>
@@ -106,12 +107,10 @@
                 <%else%>
                 <td class=""><%= link_to "#{report.committee&.name}", report.committee  %>
                 <%end%></td>
-            <td class=""><%= link_to "#{report.report_filed.strftime("%y-%m-%d")}", report %><% if report.is_amended? %>*<%end%><br><small><%= "#{report.period_begin.strftime("%b-%d-%y")} -" %> <br> <%= "#{report.period_end.strftime("%b-%d-%y")}" %></small><%if current_user.admin?%><br><small><%= link_to 'Edit', edit_report_path(report) %></small><%end%></td>
+            <td class=""><%= "#{report.period_begin.strftime("%b-%d-%y")}" %></td>
+            <td><%= "#{report.period_end.strftime("%b-%d-%y")}" %></td>
             <td class=""><span class="float-right green-text"><%= number_to_currency(report.period_receipts) %></span></td>
-            <td class=""><span class="float-right"><% if report.loans_received.present? %><%= number_to_currency(report.loans_received, :delimiter => ',') %><%else%>0.00<%end%></span></td>
             <td class=""><span class="float-right red-text"><%= number_to_currency(report.period_disbursements) %></span></td>
-            <td class=""><span class="float-right green-pill"><%= number_to_currency(report.current_coh) %></span></td>
-            <td class=""><span class="float-right red-pill"><%= number_to_currency(report.current_debt) %></span></td>
             <td class=""><%if report.net_coh < 0 %><span class="float-right gop-text">(<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right"><%= number_to_currency(report.net_coh) %></span><%end%></td>
             <td class><% if report.pdf.url.present? %><%= link_to "View", report.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
           </tr>
@@ -123,7 +122,10 @@
 <br>
 <% if current_user.admin? %>
 <%= link_to 'New Report', new_report_path, :class => "btn btn-primary mr-2" %>
-<%end%>    
+<%end%>
+<% if params[:person_id] %>
+<%= link_to "Back to #{Person.find(params[:person_id]).full_name}", Person.find(params[:person_id]), :class => "btn btn-primary mr-2" %>
+<%end%>
 </div>
 <script>
     $( document ).on('turbolinks:load', function() {

@@ -42,6 +42,7 @@
                         <%end%>
                       </td>
                     </tr>
+                    <% if incumbent.resides_in_present? %>
                     <tr>
                       <td class="heavy small">Resides In:</td>
                       <td class="small"><% if @district.incumbent.congressional_district != nil %>
@@ -58,6 +59,7 @@
                             <%end%>
                       </td>
                     </tr>
+                    <%end%>
                   </table>
                       <%end%>
                   </div>
@@ -111,6 +113,7 @@
                         <%end%>
                       </td>
                     </tr>
+                    <% if @district.incumbent.resides_in_present %>
                     <tr>
                       <td class="heavy">Resides In:</td>
                       <td><% if @district.incumbent.congressional_district != nil %>
@@ -127,6 +130,7 @@
                             <%end%>
                       </td>
                     </tr>
+                    <%end%>
                   </table>
                   
                   <% if @district.incumbent.bio.present? %>

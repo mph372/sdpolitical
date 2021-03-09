@@ -1,30 +1,28 @@
 
 
     <% if @person.on_ballot?%>
-    <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= @person.district.name %> Campaign Info</h4>
+    <h3><%= @person.district.name %> Campaign Info</h3>
     <% elsif @person.running_reelection? %>
-    <h4 class="section-header p-3 border rounded mb-4 text-center text-md-left"><%= @person.incumbent_district.name %> Campaign Info</h4>
+    <h3><%= @person.incumbent_district.name %> Campaign Info</h3>
     <%end%>
 
     <% if current_user.subscribed == true %>
       
       
 
-    <div class="col-lg">
-    <%= render 'opponentssection'%>
-    
-    <%= render 'districtdata' %>
-    </div>
+        <div class="col-lg">
+        <%= render 'opponentssection'%>
+        </div>
 
-<% if @person.reports.present? %>
-<hr>
-<%= render 'fundraisingheader'%>
-<%= render 'fundraisingdata'%>
-<%end%>
+        <% if @person.reports.present? %>
+        <%= render 'fundraisingheader'%>
+        <%= render 'fundraisingdata'%>
+        <%end%>
 
-<%= render 'expendituredata'%>
-
-<%else%>
-<%= render 'shared/subscription_required' %>
-<%end%>
+        
+        <%= render 'expendituredata'%>
+        </div>
+    <%else%>
+        <%= render 'shared/subscription_required' %>
+    <%end%>
 
