@@ -3,6 +3,8 @@
     <% if current_user.admin? %>
     <%= link_to "Add Report", new_report_path(:person_id => @person.id), 
           :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
+    <%= link_to "Add Election History", new_election_history_path, 
+            :class => "btn btn-primary", :action => "new", :method => :get %>      
     <%= link_to "Edit", edit_person_path(@person), :class => "btn btn-outline-primary mr-2" %> 
     <%= link_to 'Delete Person', @person, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
     <%end%>

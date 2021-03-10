@@ -22,7 +22,7 @@
         </tr>
        
         
-        <% end %>
+          <% end %>
 
         <% elsif @district.at_large_district? %>
         <% @district.jurisdiction.districts.former_offices.uniq.each do |former_office| %>
@@ -36,4 +36,4 @@
         </tbody>
     </table>
     </div>
-    <%end%>
+<%end%>
