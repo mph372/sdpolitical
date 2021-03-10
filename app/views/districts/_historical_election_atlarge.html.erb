@@ -1,6 +1,6 @@
 <hr>
 <div class="h3">Electoral History</div>
- <% @district.jurisdiction.election_histories.uniq.each do |election_history| %>
+ <% @district.jurisdiction.election_histories.order("election_date desc").uniq.each do |election_history| %>
   <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <div class="card-header">
       <%= "#{election_history.cycle} #{election_history.election_type} Election Results" %> <span class="font-weight-light"><%= "(#{election_history.election_date.strftime("%B %e, %Y")})" %></span>

@@ -11,7 +11,7 @@
       </thead>
       
       <tbody>
-        <% @person.former_offices.each do |former_office| %>
+        <% @person.former_offices.order("end_year desc").each do |former_office| %>
         <% @district = District.find_by_id(former_office.district_id) %>
         <tr>
             

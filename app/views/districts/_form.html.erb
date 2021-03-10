@@ -49,7 +49,7 @@
           <%= f.select(:incumbent_id, Person.where(:is_incumbent => true).order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
         </div>
         <div class="col-md">  
-           <%= f.select :term_expires, ['','2020', '2022'], {:include_blank => true}, label: "Ballot Cycle" %>  
+           <%= f.select :term_expires, ['', '2022', '2024'], {:include_blank => true}, label: "Ballot Cycle" %>  
         </div>
       </div>  
         <div class="row">
