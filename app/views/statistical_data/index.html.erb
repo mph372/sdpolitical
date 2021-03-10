@@ -2,7 +2,7 @@
 
 <h1>Statistical Data</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>District</th>
@@ -15,8 +15,8 @@
   <tbody>
     <% @statistical_data.each do |statistical_datum| %>
       <tr>
-        <td><%= statistical_datum.district %></td>
-        <td><%= statistical_datum.jurisdiction %></td>
+        <td><%if statistical_datum.district.present? %><%= link_to "#{statistical_datum.district.district_name}", statistical_datum.district %><%end%></td>
+        <td><%if statistical_datum.jurisdiction.present? %><%= link_to "#{statistical_datum.jurisdiction.name}", statistical_datum.jurisdiction %><%end%></td>
         <td><%= statistical_datum.district_year %></td>
         <td><%= link_to 'Show', statistical_datum %></td>
         <td><%= link_to 'Edit', edit_statistical_datum_path(statistical_datum) %></td>

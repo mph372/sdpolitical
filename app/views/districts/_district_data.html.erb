@@ -1,7 +1,7 @@
-<% if @district.is_at_large == true %>
+<% if @district.at_large_district == true && @district.jurisdiction.statistical_datum.present? %>
 <% registration_snapshot = RegistrationSnapshot.all.order("snapshot_date desc").limit(1).find_by(statistical_datum_id: @district.jurisdiction.statistical_datum)%>
 <% statistical_datum = StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction) %>
-<% elsif @district.is_at_large == false %>
+<% elsif @district.at_large_district == false && @district.statistical_datum.present? %>
 <% registration_snapshot = RegistrationSnapshot.all.order("snapshot_date desc").limit(1).find_by(statistical_datum_id: @district.statistical_datum)%>
 <% statistical_datum = StatisticalDatum.find_by(district_id: @district) %>
 <%end%>
