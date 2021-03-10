@@ -29,7 +29,8 @@ class District < ApplicationRecord
   end
 
   def is_at_large
-    at_large_district == true || self.district = "At Large"
+    at_large_district == true || district == "At Large"
+
   end
 
   def user_following
