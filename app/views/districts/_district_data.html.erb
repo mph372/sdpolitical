@@ -3,7 +3,7 @@
 <% statistical_datum = StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction) %>
 <% elsif @district.at_large_district == false %>
 <% registration_snapshot = RegistrationSnapshot.all.order("snapshot_date desc").limit(1).find_by(statistical_datum_id: @district.statistical_datum)%>
-<% statistical_datum = @district.statistical_datum %>
+<% statistical_datum = StatisticalDatum.find_by(district_id: @district) %>
 <%end%>
 <hr>
 <div class="h3">District Data</div>
