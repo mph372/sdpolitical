@@ -1,0 +1,2 @@
+module CandidateCommitteesHelper
+end

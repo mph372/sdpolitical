@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  references: 
+  name: MyString
+  cycle: MyString
+  status: MyString
+
+two:
+  references: 
+  name: MyString
+  cycle: MyString
+  status: MyString

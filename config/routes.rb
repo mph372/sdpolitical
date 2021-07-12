@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :admins
+  resources :candidate_committees
   resources :candidates
   resources :former_offices
   resources :registration_snapshots

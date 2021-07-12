@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_165959) do
+ActiveRecord::Schema.define(version: 2021_07_12_191534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,14 @@ ActiveRecord::Schema.define(version: 2021_07_12_165959) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.date "period_begin"
+    t.date "period_end"
+    t.string "current_cycle"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "campaigns", force: :cascade do |t|
     t.bigint "district_id"
     t.date "election_date"
@@ -37,6 +45,16 @@ ActiveRecord::Schema.define(version: 2021_07_12_165959) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["district_id"], name: "index_campaigns_on_district_id"
+  end
+
+  create_table "candidate_committees", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "report_id"
+    t.string "name"
+    t.string "cycle"
+    t.string "status"
+    t.index ["person_id"], name: "index_candidate_committees_on_person_id"
+    t.index ["report_id"], name: "index_candidate_committees_on_report_id"
   end
 
   create_table "candidates", force: :cascade do |t|
@@ -512,6 +530,8 @@ ActiveRecord::Schema.define(version: 2021_07_12_165959) do
   end
 
   add_foreign_key "campaigns", "districts"
+  add_foreign_key "candidate_committees", "people"
+  add_foreign_key "candidate_committees", "reports"
   add_foreign_key "candidates", "campaigns"
   add_foreign_key "candidates", "people"
   add_foreign_key "committees", "jurisdictions"

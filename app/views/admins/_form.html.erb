@@ -1,0 +1,28 @@
+
+<% if @admin.errors.any? %>
+  <% @admin.errors.full_messages.each do |message|%>\
+  <h3><%= message %> </h3>
+  <%end%>
+<%end%>
+
+<%= bootstrap_form_for(@admin, label_errors: true) do |f| %>
+  
+
+  <div class="form-inputs">
+  <div class="row">
+    <div class="col"><%= f.date_field :period_begin %></div>
+    <div class="col"><%= f.date_field :period_end %></div>
+    <div class="col"><%= f.select :current_cycle, ['2022', '2024'] %></div>
+  
+  </div>
+
+
+    
+    
+    
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

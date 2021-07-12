@@ -1,5 +1,6 @@
 class Report < ApplicationRecord
   belongs_to :committee, optional: true
+  belongs_to :candidate_committee, optional: true
   delegate :district, to: :person
   delegate :jurisdiction, to: :person
   delegate :incumbent_district, to: :person

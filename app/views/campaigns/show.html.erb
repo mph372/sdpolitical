@@ -2,7 +2,7 @@
 
 <p>
   <strong>District:</strong>
-  <%= @campaign.district %>
+  <%= link_to "#{@campaign.district.jurisdiction.name} - #{@campaign.district.name} (District #{@campaign.district.district}) #{@campaign.district.term_expires}", @campaign.district %>
 </p>
 
 <p>

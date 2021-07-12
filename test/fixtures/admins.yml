@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  period_begin: 2021-07-12
+  period_end: 2021-07-12
+  current_cycle: MyString
+
+two:
+  period_begin: 2021-07-12
+  period_end: 2021-07-12
+  current_cycle: MyString

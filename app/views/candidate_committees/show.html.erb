@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>References:</strong>
+  <%= @candidate_committee.references %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @candidate_committee.name %>
+</p>
+
+<p>
+  <strong>Cycle:</strong>
+  <%= @candidate_committee.cycle %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @candidate_committee.status %>
+</p>
+
+<%= link_to 'Edit', edit_candidate_committee_path(@candidate_committee) %> |
+<%= link_to 'Back', candidate_committees_path %>

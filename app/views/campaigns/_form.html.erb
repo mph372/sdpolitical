@@ -12,11 +12,13 @@
     <div class="row">
       <div class="col">
       
-      <%= f.select :number_of_winners, ['1', '2', '3', '4', '5', '6', '7'], :selected => '1', required: true %>
+      <%= f.select :number_of_winners, ['1', '2', '3', '4', '5', '6', '7'], required: true, value: (f.object.new_record? ? 
+'1' : f.object.number_of_winners)  %>
       
       </div>
       <div class="col">
-        <%= f.select :election_type, ['General', 'Primary', 'Special'], :selected => 'Primary', required: true %>
+        <%= f.select :election_type, ['General', 'Primary', 'Special'], required: true, value: (f.object.new_record? ? 
+'Primary' : f.object.election_type) %>
 
       </div>
       <div class="col">
@@ -34,6 +36,7 @@ Date.new(2022,06,07) : f.object.election_date) %>
             <tr>
             <th></th>
               <th>Person</th>
+              <th>Ballot Status</th>
             </tr>
           </thead>
         

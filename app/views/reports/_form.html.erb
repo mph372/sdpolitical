@@ -8,13 +8,13 @@
   <div class="col-md-9">
     <div class="row">
       <div class="col">
-      <%= f.date_field :period_begin, required: true, value: Date.new(2020,10,18) %>
-      <%= f.date_field :period_end, required: true, value: Date.new(2020,12,31) %>
+      <%= f.date_field :period_begin, required: true, value: Admin.last.period_begin %>
+      <%= f.date_field :period_end, required: true, value: Admin.last.period_end %>
       </div>
       <div class="col">
       <%= f.date_field :report_filed, required: true, value: (f.object.new_record? ? 
 Date.today.strftime("%Y-%m-%d") : f.object.report_filed) %> 
-      <%= f.select :cycle, ['2018', '2020', '2022'], :selected => '2020', required: true %>
+      <%= f.select :cycle, ['2018', '2020', '2022'], :selected => Admin.last.current_cycle, required: true %>
       </div>
     </div>
     <hr>
@@ -28,11 +28,9 @@ Date.today.strftime("%Y-%m-%d") : f.object.report_filed) %>
         </div>
       <div class="col">
         <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true},  label: "Candidate:" ) %>
-        <%= f.select(:committee_id, Committee.order('name ASC').all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true }, label: "Committee:" ) %>
-        <%= f.check_box :incumbent_report %>
-        <%= f.check_box :candidate_report %>
+        <%= f.select(:candidate_committee_id, CandidateCommittee.order('name ASC').all.collect { |v| [ v.name, v.id ] }, {:selected => params[:candidate_committee_id], :include_blank => true }, label: "Candidate Committee:" ) %>
+        <%= f.select(:committee_id, Committee.order('name ASC').all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true }, label: "Non-Candidate Committee:" ) %>
         <%= f.check_box :is_amended, label: "Report is Amended" %>
-        <%= f.check_box :officeholder_account, label: "Officeholder Account" %>
         <br>
         <%= f.file_field :pdf, { label: "Upload Report" } %>
       </div>  

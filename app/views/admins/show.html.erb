@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Period begin:</strong>
+  <%= @admin.period_begin %>
+</p>
+
+<p>
+  <strong>Period end:</strong>
+  <%= @admin.period_end %>
+</p>
+
+<p>
+  <strong>Current cycle:</strong>
+  <%= @admin.current_cycle %>
+</p>
+
+<%= link_to 'Edit', edit_admin_path(@admin) %> |
+<%= link_to 'Back', admins_path %>

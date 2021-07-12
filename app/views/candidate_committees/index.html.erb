@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Candidate Committees</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>References</th>
+      <th>Name</th>
+      <th>Cycle</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @candidate_committees.each do |candidate_committee| %>
+      <tr>
+        <td><%= candidate_committee.references %></td>
+        <td><%= candidate_committee.name %></td>
+        <td><%= candidate_committee.cycle %></td>
+        <td><%= candidate_committee.status %></td>
+        <td><%= link_to 'Show', candidate_committee %></td>
+        <td><%= link_to 'Edit', edit_candidate_committee_path(candidate_committee) %></td>
+        <td><%= link_to 'Destroy', candidate_committee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Candidate Committee', new_candidate_committee_path %>
