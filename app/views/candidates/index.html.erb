@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Candidates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campaign</th>
+      <th>Person</th>
+      <th>Ballot status</th>
+      <th>Campaign email</th>
+      <th>Campaign phone</th>
+      <th>Campaign twitter</th>
+      <th>Campaign facebook</th>
+      <th>Campaign website</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @candidates.each do |candidate| %>
+      <tr>
+        <td><%= candidate.campaign %></td>
+        <td><%= candidate.person %></td>
+        <td><%= candidate.ballot_status %></td>
+        <td><%= candidate.campaign_email %></td>
+        <td><%= candidate.campaign_phone %></td>
+        <td><%= candidate.campaign_twitter %></td>
+        <td><%= candidate.campaign_facebook %></td>
+        <td><%= candidate.campaign_website %></td>
+        <td><%= link_to 'Show', candidate %></td>
+        <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
+        <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Candidate', new_candidate_path %>

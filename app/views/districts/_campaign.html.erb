@@ -1,0 +1,57 @@
+<% if @district.campaigns.present? %>
+<div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+  <div class="card-header">
+    Candidates for this Office <% if @district.number_of_winners.present? && @district.number_of_winners > 1 %><%= "(Top #{@district.number_of_winners} Win)" %><%end%> <% if current_user.admin? %> <%= link_to "Edit", edit_campaign_path(@district.campaigns.last), :class => "btn btn-outline-primary btn-sm" %> <%end%>
+  </div>
+  <div class="card-text pl-4 pr-4">
+  <div class="table-responsive">
+    <table class="table">
+
+
+      <tbody>
+
+      <% @district.campaigns.last.candidates.each do |candidate| %>
+      <tr>
+
+   
+
+          <td><%= image_tag candidate.person.image.url(:headshot), alt: 'headshot', :class => "avatar img-fluid shadow-sm", size: "75x75"  %></td>
+          <td>
+            <% if candidate.person.party == "Republican" %>
+            <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.person.incumbent_asterisk}", candidate, { :class =>"gop-text text-nowrap" }%><br><small><%= candidate.person.person_title %></small>
+            <%elsif candidate.person.party == "Democrat"%>
+            <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.person.incumbent_asterisk}", candidate, { :class =>"dem-text text-nowrap" }%> <% if candidate.person.endorsed_republican? %>
+              <span class="gop-text">&#10004;</span>
+              <%elsif candidate.person.endorsed_democrat?%>
+              <span class="dem-text">&#10004;</span>
+              <%else%>
+              <%end%><br><small><%= candidate.person.person_title %></small>
+  
+
+            <br><small class="d-none d-lg-table-cell primary-blue"><%= candidate.person.ballot_status %></small>
+          </td>
+          
+<%if candidate.person.reports.where(:cycle => "2022", candidate_report: true ).present? %>
+                    <% report = candidate.person.reports %>   
+                    <td class="d-none d-lg-table-cell text-right"><span class="green-text"><%= number_to_currency(candidate.reports.where(:cycle => "2022", candidate_report: true ).sum(:period_receipts)) %></span><br><small>Raised this cycle</small><br><small><%= "(Since #{candidate.reports.where(candidate_report: true).order(:period_begin).first.period_begin.strftime("%m/%d/%Y")})" %></small></td>
+                    <td class="d-none d-lg-table-cell text-right"><span class="red-text"><%= number_to_currency(candidate.reports.where(:cycle => "2022", candidate_report: true ).sum(:period_disbursements)) %></span><br><small>Spent this cycle</small><br><small><%= "(Through #{candidate.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")})" %></small></td>          
+                    <td class="text-right "><span class="green-text heavy"><%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small><br><small><%if report.where(candidate_report: true).order('period_end DESC').first.net_coh < 0 %><span class="float-right red-text">Net: (<%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %>)<%else%><span class="float-right green-text">Net: <%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %><%end%></small></td>
+                    <%else%>
+                    <td class="d-none d-lg-table-cell green-text text-right">$0.00<br><small>Raised this cycle</small><br><small></td>
+                    <td class="d-none d-lg-table-cell red-text text-right">$0.00<br><small>Spent this cycle</small></td>          
+                    <td class="text-right"><span class="green-text heavy">$0.00</span><br><small>Cash-on-Hand</small></td>
+                    <%end%>
+                <% end %>
+                <%end%>
+         
+          
+          
+      </tr>    
+      <small class="text-muted">Checkmark = Party Endorsement</small>
+      </tbody>
+      </div>
+      </table>
+    </div>
+  </div>
+  </div>
+  <%end%>

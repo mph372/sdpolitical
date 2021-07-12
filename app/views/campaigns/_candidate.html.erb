@@ -1,0 +1,10 @@
+<tr>
+    <td>
+        <%= f.hidden_field :_destroy %>
+        <%= link_to 'Delete', '#', class: 'remove_record' %>
+    </td>
+    <td><%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true, hide_label: true }) %></td>
+
+</tr>
+
+        

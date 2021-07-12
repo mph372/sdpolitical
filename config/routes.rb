@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :candidates
   resources :former_offices
   resources :registration_snapshots
   resources :statistical_data
@@ -30,6 +31,8 @@ Rails.application.routes.draw do
     [:index]
   end
   resources :committees
+  resources :campaigns
+  resources :campaign_candidates
   resources :measures
   resources :pricing, only: [:index]
   resources :reports

@@ -1,0 +1,63 @@
+<% if @campaign.errors.any? %>
+  <% @campaign.errors.full_messages.each do |message|%>\
+  <h3><%= message %> </h3>
+  <%end%>
+<%end%>
+
+<%= bootstrap_form_for(@campaign, label_errors: true) do |f| %>
+  
+
+  <div class="form-inputs">
+ 
+    <div class="row">
+      <div class="col">
+      
+      <%= f.select :number_of_winners, ['1', '2', '3', '4', '5', '6', '7'], :selected => '1', required: true %>
+      
+      </div>
+      <div class="col">
+        <%= f.select :election_type, ['General', 'Primary', 'Special'], :selected => 'Primary', required: true %>
+
+      </div>
+      <div class="col">
+        <%= f.date_field :election_date, value: (f.object.new_record? ? 
+Date.new(2022,06,07) : f.object.election_date) %>
+        
+      </div>
+      
+    </div>
+    <%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:selected => params[:district_id], :include_blank => true} ) %>
+    <div class="row">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr>
+            <th></th>
+              <th>Person</th>
+            </tr>
+          </thead>
+        
+        <tbody class='fields'>
+          <%= f.simple_fields_for :candidates do |builder| %>
+            <%=render 'candidate', f: builder %>
+          <% end %>  
+        </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+
+    
+      <div class="form-actions">
+        <%= f.submit %>
+        <%= link_to_add_row('Add Candidate', f, :candidates, class: 'btn btn-primary') %> 
+      </div>
+      <br>
+      <%= link_to 'Back', campaigns_path %>
+  
+
+  </div>
+
+<% end %>
+

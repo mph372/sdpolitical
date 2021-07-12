@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Campaign:</strong>
+  <%= @candidate.campaign %>
+</p>
+
+<p>
+  <strong>Person:</strong>
+  <%= @candidate.person %>
+</p>
+
+<p>
+  <strong>Ballot status:</strong>
+  <%= @candidate.ballot_status %>
+</p>
+
+<p>
+  <strong>Campaign email:</strong>
+  <%= @candidate.campaign_email %>
+</p>
+
+<p>
+  <strong>Campaign phone:</strong>
+  <%= @candidate.campaign_phone %>
+</p>
+
+<p>
+  <strong>Campaign twitter:</strong>
+  <%= @candidate.campaign_twitter %>
+</p>
+
+<p>
+  <strong>Campaign facebook:</strong>
+  <%= @candidate.campaign_facebook %>
+</p>
+
+<p>
+  <strong>Campaign website:</strong>
+  <%= @candidate.campaign_website %>
+</p>
+
+<%= link_to 'Edit', edit_candidate_path(@candidate) %> |
+<%= link_to 'Back', candidates_path %>

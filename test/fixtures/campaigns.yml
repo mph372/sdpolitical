@@ -3,7 +3,11 @@
 one:
   district: one
   election_date: 2021-07-12
+  election_type: MyString
+  number_of_winners: MyString
 
 two:
   district: two
   election_date: 2021-07-12
+  election_type: MyString
+  number_of_winners: MyString

@@ -1,0 +1,20 @@
+
+<%= simple_form_for(@candidate) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :campaign %>
+    <%= f.association :person %>
+    <%= f.input :ballot_status %>
+    <%= f.input :campaign_email %>
+    <%= f.input :campaign_phone %>
+    <%= f.input :campaign_twitter %>
+    <%= f.input :campaign_facebook %>
+    <%= f.input :campaign_website %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

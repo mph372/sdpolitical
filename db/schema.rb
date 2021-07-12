@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_154958) do
+ActiveRecord::Schema.define(version: 2021_07_12_165959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,17 @@ ActiveRecord::Schema.define(version: 2021_07_12_154958) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
-  create_table "campaign_candidates", force: :cascade do |t|
+  create_table "campaigns", force: :cascade do |t|
+    t.bigint "district_id"
+    t.date "election_date"
+    t.string "election_type"
+    t.string "number_of_winners"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_campaigns_on_district_id"
+  end
+
+  create_table "candidates", force: :cascade do |t|
     t.bigint "campaign_id"
     t.bigint "person_id"
     t.string "ballot_status"
@@ -40,32 +50,8 @@ ActiveRecord::Schema.define(version: 2021_07_12_154958) do
     t.string "campaign_website"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id"], name: "index_campaign_candidates_on_campaign_id"
-    t.index ["person_id"], name: "index_campaign_candidates_on_person_id"
-  end
-
-  create_table "campaigns", force: :cascade do |t|
-    t.bigint "district_id"
-    t.date "election_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["district_id"], name: "index_campaigns_on_district_id"
-  end
-
-  create_table "candidates", force: :cascade do |t|
-    t.bigint "district_id"
-    t.date "birth_date"
-    t.string "party"
-    t.string "professional_career"
-    t.string "email"
-    t.string "campaign_website"
-    t.string "twitter"
-    t.string "facebook"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.index ["district_id"], name: "index_candidates_on_district_id"
+    t.index ["campaign_id"], name: "index_candidates_on_campaign_id"
+    t.index ["person_id"], name: "index_candidates_on_person_id"
   end
 
   create_table "committees", force: :cascade do |t|
@@ -525,11 +511,9 @@ ActiveRecord::Schema.define(version: 2021_07_12_154958) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "campaign_candidates", "campaigns"
-  add_foreign_key "campaign_candidates", "people"
   add_foreign_key "campaigns", "districts"
-  add_foreign_key "candidates", "districts"
-  add_foreign_key "committees", "candidates"
+  add_foreign_key "candidates", "campaigns"
+  add_foreign_key "candidates", "people"
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
   add_foreign_key "committees", "people"
@@ -553,7 +537,6 @@ ActiveRecord::Schema.define(version: 2021_07_12_154958) do
   add_foreign_key "registration_histories", "districts"
   add_foreign_key "registration_histories", "jurisdictions"
   add_foreign_key "registration_snapshots", "statistical_data"
-  add_foreign_key "reports", "candidates"
   add_foreign_key "reports", "committees"
   add_foreign_key "reports", "districts"
   add_foreign_key "reports", "people"

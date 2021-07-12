@@ -1,0 +1,20 @@
+<div class="table-responsive p-2 mt-4">
+    <table class="table bg-white" style="width:100%">
+      <thead class="thead-light rounded">
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+      <% @campaign.candidates.each do |candidate| %>
+        <tr>
+          <td>
+         <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}", candidate.person %>
+          </td>
+        </tr>
+       
+        
+      <% end %>
+    </tbody>
+    </table>

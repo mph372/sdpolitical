@@ -14,6 +14,7 @@ class District < ApplicationRecord
   has_many :former_offices
   acts_as_followable
   cattr_accessor :current_user
+  has_many :campaigns
   
 
   def district_name

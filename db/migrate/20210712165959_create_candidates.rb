@@ -1,6 +1,6 @@
 class CreateCandidates < ActiveRecord::Migration[5.2]
   def change
-    create_table :campaign_candidates do |t|
+    create_table :candidates do |t|
       t.references :campaign, foreign_key: true
       t.references :person, foreign_key: true
       t.string :ballot_status

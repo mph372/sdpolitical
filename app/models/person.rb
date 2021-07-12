@@ -5,6 +5,7 @@ class Person < ApplicationRecord
   has_many :committees
   has_many :historical_candidate
   has_many :former_offices
+  has_many :candidates
  
 
 

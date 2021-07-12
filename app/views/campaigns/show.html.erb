@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>District:</strong>
+  <%= @campaign.district %>
+</p>
+
+<p>
+  <strong>Election date:</strong>
+  <%= @campaign.election_date %>
+</p>
+
+<p>
+  <strong>Election type:</strong>
+  <%= @campaign.election_type %>
+</p>
+
+<p>
+  <strong>Number of winners:</strong>
+  <%= @campaign.number_of_winners %>
+</p>
+
+<%= render 'candidates_table' %>
+
+<%= link_to 'Edit', edit_campaign_path(@campaign) %> |
+<%= link_to 'Back', campaigns_path %>
