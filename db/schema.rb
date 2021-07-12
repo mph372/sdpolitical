@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_224650) do
+ActiveRecord::Schema.define(version: 2021_07_12_154958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,29 @@ ActiveRecord::Schema.define(version: 2021_02_25_224650) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "campaign_candidates", force: :cascade do |t|
+    t.bigint "campaign_id"
+    t.bigint "person_id"
+    t.string "ballot_status"
+    t.string "campaign_email"
+    t.string "campaign_phone"
+    t.string "campaign_twitter"
+    t.string "campaign_facebook"
+    t.string "campaign_website"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_campaign_candidates_on_campaign_id"
+    t.index ["person_id"], name: "index_campaign_candidates_on_person_id"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.bigint "district_id"
+    t.date "election_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_campaigns_on_district_id"
   end
 
   create_table "candidates", force: :cascade do |t|
@@ -502,6 +525,9 @@ ActiveRecord::Schema.define(version: 2021_02_25_224650) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "campaign_candidates", "campaigns"
+  add_foreign_key "campaign_candidates", "people"
+  add_foreign_key "campaigns", "districts"
   add_foreign_key "candidates", "districts"
   add_foreign_key "committees", "candidates"
   add_foreign_key "committees", "jurisdictions"

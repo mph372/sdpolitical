@@ -7,6 +7,7 @@
   <div class="shadow-sm">
     <table class="table table-sm">
         <thead class="thead-light">
+        <th>Jurisdiction</th>
         <th>Total Voters</th>
         <th>DEM</th>
         <th>REP</th>
@@ -14,6 +15,7 @@
       </thead>
 
       <tbody>
+        <td><% if @registration_snapshot.statistical_datum.jurisdiction.present? %><%= link_to "#{@registration_snapshot.statistical_datum.jurisdiction.name}", @registration_snapshot.statistical_datum.jurisdiction %><%elsif @registration_snapshot.statistical_datum.district.present? %><%= link_to "#{@registration_snapshot.statistical_datum.district.district_name}", @registration_snapshot.statistical_datum.district %><%end%>
         <td><%= number_with_delimiter(@registration_snapshot.total_registered, :delimiter => ',') %></td>
         <td><%= number_with_precision(@registration_snapshot.democrat_percentage, precision: 2) %></td>
         <td><%= number_with_precision(@registration_snapshot.republican_percentage, precision: 2) %></td>
