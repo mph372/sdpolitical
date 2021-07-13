@@ -1,9 +1,7 @@
 
 
-    <% if @person.on_ballot?%>
-    <h3><%= @person.district.name %> Campaign Info</h3>
-    <% elsif @person.running_reelection? %>
-    <h3><%= @person.incumbent_district.name %> Campaign Info</h3>
+    <% if @person.campaign.present? %>
+    <h3><%= @person.campaign_district.name %> Campaign Info</h3>
     <%end%>
 
     <% if current_user.subscribed == true %>

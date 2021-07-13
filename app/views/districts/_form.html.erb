@@ -46,7 +46,7 @@
           <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
         </div>  
         <div class="col-md">  
-          <%= f.select(:incumbent_id, Person.where(:is_incumbent => true).order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
+          <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
         </div>
         <div class="col-md">  
            <%= f.select :term_expires, ['', '2022', '2024'], {:include_blank => true}, label: "Ballot Cycle" %>  

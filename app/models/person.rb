@@ -1,11 +1,14 @@
 class Person < ApplicationRecord
-  belongs_to :district, inverse_of: :candidates, class_name: "District", optional: true
-  has_one :incumbent_district, inverse_of: :incumbent, class_name: "District", required: false, foreign_key: "incumbent_id"
+  # belongs_to :district, inverse_of: :candidates, class_name: "District", optional: true
+  # has_one :incumbent_district, inverse_of: :incumbent, class_name: "District", required: false, foreign_key: "incumbent_id"
   has_many :expenditures
   has_many :candidate_committees
   has_many :historical_candidate
   has_many :former_offices
   has_many :candidates
+  belongs_to :district, optional: true
+  has_many :reports
+
  
 
 
@@ -13,11 +16,19 @@ class Person < ApplicationRecord
   has_many :reports do
     def most_recent
       order(report_filed: :desc).first
-    end
+    end  
+  end
 
+  def campaign
+    candidates.last.campaign
+  end
 
+  def opponents
+    campaign.candidates.collect{|u| u.person}
+  end
 
-  
+  def campaign_district
+    campaign.district
   end
 
   def self.to_csv
@@ -166,33 +177,24 @@ class Person < ApplicationRecord
     end
   end
 
-  def description
-    if incumbent_district.present?
-      if running_reelection == true
-      "#{self.full_name} currently serves as #{self.title} with the #{self.incumbent_district.jurisdiction.name}. #{self.last_name} is currently running for re-election."
-      elsif running_reelection == false && on_ballot == true
-        "#{self.full_name} currently serves as #{self.title} with the #{self.incumbent_district.jurisdiction.name}. #{self.last_name} is currently running for #{self.district.name}, #{self.district.jurisdiction.name}."
-      else
-        "#{self.full_name} currently serves as #{self.title} with the #{self.incumbent_district.jurisdiction.name}."
+
+  def description    
+      if district.present?
+      "#{self.full_name} currently serves as #{self.title} with the #{self.district.jurisdiction.name}."
       end
-    elsif on_ballot == true
-      "#{self.full_name} is a candidate for #{self.district.name}, #{self.district.jurisdiction.name}."
-    end
   end
+
+  
 
   def keywords
     "#{self.full_name}, #{}"
-    if incumbent_district.present?
-      if running_reelection == true
-      "#{self.full_name}, #{self.incumbent_district.name}, #{self.incumbent_district.jurisdiction.name}"
-      elsif running_reelection == false && on_ballot == true
-        "#{self.full_name}, #{self.incumbent_district.name}, #{self.district.name}"
-      else
-        "#{self.full_name}, #{self.incumbent_district.name}"
-      end
-    elsif on_ballot == true
+    if district.present?
       "#{self.full_name}, #{self.district.name}."
     end
+  end
+
+  def incumbent_district
+    district
   end
 
   def person_title
@@ -210,7 +212,7 @@ class Person < ApplicationRecord
 
 
   before_save :update_birthdate_fields
-  before_save :update_district_field
+  # before_save :update_district_field
 
   private
 
@@ -222,14 +224,14 @@ class Person < ApplicationRecord
   end
 
   
-  def update_district_field
-    if running_reelection == true
-      self.district = self.incumbent_district
-    end
-    if running_reelection == false && is_incumbent == true && on_ballot == false
-      self.district = nil
-    end
-  end
+  #def update_district_field
+   # if running_reelection == true
+    #  self.district = self.incumbent_district
+   # end
+   # if running_reelection == false && is_incumbent == true && on_ballot == false
+   #   self.district = nil
+   # end
+  #end
 
 
 

@@ -3,8 +3,8 @@ class District < ApplicationRecord
 
 
   belongs_to :jurisdiction 
-  has_many :candidates, inverse_of: :district, class_name: 'Person'
-  belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
+  # has_many :candidates, inverse_of: :district, class_name: 'Person'
+  # belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
   has_many :reports, through: :persons
   has_many :election_histories
   has_many :historical_candidates, through: :election_histories
@@ -15,6 +15,8 @@ class District < ApplicationRecord
   acts_as_followable
   cattr_accessor :current_user
   has_many :campaigns
+  has_one :person
+  accepts_nested_attributes_for :person
   
 
   def district_name
@@ -27,6 +29,10 @@ class District < ApplicationRecord
     else
      "#{self.name}"
     end
+  end
+
+  def incumbent
+    person
   end
 
   def is_at_large
@@ -266,8 +272,8 @@ class District < ApplicationRecord
   end
 
   def description
-    if incumbent.present?
-      "#{self.jurisdiction.name}, #{self.district_name} is currently represented by #{incumbent.title} #{incumbent.full_name}."
+    if person.present?
+      "#{self.jurisdiction.name}, #{self.district_name} is currently represented by #{person.title} #{person.full_name}."
     else
       "#{self.jurisdiction.name}, #{self.district_name} is currently vacant."
     end

@@ -9,8 +9,8 @@
         </div>
         <div class="col-md m-1 p-2">
             <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong></h1>
-              <% if @person.incumbent_district.present? %>
-              <h5 class="text-center text-md-left"><%= link_to "#{@person.incumbent_district.jurisdiction.name}", @person.incumbent_district.jurisdiction, :class => "nounderline" %> - 
+              <% if @person.district.present? %>
+              <h5 class="text-center text-md-left"><%= link_to "#{@person.district.jurisdiction.name}", @person.district.jurisdiction, :class => "nounderline" %> - 
                 <% if @person.incumbent_district.district != "At Large" && @person.incumbent_district.is_seat == false && @person.incumbent_district.is_area == false %>
                 <%= link_to "#{@person.title}, #{@person.incumbent_district.district.to_i.ordinalize} District", @person.incumbent_district, :class => "nounderline" %> 
                 <% elsif @person.incumbent_district.is_seat %>
