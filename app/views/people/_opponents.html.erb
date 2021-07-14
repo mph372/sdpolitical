@@ -3,16 +3,16 @@
         <div class="card-header">
           Candidates for <%= @person.campaign.district.full_district_name %>
         </div>
-      <% if @person.campaign.present? %>
+      
       <div class="table-responsive p-1">
         <table class="table table p-2 bg-white" style="width:100%">
           <tbody>     
     
-            <% @person.opponents.each do |candidate| %>
+            <% candidates.each do |candidate| %>
             <tr >
               
 
-                <% report = candidate.reports.most_recent %>
+                <% report = candidate.candidate_committees.is_primary.last.reports.most_recent %>
 
                 <td class="condensed-column pt-4 pb-0 text-right">
                 <% if candidate.endorsed_republican? %>
@@ -56,7 +56,7 @@
         </table>
       </div>
       
-      <%end%>
+
       
          </div>
       </div>

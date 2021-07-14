@@ -27,6 +27,15 @@ class Person < ApplicationRecord
     campaign.candidates.collect{|u| u.person}
   end
 
+  def at_large_opponents
+    campaign.district.jurisdiction
+  end
+
+  #@person.district.jurisdiction.candidates.each
+
+
+#candidates: @district.campaigns.last.candidates.collect{|u| u.person}.flatten
+
   def campaign_district
     campaign.district
   end
@@ -77,7 +86,7 @@ class Person < ApplicationRecord
   end
 
   def is_candidate
-    on_ballot == true || running_reelection == true
+    candidates.present?
   end
 
   def incumbent_asterisk
@@ -206,7 +215,7 @@ class Person < ApplicationRecord
   end
 
   def is_current_cycle
-    reports.where(candidate_report: true).present? && (reports.where(:cycle => "2022").present? || reports.where(:cycle => "2021").present?)
+    reports.where(candidate_report: true).present? && (reports.where(:cycle => Admin.current_cycle).present?)
   end
 
 
@@ -214,6 +223,18 @@ class Person < ApplicationRecord
   before_save :update_birthdate_fields
   # before_save :update_district_field
 
+  def most_recent_report
+    candidate_committees.is_primary.last.reports.most_recent
+  end
+
+  def all_reports
+    candidate_committees.is_primary.collect{|u| u.report}.flatten
+  end
+
+  def has_reports
+    candidate_committees.find_by(:primary_committee => true).reports.present?
+  end
+  
   private
 
   def update_birthdate_fields

@@ -1,9 +1,9 @@
 
-<div class="wrapper container ">
+<div class="">
 <div class="row ">
   <div class="col">
     <h3 class="mb-0 mt-2 header-text text-nowrap nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
-    <h1 class="heavy text-nowrap primary-blue"><%= @district.name %>  <br>
+    <h1 class="heavy text-nowrap primary-blue"><%= @district.name %>, 
     <%if @district.district != "At Large" && @district.is_seat == false && @district.is_area == false %>
     <%= "#{@district.district.to_i.ordinalize} District" %>
     <%elsif @district.is_seat %>
@@ -24,7 +24,7 @@
 </div>
 </div>     
     <br>
-<div class="wrapper container">    
+<div class="">    
   <div class="row">
     <div class="col">
     <%= render 'incumbent' %>
@@ -32,9 +32,9 @@
   </div>
   <div class="row">
     <div class="col">
-
-      <%= render 'campaign'%>
-
+      <% if @district.campaigns.present?%>
+      <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.last.candidates.collect{|u| u.person}.flatten}%>
+      <%end%>
     </div>
   </div>
   <% if @district.district_data == false %>
@@ -129,9 +129,9 @@
 
       <div class="row mt-2">
         <div class="col">
-          <% if @district.at_large_district == false%>
+          <% if @district.at_large_district == false && @district.statistical_datum.present? %>
           <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(district_id: @district)), :class => "btn btn-primary btn-sm" %>      
-          <%else @district.at_large_district == true %>  
+          <%else @district.at_large_district == true && @district.statistical_datum.present?  %>  
           <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction)), :class => "btn btn-primary btn-sm" %> 
           <%end%>        
            <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary btn-sm" %>

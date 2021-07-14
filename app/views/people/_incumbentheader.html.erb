@@ -1,13 +1,13 @@
 
 <div class="row bg-light shadow-sm bg-white section-border rounded mt-1 p-3">
-        <div class="col-sm-3 m-1 p-2 text-center my-auto"  >
+        <div class="col-sm-3 m-1 px-2 "  >
           <% if @person.image.present? %>
-          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => "avatar center-image img-fluid shadow", size: "200x200"  %><br>
+          <%= image_tag @person.image.url(:headshot), alt: 'headshot', :class => " center-image avatar img-fluid shadow", size: "185x185"  %><br>
           <% else %>
           <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div><br>
           <%end%>     
         </div>
-        <div class="col-md m-1 p-2">
+        <div class="col-md m-1 px-2">
             <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong></h1>
               <% if @person.district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.district.jurisdiction.name}", @person.district.jurisdiction, :class => "nounderline" %> - 
@@ -49,7 +49,6 @@
                     <%end%>
                   </div>  
                   <%end%>
-                 
                 <%end%>
               </div> 
                 
@@ -144,6 +143,13 @@
                   <%end%>
                 </div>     
             </div> 
-            <%= render 'biography'%>  
+            
+
       </div>
+      <div class="row px-3">
+        <div class="col">
+        <%= render 'biography'%>
+        </div>
+      </div>
+      
       

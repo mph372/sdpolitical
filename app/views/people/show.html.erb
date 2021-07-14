@@ -8,7 +8,7 @@
     </div> 
     <br>
     <%= render 'incumbentsection'%>
-    <% if @person.campaign.present? %>
+    <% if @person.candidates.present? %>
       <div class=" mb-3 bg-white  ">
         <%= render 'campaignsection'%>
       </div>

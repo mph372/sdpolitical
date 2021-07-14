@@ -6,9 +6,9 @@ class DashboardController < ApplicationController
         @updates = Update.all.limit(3)
         @birthdays = Person.where(birth_month: Time.zone.now.month).order(:birth_day).where("birth_day >= ?", Time.zone.now.day.to_i)
         @deadlines = Deadline.all.order('deadline_date ASC')
-        @incumbents = current_user.following_by_type('District').includes(:incumbent).collect{|u| u.incumbent}.flatten
-        @atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
-        @district_candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
+        @incumbents = current_user.following_by_type('District').includes(:person).collect{|u| u.person}.flatten
+        #@atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
+        @district_candidates = current_user.following_by_type('District').includes(:campaigns).collect{|u| u.campaigns}.flatten
         
 
         @candidates = @district_candidates + @atlarge_candidates

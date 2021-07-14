@@ -1,0 +1,60 @@
+<div style="width:100%;">
+      <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+          Candidates for <%= district.full_district_name %><%if current_user.admin? %><%= link_to "Edit Campaign", edit_campaign_path(district.campaigns.last), :class => "float-right" %><%end%>
+        </div>
+
+      <div class="table-responsive">
+        <table class="table bg-white mb-0" style="width:100%">
+          <tbody>     
+    
+            <% candidates.each do |candidate| %>
+            <tr >
+              
+                
+                
+
+                          
+                <td class="col-1"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %></td>
+                <td class="col-3">
+                  <% if candidate.party == "Republican" %>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}", candidate, { :class =>"gop-text" }%>
+                  <%elsif candidate.party == "Democrat"%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}", candidate, { :class =>"dem-text" }%>
+                  <%else%>
+                  <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}",candidate, { :class =>"dts-text" }%>
+                  <%end%><br><small>
+                <%if candidate.is_incumbent? %>
+                <%= candidate.title %>
+                <%else%>
+                <%= candidate.professional_career %>
+                <%end%>
+                </td>
+                <%if candidate.has_reports %>
+                    <% reports = candidate.all_reports %>   
+                    <td class="text-right col-2"><span class="green-text"><%= number_to_currency(reports.sum(:period_receipts)) %></span><br><small>Total Raised</small><br><small><%= "(Since #{candidate.reports.where(candidate_report: true).order(:period_begin).first.period_begin.strftime("%m/%d/%Y")})" %></small></td>
+                    <td class=" text-right col-2"><span class="red-text"><%= number_to_currency(reports.sum(:period_disbursements)) %></span><br><small>Total Spent</small><br><small><%= "(Through #{candidate.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")})" %></small></td>          
+                    <td class="text-right col-2 pr-4"><span class="green-pill"><%= number_to_currency(reports.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small><br><small><%if report.where(candidate_report: true).order('period_end DESC').first.net_coh < 0 %><span class="float-right red-text">Net: (<%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %>)<%else%><span class="float-right green-text">Net: <%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %><%end%></small></td>
+                    <%else%>
+                    <td class="green-text text-right col-2">$0.00<br><small>Total Raised</small><br><small></td>
+                    <td class="red-text text-right col-2">$0.00<br><small>Total Spent</small></td>          
+                    <td class="text-right col-2 pr-4"><span class="green-pill">$0.00</span><br><small>Cash-on-Hand</small></td>
+                    <%end%>
+                
+                <%end%>
+
+            </tr>
+            
+          </tbody>
+         
+        </table>
+         <div class="pl-4 mb-2 text-muted "><small>Checkmark = Party Endorsement | * = Incumbent(s)</small></div>
+      </div>
+      
+
+      
+         </div>
+      </div>
+      </div>
+  
+

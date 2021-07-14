@@ -1,0 +1,48 @@
+
+
+
+<% if @person.candidate_committees.present? %>
+    <div class="h4">Campaign Finance Committees</div>
+    <% @person.candidate_committees.order(primary_committee: :desc, cycle: :desc).each do |committee| %>
+        
+        <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+            <table class="table table-sm bg-white" >
+            <thead >
+
+
+                <tr class="card-header">
+                <th class="pl-4 col-5"><u><%= committee.name %></u> <%= committee.committee_status %></th>
+                <th class="col-2">Raised</th>
+                <th class="col-2">Spent </th>
+                <th class="col-1">Debt</th>
+                <th class="col-2">Cash on Hand</th>
+                <th class="col-1"></th>
+                </tr>
+
+                <tr >
+                <th class="pl-4">Committee Totals</th>
+                <th><%= number_to_currency(committee.reports.sum(:period_receipts)) %></th>
+                <th><%= number_to_currency(committee.reports.sum(:period_disbursements)) %></th>
+                <th><%if committee.reports.present?%><%= number_to_currency(committee.reports.order('period_end DESC').first.current_debt) %><%else%>$0.00<%end%></th>
+                <th><%if committee.reports.present?%><%= number_to_currency(committee.reports.order('period_end DESC').first.current_coh) %><%else%>$0.00<%end%></th>
+                </tr>
+
+                
+
+            </thead>
+            
+            <tbody>
+                <% committee.reports.order('period_end DESC').each do |report| %>
+                    <tr>
+                        <td class="pl-4"><%= link_to "#{report.period_begin.strftime("%b %d, %Y")} - #{report.period_end.strftime("%b %d, %Y")}", report %></td>
+                        <td><%= number_to_currency(report.period_receipts) %></td>
+                        <td><%= number_to_currency(report.period_disbursements) %></td>
+                        <td><%= number_to_currency(report.current_debt) %></td>
+                        <td><%= number_to_currency(report.current_coh) %></td>
+                    </tr>
+                <%end%>    
+            </tbody>
+        </table>
+        </div>
+        <%end%>
+<%end%>

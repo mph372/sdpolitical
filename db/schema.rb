@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_170507) do
+ActiveRecord::Schema.define(version: 2021_07_14_225356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2021_07_13_170507) do
     t.string "name"
     t.string "cycle"
     t.string "status"
+    t.boolean "primary_committee", default: false
     t.index ["person_id"], name: "index_candidate_committees_on_person_id"
     t.index ["report_id"], name: "index_candidate_committees_on_report_id"
   end
@@ -348,8 +349,18 @@ ActiveRecord::Schema.define(version: 2021_07_13_170507) do
     t.string "incumbent_committee_name"
     t.string "linkedin_url"
     t.bigint "historical_candidates_id"
+    t.string "campaign_email"
     t.index ["district_id"], name: "index_people_on_district_id"
     t.index ["historical_candidates_id"], name: "index_people_on_historical_candidates_id"
+  end
+
+  create_table "people_districts", id: false, force: :cascade do |t|
+    t.bigint "district_id"
+    t.bigint "person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_people_districts_on_district_id"
+    t.index ["person_id"], name: "index_people_districts_on_person_id"
   end
 
   create_table "registration_histories", force: :cascade do |t|
@@ -410,6 +421,8 @@ ActiveRecord::Schema.define(version: 2021_07_13_170507) do
     t.float "loans_received"
     t.boolean "officeholder_account", default: false
     t.string "pdf"
+    t.bigint "candidate_committee_id"
+    t.index ["candidate_committee_id"], name: "index_reports_on_candidate_committee_id"
     t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["district_id"], name: "index_reports_on_district_id"
@@ -557,9 +570,12 @@ ActiveRecord::Schema.define(version: 2021_07_13_170507) do
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "people", "districts"
   add_foreign_key "people", "historical_candidates", column: "historical_candidates_id"
+  add_foreign_key "people_districts", "districts"
+  add_foreign_key "people_districts", "people"
   add_foreign_key "registration_histories", "districts"
   add_foreign_key "registration_histories", "jurisdictions"
   add_foreign_key "registration_snapshots", "statistical_data"
+  add_foreign_key "reports", "candidate_committees"
   add_foreign_key "reports", "committees"
   add_foreign_key "reports", "districts"
   add_foreign_key "reports", "people"

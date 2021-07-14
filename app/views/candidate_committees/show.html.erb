@@ -1,9 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>References:</strong>
-  <%= @candidate_committee.references %>
-</p>
 
 <p>
   <strong>Name:</strong>
@@ -18,6 +14,11 @@
 <p>
   <strong>Status:</strong>
   <%= @candidate_committee.status %>
+</p>
+
+<p>
+  <strong>Person:</strong>
+  <%= link_to "#{@candidate_committee.person.full_name}", @candidate_committee.person %>
 </p>
 
 <%= link_to 'Edit', edit_candidate_committee_path(@candidate_committee) %> |

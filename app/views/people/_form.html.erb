@@ -44,6 +44,7 @@
           </div>
         </div>    
         <%= f.text_area :bio %>
+        <%= f.number_field :term, { label: "Term Limit Year" } %> 
     </div>
 
   </div>
@@ -56,18 +57,8 @@
     </div>
     <div class="col-md-9">
         <div class="row">
-          <div class="col">
-          <%= f.form_group do %>
-          <%= f.check_box :is_incumbent, label: "Is an incumbent"  %>
-          <%= f.check_box  :running_reelection,  label: "Running for re-election", id:'reElection' %>
-          <%end%>
-          </div>
-          <div class="col">
-            <%= f.form_group do %>
-            <%= f.check_box  :on_ballot,  label: "Running for non-incumbent office", id:"runningFor"%>
-            <%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true, label: false} ) %>
-            <%end%>
-          </div>
+         
+          
         </div>
         <div class="row">
           <div class="col">
@@ -79,46 +70,21 @@
           <div class="col">
            <%= f.select :ballot_status, ['','Rumored', 'Filed Paperwork', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary', 'Winner by Default'] %></div>    
           </div>
-            <%= f.text_field :incumbent_committee_name, label: "Incumbent Committee Name (if present)"%>
-            <%= f.text_field :campaign_website %>
+          <div class="row">
+          <div class="col">
+          <%= f.text_field :campaign_website %>
+          </div>
+
+          <div class="col">
+          <%= f.text_field :campaign_email %>
+          </div>
+            </div>
         </div>          
     </div>
 
   <hr> 
 
-  <div class="row p-3">
-    <div class="col-md-3">
-      <h5 class="heavy">Incumbent Information</h5>
-    </div>
-    <div class="col-md-9">
-        <div class="row">
-          <div class="col">
-            <div class="row">
-              <div class="col-auto">
-                <%= f.date_select :first_elected, include_blank: true,  :discard_day => true, start_year: 1978, :order => [:month, :year], end_year: Date.today.year %>
-              </div>
-              <div class="col-auto">
-                <%= f.check_box :is_appointed, label: "Appointed"  %>
-              </div>
-            </div>  
-          </div>
 
-        </div>
-        <div class="row">
-          <div class="col">
-            <%= f.text_field :title %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <%= f.number_field :term, { label: "Term Limit Year" } %> 
-          </div>
-          <div class="col">
-            <%= f.number_field :term_expires, { label: "Current Term Expires" } %> 
-          </div>
-        </div>               
-    </div>
-  </div>
 <hr>  
 
 <div class="row p-3">
@@ -144,7 +110,6 @@
         </div>    
     </div>   
 </div>
-<hr>  
 
 
 

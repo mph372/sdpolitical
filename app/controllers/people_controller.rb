@@ -14,8 +14,8 @@ class PeopleController < ApplicationController
     set_meta_tags title: 'Candidates & Elected Officials',
                   site: 'The Ballot Book'
     
-    @district_candidates = current_user.following_by_type('District').includes(:candidates).collect{|u| u.candidates}.flatten
-    @atlarge_candidates = current_user.following_by_type('District').includes(:candidates).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.candidates}.flatten
+    @district_candidates = current_user.following_by_type('District').includes(:person).collect{|u| u.person}.flatten
+    @atlarge_candidates = current_user.following_by_type('District').includes(:person).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction.person}.flatten
     @candidates = @district_candidates + @atlarge_candidates
 
     respond_to do |format|
@@ -102,7 +102,7 @@ class PeopleController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.require(:person).permit(:title, :first_name, :last_name, :birthdate, :party, :first_elected, :prior_elected, :salary, :professional_career, :congressional_district, :assembly_district, :senate_district, :supe_district, :birthplace, :email, :twitter, :facebook, :phone, :term, :on_ballot, :image, :term_expires, :seeking_office, :official_website, :campaign_website, :is_incumbent, :running_reelection, :incumbent_district, :endorsed_republican, :endorsed_democrat, :ballot_status, :bio, :incumbent_id, :remote_image_url, :incumbent_district_id, :is_appointed, :running_at_large, :incumbent_committee_name, :linkedin_url, :district_id)
+      params.require(:person).permit(:title, :first_name, :last_name, :birthdate, :party, :first_elected, :prior_elected, :salary, :professional_career, :congressional_district, :assembly_district, :senate_district, :supe_district, :birthplace, :email, :twitter, :facebook, :phone, :term, :on_ballot, :image, :term_expires, :seeking_office, :official_website, :campaign_website, :is_incumbent, :running_reelection, :incumbent_district, :endorsed_republican, :endorsed_democrat, :ballot_status, :bio, :incumbent_id, :remote_image_url, :incumbent_district_id, :is_appointed, :running_at_large, :incumbent_committee_name, :linkedin_url, :district_id, :campaign_email)
     end
 
     def is_subscriber?

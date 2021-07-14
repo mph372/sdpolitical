@@ -1,13 +1,23 @@
 
-<%= simple_form_for(@candidate_committee) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<%= bootstrap_form_for(@candidate_committee, label_errors: true) do |f| %>
+<% if @candidate_committee.errors.any? %>
+    <% @candidate_committee.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
 
   <div class="form-inputs">
-    <%= f.input :references %>
-    <%= f.input :name %>
-    <%= f.input :cycle %>
-    <%= f.input :status %>
+    <%= f.text_field :name %>
+    <div class="row">
+      <div class="col"><%= f.select :cycle, ['2018', '2020', '2022'], value: (f.object.new_record? ? 
+          "2022" : f.object.cycle) %></div>
+      <div class="col"> <%= f.select :status, ['Open', 'Closed'], value: (f.object.new_record? ? 
+          'Open' : f.object.status) %></div>
+      <div class="col"><%= f.check_box :primary_committee, value: (f.object.new_record? ? 
+          true : f.object.primary_committee)  %></div>
+    </div>
+    <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, selected: (f.object.new_record? ? 
+          params[:person_id] : f.object.person_id),  label: "Candidate:" ) %>
   </div>
 
   <div class="form-actions">

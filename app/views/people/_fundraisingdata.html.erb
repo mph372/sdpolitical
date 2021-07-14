@@ -9,31 +9,31 @@
         <div class="row p-3">  
           <div class="col-md  text-center">
             <div class="bg-white ">
-              <h3 class="green-text"><%= number_to_currency(@person.reports.where(:cycle => "2022", candidate_report: true ).sum(:period_receipts)) %></h3>
+              <h3 class="green-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)) %></h3>
               <%if @person.on_ballot? %>
               <h6>Total Raised this cycle<br>for <%= @person.district.name %></h6>
               <%elsif @person.running_reelection? %>
               <h6>Total Raised this cycle<br>for <%= @person.incumbent_district.name %></h6>
               <%end%>
-              <% if @person.reports.where(:cycle => "2022", candidate_report: true ).sum(:loans_received) > 0 %><small>Including <%= number_to_currency(@person.reports.where(:cycle => "2022", candidate_report: true ).sum(:loans_received)) %> in Loans</small><%end%>
+              <% if @person.reports.where(:cycle => Admin.current_cycle, candidate_report: true ).sum(:loans_received) > 0 %><small>Including <%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:loans_received)) %> in Loans</small><%end%>
             </div>
           </div>
           <div class="col-md  text-center">
             <div class="bg-white  ">
-              <h3 class="red-text"><%= number_to_currency(@person.reports.where(:cycle => "2022", candidate_report: true ).sum(:period_disbursements)) %></h3>
+              <h3 class="red-text"><%= number_to_currency(@person.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)) %></h3>
               <%if @person.on_ballot? %>
                 <h6>Total Spent this cycle<br>for <%= @person.district.name %></h6>
               <%elsif @person.running_reelection? %>
                 <h6>Total Spent this cycle<br>for <%= @person.incumbent_district.name %></h6>
               <%end%>
-              <% if @person.reports.where(:cycle => "2022", candidate_report: true ).sum(:loans_received) > 0 %><br><small></small><%end%>
+              <% if @person.reports.where(:cycle => "2020", candidate_report: true ).sum(:loans_received) > 0 %><br><small></small><%end%>
           </div>
       </div>
       <div class="col-md  text-center">
         <div class="bg-white  ">
           <h3 class="green-text heavy"><%= number_to_currency(@person.reports.where(candidate_report: true).order('period_end DESC').first.current_coh ) %></h3>
           <h6>Most Recent <br>Cash-On-Hand</h6>
-                  <% if @person.reports.where(:cycle => "2022", candidate_report: true ).sum(:loans_received) > 0 %><br><small></small><%end%>
+                  <% if @person.reports.where(:cycle => "2020", candidate_report: true ).sum(:loans_received) > 0 %><br><small></small><%end%>
         </div>
       </div>
     </div>

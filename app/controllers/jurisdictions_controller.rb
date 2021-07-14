@@ -23,7 +23,7 @@ class JurisdictionsController < ApplicationController
     set_meta_tags title: @jurisdiction.name,
     site: 'The Ballot Book'
 
-    @candidates = @jurisdiction.candidates.sort_by{|a| [a.district.name, a.district.district]}
+    @candidates = @jurisdiction.candidates.collect{|u| u.person}.sort_by{|a| [a.district.name, a.district.district]}
     @election_histories = @jurisdiction.election_histories 
     @statistical_datum = @jurisdiction.statistical_datum
     @former_offices = @jurisdiction.former_offices
