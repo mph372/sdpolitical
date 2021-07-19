@@ -75,9 +75,10 @@ class DistrictsController < ApplicationController
   # PATCH/PUT /districts/1
   # PATCH/PUT /districts/1.json
   def update
+    assign_person
     respond_to do |format|
       if @district.update(district_params)
-        assign_person
+       
         format.html { redirect_to @district, notice: 'District was successfully updated.' }
         format.json { render :show, status: :ok, location: @district }
       else
@@ -130,7 +131,7 @@ class DistrictsController < ApplicationController
     person_id = district_params[:person_id]
     district_id = @district.id 
     @person = Person.find_by(id: person_id)
-    @person.update_attribute(:district_id, district_id)
+    @person.update_attribute(:district_id, district_id) unless @person.nil?
   end
 
   private
@@ -141,7 +142,7 @@ class DistrictsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def district_params
-      params.require(:district).permit(:id, :name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url, :incumbent_id, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :party_contribution_limit, :term_expires, :measure_a_yes, :measure_a_no, :at_large_district, :number_of_winners, :registered_2018, :registered_2016, :registered_2014, :registered_2012, :voted_2018, :voted_2016, :voted_2014, :voted_2012, :voted_2020, :registered_2020, :prop_6_yes, :prop_6_no, :prop_51_yes, :prop_51_no, :prop_62_yes, :prop_62_no, :is_seat, :is_area, :registration_history_id, :election_history_id, :former_office_id, :person_id)
+      params.require(:district).permit(:id, :name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :party_contribution_limit, :term_expires, :measure_a_yes, :measure_a_no, :at_large_district, :number_of_winners, :registered_2018, :registered_2016, :registered_2014, :registered_2012, :voted_2018, :voted_2016, :voted_2014, :voted_2012, :voted_2020, :registered_2020, :prop_6_yes, :prop_6_no, :prop_51_yes, :prop_51_no, :prop_62_yes, :prop_62_no, :is_seat, :is_area, :registration_history_id, :election_history_id, :former_office_id, :person_id, :district_title)
     end
 
     def is_subscriber?

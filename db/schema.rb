@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_14_225356) do
+ActiveRecord::Schema.define(version: 2021_07_19_212804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 2021_07_14_225356) do
     t.float "trump20_percent"
     t.bigint "former_office_id"
     t.bigint "person_id"
+    t.string "district_title"
     t.index ["former_office_id"], name: "index_districts_on_former_office_id"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"

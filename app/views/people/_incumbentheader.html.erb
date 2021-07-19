@@ -8,7 +8,34 @@
           <%end%>     
         </div>
         <div class="col-md m-1 px-2">
-            <h1 class=" primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong></h1>
+            <div class="row">
+              <div class="col-md"> <h1 class=" primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong></h1></div>
+              
+              <div class="col-md text-center text-md-right">
+
+ 
+
+              <%if @person.twitter.present? %>
+                  <%= link_to "https://www.twitter.com/" + @person.twitter, target: :_blank, :class => "nounderline text-md-right px-1", aria: { label: 'View Twitter Page' }   do %>
+                      <%= fa_icon "twitter" %>
+                  <% end %>
+              <%end%>
+              
+              <% if @person.facebook.present? %>
+                <%= link_to "https://www.facebook.com/" + @person.facebook, target: :_blank, :class => "nounderline text-md-right px-1", aria: { label: 'View Facebook Page' }   do %>
+                    <%= fa_icon "facebook" %>
+                <% end %>
+              <%end%> 
+
+              <% if @person.linkedin_url.present? %>
+                <%= link_to "#{@person.linkedin_url}", target: :_blank, :class => "nounderline px-1 text-md-right", aria: { label: 'View LinkedIn Profile' }   do %>
+                    <%= fa_icon "linkedin" %>
+                <% end %>
+              <%end%>               
+              
+              </div>
+            </div>
+           
               <% if @person.district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.district.jurisdiction.name}", @person.district.jurisdiction, :class => "nounderline" %> - 
                 <% if @person.incumbent_district.district != "At Large" && @person.incumbent_district.is_seat == false && @person.incumbent_district.is_area == false %>
@@ -43,20 +70,20 @@
                 <%end%>
 
                 <tr>
-                  <td class="heavy">Birthdate:</td>
+                  <td class="heavy col-4">Birthdate:</td>
                   <td><%if @person.birthdate.present? %><%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>)<%else%><em>Unknown</em><%end%></td>
                 </tr>
 
                 <% if @person.district.present? && @person.term_expires.present?%>
                   <tr>
-                  <td class="heavy">Term Expires:</td>
+                  <td class="heavy col-4">Term Expires:</td>
                   <td><%= @person.term_expires %> <%if @person.term? %><%= "(Term Limited in #{@person.term})" %><%end%></td>
                   </tr>
                 <%end%>
 
                 <%if @person.resides_in_present %>
                   <tr>
-                    <td class="heavy">Resides in:</td>
+                    <td class="heavy col-4">Resides in:</td>
                     <td><% if @person.congressional_district != nil %>
                     <%=  "CD-#{@person.congressional_district}" %>,
                     <%end%>
@@ -71,65 +98,31 @@
                     <%end%></td>
                   </tr>
                 <%end%>
-                
 
+                <% if @person.official_website.present? || @person.email.present? %>
+                  <tr>
+                    <td class="heavy col-4">Official Contact Info:</td>
+                    <td>
+
+                      <%if @person.email.present?%>
+                        <%= link_to "Website", @person.campaign_website, target: :_blank %>
+                      <%end%>
+
+                      <% if @person.email.present? && @person.email.present? %>
+                       | 
+                      <%end%>
+
+                       <%if @person.email.present?%>
+                        <%= mail_to @person.email, "E-Mail", target: :_blank %>
+                      <%end%>
+
+
+                    
+                    </td>
+                  </tr>
+                <%end %>
               </table>      
               </div> 
-                
-              
-              
-              <div class="row mt-2 d-flex align-items-start">
-                <div class="col" style="color: #1992D4;">
-                  <% if @person.campaign_website.present? %>
-                      <%= link_to @person.campaign_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' }  do %>
-                      <%= fa_icon "desktop" %>  
-                    <%end%>
-                     
-                        
-                    <%elsif @person.official_website.present?%>
-                    
-                      <%= link_to @person.official_website, target: :_blank, :class => "nounderline primary-blue", aria: { label: 'View Website' }  do %>
-                      <%= fa_icon "desktop" %>  
-                      <%end%>
-                    
-                    &nbsp   
-                    <%else%>
-                    <%end%>    
-                  
-                  <%if @person.email.present?%>
-                    <%= mail_to @person.email, target: :_blank, :class => "nounderline", aria: { label: 'Send E-Mail' }   do %>
-                        <%= fa_icon "envelope" %>
-                    <% end %>
-                  &nbsp  
-                  <%end%>  
-                  
-                  <%if @person.twitter.present? %>
-                    <%= link_to "https://www.twitter.com/" + @person.twitter, target: :_blank, :class => "nounderline", aria: { label: 'View Twitter Page' }   do %>
-                        <%= fa_icon "twitter" %>
-                    <% end %>
-                  &nbsp  
-                  <%end%>
-                  
-                  <% if @person.facebook.present? %>
-                    <%= link_to "https://www.facebook.com/" + @person.facebook, target: :_blank, :class => "nounderline", aria: { label: 'View Facebook Page' }   do %>
-                        <%= fa_icon "facebook" %>
-                    <% end %>
-                  &nbsp
-                  <%end%>  
-
-                  <% if @person.linkedin_url.present? %>
-                    <%= link_to "#{@person.linkedin_url}", target: :_blank, :class => "nounderline", aria: { label: 'View LinkedIn Profile' }   do %>
-                        <%= fa_icon "linkedin" %>
-                    <% end %>
-                  &nbsp
-                  <%end%>  
-                 <% if @person.phone.present? %> 
-                    <p class="nounderline primary-blue m-0"><%= number_to_phone(@person.phone) %></p>
-                  <%end%>
-                </div>     
-            </div> 
-            
-
       </div>
       <div class="row px-3">
         <div class="col">

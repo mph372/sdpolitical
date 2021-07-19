@@ -1,0 +1,152 @@
+<div class="row bg-light shadow-sm bg-white section-border rounded mt-1 p-3">
+        <div class="col-sm-3 m-1 px-2 "  >
+          <% if person.image.present? %>
+          <%= image_tag person.image.url(:headshot), alt: 'headshot', :class => " center-image avatar img-fluid shadow", size: "185x185"  %><br>
+          <% else %>
+          <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div><br>
+          <%end%>     
+        </div>
+        <div class="col-md m-1 px-2">
+            <div class="row">
+              <div class="col-md"> <h1 class=" primary-blue text-center text-md-left"><strong><% if page_source == "district" %><%= link_to "#{person.first_name} #{person.last_name} #{person.party_abbreviation}", person %><%end%><% if page_source == "person" %><%= "#{person.first_name} #{person.last_name} #{person.party_abbreviation}" %><%end%></strong></h1></div>
+              
+              <div class="col-md text-center text-md-right">
+
+ 
+
+              <%if person.twitter.present? %>
+                  <%= link_to "https://www.twitter.com/" + person.twitter, target: :_blank, :class => "nounderline text-md-right px-1", aria: { label: 'View Twitter Page' }   do %>
+                      <%= fa_icon "twitter" %>
+                  <% end %>
+              <%end%>
+              
+              <% if person.facebook.present? %>
+                <%= link_to "https://www.facebook.com/" + person.facebook, target: :_blank, :class => "nounderline text-md-right px-1", aria: { label: 'View Facebook Page' }   do %>
+                    <%= fa_icon "facebook" %>
+                <% end %>
+              <%end%> 
+
+              <% if person.linkedin_url.present? %>
+                <%= link_to "#{person.linkedin_url}", target: :_blank, :class => "nounderline px-1 text-md-right", aria: { label: 'View LinkedIn Profile' }   do %>
+                    <%= fa_icon "linkedin" %>
+                <% end %>
+              <%end%>               
+              
+              </div>
+            </div>
+           
+              <% if person.district.present? %>
+              <h5 class="text-center text-md-left"><%= link_to "#{person.district.jurisdiction.name}", person.district.jurisdiction, :class => "nounderline" %> - 
+                <% if person.incumbent_district.district != "At Large" && person.incumbent_district.is_seat == false && person.incumbent_district.is_area == false %>
+                <%= link_to "#{person.district.district_title}, #{person.incumbent_district.district.to_i.ordinalize} District", person.incumbent_district, :class => "nounderline" %> 
+                <% elsif person.incumbent_district.is_seat %>
+                <%= link_to "#{person.district.district_title}, Seat #{person.incumbent_district.district}", person.incumbent_district, :class => "nounderline" %>
+                <% elsif person.incumbent_district.is_area %>
+                <%= link_to "#{person.district.district_title}, Trustee Area #{person.incumbent_district.district}", person.incumbent_district, :class => "nounderline" %>
+                <% elsif person.incumbent_district.district == "At Large" %>
+                <%= link_to "#{person.district.district_title}", person.incumbent_district, :class => "nounderline" %>
+                <%end%></h5>
+              <%end%>
+              
+              <div class="row text-center text-md-left mb-1 pl-2">
+              <table class="table borderless table-sm">
+                
+                <% if person.is_candidate == true %>
+                <tr>
+                  <td class="heavy">Candidate for:</td>
+                  <td>
+                    <%= link_to "#{person.campaign.district.full_district_name}", person.campaign.district %>
+                  </td>
+                </tr>
+                <%end%>
+                <% if person.former_offices.present? && person.district.nil? %>
+                <tr>
+                  <td class="heavy">Formerly Represented:</td>
+                  <td>
+                    <%= link_to "#{person.former_offices.order("end_year desc").first.district.full_district_name}", person.former_offices.order("end_year desc").first.district %>
+                  </td>
+                </tr>
+                <%end%>
+
+                <tr>
+                  <td class="heavy col-4">Birthdate:</td>
+                  <td><%if person.birthdate.present? %><%= person.birthdate.to_formatted_s(:long) %> (Age <%= person.calculated_age %>)<%else%><em>Unknown</em><%end%></td>
+                </tr>
+
+                <% if person.district.present? && person.term_expires.present?%>
+                  <tr>
+                  <td class="heavy col-4">Term Expires:</td>
+                  <td><%= person.term_expires %> <%if person.term? %><%= "(Term Limited in #{person.term})" %><%end%></td>
+                  </tr>
+                <%end%>
+
+                <%if person.resides_in_present %>
+                  <tr>
+                    <td class="heavy col-4">Resides in:</td>
+                    <td><% if person.congressional_district != nil %>
+                    <%=  "CD-#{person.congressional_district}" %>,
+                    <%end%>
+                    <% if person.senate_district != nil %>
+                    <%= "SD-#{person.senate_district}" %>,
+                    <%end%>
+                    <% if person.assembly_district != nil %>
+                    <%= "AD-#{person.assembly_district}" %>,
+                    <%end%>
+                    <% if person.supe_district != nil %>
+                    <%= "BOS-#{person.supe_district}" %>
+                    <%end%></td>
+                  </tr>
+                <%end%>
+
+                <% if person.official_website.present? || person.email.present? %>
+                  <tr>
+                    <td class="heavy col-4">Official Contact Info:</td>
+                    <td>
+
+                      <%if person.email.present?%>
+                        <%= link_to "Website", person.campaign_website, target: :_blank %>
+                      <%end%>
+
+                      <% if person.email.present? && person.email.present? %>
+                       | 
+                      <%end%>
+
+                       <%if person.email.present?%>
+                        <%= mail_to person.email, "E-Mail", target: :_blank %>
+                      <%end%>
+
+
+                    
+                    </td>
+                  </tr>
+                <%end %>
+              </table>      
+              </div> 
+      </div>
+      <div class="row px-3">
+        <div class="col">
+        <!--Start of Biography Section-->
+
+        <% if person.bio.present? %>
+        <strong>Biography:</strong>
+        <div>    
+          <% if person.bio.length > 300 %>
+          <%= truncate(person.bio, length: 300, :escape => false) %>
+          <%= link_to 'Read more', '', class: "read-more-#{person.id}" %>
+          <script>
+          $('.read-more-<%= person.id %>').on('click', function(e) {
+            e.preventDefault()
+            $(this).parent().html('<%= escape_javascript h(person.bio).gsub(/\n/, '</br>').html_safe %>')
+            })
+          </script>
+          <% else %>
+            <%= h(person.bio).gsub(/\n/, '</br>').html_safe %>
+          <% end %>
+        </div>
+          <%end%>
+
+        </div>
+      </div>
+      
+      
+      

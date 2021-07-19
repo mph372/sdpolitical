@@ -69,6 +69,10 @@
             <%= f.select(:registration_history_id, RegistrationHistory.order(:name).all.collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true, label: false} ) %>    
           </div>
         </div>
+
+        <div class="row">
+          <div class="col"><%= f.select :district_title, ["Representative", "Senator", "Assemblymember", "Supervisor", "Mayor", "Councilmember", "Trustee", "Board Member", "Director", "District Attorney", "Sheriff", "Treasurer-Tax Collector", "Assessor/ Recorder/ County Clerk", "City Clerk", "City Treasurer"], {:include_blank => true} %></div>
+        </div>
   </div>
 </div>
 

@@ -32,10 +32,10 @@
                     <% committee.reports.order('period_end DESC').each do |report| %>
                         <tr>
                             <td class="pl-4"><%= link_to "#{report.period_begin.strftime("%b %d, %Y")} - #{report.period_end.strftime("%b %d, %Y")}", report %></td>
-                            <td><%= number_to_currency(report.period_receipts) %></td>
-                            <td><%= number_to_currency(report.period_disbursements) %></td>
-                            <td><%= number_to_currency(report.current_debt) %></td>
-                            <td><%= number_to_currency(report.current_coh) %></td>
+                            <td class="text-right "><%= number_to_currency(report.period_receipts) %></td>
+                            <td class="text-right "><%= number_to_currency(report.period_disbursements) %></td>
+                            <td class="text-right "><%= number_to_currency(report.current_debt) %></td>
+                            <td class="text-right "><%= number_to_currency(report.current_coh) %></td>
                         </tr>
                     <%end%>  
                 <%else%>
