@@ -43,7 +43,8 @@
       </div>
       <div class="row">
         <div class="col-md"> 
-          <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
+          <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, , value: (f.object.new_record? ? 
+Date.new(2022,06,07) : f.object.election_date)) %>
         </div>  
         <div class="col-md">  
           <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>

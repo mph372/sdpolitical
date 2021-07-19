@@ -1,0 +1,47 @@
+<div class="container">
+<hr>
+<% if current_user.admin? %>
+<div class="row border border-warning p-3">
+  
+  <div class="col-9">
+    
+
+    <%= link_to "Add Election History", new_election_history_path(:district_id => @district.id), 
+            :class => "btn btn-primary btn-sm", :action => "new", :method => :get %>
+    <%= link_to "Add Campaign", new_campaign_path(:district_id => @district.id), 
+            :class => "btn btn-primary btn-sm", :action => "new", :method => :get %>        
+    <% if @district.at_large_district == false%>
+
+        <%= link_to 'Add Statistical Data', new_statistical_datum_path(:district_id => @district.id), :class => "btn btn-primary btn-sm" %>      
+
+    <%else @district.at_large_district == true %>  
+
+        <%= link_to 'Add Statistical Data', new_statistical_datum_path(:jurisdiction_id => @district.jurisdiction.id), :class => "btn btn-primary btn-sm" %>      
+
+    <%end%>
+
+
+
+
+          <% if @district.at_large_district == false && @district.statistical_datum.present? %>
+          <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(district_id: @district)), :class => "btn btn-primary btn-sm" %>      
+          <%else @district.at_large_district == true && @district.statistical_datum.present?  %>  
+          <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction)), :class => "btn btn-primary btn-sm" %> 
+          <%end%>   
+        </div>     
+    <div class="col-3 text-right">
+    <%= link_to "Edit", edit_district_path(@district), :class => "btn btn-outline-primary btn-sm " %>
+ 
+    <%= link_to 'Delete District', @district, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn-danger btn btn-sm" %> 
+
+    </div>
+
+    <%end%>
+
+   
+  </div>     
+
+  
+ 
+
+</div>

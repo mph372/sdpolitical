@@ -4,7 +4,7 @@
   <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <div class="card-header">
       <%= "#{election_history.cycle} #{election_history.election_type} Election Results" %> <span class="font-weight-light"><%= "(#{election_history.election_date.strftime("%B %e, %Y")})" %></span>
-      <%if current_user.admin?%><%= link_to "Edit History", edit_election_history_path(election_history) %> <%end%>
+      <%if current_user.admin?%><%= link_to "Edit History", edit_election_history_path(election_history), :class => "float-right" %> <%end%>
     </div>
     <div class="table-responsive ">
       <table class="table-sm table bg-white " >

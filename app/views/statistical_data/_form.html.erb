@@ -13,10 +13,12 @@
 
 <div class="row">
   <div class="col-md">
-    <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:selected => params[:jurisdiction_id], :include_blank => true}) %>
+    <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, value: (f.object.new_record? ? 
+params[:jurisdiction_id] : f.object.jurisdiction_id)) %>
   </div>
   <div class="col-md">
-    <%= f.select(:district_id, District.all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:selected => params[:district_id], :include_blank => true}) %>
+    <%= f.select(:district_id, District.all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, value: (f.object.new_record? ? 
+params[:district_id] : f.object.district_id)) %>
   </div>
   <div class="col-md">
     <%= f.select :district_year, ['2010', '2020'], :selected => '2010', required: true %>
