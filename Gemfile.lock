@@ -16,6 +16,13 @@ GIT
       multi_json (>= 1.11.0)
 
 GIT
+  remote: https://github.com/ricardoemerson/font-ionicons-rails.git
+  revision: 4390620e915a9cdc55ec6da29dcedf4dcfb144f8
+  specs:
+    font-ionicons-rails (2.0.1.6)
+      railties (>= 3.2, < 7.0)
+
+GIT
   remote: https://github.com/rweng/jquery-datatables-rails.git
   revision: d486b31b192a2924b1913e080ad23460e6b96d31
   specs:
@@ -358,6 +365,7 @@ DEPENDENCIES
   figaro
   fog-aws
   font-awesome-rails
+  font-ionicons-rails!
   gibbon!
   heroku-deflater
   high_voltage (~> 3.1)

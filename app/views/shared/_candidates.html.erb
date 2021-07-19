@@ -30,15 +30,23 @@
                 <%= candidate.professional_career %>
                 <%end%>
                 </td>
+                <td> 
+                <%=candidate.ballot_status %>
+                <br><small>
+                <%if candidate.campaign_website.present? %><%= link_to "Website", candidate.campaign_website, target: :_blank %><%end%>
+                <%if candidate.campaign_website.present? && candidate.campaign_email.present? %> | <%end%>
+                <%if candidate.campaign_email.present? %><%= mail_to candidate.campaign_email, "E-Mail", target: :_blank %><%end%>
+                
+                </td>
                 <%if candidate.has_reports %>
                     <% reports = candidate.all_reports %>   
                     <td class="text-right col-2"><span class="green-text"><%= number_to_currency(reports.sum(:period_receipts)) %></span><br><small>Total Raised</small><br><small><%= "(Since #{candidate.reports.where(candidate_report: true).order(:period_begin).first.period_begin.strftime("%m/%d/%Y")})" %></small></td>
                     <td class=" text-right col-2"><span class="red-text"><%= number_to_currency(reports.sum(:period_disbursements)) %></span><br><small>Total Spent</small><br><small><%= "(Through #{candidate.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%Y")})" %></small></td>          
-                    <td class="text-right col-2 pr-4"><span class="green-pill"><%= number_to_currency(reports.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small><br><small><%if report.where(candidate_report: true).order('period_end DESC').first.net_coh < 0 %><span class="float-right red-text">Net: (<%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %>)<%else%><span class="float-right green-text">Net: <%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %><%end%></small></td>
+                    <td class="text-right col-2 pr-4"><span class="green-text font-weight-bold"><%= number_to_currency(reports.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small><br><small><%if report.where(candidate_report: true).order('period_end DESC').first.net_coh < 0 %><span class="float-right red-text">Net: (<%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %>)<%else%><span class="float-right green-text">Net: <%= number_to_currency(report.where(candidate_report: true).order('period_end DESC').first.net_coh) %><%end%></small></td>
                     <%else%>
                     <td class="green-text text-right col-2">$0.00<br><small>Total Raised</small><br><small></td>
                     <td class="red-text text-right col-2">$0.00<br><small>Total Spent</small></td>          
-                    <td class="text-right col-2 pr-4"><span class="green-pill">$0.00</span><br><small>Cash-on-Hand</small></td>
+                    <td class="text-right col-2 pr-4"><span class="green-text font-weight-bold">$0.00</span><br><small>Cash-on-Hand</small></td>
                     <%end%>
                 
                 <%end%>

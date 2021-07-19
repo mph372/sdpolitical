@@ -3,9 +3,9 @@
         <% if @person.bio.present? %>
         <strong>Biography:</strong>
         <div>    
-          <% if @person.bio.length > 250 %>
-          <%= truncate(@person.bio, length: 250, :escape => false) %>
-          <%= link_to '...Read more', '', class: "read-more-#{@person.id}" %>
+          <% if @person.bio.length > 300 %>
+          <%= truncate(@person.bio, length: 300, :escape => false) %>
+          <%= link_to 'Read more', '', class: "read-more-#{@person.id}" %>
           <script>
           $('.read-more-<%= @person.id %>').on('click', function(e) {
             e.preventDefault()

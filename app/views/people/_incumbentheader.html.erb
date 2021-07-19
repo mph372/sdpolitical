@@ -8,7 +8,7 @@
           <%end%>     
         </div>
         <div class="col-md m-1 px-2">
-            <h1 class="p-0 m-0 primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong></h1>
+            <h1 class=" primary-blue text-center text-md-left"><strong><%= "#{@person.first_name} #{@person.last_name} #{@person.party_abbreviation}" %></strong></h1>
               <% if @person.district.present? %>
               <h5 class="text-center text-md-left"><%= link_to "#{@person.district.jurisdiction.name}", @person.district.jurisdiction, :class => "nounderline" %> - 
                 <% if @person.incumbent_district.district != "At Large" && @person.incumbent_district.is_seat == false && @person.incumbent_district.is_area == false %>
@@ -22,76 +22,61 @@
                 <%end%></h5>
               <%end%>
               
-              <div class="row text-center text-md-left mb-1">
-              <% if @person.on_ballot? || @person.running_reelection? %>
-                <% if @person.running_reelection? %>
-                  <div class="col-auto text-center text-md-left">  
-                    <h6 class="nounderline dark-red-supporting heavy text-center text-md-left">Seeking Re-Election</h6>
-                  </div>
-                <%else%>  
-                  <div class="col-auto text-center text-md-left mb-1">
-                    <% if @person.former_candidate %>
-                      <% if @person.district.district != "At Large" %>
-                        <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
-                      <%else%>
-                        <h6 class="text-center text-md-left"><%= link_to "Former Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
-                      <%end%>
-                    <%else%>  
-                      <% if @person.district.district != "At Large" %>
-                          <% if @person.district.district == "A" || @person.district.district == "B" || @person.district.district == "C" || @person.district.district == "D" || @person.district.district == "E" %>
-                          <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, Area #{@person.district.district}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>
-                           <%else%>
-                          <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} - #{@person.district.name}, #{@person.district.district.to_i.ordinalize} District", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
-                          <%end%>
-                      <%else%>
-                        <h6 class="text-center text-md-left"><%= link_to "Candidate for #{@person.district.jurisdiction.name} -  #{@person.district.name}", @person.district, :class => "nounderline dark-red-supporting heavy text-center text-md-left" %></h6>  
-                      <%end%>
-                    <%end%>
-                  </div>  
-                  <%end%>
+              <div class="row text-center text-md-left mb-1 pl-2">
+              <table class="table borderless table-sm">
+                
+                <% if @person.is_candidate == true %>
+                <tr>
+                  <td class="heavy">Candidate for:</td>
+                  <td>
+                    <%= link_to "#{@person.campaign.district.full_district_name}", @person.campaign.district %>
+                  </td>
+                </tr>
                 <%end%>
+                <% if @person.former_offices.present? && @person.district.nil? %>
+                <tr>
+                  <td class="heavy">Formerly Represented:</td>
+                  <td>
+                    <%= link_to "#{@person.former_offices.order("end_year desc").first.district.full_district_name}", @person.former_offices.order("end_year desc").first.district %>
+                  </td>
+                </tr>
+                <%end%>
+
+                <tr>
+                  <td class="heavy">Birthdate:</td>
+                  <td><%if @person.birthdate.present? %><%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>)<%else%><em>Unknown</em><%end%></td>
+                </tr>
+
+                <% if @person.district.present? && @person.term_expires.present?%>
+                  <tr>
+                  <td class="heavy">Term Expires:</td>
+                  <td><%= @person.term_expires %> <%if @person.term? %><%= "(Term Limited in #{@person.term})" %><%end%></td>
+                  </tr>
+                <%end%>
+
+                <%if @person.resides_in_present %>
+                  <tr>
+                    <td class="heavy">Resides in:</td>
+                    <td><% if @person.congressional_district != nil %>
+                    <%=  "CD-#{@person.congressional_district}" %>,
+                    <%end%>
+                    <% if @person.senate_district != nil %>
+                    <%= "SD-#{@person.senate_district}" %>,
+                    <%end%>
+                    <% if @person.assembly_district != nil %>
+                    <%= "AD-#{@person.assembly_district}" %>,
+                    <%end%>
+                    <% if @person.supe_district != nil %>
+                    <%= "BOS-#{@person.supe_district}" %>
+                    <%end%></td>
+                  </tr>
+                <%end%>
+                
+
+              </table>      
               </div> 
                 
-              <div class="row mt-0">
-                <div class="col-auto">
-                  <strong><small>Born:</small></strong>
-                  <% if @person.is_incumbent? %>
-                  <br><strong><small>Term Expires:</small></strong><br>
-                  <%end%>
-                  <%if @person.resides_in_present %>
-                  <small>Resides in:</small>
-                  <%end%>
-                </div>
-                <div class="col">
-                  <% if @person.birthdate.present?%>
-                  <small><%= @person.birthdate.to_formatted_s(:long) %> (Age <%= @person.calculated_age %>) </small>
-                  <%else%>
-                  <small><em>Unknown</em></small>
-                  <%end%>
-                  <%if @person.birthplace? %>
-                  <small>in <%= @person.birthplace %></small>
-                  <% end %>
-                  <% if @person.is_incumbent? && @person.term_expires.present? %>
-                  <br><small><%= @person.term_expires %></small>
-                  <%end%>
-                  <% if @person.term? && @person.is_incumbent %>
-                  <small><%= "(Term Limited in #{@person.term})" %></small>
-                  <%end%>
-                  <small>
-                  <% if @person.congressional_district != nil %>
-                  <br><%=  "CD-#{@person.congressional_district}" %>,
-                  <%end%>
-                  <% if @person.senate_district != nil %>
-                  <%= "SD-#{@person.senate_district}" %>,
-                  <%end%>
-                  <% if @person.assembly_district != nil %>
-                  <%= "AD-#{@person.assembly_district}" %>,
-                  <%end%>
-                  <% if @person.supe_district != nil %>
-                  <%= "BOS-#{@person.supe_district}" %>
-                  <%end%></small>
-                </div>
-              </div>
+              
               
               <div class="row mt-2 d-flex align-items-start">
                 <div class="col" style="color: #1992D4;">

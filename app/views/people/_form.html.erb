@@ -45,6 +45,9 @@
         </div>    
         <%= f.text_area :bio %>
         <%= f.number_field :term, { label: "Term Limit Year" } %> 
+        <div class="row">
+            <div class="col"><%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true, label: false} ) %></div>
+          </div>
     </div>
 
   </div>
@@ -53,7 +56,7 @@
 
   <div class="row p-3">
     <div class="col-md-3">
-      <h5 class="heavy">Candidate Status</h5>
+      <h5 class="heavy">Candidate Information</h5>
     </div>
     <div class="col-md-9">
         <div class="row">
@@ -71,14 +74,16 @@
            <%= f.select :ballot_status, ['','Rumored', 'Filed Paperwork', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary', 'Winner by Default'] %></div>    
           </div>
           <div class="row">
-          <div class="col">
-          <%= f.text_field :campaign_website %>
+            <div class="col">
+            <%= f.text_field :campaign_website %>
+            </div>
+
+            <div class="col">
+            <%= f.text_field :campaign_email %>
+            </div>
           </div>
 
-          <div class="col">
-          <%= f.text_field :campaign_email %>
-          </div>
-            </div>
+          
         </div>          
     </div>
 

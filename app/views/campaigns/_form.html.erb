@@ -28,7 +28,8 @@ Date.new(2022,06,07) : f.object.election_date) %>
       </div>
       
     </div>
-    <%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:selected => params[:district_id], :include_blank => true} ) %>
+    <%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, value: (f.object.new_record? ? 
+params[:district_id] : f.object.district_id) ) %>
     <div class="row">
       <div class="col">
         <table class="table">

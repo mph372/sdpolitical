@@ -40,6 +40,11 @@ class Person < ApplicationRecord
     campaign.district
   end
 
+  def retired
+    if is_candidate == false && district.present? == false && former_offices.present?
+    end
+  end
+
   def self.to_csv
     CSV.generate do |csv|
         csv << column_names
@@ -232,7 +237,9 @@ class Person < ApplicationRecord
   end
 
   def has_reports
-    candidate_committees.find_by(:primary_committee => true).reports.present?
+    if candidate_committees.present?
+    candidate_committees.find_by(:primary_committee => true).reports.present? 
+    end
   end
   
   private
