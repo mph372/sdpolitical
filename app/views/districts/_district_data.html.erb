@@ -16,11 +16,11 @@
         </div>
         <table class="table table-sm">
             <thead class="thead-light">
-                    <th class="pl-4">Total Voters</th>
-                    <th>DEM</th>
-                    <th>REP</th>
-                    <th>OTHER</th>
-                    <th>MARGIN</th>
+                    <th class="pl-4 col-3">Total Voters</th>
+                    <th class="col-2">DEM</th>
+                    <th class="col-2">REP</th>
+                    <th class="col-2">OTHER</th>
+                    <th class="col-2">MARGIN</th>
             </thead>
 
             <tbody>
@@ -44,11 +44,11 @@
         Candidate Performance <%if current_user.admin?%><%end%>
         </div>    
       <thead class="thead-light">
-        <th class="pl-4">Election</th>
-        <th class="d-none d-lg-table-cell">DEM</th>
-        <th class="d-none d-lg-table-cell">REP</th>
-        <th>Margin</th>
-        <th>Turnout</th>
+        <th class="pl-4 col-3">Election</th>
+        <th class="col-2 d-none d-lg-table-cell">DEM</th>
+        <th class="col-2 d-none d-lg-table-cell">REP</th>
+        <th class="col-2">Margin</th>
+        <th class="col-2">Turnout</th>
       </thead>
 
       <tbody>
@@ -143,8 +143,8 @@
         Ballot Measure Performance
         </div> 
       <thead class="thead-light">
-        <th class="pl-4">Ballot Item</th>
-        <th>Description</th>
+        <th class="pl-4 col-3">Ballot Item</th>
+        <th class="col-4">Description</th>
         <th>Yes</th>
         <th>No</th>
         <th>Margin</th>

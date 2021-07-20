@@ -131,6 +131,11 @@ class DistrictsController < ApplicationController
     person_id = district_params[:person_id]
     district_id = @district.id 
     @person = Person.find_by(id: person_id)
+    if Person.find_by(district_id: district_id).present?
+      @old_person = Person.find_by(district_id: district_id)
+      @old_person.update_attributes(:district_id => nil, :archived => true)
+    end
+    @person.update_attribute(:archived, false)
     @person.update_attribute(:district_id, district_id) unless @person.nil?
   end
 

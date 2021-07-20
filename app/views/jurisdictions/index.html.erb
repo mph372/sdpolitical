@@ -7,6 +7,7 @@
     <tr>
       <th>Name</th>
       <th>Jurisdiction Type</th>
+      <%if current_user.admin?%><th>Archive</th><%end%>
     </tr>
   </thead>
 
@@ -15,6 +16,7 @@
       <tr>
         <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
         <td><%= jurisdiction.jurisdiction_type %>
+        <%if current_user.admin?%><td><%if jurisdiction.archived == false %> <%= link_to 'Archive', make_archived_jurisdiction_path(jurisdiction), :class => "btn btn-primary btn-sm mr-2" %><%end%><%if jurisdiction.archived == true %> <%= link_to 'Un-Archive', unarchive_jurisdiction_path(jurisdiction), :class => "btn btn-primary btn-sm mr-2" %><%end%></td><%end%>
       </tr>
     <% end %>
   </tbody>

@@ -221,6 +221,9 @@ GEM
     msgpack (1.3.3)
     multi_json (1.14.1)
     multipart-post (2.1.1)
+    nilify_blanks (1.4.0)
+      activerecord (>= 4.0.0)
+      activesupport (>= 4.0.0)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -376,6 +379,7 @@ DEPENDENCIES
   material_icons
   meta-tags
   morrisjs-rails
+  nilify_blanks
   pg
   prawn
   prawn-table

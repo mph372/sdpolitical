@@ -1,5 +1,5 @@
 
-<div class="container bg-white shadow-sm border rounded mt-2">
+<div class="container bg-white shadow-sm border rounded mt-2 pb-4">
 <br>
 <%= bootstrap_form_for(@district, label_errors: true) do |f| %>
 <% if @district.errors.any? %>
@@ -43,8 +43,7 @@
       </div>
       <div class="row">
         <div class="col-md"> 
-          <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, , value: (f.object.new_record? ? 
-Date.new(2022,06,07) : f.object.election_date)) %>
+         <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
         </div>  
         <div class="col-md">  
           <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
@@ -143,9 +142,9 @@ Date.new(2022,06,07) : f.object.election_date)) %>
 
 
 <%= f.submit %>  
-&nbsp
+
 <% end %>
-<%= link_to 'Back', districts_path, :class => "btn btn-outline-primary" %>
+
 </div>
 
 <script>

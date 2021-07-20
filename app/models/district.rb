@@ -17,6 +17,7 @@ class District < ApplicationRecord
   has_many :campaigns
   has_one :person
   accepts_nested_attributes_for :person
+  nilify_blanks only: [:person_id]
   
 
   def district_name
@@ -30,6 +31,12 @@ class District < ApplicationRecord
      "#{self.name}"
     end
   end
+
+  def archived
+    jurisdiction.archived == true
+  end
+
+  
 
   def incumbent
     person

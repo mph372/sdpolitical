@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_19_212804) do
+ActiveRecord::Schema.define(version: 2021_07_20_190217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 2021_07_19_212804) do
     t.bigint "former_office_id"
     t.bigint "person_id"
     t.string "district_title"
+    t.boolean "archived", default: false
     t.index ["former_office_id"], name: "index_districts_on_former_office_id"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
@@ -272,6 +273,7 @@ ActiveRecord::Schema.define(version: 2021_07_19_212804) do
     t.string "map_url"
     t.string "jurisdiction_type"
     t.bigint "registration_history_id"
+    t.boolean "archived", default: false
     t.index ["registration_history_id"], name: "index_jurisdictions_on_registration_history_id"
   end
 
@@ -351,6 +353,7 @@ ActiveRecord::Schema.define(version: 2021_07_19_212804) do
     t.string "linkedin_url"
     t.bigint "historical_candidates_id"
     t.string "campaign_email"
+    t.boolean "archived", default: false
     t.index ["district_id"], name: "index_people_on_district_id"
     t.index ["historical_candidates_id"], name: "index_people_on_historical_candidates_id"
   end

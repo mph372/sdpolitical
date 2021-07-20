@@ -57,7 +57,7 @@ class PeopleController < ApplicationController
   # POST /people.json
   def create
     @person = Person.new(person_params)
-    
+    assign_district
 
     respond_to do |format|
       if @person.save
@@ -73,6 +73,7 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   # PATCH/PUT /people/1.json
   def update
+    assign_district
     respond_to do |format|
       if @person.update(person_params)
         format.html { redirect_to @person, notice: 'Person was successfully updated.' }
@@ -93,6 +94,20 @@ class PeopleController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def assign_district
+    district_id = person_params[:district_id]
+    person_id = @person.id 
+    @district = District.find_by(id: district_id)
+    if Person.find_by(district_id: district_id).present?
+      @old_person = Person.find_by(district_id: district_id)
+      @old_person.update_attribute(:archived, true)
+      @old_person.update_attribute(:district_id, nil)
+    end
+    @person.update_attribute(:archived, false)
+    @district.update_attribute(:person_id, person_id) unless @district.nil?
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

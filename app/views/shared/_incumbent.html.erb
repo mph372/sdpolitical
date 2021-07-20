@@ -1,15 +1,15 @@
 
-<div class="row bg-light shadow-sm bg-white section-border rounded mt-1 p-3">
+<div class="row bg-light shadow-sm bg-white section-border rounded mb-4 p-3">
         <div class="col-sm-3 m-1 px-2 "  >
           <% if person.image.present? %>
           <%= image_tag person.image.url(:headshot), alt: 'headshot', :class => " center-image avatar img-fluid shadow", size: "185x185"  %><br>
           <% else %>
-          <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "100x100"  %></div><br>
+          
           <%end%>     
         </div>
         <div class="col-md m-1 px-2">
             <div class="row">
-              <div class="col-md"> <h1 class=" primary-blue text-center text-md-left"><strong><% if page_source == "district" %><%= link_to "#{person.first_name} #{person.last_name} #{person.party_abbreviation}", person %><%end%><% if page_source == "person" %><%= "#{person.first_name} #{person.last_name} #{person.party_abbreviation}" %><%end%></strong></h1></div>
+              <div class="col-md-9"> <h1 class=" primary-blue text-center text-md-left"><strong><% if page_source == "district" %><%= link_to "#{person.first_name} #{person.last_name} #{person.party_abbreviation}", person %><%end%><% if page_source == "person" %><%= "#{person.first_name} #{person.last_name} #{person.party_abbreviation}" %><%end%></strong></h1></div>
               
               <div class="col-md text-center text-md-right">
 

@@ -94,6 +94,14 @@ class Person < ApplicationRecord
     candidates.present?
   end
 
+  def archived
+    if district.present?
+      district.archived == true
+    else
+      return true
+    end
+  end
+
   def incumbent_asterisk
     if is_incumbent == true && running_reelection == true
       "*"
@@ -238,6 +246,14 @@ class Person < ApplicationRecord
 
   def has_reports
    candidate_committees.find_by(:primary_committee => true).reports.present? 
+  end
+
+  def candidate_title
+    if district.present?
+      district.district_title
+    else
+      professional_career
+    end
   end
   
   private

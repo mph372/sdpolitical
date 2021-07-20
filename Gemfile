@@ -58,6 +58,7 @@ gem "sort-by-alphabet"
 gem 'morrisjs-rails'
 gem 'raphael-rails'
 gem 'stripe_event'
+gem "nilify_blanks"
 gem "font-ionicons-rails", git: 'https://github.com/ricardoemerson/font-ionicons-rails.git'
 
 # Reduces boot times through caching; required in config/boot.rb

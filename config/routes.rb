@@ -45,7 +45,12 @@ Rails.application.routes.draw do
     end
     collection {post :import}
   end
-  resources :jurisdictions
+  resources :jurisdictions do
+    member do
+      get 'make_archived'
+      get 'unarchive'
+    end
+  end
   resources :subscriptions
   resources :dashboard
   resources :notifications do

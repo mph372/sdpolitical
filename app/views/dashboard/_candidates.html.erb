@@ -15,7 +15,7 @@
 
                 <% @candidates.uniq.each do |person| %>
                   <tr>
-                    <td class="pl-4 col-3"><%= link_to "#{person.first_name} #{person.last_name}", person %></td>
+                    <td class="pl-4 col-3"><%= link_to "#{person.first_name} #{person.last_name}", person %><br><small><%= person.candidate_title %></small></td>
                     <td class="col-3">
                           <%= person.candidates.last.campaign.district.jurisdiction.name%>
                           <br>

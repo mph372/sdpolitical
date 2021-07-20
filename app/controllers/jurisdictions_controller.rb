@@ -44,6 +44,50 @@ class JurisdictionsController < ApplicationController
     @jurisdiction = Jurisdiction.new
   end
 
+  def make_archived
+    @jurisdiction = Jurisdiction.find(params[:id])
+    @jurisdiction.update_attribute(:archived, true)
+    @jurisdiction.districts.each do |district|
+      district.update_attribute(:archived, true)
+      if district.person.present?
+      district.person.update_attribute(:archived, true)
+      end
+    end
+  
+
+    respond_to do |format|
+      if @jurisdiction.save
+        format.html { redirect_to action: :index, notice: 'Jurisdiction was archived.' }
+        format.json { render :show, status: :created, location: @jurisdiction }
+      else
+        format.html { render :new }
+        format.json { render json: @jurisdiction.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def unarchive
+    @jurisdiction = Jurisdiction.find(params[:id])
+    @jurisdiction.update_attribute(:archived, false)
+    @jurisdiction.districts.each do |district|
+      district.update_attribute(:archived, false)
+      if district.person.present?
+      district.person.update_attribute(:archived, false)
+      end
+    end
+  
+
+    respond_to do |format|
+      if @jurisdiction.save
+        format.html { redirect_to action: :index, notice: 'Jurisdiction was un-archived.' }
+        format.json { render :show, status: :created, location: @jurisdiction }
+      else
+        format.html { render :new }
+        format.json { render json: @jurisdiction.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # GET /jurisdictions/1/edit
   def edit
   end
