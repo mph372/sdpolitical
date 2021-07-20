@@ -39,6 +39,7 @@ class Report < ApplicationRecord
     end
   end
 
+=begin   
   def district_followers
     district_followers = []
     if self.district.at_large_district == false
@@ -54,7 +55,7 @@ class Report < ApplicationRecord
     end
     return district_followers
   end
-
+=end
 
   before_save :prevent_candidate_report
 

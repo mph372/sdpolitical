@@ -7,7 +7,7 @@ class Person < ApplicationRecord
   has_many :former_offices
   has_many :candidates
   belongs_to :district, optional: true
-  has_many :reports
+  has_many :reports, through: :candidate_committees 
 
  
 
@@ -233,13 +233,11 @@ class Person < ApplicationRecord
   end
 
   def all_reports
-    candidate_committees.is_primary.collect{|u| u.report}.flatten
+    candidate_committees.find_by(primary_committee: true).reports
   end
 
   def has_reports
-    if candidate_committees.present?
-    candidate_committees.find_by(:primary_committee => true).reports.present? 
-    end
+   candidate_committees.find_by(:primary_committee => true).reports.present? 
   end
   
   private

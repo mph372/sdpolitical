@@ -4,10 +4,10 @@
 
     <div class="panel panel-default">
       <div class="table-responsive shadow-sm bg-white rounded primary-border p-4">
-        <table class="table" id="committees">
-          <thead class="thead-light">
+        <table class="table table-sm" id="committees">
+          <thead>
             <tr>
-              <th>Name<br></th>
+              <th class="col-5">Name<br></th>
               <th>Candidate or Measure</th>
               <th>Support/Oppose</th>
               <th>Cash-on-Hand</th>
@@ -26,7 +26,7 @@
                     <%end%>
                 </td>
                 <td><%if committee.is_support?%>Support</td><%elsif committee.is_oppose?%>Oppose<%end%></td>
-                <td><span class="green-pill float-right"><% if committee.reports.present? %><%= number_to_currency(committee.reports.order('period_end DESC').first.current_coh ) %><%else%>$0.00<%end%></span></td>
+                <td><span class="green-text float-right"><% if committee.reports.present? %><%= number_to_currency(committee.reports.order('period_end DESC').first.current_coh ) %><%else%>$0.00<%end%></span></td>
               </tr>
             <% end %>
           </tbody>

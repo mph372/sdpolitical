@@ -82,6 +82,7 @@
   </div>
 </div>  
 <br>
+<!--
 <% if @jurisdiction.measures.present? %>
 <hr>
 <h5 class="dark-red-supporting heavy">Current Ballot Measures</h5>
@@ -114,6 +115,7 @@
   </div>
 </div>
 <%end%>
+-->
 <br>
 <% if @jurisdiction.committees.present? && current_user.subscribed? %>
 <%= render 'committees'%>

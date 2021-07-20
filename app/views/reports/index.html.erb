@@ -19,7 +19,7 @@
     <table class="table table-sm" id="reports">
       <thead class="thead-light">
         <tr>
-          <th>Name<br><small>(Committee)</small></th>
+          <th>Name<br></th>
           <th>Start Date</th>
           <th>End Date</th>
           <th class="text-right">Receipts</th>
@@ -31,22 +31,11 @@
 
       <tbody>
         <% @reports.each do |report| %>
-          <% if report.person.present?%>
+          <% if report.candidate_committee.present?%>
           <tr>
             
-            <td class=""><%= link_to "#{report.person&.first_name} #{report.person&.last_name}", report.person  %></small><%if current_user.admin?%> - <%= link_to 'Edit', edit_report_path(report) %><%end%><br>
-                <% if report.person.running_reelection || report.incumbent_report? %>
-                        <% if report.person.incumbent_committee_name.present? %>
-                        <small>(<%= report.person.incumbent_committee_name %>)</small>
-                        <%else%>
-                        <small>(<%= report.person.incumbent_district&.name %>)</small>
-                        <%end%>
-                      <%else%>           
-                      <small>(<%= report.person.district&.name %>)</small>
-                      <%end%>
-                <%else%>
-                <td class=""><%= link_to "#{report.committee&.name}", report.committee  %>
-                <%end%></td>
+            <td class=""><%= link_to "#{report.candidate_committee.name}", report.candidate_committee  %></small><%if current_user.admin?%> - <%= link_to 'Edit', edit_report_path(report) %><%end%><br>
+                </td>
             <td class=""><%= "#{report.period_begin.strftime("%b-%d-%y")}" %></td>
             <td><%= "#{report.period_end.strftime("%b-%d-%y")}" %></td>
             <td class=""><span class="float-right green-text"><%= number_to_currency(report.period_receipts) %></span></td>
@@ -54,6 +43,7 @@
             <td class=""><%if report.net_coh < 0 %><span class="float-right gop-text">(<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right"><%= number_to_currency(report.net_coh) %></span><%end%></td>
             <td class><% if report.pdf.url.present? %><%= link_to "View", report.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
           </tr>
+          <%end%>
         <% end %>
       </tbody>
     </table>
