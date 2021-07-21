@@ -8,7 +8,7 @@
 <% statistical_datum = StatisticalDatum.find_by(district_id: @district) %>
 <%end%>
 <hr>
-<div><h3>District Data</h3> <%if current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%> </div>
+<div><h3>District Data</h3> <%if user_signed_in? && current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%> </div>
     <% if registration_snapshot.present? %>
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
         <div class="card-header">
@@ -41,7 +41,7 @@
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <table class="table table-sm ">
         <div class="card-header">
-        Candidate Performance <%if current_user.admin?%><%end%>
+        Candidate Performance <%if user_signed_in? && current_user.admin?%><%end%>
         </div>    
       <thead class="thead-light">
         <th class="pl-4 col-3">Election</th>

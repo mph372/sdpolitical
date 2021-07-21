@@ -39,7 +39,7 @@
 
 
 <br>
-<% if current_user.admin? %>
+<% if user_signed_in? && current_user.admin? %>
 <%= link_to 'New Committee', new_committee_path, :class => "btn btn-primary mr-2" %>
 <%end%>    
 </div>

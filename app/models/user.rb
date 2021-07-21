@@ -13,6 +13,10 @@ class User < ApplicationRecord
     stripe_subscription_id? || free_account?
   end
 
+  def admin?
+    self.admin == true && user_signed_in? 
+  end
+
   def full_name
     first_name + " " + last_name
   end

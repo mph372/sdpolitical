@@ -48,7 +48,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/users/edit">My Account</a>
               <a class="dropdown-item" href="/dashboard/">My Dashboard</a>
-              <%if current_user.admin? %><a class="dropdown-item" href="/admins/1">Admin Panel</a><%end%>
+              <%if user_signed_in? && current_user.admin? %><a class="dropdown-item" href="/admins/1">Admin Panel</a><%end%>
               <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "dropdown-item" %>
             </div>
            </li>
