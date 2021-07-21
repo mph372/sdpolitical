@@ -1,6 +1,6 @@
 <div class="container">
 <hr>
-<% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
+<% if  current_user.admin? && Admin.last.admin_mode == true %>
 <div class="row border border-warning p-3">
   
   <div class="col-9">

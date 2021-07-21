@@ -51,7 +51,7 @@
 
       <br>
       <br>
-      <% if user_signed_in? && current_user.admin? %>
+      <% if  current_user.admin? %>
       <%= link_to 'New Expenditure', new_expenditure_path, :class => "btn btn-primary mr-2" %>
       <%end%>
     </div>

@@ -8,6 +8,7 @@
               <li class="nav-item active">
                   <a class="nav-link" <%= link_to 'Home', page_path('home') %><span class="sr-only">(current)</span></a>
               </li>
+              <% if user_signed_in? %>
               <li class="nav-item">
                   <a class="nav-link " href="/districts/">Districts</a>
               </li>
@@ -23,15 +24,17 @@
                     <a class="dropdown-item" href="/committees/">Committees</a>
                   </div>
                 </li>
+                <%end%>
           </ul>
 
           <ul class="navbar-nav navbar-right">  
-          <li>
+           <% if user_signed_in? %><li>
               <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
-                <%= form.text_field :q, placeholder: "Person/Committee Search...", data: { behavior: "autocomplete" }, class: "form-control mdb-autocomplete", aria: { label: 'Search for Candidates and Elected Officials' }  %>
+                <%= form.text_field :q, placeholder: "Search...", data: { behavior: "autocomplete" }, class: "form-control mdb-autocomplete", aria: { label: 'Search for Candidates and Elected Officials' }  %>
                 <%= form.button "Search", class: "d-none" %>
               <% end %>
           </li>
+          <%end%>
           <!-- 
           <li class="nav-item  btn-group" data-behavior="notifications" data-notifications='<%= render template: "notifications/index", formats: [:json] %>'>
           <a class="dropdown-toggle nav-link" type="button" data-behavior="notifications-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,7 +51,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/users/edit">My Account</a>
               <a class="dropdown-item" href="/dashboard/">My Dashboard</a>
-              <%if user_signed_in? && current_user.admin? %><a class="dropdown-item" href="/admins/1">Admin Panel</a><%end%>
+              <%if current_user.admin? %><a class="dropdown-item" href="/admins/1">Admin Panel</a><%end%>
               <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "dropdown-item" %>
             </div>
            </li>

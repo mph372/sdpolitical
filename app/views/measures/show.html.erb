@@ -88,7 +88,7 @@
 <%end%>
 
 <%end%>
-<% if user_signed_in? && current_user.admin? %>
+<% if  current_user.admin? %>
 <%= link_to 'Edit', edit_measure_path(@measure) %> |
 <%= link_to 'Delete Measure', @measure, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%end%>

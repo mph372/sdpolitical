@@ -56,7 +56,7 @@
           </div>
         </div>
       <br>
-      <% if user_signed_in? && current_user.admin? %>
+      <% if  current_user.admin? %>
       <%= link_to 'New District', new_district_path, :class => "btn btn-primary mr-2" %>
       <%end%>
 

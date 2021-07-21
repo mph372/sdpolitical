@@ -1,6 +1,6 @@
   <div class="row p-3">
     <div class="col">
-    <% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
+    <% if current_user.admin? && Admin.last.admin_mode == true %>
     <%= link_to "Add Report", new_report_path(:person_id => @person.id), 
           :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
     <%= link_to "Create Committee", new_candidate_committee_path(:person_id => @person.id), 
@@ -17,7 +17,7 @@
     
   
   </div>
-  <% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
+  <% if   Admin.last.admin_mode == true %>
   <div class="container">
   <div class="row mt-2 p-4 border border-success rounded">
   <%= render 'former_offices/form' %>

@@ -18,7 +18,7 @@
               <tbody>
                 <% @expenditures.order('expenditure_date DESC').each do |expenditure| %>
                   <tr>
-                  <% if user_signed_in? && current_user.admin?%>
+                  <% if current_user.admin?%>
                     <td><%= link_to "#{expenditure.expenditure_date.strftime("%b-%d-%y")}", expenditure %></td>
                   <%else%>
                     <td><%= expenditure.expenditure_date.strftime("%b-%d-%y") %></td>
