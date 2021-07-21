@@ -1,8 +1,9 @@
 class JurisdictionsController < ApplicationController
   before_action :set_jurisdiction, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   # before_action :is_subscriber?
   before_action :authorize_admin, except: [:index, :show]
+  before_action :admin_mode, except: [:index, :show]
 
   # GET /jurisdictions
   # GET /jurisdictions.json

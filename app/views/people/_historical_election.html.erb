@@ -1,8 +1,8 @@
 <div class="h3">Electoral History</div>
- <% @person.historical_candidate.each do |historical_candidate| %>
+ <% @person.historical_candidate.collect{|u| u.election_history}.sort_by{|e| e[:election_date]}.reverse.each do |election_history| %>
   <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <div class="card-header">
-      <%= "#{historical_candidate.election_history.cycle} #{historical_candidate.election_history.election_type} Election Results" %> <span class="font-weight-light"><%= "(#{historical_candidate.election_history.election_date.strftime("%B %e, %Y")})" %></span>
+      <%= "#{election_history.cycle} #{election_history.election_type} Election Results" %> <span class="font-weight-light"><%= "(#{election_history.election_date.strftime("%B %e, %Y")})" %></span>
     </div>
     <div class="table-responsive ">
       <table class="table table-sm bg-white" >
@@ -17,14 +17,14 @@
         </thead>
         
         <tbody>
-        <% historical_candidate.election_history.historical_candidates.each_with_index do |candidate, index| %>
+        <% election_history.historical_candidates.each_with_index do |candidate, index| %>
           <tr>
-            <td class="pl-4"> <% if index <= historical_candidate.election_history.number_winners - 1 %> &#10004; <%end%></td>
+            <td class="pl-4"> <% if index <= election_history.number_winners - 1 %> &#10004; <%end%></td>
             <td>
             <% if candidate.person.present? %> <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}", candidate.person %>
-            <%else%>
+            <% else %>
             <%= "#{candidate.first_name} #{candidate.last_name}" %>
-            <%end%></td>
+            <% end %></td>
             
             <td><%= number_with_delimiter(candidate.votes, :delimiter => ',') %></td>
             <td class="font-weight-bold"><%= candidate.vote_share %></td>
@@ -40,6 +40,6 @@
           </tbody>
       </table>
     </div>
+    
   </div>
 <%end%>
-  

@@ -2,6 +2,7 @@ class ElectionsController < ApplicationController
   before_action :set_election, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :authorize_admin, except: [:index, :show]
+  before_action :admin_mode, except: [:index, :show]
 
   # GET /elections
   # GET /elections.json

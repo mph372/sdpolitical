@@ -245,7 +245,11 @@ class Person < ApplicationRecord
   end
 
   def has_reports
-   candidate_committees.find_by(:primary_committee => true).reports.present? 
+    if candidate_committees.empty?
+      false
+    elsif candidate_committees.find_by(:primary_committee => true).reports.present? 
+      true
+    end
   end
 
   def candidate_title

@@ -5,12 +5,11 @@
       <br>
         <div class="panel panel-default">
           <div class="table-responsive shadow bg-white rounded primary-border p-4">
-            <table class="table" id="districts">
+            <table class="table table-sm" id="districts">
               <thead class="thead-light rounded">
                 <tr>
                   <th>INCUMBENT</th>
                   <th>OFFICE</th>
-                  <th>AVG. TURNOUT</th>
                   <th class="text-right">DEM%</th>
                   <th class="text-right">REP%</span></th>
                   <th class="text-right">ADVANTAGE</th>
@@ -18,7 +17,7 @@
               </thead>
 
               <tbody>
-                <% @districts.each do |district| %>
+                <% @districts.where(:archived => false).each do |district| %>
                   <tr>
                     <td><strong><% if district.incumbent.present? %><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %><%else%>Vacant<%end%></strong><br>        
                     <% if district.incumbent.present? %>
@@ -42,13 +41,12 @@
                         <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
 
                     </td>
-                    <td><% if district.average_turnout_eligible == true %><%= district.average_turnout.truncate(2) %>%<%end%> </td>
                     <td><span class="float-right dem-text"><%= district.dem_voters.truncate(2) %>%</span></td>
                     <td><span class="float-right gop-text"><%= district.rep_voters.truncate(2) %>%</span></td>
                     <td class="text-nowrap"><% if district.registration_advantage > 0 %>
-                        <span class="float-right dem-pill" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+                        <span class="float-right dem-text font-weight-bold" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
                         <% else %>
-                        <span class="float-right gop-pill" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
+                        <span class="float-right gop-text font-weight-bold" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
                         <%end%>
                     </td>      
                   </tr>

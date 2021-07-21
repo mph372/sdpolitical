@@ -1,7 +1,8 @@
 class FormerOfficesController < ApplicationController
   before_action :set_former_office, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :authorize_admin, except: [:index, :show]
+  before_action :admin_mode, except: [:index, :show]
 
   # GET /former_offices
   # GET /former_offices.json

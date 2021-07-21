@@ -71,7 +71,7 @@ class AdminsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def admin_params
-      params.require(:admin).permit(:period_begin, :period_end, :current_cycle)
+      params.require(:admin).permit(:period_begin, :period_end, :current_cycle, :admin_mode)
     end
 
 end

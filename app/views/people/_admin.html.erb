@@ -1,6 +1,6 @@
   <div class="row p-3">
     <div class="col">
-    <% if current_user.admin? %>
+    <% if current_user.admin? && Admin.last.admin_mode == true %>
     <%= link_to "Add Report", new_report_path(:person_id => @person.id), 
           :class => "btn btn-primary mr-2", :action => "new", :method => :get %>
     <%= link_to "Create Committee", new_candidate_committee_path(:person_id => @person.id), 
@@ -8,7 +8,8 @@
     <%= link_to "Add Election History", new_election_history_path, 
             :class => "btn btn-primary", :action => "new", :method => :get %>      
     <%= link_to "Edit", edit_person_path(@person), :class => "btn btn-outline-primary mr-2" %> 
-    <%= link_to 'Delete Person', @person, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
+    <%= link_to 'Delete Person', @person, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-warning" %> 
+    <%= link_to 'Archive', archive_person_path(@person), :class => "btn btn-danger mr-2" %>
     <%end%>
 
     <%= link_to "Help", '/pages/about_people', :class => "btn btn-primary float-right align-bottom mt-auto", :target => "_blank"%>   
@@ -16,8 +17,10 @@
     
   
   </div>
+  <% if current_user.admin? && Admin.last.admin_mode == true %>
   <div class="container">
   <div class="row mt-2 p-4 border border-success rounded">
   <%= render 'former_offices/form' %>
   </div>
   </div>
+<%end%>

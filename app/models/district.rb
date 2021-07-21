@@ -171,7 +171,11 @@ class District < ApplicationRecord
   end
   
   def registration_advantage
+    if statistical_datum.present? && statistical_datum.last.registration_snapshots.present?
+      statistical_datum.last.registration_snapshots.last.registration_advantage
+    else
     dem_voters - rep_voters
+    end
   end
 
   def absolute_registration_advantage
@@ -195,11 +199,19 @@ class District < ApplicationRecord
   end
 
   def dem_voters
-    (dem_percent / total_voters) * 100
+    if statistical_datum.present? && statistical_datum.last.registration_snapshots.present?
+      statistical_datum.last.registration_snapshots.last.democrat_percentage
+    else
+      (dem_percent / total_voters) * 100
+    end
   end
 
   def rep_voters
+    if statistical_datum.present? && statistical_datum.last.registration_snapshots.present?
+      statistical_datum.last.registration_snapshots.last.republican_percentage
+    else
     (rep_percent / total_voters) * 100
+    end
   end
 
   def other_voters

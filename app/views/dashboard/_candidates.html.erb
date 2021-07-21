@@ -1,13 +1,12 @@
-
         <div class="card shadow-sm mb-3 bg-white rounded primary-border">
           <table class="table table-sm" id="expenditures">
             <thead class="thead">
               <tr class="card-header">
                 <th class="pl-4 col-3">Candidate</th>
                 <th class="col-3">District</th>
-                <th class="col-2">Raised</th>
-                <th class="col-2">Spent</th>
-                <th class="col-2">COH</th>
+                <th class="col-2 text-right">Raised</th>
+                <th class="col-2 text-right">Spent</th>
+                <th class="col-2 text-right pr-4">COH</th>
               </tr>
             </thead>
 
@@ -32,7 +31,7 @@
                       </td>
                    
                    
-                      <% if person.candidate_committees.present? %>
+                    
 
                          <%if person.has_reports %>
                             <% reports = person.all_reports %>   
@@ -45,7 +44,7 @@
                             <td class="text-right col-2 pr-4"><span class="green-text font-weight-bold">$0.00</span><br><small>Cash-on-Hand</small></td>
                         <%end%>
                       
-                      <%end%>
+                
 
                     
 
@@ -60,4 +59,4 @@
 
         </div>
 
- <%= link_to "Export (PDF)", people_path(@persons, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>
+ 

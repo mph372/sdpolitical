@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   resources :people do 
     resources :reports, only:
     [:index]
+    member do
+      get 'archive'
+    end
   end
   resources :committees
   resources :campaigns

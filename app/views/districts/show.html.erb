@@ -5,13 +5,13 @@
     <h3 class="mb-0 mt-2 header-text text-nowrap nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
     <h1 class="heavy text-nowrap primary-blue"><%= @district.district_name %> </h1>
 
-    <% if @district.at_large_district? && current_user.admin? %>
+    <% if @district.at_large_district? && current_user.admin? && Admin.last.admin_mode == true %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
   <%= render 'map'%>
   </div>
   <div class="col">
-    <% if current_user.admin? %><div class="float-right followers"><small><%= @district.district_followers %></small></div><%end%>
+    <% if current_user.admin? && Admin.last.admin_mode == true %><div class="float-right followers"><small><%= @district.district_followers %></small></div><%end%>
   </div>
 
 </div>

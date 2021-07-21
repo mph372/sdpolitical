@@ -3,6 +3,7 @@ class ExpendituresController < ApplicationController
   before_action :authenticate_user!
   before_action :is_subscriber?
   before_action :authorize_admin, except: [:index, :show]
+  before_action :admin_mode, except: [:index, :show]
 
   # GET /expenditures
   # GET /expenditures.json

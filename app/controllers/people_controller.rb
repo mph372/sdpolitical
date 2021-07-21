@@ -1,8 +1,9 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   # before_action :is_subscriber?
-  before_action :authorize_admin, except: [:index, :show]
+  before_action :authorize_admin, except: [ :show]
+  before_action :admin_mode, except: [ :show]
 
   # GET /people
   # GET /people.json
@@ -42,6 +43,21 @@ class PeopleController < ApplicationController
                   site: 'The Ballot Book',
                   description: @person.description,
                   keywords: @person.keywords
+  end
+
+  def archive
+    @person = Person.find(params[:id])
+    @person.update_attribute(:archived, true)
+
+    respond_to do |format|
+      if @person.save
+        format.html { redirect_to @person, notice: 'Person was archived.' }
+        format.json { render :show, status: :created, location: @person }
+      else
+        format.html { render :new }
+        format.json { render json: @person.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # GET /people/new

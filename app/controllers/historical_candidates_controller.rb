@@ -2,6 +2,7 @@ class HistoricalCandidatesController < ApplicationController
   before_action :set_historical_candidate, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   before_action :authorize_admin, except: [:index, :show]
+  before_action :admin_mode, except: [:index, :show]
 
   # GET /historical_candidates
   # GET /historical_candidates.json

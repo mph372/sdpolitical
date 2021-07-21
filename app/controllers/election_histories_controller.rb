@@ -2,6 +2,7 @@ class ElectionHistoriesController < ApplicationController
   before_action :set_election_history, only: [:show, :edit, :update, :destroy]
   before_action :authorize_admin, except: [:show]
   before_action :authenticate_user!
+  before_action :admin_mode, except: [:show]
 
   # GET /election_histories
   # GET /election_histories.json

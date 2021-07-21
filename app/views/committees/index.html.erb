@@ -5,12 +5,12 @@
     <br>
     <div class="panel panel-default">
       <div class="table-responsive shadow bg-white rounded primary-border p-4">
-        <table class="table" id="committees">
+        <table class="table table-sm" id="committees">
           <thead class="thead-light">
             <tr>
               <th>Name<br><small>Jurisdiction</small></th>
               <th>Candidate or Measure</th>
-              <th>Support/Oppose</th>
+             
               <th>Cash-on-Hand</th>
             </tr>
           </thead>
@@ -25,9 +25,9 @@
                     <%= link_to "Measure #{committee.measure.letter}", committee.measure %>
                     <%else%>
                     <%end%>
+                    <br><small><%if committee.is_support?%>Support</td><%elsif committee.is_oppose?%>Oppose<%end%></small>
                 </td>
-                <td><%if committee.is_support?%>Support</td><%elsif committee.is_oppose?%>Oppose<%end%></td>
-                <td><span class="green-pill float-right"><% if committee.reports.present? %><%= number_to_currency(committee.reports.order('period_end DESC').first.current_coh ) %><%else%>$0.00<%end%></span></td>
+                <td class="pr-4"><span class="green-text font-weight-bold float-right"><% if committee.reports.present? %><%= number_to_currency(committee.reports.order('period_end DESC').first.current_coh ) %><%else%>$0.00<%end%></span></td>
               </tr>
             <% end %>
           </tbody>

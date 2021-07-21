@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_20_190217) do
+ActiveRecord::Schema.define(version: 2021_07_20_202502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2021_07_20_190217) do
     t.string "current_cycle"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin_mode", default: true
   end
 
   create_table "campaigns", force: :cascade do |t|

@@ -1,32 +1,23 @@
 <div class="container mt-3">
-<div class="dashboard-header border rounded p-4">
-  <h2 class="text-left-right heavy">
-    <span class="text-left">Welcome to your dashboard, </span>
-    <span class="dark-red-supporting"> <%= current_user.first_name %>!</span>
-  </div>
-<div>  
-  <div class="row pt-4">
-    <div class="col">
-    <%= render 'messages' %>
-    </div>
+  <div class="dashboard-header border rounded p-4">
+    <h2 class="text-left-right heavy">
+      <span class="text-left">Welcome to your dashboard, </span>
+      <span class="dark-red-supporting"> <%= current_user.first_name %>!</span>
+    </h2>
   </div>
   <div class="row pt-4">
-    <div class="col-md-6">  
-          <%= render 'trackeddistricts'%>
-          <%= render 'birthdays' %>
-    </div>
-    <div class="col-md-6">
-         <%= render 'deadlines'%>
-    </div>
-    <% if @districts.present? %>
     <div class="col">
-      <%= render 'candidates'%>
-     <%= render 'expenditures'%>
+      <%= render 'messages' %>
+      <%= render 'deadlines'%>
+      <% if @districts.present? %>
+        <%= render 'trackeddistricts'%>
+        <%= render 'candidates'%>
+      <%end%>
+      <%= render 'expenditures'%>
+      <%= render 'birthdays' %>
     </div>
-    <%end%>
-    </div>
-
-
+  </div>
+  <%= link_to "Export (PDF)", people_path(@persons, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>
 </div>
 
 

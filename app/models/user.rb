@@ -23,7 +23,9 @@ class User < ApplicationRecord
     end
   end
 
-
+  def admin_mode
+   Admin.last.admin_mode == true 
+  end
 
   after_create :subscribe_user_to_mailing_list
 
