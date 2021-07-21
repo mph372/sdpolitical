@@ -117,10 +117,10 @@ class PeopleController < ApplicationController
     @district = District.find_by(id: district_id)
     if Person.find_by(district_id: district_id).present?
       @old_person = Person.find_by(district_id: district_id)
-      @old_person.update_attribute(:archived, true)
-      @old_person.update_attribute(:district_id, nil)
+      @old_person.update_attribute(:archived, true) unless @person == @old_person
+      @old_person.update_attribute(:district_id, nil) unless @person == @old_person
     end
-    @person.update_attribute(:archived, false)
+    @person.update_attribute(:archived, false) unless @person == @old_person
     @district.update_attribute(:person_id, person_id) unless @district.nil?
   end
 
