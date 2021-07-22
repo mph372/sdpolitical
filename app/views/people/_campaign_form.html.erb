@@ -1,0 +1,29 @@
+<%= bootstrap_form_for(@candidate, label_errors: true) do |f| %>
+  <% if @former_office.errors.any? %>
+    <% @former_office.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
+ 
+
+  <div class="row">
+    <div><%= f.hidden_field :person_id, :value => @person.id %></div>
+    <div class="col">
+    <%= f.select(:campaign_id, Campaign.all.collect { |v| ["#{v.district.jurisdiction.name} - #{v.district.name} (District #{v.district.district}) #{v.district.term_expires}", v.id ] }, {:include_blank => true, label: "Add to Campaign"}) %></div>
+  </div>
+  <div class="row">
+  <div class="col">
+     <%= f.select :ballot_status, ['Rumored', 'Filed Paperwork', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary', 'Winner by Default'],  { :include_blank => true} %>
+
+  </div>
+  </div>
+
+    
+    
+    
+  
+
+  <div class="form-actions">
+    <%= f.submit "Add to Campaign" %>
+  </div>
+<% end %>

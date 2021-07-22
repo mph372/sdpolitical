@@ -76,6 +76,12 @@ class Person < ApplicationRecord
     now.year - birthdate.year - ((now.month > birthdate.month || (now.month == birthdate.month && now.day >= birthdate.day)) ? 0 : 1)
   end
 
+  def birthday_unknown
+    if calculated_age > 100
+      true
+    end
+  end
+
   def next_birthday
     calculated_age + 1
   end

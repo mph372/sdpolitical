@@ -71,7 +71,7 @@
 
                 <tr>
                   <td class="heavy col-4">Birthdate:</td>
-                  <td><%if person.birthdate.present? %><%= person.birthdate.to_formatted_s(:long) %> (Age <%= person.calculated_age %>)<%else%><em>Unknown</em><%end%></td>
+                  <td><% if person.birthday_unknown %>Unknown<%else%><%= person.birthdate.to_formatted_s(:long) %> (Age <%= person.calculated_age %>)<%end%></td>
                 </tr>
 
                 <% if person.district.present? && person.term_expires.present?%>

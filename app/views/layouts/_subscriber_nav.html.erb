@@ -25,6 +25,7 @@
                   </div>
                 </li>
                 <%end%>
+                <% if current_user.admin? %><li><%= link_to 'New Person', new_person_path, :class => "nav-link" %></li><%end%> 
           </ul>
 
           <ul class="navbar-nav navbar-right">  

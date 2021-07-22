@@ -3,6 +3,7 @@
       <thead class="thead-light rounded">
         <tr>
           <th>Name</th>
+          <th>Ballot Status</th>
         </tr>
       </thead>
       
@@ -12,6 +13,7 @@
           <td>
          <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}", candidate.person %>
           </td>
+          <td><%= candidate.ballot_status %></td>
         </tr>
        
         

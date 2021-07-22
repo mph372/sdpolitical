@@ -28,8 +28,8 @@ class CandidatesController < ApplicationController
 
     respond_to do |format|
       if @candidate.save
-        format.html { redirect_to @candidate, notice: 'Candidate was successfully created.' }
-        format.json { render :show, status: :created, location: @candidate }
+        format.html { redirect_to @candidate.person, notice: 'Candidate was added to campaign.' }
+        format.json { render :show, status: :created, location: @candidate.person }
       else
         format.html { render :new }
         format.json { render json: @candidate.errors, status: :unprocessable_entity }

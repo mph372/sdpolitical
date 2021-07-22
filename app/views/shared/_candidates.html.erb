@@ -23,7 +23,9 @@
                   <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}", candidate, { :class =>"dem-text" }%>
                   <%else%>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}",candidate, { :class =>"dts-text" }%>
-                  <%end%><br><small>
+                  <%end%>
+                  <% if current_user.admin? %>(<%= link_to "Remove", candidate.candidates.last, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
+                <br><small>
                 <%if candidate.is_incumbent? %>
                 <%= candidate.title %>
                 <%else%>
@@ -31,7 +33,7 @@
                 <%end%>
                 </td>
                 <td> 
-                <%=candidate.ballot_status %>
+                <%= candidate.candidates.last.ballot_status %>
                 <br><small>
                 <%if candidate.campaign_website.present? %><%= link_to "Website", candidate.campaign_website, target: :_blank %><%end%>
                 <%if candidate.campaign_website.present? && candidate.campaign_email.present? %> | <%end%>
