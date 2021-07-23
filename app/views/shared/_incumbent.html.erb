@@ -104,8 +104,8 @@
                     <td class="heavy col-4">Official Contact Info:</td>
                     <td>
 
-                      <%if person.email.present?%>
-                        <%= link_to "Website", person.campaign_website, target: :_blank %>
+                      <%if person.official_website.present?%>
+                        <%= link_to "Website", person.official_website, target: :_blank %>
                       <%end%>
 
                       <% if person.email.present? && person.email.present? %>

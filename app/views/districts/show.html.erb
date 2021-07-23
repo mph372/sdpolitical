@@ -30,6 +30,15 @@
       <%end%>
     </div>
   </div>
+
+  <% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
+  <div class="row">
+    <div class="col">
+      <%= render 'district_data'%>
+    </div>
+  </div>
+  <%end%>  
+
   <% if @district.district_data == false %>
   <div class="row">
     <div class="col-lg">
@@ -53,13 +62,7 @@
   </div>
 </div>
   
-<% if @district.registration_history.present? %>
-  <div class="row">
-    <div class="col">
-      <%= render 'registration_history'%>
-    </div>
-  </div>
-<%end%>
+
   <div class="row">
     <div class="col">
       <%= render 'electedofficials'%>
@@ -72,13 +75,7 @@
     </div>
   </div>  
 
-<% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
-  <div class="row">
-    <div class="col">
-      <%= render 'district_data'%>
-    </div>
-  </div>
-<%end%>  
+
 
 <%if @district.at_large_district == false %>
   <% if @district.election_histories.present? %> 

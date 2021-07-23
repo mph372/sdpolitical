@@ -305,7 +305,7 @@ class District < ApplicationRecord
   def district_data
     if at_large_district? && self.jurisdiction.statistical_datum.present?
       true
-    elsif statistical_datum.present?
+    elsif statistical_datum.present? || jurisdiction.statistical_datum.present?
       true
     else
       false
