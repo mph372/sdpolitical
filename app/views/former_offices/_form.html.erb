@@ -9,7 +9,7 @@
   <div class="row">
     <div><%= f.hidden_field :person_id, :value => @person.id %></div>
     <div class="col">
-    <%= f.select(:district_id, District.all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true}) %></div>
+    <%= f.select(:district_id, District.all.order(jurisdiction_id: :asc, name: :desc).collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true}) %></div>
   </div>
   <div class="row">
     <div class="col">

@@ -4,14 +4,14 @@
     <h3><%= @person.campaign_district.name %> Campaign Info</h3>
     <%end%>
 
-    <% if current_user.subscribed == true %>
+   
       
       
 
         <div class="col-lg">
         <%= render 'opponentssection'%>
         </div>
-
+        <%= render 'candidate_committees' %>
         <% if @person.reports.present? %>
     
    
@@ -20,7 +20,5 @@
         
         <!-- RENDER EXPENDITURE DATA HERE -->
         </div>
-    <%else%>
-        <%= render 'shared/subscription_required' %>
-    <%end%>
+
 
