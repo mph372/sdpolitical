@@ -27,21 +27,6 @@
 
       </div>  
       <div class="row">
-        <div class="col-md">
-          <%= f.form_group do %>
-            <%= f.check_box :corporate_contributions, label: "Corporate Allowed" %>
-            <%= f.check_box :pac_contributions, label: "PAC Allowed" %>
-            <%= f.check_box :party_contributions, label: "Party Allowed", id:"runningFor" %>
-          <%end%>
-        </div>   
-        <div class="col-md"> 
-          <%= f.number_field :contribution_limit %>
-        </div>  
-        <div class="col-md">  
-          <%= f.number_field :party_contribution_limit %>
-        </div>
-      </div>
-      <div class="row">
         <div class="col-md"> 
          <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
         </div>  

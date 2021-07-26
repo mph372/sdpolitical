@@ -15,7 +15,7 @@
         <% @district = District.find_by_id(former_office.district_id) %>
         <tr>
             
-          <td class="pl-4"><%= link_to "#{@district.full_district_name}", @district %> <% if current_user.admin? %> - <%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> <%end%></td> 
+          <td class="pl-4"><%if former_office.at_large? %><%= link_to "#{@district.jurisdiction.name} - #{@district.name}", @district.jurisdiction %><%else%><%= link_to "#{@district.full_district_name}", @district %><%end%> <% if current_user.admin? %> - <%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> <%end%></td> 
           <td><%= former_office.start_year %> - <%= former_office.end_year %> </td>
         
         </tr>

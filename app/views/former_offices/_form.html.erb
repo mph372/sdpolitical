@@ -15,6 +15,7 @@
     <div class="col">
     <%= f.check_box :elected, { checked: true } %>
     <%= f.check_box  :appointed %>    
+    <%= f.check_box  :at_large, { :label => "District was At Large"} %>    
     </div>
     <div class="col">
       <%= f.select :start_year, (Time.zone.now.year - 50)..(Time.zone.now.year), {:selected => '2020'} %>
@@ -29,7 +30,7 @@
     
   
 
-  <div class="form-actions">
+  <div class="form-actions mt-3">
     <%= f.submit "Add Former Office" %>
   </div>
 <% end %>
