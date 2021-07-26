@@ -4,7 +4,7 @@
         <%= link_to 'Delete', '#', class: 'remove_record' %>
     </td>
     <td><%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true, hide_label: true }) %></td>
-    <td><%= f.select :ballot_status, ['Opened Committee', 'Rumored', 'Filed Paperwork', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary', 'Winner by Default'],  { :include_blank => true, hide_label: true } %></td>
+    <td><%= f.select :ballot_status, ['Opened Committee', 'Pulled Papers', 'Rumored', 'Filed Paperwork', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary', 'Winner by Default'],  { :include_blank => true, hide_label: true } %></td>
 </tr>
 
         
