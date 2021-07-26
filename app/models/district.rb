@@ -36,7 +36,13 @@ class District < ApplicationRecord
     jurisdiction.archived == true
   end
 
-  
+  def incumbent_name
+    if person.present?
+      person.full_name
+    else
+      "Vacant"
+    end
+  end
 
   def incumbent
     person
