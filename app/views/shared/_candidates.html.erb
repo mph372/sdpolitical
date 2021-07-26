@@ -15,7 +15,12 @@
                 
 
                           
-                <td class="col-1"><%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %></td>
+                <td class="col-1"><%if candidate.image.present? %>
+                                  <%= image_tag candidate.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
+                                  <%else%>
+                                  <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
+                                  <%end%>
+                                  </td>
                 <td class="col-3">
                   <% if candidate.party == "Republican" %>
                   <%= link_to "#{candidate.first_name} #{candidate.last_name} #{candidate.incumbent_asterisk}", candidate, { :class =>"gop-text" }%>

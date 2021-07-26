@@ -4,7 +4,7 @@
           <% if person.image.present? %>
           <%= image_tag person.image.url(:headshot), alt: 'headshot', :class => " center-image avatar img-fluid shadow", size: "185x185"  %><br>
           <% else %>
-          
+           <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "185x185"  %><br>
           <%end%>     
         </div>
         <div class="col-md m-1 px-2">
