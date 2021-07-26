@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :campaign_finance_modules
   resources :admins
   resources :candidate_committees
   resources :candidates

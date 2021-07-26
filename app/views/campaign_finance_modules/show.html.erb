@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Corporate:</strong>
+  <%= @campaign_finance_module.corporate %>
+</p>
+
+<p>
+  <strong>Pac:</strong>
+  <%= @campaign_finance_module.pac %>
+</p>
+
+<p>
+  <strong>Party:</strong>
+  <%= @campaign_finance_module.party %>
+</p>
+
+<p>
+  <strong>Contribution limit:</strong>
+  <%= @campaign_finance_module.contribution_limit %>
+</p>
+
+
+<p>
+  <strong>Party limit:</strong>
+  <%= @campaign_finance_module.party_limit %>
+</p>
+
+<% if @campaign_finance_module.jurisdiction.present? %>
+<p>
+  <strong>Jurisdiction:</strong>
+  <%= link_to "#{@campaign_finance_module.jurisdiction.name}", @campaign_finance_module.jurisdiction  %>
+</p>
+<%else%>
+<p>
+  <strong>District:</strong>
+  <%= link_to "#{@campaign_finance_module.district.full_district_name}", @campaign_finance_module.district %>
+</p>
+<%end%>
+
+<%= link_to 'Edit', edit_campaign_finance_module_path(@campaign_finance_module) %> |
+<%= link_to 'Back', campaign_finance_modules_path %>

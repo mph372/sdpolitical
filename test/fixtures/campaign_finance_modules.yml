@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  corporate: false
+  pac: false
+  party: false
+  contribution_limit: 1
+  party_limit: 1
+  jurisdiction_override: false
+  jurisdiction: one
+
+two:
+  corporate: false
+  pac: false
+  party: false
+  contribution_limit: 1
+  party_limit: 1
+  jurisdiction_override: false
+  jurisdiction: two

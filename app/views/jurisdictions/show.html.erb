@@ -119,21 +119,30 @@
 <br>
 <% if @jurisdiction.committees.present? && current_user.subscribed? %>
 <%= render 'committees'%>
-<%end%>
 <br>
-<div class="container">
-<% if  current_user.admin? %>
-<%= link_to("Add District", new_district_path(:jurisdiction_id => @jurisdiction.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%> 
-<%= link_to 'Add Statistical Data', new_statistical_datum_path(:jurisdiction_id => @jurisdiction.id), :class => "btn btn-primary mr-2" %>  
-<%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(jurisdiction_id: @jurisdiction)), :class => "btn btn-primary mr-2" %>    
-<%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction), :class => "btn btn-outline-primary mr-2" %> 
-<%= link_to 'Delete Jurisdiction', @jurisdiction, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
 <%end%>
 
-<%= link_to "Download Jurisdiction Fundraising Report (PDF)", jurisdiction_path(@jurisdiction, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>
 
-<%= link_to 'Back', jurisdictions_path, :class => "float-right btn btn-outline-secondary text-right" %> 
+<div class="row">
+
+  <%= link_to "Download Jurisdiction Fundraising Report (PDF)", jurisdiction_path(@jurisdiction, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>
+
+  <%= link_to 'Back', jurisdictions_path, :class => "float-right btn btn-outline-secondary text-right" %> 
 </div>
+<% if  current_user.admin? %>
+<div class="row my-3">
+  <div class="col">
+    <%= link_to "Add District", new_district_path(:jurisdiction_id => @jurisdiction.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2" %> 
+    <%= link_to 'Add Statistical Data', new_statistical_datum_path(:jurisdiction_id => @jurisdiction.id), :class => "btn btn-primary mr-2" %>  
+    <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(jurisdiction_id: @jurisdiction)), :class => "btn btn-primary mr-2" %>
+    <%= link_to 'Add Campaign Finance', new_campaign_finance_module_path(:jurisdiction_id => @jurisdiction.id), :class => "btn btn-primary mr-2" %>        
+    <%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction), :class => "btn btn-outline-primary mr-2" %> 
+    <%= link_to 'Delete Jurisdiction', @jurisdiction, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn" %> 
+  </div>
+</div>
+<%end%>
+
+
     
 </div>
 

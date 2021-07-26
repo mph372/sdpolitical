@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Campaign Finance Modules</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Corporate</th>
+      <th>Pac</th>
+      <th>Party</th>
+      <th>Contribution limit</th>
+      <th>Party limit</th>
+      <th>Jurisdiction override</th>
+      <th>Jurisdiction</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @campaign_finance_modules.each do |campaign_finance_module| %>
+      <tr>
+        <td><%= campaign_finance_module.corporate %></td>
+        <td><%= campaign_finance_module.pac %></td>
+        <td><%= campaign_finance_module.party %></td>
+        <td><%= campaign_finance_module.contribution_limit %></td>
+        <td><%= campaign_finance_module.party_limit %></td>
+        <td><%= campaign_finance_module.jurisdiction_override %></td>
+        <td><%= campaign_finance_module.jurisdiction %></td>
+        <td><%= link_to 'Show', campaign_finance_module %></td>
+        <td><%= link_to 'Edit', edit_campaign_finance_module_path(campaign_finance_module) %></td>
+        <td><%= link_to 'Destroy', campaign_finance_module, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Campaign Finance Module', new_campaign_finance_module_path %>

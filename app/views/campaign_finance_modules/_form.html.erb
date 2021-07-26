@@ -1,0 +1,42 @@
+<%= bootstrap_form_for(@campaign_finance_module, label_errors: true) do |f| %>
+<% if @campaign_finance_module.errors.any? %>
+    <% @campaign_finance_module.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
+
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-md">
+        <%= f.select(:jurisdiction_id, Jurisdiction.order(:name).all.collect { |v| [ v.name, v.id ] }, {:selected => params[:jurisdiction_id], :include_blank => true} ) %>
+      </div>
+      <div class="col-md">
+        <%= f.select(:district_id, District.order(jurisdiction_id: :asc, name: :desc).all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:selected => params[:district_id], :include_blank => true}) %>
+      </div>
+    </div>
+
+    <div class="row my-3 text-center">
+      <div class="col"><%= f.check_box :corporate, {:label => "Corporate Contributions Allowed"} %></div>
+      <div class="col"><%= f.check_box :pac, {:label => "PAC Contributions Allowed"} %></div>
+      <div class="col"><%= f.check_box :party, {:label => "Party Contributions Allowed"} %></div>
+    </div>
+
+    
+    
+    
+    <div class="row">
+      <div class="col">
+        <%= f.number_field :contribution_limit %>
+      </div>
+      <div class="col">
+        <%= f.number_field :party_limit %>
+      </div>
+    </div>
+    
+   
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

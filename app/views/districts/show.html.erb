@@ -56,11 +56,20 @@
   </div>
   <%end%>
   
+<% if @district.campaign_finance_module.present? %>
 <div class="row">
   <div class="col">
-    <%= render 'campaignfinance' %>
+    <%= render partial: 'campaignfinance', locals: {district: @district.campaign_finance_module} %>
   </div>
 </div>
+
+<% elsif @district.jurisdiction.campaign_finance_module.present? %>
+<div class="row">
+  <div class="col">
+    <%= render partial: 'campaignfinance', locals: {district: @district.jurisdiction.campaign_finance_module } %>
+  </div>
+</div>
+<%end%>
   
 
   <div class="row">

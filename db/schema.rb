@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_20_202502) do
+ActiveRecord::Schema.define(version: 2021_07_26_181353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,20 @@ ActiveRecord::Schema.define(version: 2021_07_20_202502) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin_mode", default: true
+  end
+
+  create_table "campaign_finance_modules", force: :cascade do |t|
+    t.boolean "corporate"
+    t.boolean "pac"
+    t.boolean "party"
+    t.integer "contribution_limit"
+    t.integer "party_limit"
+    t.bigint "jurisdiction_id"
+    t.bigint "district_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_campaign_finance_modules_on_district_id"
+    t.index ["jurisdiction_id"], name: "index_campaign_finance_modules_on_jurisdiction_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -549,6 +563,8 @@ ActiveRecord::Schema.define(version: 2021_07_20_202502) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "campaign_finance_modules", "districts"
+  add_foreign_key "campaign_finance_modules", "jurisdictions"
   add_foreign_key "campaigns", "districts"
   add_foreign_key "candidate_committees", "people"
   add_foreign_key "candidate_committees", "reports"
