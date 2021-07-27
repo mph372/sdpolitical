@@ -32,10 +32,9 @@
 <div class="container primary-border rounded p-3">
   <h5 class="dark-red-supporting heavy"> List of Offices & Districts </h5>
   <div class="table-responsive bg-white rounded border-primary p-4">
-    <table class="table">
+    <table class="table table-sm">
     <thead>
         <tr>
-          <th>Office</th>
           <th>District</th>
           <th class="condensed-column"></th>
           <th>Incumbent</th>
@@ -47,32 +46,21 @@
       <tbody> 
           <tr>
           <% @jurisdiction.districts.order(:district).each do |district| %>
-            <td><%= district.name %></td>
-            <td>
-                  <%if district.district != "At Large" && district.is_seat == false && district.is_area == false %>
-                  <%= link_to "#{district.district.to_i.ordinalize} District", district %>
-                  <%elsif district.is_seat %>
-                  <%= link_to "Seat #{district.district}", district %>
-                  <%elsif district.is_area %>
-                  <%= link_to "Trustee Area #{district.district}", district%>
-                  <%elsif district.district == "At Large" %>
-                  <%= link_to "At Large", district%>
-                  <%end%>
-                  <%if district.at_large_district? && current_user.admin? %><br><small>Term Expires: <%= district.term_expires %> </small><%end%>
-                </td>
+            <td><%= link_to "#{district.district_name}", district %></td>
 
-                <% if district.incumbent.present? %>
-                <td class="condensed-column"><%= image_tag district.incumbent.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+
+                <% if district.person.present? %>
+                <td class="condensed-column"><%= image_tag district.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <%else%>
                 <td class="condensed-column"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <%end%>
 
-            <td><% if district.incumbent.present? %><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent %><br><small><%= district.incumbent.party %></small><%else%>Vacant<%end%></td>
-            <td><%= district.incumbent&.term_expires %>
+            <td><% if district.person.present? %><%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person %><%else%>Vacant<%end%></td>
+            <td><%= district.term_expires %>
             <td class="text-nowrap"><% if district.registration_advantage > 0 %>
-                <span class="float-right dem-pill" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+                <span class="float-right dem-text" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
                 <% else %>
-                <span class="float-right gop-pill" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
+                <span class="float-right gop-text" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
                 <%end%>
             </td> 
           </tr>
