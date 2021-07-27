@@ -29,24 +29,24 @@
 </div>
 <%end%>
 <br>
-<div class="container primary-border rounded p-3">
-  <h5 class="dark-red-supporting heavy"> List of Offices & Districts </h5>
-  <div class="table-responsive bg-white rounded border-primary p-4">
+<div class="card shadow-sm mb-3 bg-white rounded primary-border">
+  <h5 class="card-header"> List of Offices & Districts </h5>
+  <div class="table-responsive bg-white rounded border-primary ">
     <table class="table table-sm">
     <thead>
         <tr>
-          <th>District</th>
+          <th class="pl-4">District</th>
           <th class="condensed-column"></th>
           <th>Incumbent</th>
           <th>Term Expires</th>
-          <th>Reg Advantage</th>
+          <th class="pr-4">Reg Advantage</th>
         </tr>
       </thead>
 
       <tbody> 
           <tr>
           <% @jurisdiction.districts.order(:district).each do |district| %>
-            <td><%= link_to "#{district.district_name}", district %></td>
+            <td class="pl-4"><%= link_to "#{district.district_name}", district %></td>
 
 
                 <% if district.person.present? %>
@@ -55,12 +55,20 @@
                 <td class="condensed-column"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <%end%>
 
-            <td><% if district.person.present? %><%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person %><%else%>Vacant<%end%></td>
+            <td><% if district.person.present? %>
+                    <% if district.person.party == "Republican" %>
+                    <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, { :class =>"gop-text" }%>
+                    <%elsif district.person.party == "Democrat"%>
+                    <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, { :class =>"dem-text" }%>
+                    <%else%>
+                    <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, { :class =>"dts-text" }%>
+                    <%end%>
+                  <%else%>Vacant<%end%></td>
             <td><%= district.term_expires %>
-            <td class="text-nowrap"><% if district.registration_advantage > 0 %>
-                <span class="float-right dem-text" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+            <td class="pr-4"><% if district.registration_advantage > 0 %>
+                <span class="dem-text" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
                 <% else %>
-                <span class="float-right gop-text" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
+                <span class="gop-text" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
                 <%end%>
             </td> 
           </tr>

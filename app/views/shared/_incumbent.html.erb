@@ -40,7 +40,7 @@
               </div>
             </div>
            
-              <% if person.district.present? %>
+              <% if person.district.present? && (person.district.archived == false || current_user.admin?) %>
               <h5 class="text-center text-md-left"><%= link_to "#{person.district.jurisdiction.name}", person.district.jurisdiction, :class => "nounderline" %> - 
                 <% if person.incumbent_district.district != "At Large" && person.incumbent_district.is_seat == false && person.incumbent_district.is_area == false %>
                 <%= link_to "#{person.district.district_title}, #{person.incumbent_district.district.to_i.ordinalize} District", person.incumbent_district, :class => "nounderline" %> 
@@ -51,6 +51,20 @@
                 <% elsif person.incumbent_district.district == "At Large" %>
                 <%= link_to "#{person.district.district_title}", person.incumbent_district, :class => "nounderline" %>
                 <%end%></h5>
+
+              <%elsif person.district.present?%>
+
+                <h5 class="text-center text-md-left"><%= person.district.jurisdiction.name  %> - 
+                <% if person.incumbent_district.district != "At Large" && person.incumbent_district.is_seat == false && person.incumbent_district.is_area == false %>
+                <%=  "#{person.district.district_title}, #{person.incumbent_district.district.to_i.ordinalize} District"  %> 
+                <% elsif person.incumbent_district.is_seat %>
+                <%=  "#{person.district.district_title}, Seat #{person.incumbent_district.district}" %>
+                <% elsif person.incumbent_district.is_area %>
+                <%=  "#{person.district.district_title}, Trustee Area #{person.incumbent_district.district}" %>
+                <% elsif person.incumbent_district.district == "At Large" %>
+                <%=  "#{person.district.district_title}" %>
+                <%end%></h5>
+
               <%end%>
               
               <div class="row text-center text-md-left mb-1 pl-2">
