@@ -9,7 +9,7 @@ class District < ApplicationRecord
   has_many :election_histories
   has_many :historical_candidates, through: :election_histories
   has_many :statistical_datum
-  has_many :registration_snapshots, through: :statistical_data
+  has_many :registration_snapshots, through: :statistical_datum
   belongs_to :registration_history, optional: true
   has_many :former_offices
   acts_as_followable
@@ -69,6 +69,16 @@ class District < ApplicationRecord
       if @districts.any? { |district| district.user_following == true }
         true
       end
+    end
+  end
+
+  def registration_data 
+    if is_at_large == true
+
+      jurisdiction.registration_snapshots.last
+
+    else
+      registration_snapshots.last
     end
   end
 

@@ -12,6 +12,7 @@ class Jurisdiction < ApplicationRecord
     has_many :former_offices, through: :districts 
     belongs_to :registration_history, optional: true
     has_many :statistical_datum
+    has_many :registration_snapshots, through: :statistical_datum
     has_one :campaign_finance_module
 
     def person
