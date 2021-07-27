@@ -73,12 +73,12 @@ class District < ApplicationRecord
   end
 
   def registration_data 
-    if is_at_large == true
-
-      jurisdiction.registration_snapshots.last
-
-    else
-      registration_snapshots.last
+    if registration_snapshots.present? || jurisdiction.registration_snapshots.present?
+      if is_at_large == true
+        jurisdiction.registration_snapshots.last
+      else
+        registration_snapshots.last
+      end
     end
   end
 
