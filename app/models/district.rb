@@ -72,16 +72,7 @@ class District < ApplicationRecord
     end
   end
 
-  def registration_data 
-    if registration_snapshots.present? || jurisdiction.registration_snapshots.present?
-      if is_at_large == true
-        jurisdiction.registration_snapshots.last
-      elsif registration_snapshots.present?
-        registration_snapshots.last
-      else
-      end
-    end
-  end
+
 
   def district_followers
     if self.followers.count == 0
@@ -188,11 +179,21 @@ class District < ApplicationRecord
     end
   end
   
+
+
   def registration_advantage
-    if statistical_datum.present? && statistical_datum.last.registration_snapshots.present?
-      statistical_datum.last.registration_snapshots.last.registration_advantage
+    if is_at_large == true
+      if jurisdiction.registration_snapshots.present?
+        jurisdiction.registration_snapshots.last.registration_advantage
+      else
+        dem_voters - rep_voters
+      end
     else
-    dem_voters - rep_voters
+      if registration_snapshots.present?
+        registration_snapshots.last.registration_advantage
+      else
+        dem_voters - rep_voters
+      end
     end
   end
 
