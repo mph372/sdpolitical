@@ -76,8 +76,9 @@ class District < ApplicationRecord
     if registration_snapshots.present? || jurisdiction.registration_snapshots.present?
       if is_at_large == true
         jurisdiction.registration_snapshots.last
-      else
+      elsif registration_snapshots.present?
         registration_snapshots.last
+      else
       end
     end
   end
