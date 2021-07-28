@@ -19,7 +19,7 @@
         </thead>
         
         <tbody>
-        <% election_history.historical_candidates.each_with_index do |candidate, index| %>
+        <% election_history.historical_candidates.order('votes desc').each_with_index do |candidate, index| %>
           <tr>
             <td class="pl-4"> <% if index <= candidate.election_history.number_winners - 1 %> &#10004; <%end%></td>
             <td>

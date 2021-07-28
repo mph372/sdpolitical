@@ -18,4 +18,8 @@ class Jurisdiction < ApplicationRecord
     def person
         districts.collect{|u| u.person}
     end
+
+    def at_large_election_histories
+     election_histories.where('at_large_history == ?', true)
+    end
 end
