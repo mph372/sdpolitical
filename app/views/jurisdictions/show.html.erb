@@ -68,11 +68,19 @@
             <td class="col-2"><%= district.term_expires %>
             <td class=" col-3">
               <%if district.registration_snapshots.present? || district.jurisdiction.registration_snapshots.present? %>
-                <% if district.registration_data.registration_advantage > 0 %>
-                <span class="dem-text pr-4 float-right" >D +<%= number_with_precision(district.registration_data.registration_advantage, precision: 2) %>%</span>
-                <% else %>
-                <span class="gop-text pr-4 float-right" >R +<%= number_with_precision(district.registration_data.absolute_registration_advantage, precision: 2) %>%</span>
-                <%end%>
+                <%if district.registration_snapshots.present? %>
+                  <% if district.registration_data.registration_advantage > 0 %>
+                  <span class="dem-text pr-4 float-right" >D +<%= number_with_precision(district.registration_data.registration_advantage, precision: 2) %>%</span>
+                  <% else %>
+                  <span class="gop-text pr-4 float-right" >R +<%= number_with_precision(district.registration_data.absolute_registration_advantage, precision: 2) %>%</span>
+                  <%end%>
+                <%else%>
+                    <% if district.jurisdiction.registration_data.registration_advantage > 0 %>
+                    <span class="dem-text pr-4 float-right" >D +<%= number_with_precision(district.jurisdiction.registration_data.registration_advantage, precision: 2) %>%</span>
+                    <% else %>
+                    <span class="gop-text pr-4 float-right" >R +<%= number_with_precision(district.jurisdiction.registration_data.absolute_registration_advantage, precision: 2) %>%</span>
+                    <%end%>
+                  <%end%>
               <%end%>
             </td> 
             <td  class="col-1"></td>
