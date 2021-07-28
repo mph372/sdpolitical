@@ -67,7 +67,7 @@
                   <%else%>Vacant<%end%></td>
             <td class="col-2"><%= district.term_expires %>
             <td class=" col-3">
-              <%if district.registration_snapshot.present? || district.jurisdiction.registration_snapshot.present? %>
+              <%if district.registration_snapshots.present? || district.jurisdiction.registration_snapshots.present? %>
                 <% if district.registration_data.registration_advantage > 0 %>
                 <span class="dem-text pr-4 float-right" >D +<%= number_with_precision(district.registration_data.registration_advantage, precision: 2) %>%</span>
                 <% else %>
