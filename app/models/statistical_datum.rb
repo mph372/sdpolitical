@@ -131,6 +131,13 @@ class StatisticalDatum < ApplicationRecord
     prop_21_yes_result - prop_21_no_result
   end
 
+  def statistical_datum_parent
+    if jurisdiction.present?
+      "#{jurisdiction.name}"
+    elsif district.present?
+      "#{district.full_district_name}"
+    end
+  end
 
 
 end

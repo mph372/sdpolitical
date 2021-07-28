@@ -22,7 +22,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <%= f.select(:statistical_datum_id, StatisticalDatum.all.collect { |v| [ v.id ] }, {:selected => params[:statistical_datum_id]}) %>
+      <%= f.select(:statistical_datum_id, StatisticalDatum.all.collect { |v| ["#{v.statistical_datum_parent}", v.id ] }, {:selected => params[:statistical_datum_id]}) %>
     </div>
   </div>
 </div>
