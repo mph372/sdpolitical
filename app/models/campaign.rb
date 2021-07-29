@@ -1,5 +1,5 @@
 class Campaign < ApplicationRecord
   belongs_to :district
-  has_many :candidates
+  has_many :candidates, dependent: :destroy 
   accepts_nested_attributes_for :candidates, allow_destroy: true, reject_if: :all_blank
 end

@@ -59,9 +59,9 @@ class DistrictsController < ApplicationController
   # POST /districts.json
   def create
     @district = District.new(district_params)
-    assign_person
-
     
+
+    assign_person
     respond_to do |format|
       if @district.save
         format.html { redirect_to @district, notice: 'District was successfully created.' }

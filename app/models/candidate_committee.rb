@@ -1,5 +1,6 @@
 class CandidateCommittee < ApplicationRecord
     belongs_to :person
+    belongs_to :candidate
     has_many :reports 
     before_save :only_one_primary
 

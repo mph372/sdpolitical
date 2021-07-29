@@ -24,7 +24,17 @@
       <div class="col">
         <%= f.date_field :election_date, value: (f.object.new_record? ? 
 Date.new(2022,06,07) : f.object.election_date) %>
-        
+      </div>
+
+      <div class="col">
+       <%= f.form_group  label: { text: "Campaign Status" } do %>
+        <%= f.radio_button :active, true, label: "Active" %>
+        <%= f.radio_button :active, false, label: "Inactive" %>
+        <%end%>
+      </div>
+
+      <div class="col">
+        <%= f.text_field :total_votes %>
       </div>
       
     </div>
@@ -36,7 +46,13 @@ Date.new(2022,06,07) : f.object.election_date) %>
             <tr>
             <th></th>
               <th>Person</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Registration</th>
               <th>Ballot Status</th>
+              <th>Committee</th>
+              <th>Endorsement</th>
+              <th>Total Votes</th>
             </tr>
           </thead>
         

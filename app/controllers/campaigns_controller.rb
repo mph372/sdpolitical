@@ -72,6 +72,6 @@ class CampaignsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def campaign_params
-      params.require(:campaign).permit(:district_id, :election_date, :election_type, :number_of_winners, candidates_attributes: [:election_history_id, :ballot_status, :created_at, :person_id, :person, :id, :_destroy])
+      params.require(:campaign).permit(:district_id, :election_date, :election_type, :number_of_winners, :total_votes, :active, candidates_attributes: [:election_history_id, :ballot_status, :created_at, :person_id, :person, :id, :_destroy, :candidate_committee, :first_name, :last_name, :votes, :party_endorsement, :party_registration])
     end
 end

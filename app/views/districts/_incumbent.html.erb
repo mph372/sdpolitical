@@ -19,8 +19,11 @@
     <%= render partial: 'shared/incumbent', locals: {person: @district.person, page_source: "district"} %>
     </div>
     <%else%>
+
     <%= render partial: 'shared/vacant', locals: {person: @district.person, page_source: "district"} %>
+
     <%end%>
+    
   </div>
 
 
