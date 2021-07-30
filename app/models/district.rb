@@ -225,6 +225,38 @@ class District < ApplicationRecord
     end
   end
 
+  def truncated_dem_voters
+    if is_at_large == true
+      if jurisdiction.registration_snapshots.present?
+        jurisdiction.registration_snapshots.last.registered_dem
+      else
+        dem_voters
+      end
+    else
+      if registration_snapshots.present?
+        registration_snapshots.last.registered_dem
+      else
+        dem_voters
+      end
+    end
+  end
+
+  def truncated_rep_voters
+    if is_at_large == true
+      if jurisdiction.registration_snapshots.present?
+        jurisdiction.registration_snapshots.last.registered_rep
+      else
+        rep_voters
+      end
+    else
+      if registration_snapshots.present?
+        registration_snapshots.last.registered_rep
+      else
+        rep_voters
+      end
+    end
+  end
+
   def rep_voters
     if statistical_datum.present? && statistical_datum.last.registration_snapshots.present?
       statistical_datum.last.registration_snapshots.last.republican_percentage

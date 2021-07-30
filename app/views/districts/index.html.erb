@@ -41,8 +41,8 @@
                         <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
 
                     </td>
-                    <td><span class="float-right dem-text"><%= district.dem_voters.truncate(2) %>%</span></td>
-                    <td><span class="float-right gop-text"><%= district.rep_voters.truncate(2) %>%</span></td>
+                    <td><span class="float-right dem-text"><%= district.truncated_dem_voters.truncate(2) %>%</span></td>
+                    <td><span class="float-right gop-text"><%= district.truncated_rep_voters.truncate(2) %>%</span></td>
                     <td class="text-nowrap"><% if district.registration_advantage > 0 %>
                         <span class="float-right dem-text font-weight-bold" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
                         <% else %>
