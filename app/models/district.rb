@@ -228,13 +228,13 @@ class District < ApplicationRecord
   def truncated_dem_voters
     if is_at_large == true
       if jurisdiction.registration_snapshots.present?
-        jurisdiction.registration_snapshots.last.registered_dem
+        jurisdiction.registration_snapshots.last.democrat_percentage
       else
         dem_voters
       end
     else
       if registration_snapshots.present?
-        registration_snapshots.last.registered_dem
+        registration_snapshots.last.democrat_percentage
       else
         dem_voters
       end
@@ -244,13 +244,13 @@ class District < ApplicationRecord
   def truncated_rep_voters
     if is_at_large == true
       if jurisdiction.registration_snapshots.present?
-        jurisdiction.registration_snapshots.last.registered_rep
+        jurisdiction.registration_snapshots.last.republican_percentage
       else
         rep_voters
       end
     else
       if registration_snapshots.present?
-        registration_snapshots.last.registered_rep
+        registration_snapshots.last.republican_percentage
       else
         rep_voters
       end
