@@ -74,7 +74,7 @@ class FormerOfficesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def former_office_params
-      params.require(:former_office).permit(:elected, :appointed, :start_year, :end_year, :person_id, :district_id, :at_large)
+      params.require(:former_office).permit(:elected, :appointed, :start_year, :end_year, :person_id, :district_id, :at_large, :jurisdiction_id, :title)
     end
 
 end

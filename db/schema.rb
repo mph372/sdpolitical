@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_194509) do
+ActiveRecord::Schema.define(version: 2021_07_29_235024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 2021_07_29_194509) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "total_votes"
-    t.boolean "active", default: true
     t.index ["district_id"], name: "index_campaigns_on_district_id"
   end
 
@@ -92,6 +91,7 @@ ActiveRecord::Schema.define(version: 2021_07_29_194509) do
     t.integer "votes"
     t.string "party_endorsement"
     t.string "party_registration"
+    t.boolean "active"
     t.index ["campaign_id"], name: "index_candidates_on_campaign_id"
     t.index ["candidate_committee_id"], name: "index_candidates_on_candidate_committee_id"
     t.index ["person_id"], name: "index_candidates_on_person_id"
@@ -267,7 +267,10 @@ ActiveRecord::Schema.define(version: 2021_07_29_194509) do
     t.integer "start_year"
     t.integer "end_year"
     t.boolean "at_large", default: false
+    t.bigint "jurisdiction_id"
+    t.string "title"
     t.index ["district_id"], name: "index_former_offices_on_district_id"
+    t.index ["jurisdiction_id"], name: "index_former_offices_on_jurisdiction_id"
     t.index ["person_id"], name: "index_former_offices_on_person_id"
   end
 
@@ -594,6 +597,7 @@ ActiveRecord::Schema.define(version: 2021_07_29_194509) do
   add_foreign_key "expenditures", "measures"
   add_foreign_key "expenditures", "people"
   add_foreign_key "former_offices", "districts"
+  add_foreign_key "former_offices", "jurisdictions"
   add_foreign_key "former_offices", "people"
   add_foreign_key "historical_candidates", "election_histories"
   add_foreign_key "historical_candidates", "people"

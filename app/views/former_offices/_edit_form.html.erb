@@ -9,7 +9,16 @@
   <div class="row">
     <div><%= f.hidden_field :person_id, :value => @person.id %></div>
     <div class="col">
-    <%= f.select(:district_id, District.all.order(jurisdiction_id: :asc, name: :desc).collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true}) %></div>
+    <%= f.select(:district_id, District.all.order(jurisdiction_id: :asc, name: :desc).collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true}) %>
+   </div>
+  </div>
+  <div class="row">
+    <div class="col">
+       <%= f.select(:jurisdiction_id, Jurisdiction.all.order(name: :desc).collect { |v| ["#{v.name}", v.id ] }, {:include_blank => true}) %>
+    </div>
+    <div class="col">
+      <%= f.select :title, ["Representative", "Senator", "Assemblymember", "Supervisor", "Mayor", "Councilmember", "Trustee", "Board Member", "Director", "District Attorney", "Sheriff", "Treasurer-Tax Collector", "Assessor/ Recorder/ County Clerk", "City Clerk", "City Treasurer"], {:include_blank => true} %>
+    </div>
   </div>
   <div class="row">
     <div class="col">

@@ -20,8 +20,10 @@ class Person < ApplicationRecord
   end
 
   def campaign
-    candidates.last.campaign
+    candidates.active.last.campaign
   end
+
+  
 
   def opponents
     campaign.candidates.collect{|u| u.person}
@@ -97,7 +99,7 @@ class Person < ApplicationRecord
   end
 
   def is_candidate
-    candidates.present?
+    candidates.active.present?
   end
 
   def archived

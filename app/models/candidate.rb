@@ -4,8 +4,11 @@ class Candidate < ApplicationRecord
   has_one :candidate_committee
 
   def vote_share
+    if campaign.election_date < Date.today
     calculation = (votes.to_f / campaign.total_votes) * 100
     "#{calculation.round(2)}%"
+    else 
+    end
   end
 
   def display_name
@@ -13,6 +16,25 @@ class Candidate < ApplicationRecord
       "#{person.full_name} #{party_abbreviation}"
     else
       "#{first_name} #{last_name} #{party_abbreviation}"
+    end
+  end
+
+  def display_vote_share
+    if campaign.election_date < Date.today
+    number_with_delimiter(candidate.votes, :delimiter => ',')
+    else
+    end
+  end
+
+  def active_campaign
+    campaign.election_date >= Date.today
+  end
+
+  scope :active, -> {where('active = ?', true)}
+
+  def set_active
+    if self.campaign.election_date >= Date.today
+    self.update_attribute(:active, true)
     end
   end
 

@@ -25,8 +25,8 @@
   </div>
   <div class="row mb-3">
     <div class="col">
-      <% if @district.campaigns.present?%>
-      <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.last.candidates.collect{|u| u.person}.flatten}%>
+      <% if @district.campaigns.active.present?%>
+      <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates.collect{|u| u.person}.flatten}%>
       <%end%>
     </div>
   </div>
@@ -87,18 +87,18 @@
 
 
 <%if @district.at_large_district == false %>
-  <% if @district.election_histories.present? %> 
+  <% if @district.campaigns.historic.present? %> 
     <div class="row">
       <div class="col">
-      <%= render 'historical_election' %> 
+      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.campaigns.historic.order("election_date desc") } %> 
       </div>   
     </div>
   <% end %>
 <%else%>
-  <% if @district.jurisdiction.election_histories.present? %> 
+  <% if @district.jurisdiction.campaigns.historic.present? %> 
     <div class="row">
       <div class="col">
-      <%= render 'historical_election_atlarge' %> 
+      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.jurisdiction.campaigns.historic.order("election_date desc") } %> 
       </div>   
     </div>
   <%end%>
