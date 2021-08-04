@@ -35,6 +35,8 @@ class Candidate < ApplicationRecord
   def set_active
     if self.campaign.election_date >= Date.today
     self.update_attribute(:active, true)
+    else
+    self.update_attribute(:active, false)
     end
   end
 
