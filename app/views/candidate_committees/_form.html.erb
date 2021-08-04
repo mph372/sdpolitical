@@ -9,15 +9,12 @@
   <div class="form-inputs">
     <%= f.text_field :name %>
     <div class="row">
-      <div class="col"><%= f.select :cycle, ['2018', '2020', '2022'], value: (f.object.new_record? ? 
-          "2022" : f.object.cycle) %></div>
-      <div class="col"> <%= f.select :status, ['Open', 'Closed'], value: (f.object.new_record? ? 
-          'Open' : f.object.status) %></div>
+      <div class="col"><%= f.select :cycle, ['2022', '2020', '2018'] %></div>
+      <div class="col"> <%= f.select :status, ['Open', 'Closed'] %></div>
       <div class="col"><%= f.check_box :primary_committee, value: (f.object.new_record? ? 
           true : f.object.primary_committee)  %></div>
     </div>
-    <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}, selected: (f.object.new_record? ? 
-          params[:person_id] : f.object.person_id),  label: "Candidate:" ) %>
+    <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id]},  label: "Candidate:" ) %>
   </div>
 
   <div class="form-actions">

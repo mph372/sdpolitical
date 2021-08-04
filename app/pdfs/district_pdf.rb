@@ -6,7 +6,7 @@ class DistrictPDF < Prawn::Document
         logo = "#{Rails.root}/app/assets/images/logos/ballot.png"
         image logo, :position => :center, :scale => 0.25
         district_header
-        if @district.incumbent.present?
+        if @district.person.present?
             if @district.at_large_district?
             incumbent_atlarge
             elsif @district.at_large_district == false
@@ -51,8 +51,8 @@ class DistrictPDF < Prawn::Document
         text "Registration Breakdown", style: :bold
         move_down 5
         table ([
-            ["Democrat", "#{@district.dem_voters.truncate(2)}%"],
-            ["Republican", "#{@district.rep_voters.truncate(2)}%"],
+            ["Democrat", "#{@district.truncated_dem_voters.truncate(2)}%"],
+            ["Republican", "#{@district.truncated_rep_voters.truncate(2)}%"],
             ["Other", "#{@district.other_voters.truncate(2)}%"],
             if @district.registration_advantage > 0 
                 ["Advantage", "D +#{@district.registration_advantage.abs.truncate(2)}%"]
@@ -63,13 +63,13 @@ class DistrictPDF < Prawn::Document
     end
 
     def incumbent_not_atlarge
-        text "Incumbent: #{@district.incumbent.first_name} #{@district.incumbent.last_name} (#{@district.incumbent.party}) - Term Expires: #{@district.incumbent.term_expires}"
+        text "Incumbent: #{@district.person.first_name} #{@district.person.last_name} (#{@district.person.party}) - Term Expires: #{@district.term_expires}"
     end
 
     def incumbent_atlarge
         @district.jurisdiction.incumbents.each do |incumbent|
-            if incumbent.incumbent_district.at_large_district?
-            text "Incumbent: #{incumbent.first_name} #{incumbent.last_name} (#{incumbent.party}) - Term Expires: #{incumbent.term_expires}"
+            if person.district.at_large_district?
+            text "Incumbent: #{person.first_name} #{person.last_name} (#{person.party}) - Term Expires: #{person.district.term_expires}"
             end
         end
     end
@@ -123,8 +123,8 @@ class DistrictPDF < Prawn::Document
     def district_candidates_rows
 
         [[ "Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH", "As of"]] +
-        @district.candidates.select{|c| c.former_candidate == false}.map do |candidate|
-            [ candidate.full_name, number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_receipts)), number_to_currency(candidate.reports.where(:cycle => "2020", candidate_report: true ).sum(:period_disbursements)), number_to_currency(candidate.current_cash_on_hand), number_to_currency(candidate.current_net_coh), candidate.period_end]
+        @district.campaigns.last.candidates.each do |candidate|
+            [ candidate.person.full_name, "Total Raised", "Total Spent", "Cash-On-Hand", "Net COH", "As of"]
         end
     end
 
