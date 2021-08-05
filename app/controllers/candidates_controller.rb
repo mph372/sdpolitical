@@ -25,7 +25,7 @@ class CandidatesController < ApplicationController
   # POST /candidates.json
   def create
     @candidate = Candidate.new(candidate_params)
-    set_active
+    @candidate.set_active
     respond_to do |format|
       if @candidate.save
         format.html { redirect_to @candidate.person, notice: 'Candidate was added to campaign.' }
@@ -40,7 +40,7 @@ class CandidatesController < ApplicationController
   # PATCH/PUT /candidates/1
   # PATCH/PUT /candidates/1.json
   def update
-    set_active
+    @candidate.set_active
     respond_to do |format|
       if @candidate.update(candidate_params)
         format.html { redirect_to @candidate, notice: 'Candidate was successfully updated.' }
