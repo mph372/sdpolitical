@@ -17,7 +17,7 @@
     
   
   </div>
-  <% if   Admin.last.admin_mode == true %>
+  <% if current_user.admin? &&  Admin.last.admin_mode == true %>
   <div class="container">
   <div class="row mt-2 p-4 border border-success rounded">
   <%= render 'former_offices/edit_form' %>
