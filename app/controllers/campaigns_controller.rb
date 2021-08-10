@@ -27,6 +27,9 @@ class CampaignsController < ApplicationController
   # POST /campaigns.json
   def create
     @campaign = Campaign.new(campaign_params)
+    @campaign.candidates.each do |candidate|
+      candidate.set_active
+    end
     
 
     respond_to do |format|
@@ -43,6 +46,9 @@ class CampaignsController < ApplicationController
   # PATCH/PUT /campaigns/1
   # PATCH/PUT /campaigns/1.json
   def update
+    @campaign.candidates.each do |candidate|
+      candidate.set_active
+    end
     respond_to do |format|
       if @campaign.update(campaign_params)
         format.html { redirect_to @campaign, notice: 'Campaign was successfully updated.' }
