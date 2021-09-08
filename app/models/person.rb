@@ -6,6 +6,7 @@ class Person < ApplicationRecord
   has_many :historical_candidate
   has_many :former_offices
   has_many :candidates
+  has_many :campaigns, through: :candidates
   belongs_to :district, optional: true
   has_many :reports, through: :candidate_committees 
 
@@ -23,7 +24,17 @@ class Person < ApplicationRecord
     candidates.active.last.campaign
   end
 
-  
+
+
+  def person_is_candidate
+    if candidates.where('active = ?', true).present?
+      true
+    else
+      false
+    end
+  end
+
+
 
   def opponents
     campaign.candidates.collect{|u| u.person}

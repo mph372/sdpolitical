@@ -5,8 +5,8 @@
          
             <!--Start of Incumbent Information Section-->
 <%= render 'former_offices' %> 
-<% if @person.historical_candidate.present? %>
-<%= render 'historical_election' %> 
+<% if @person.campaigns.historic.present? %>
+<%= render partial: 'shared/historical_election', locals: { historical_elections: @person.campaigns.historic.order("election_date desc") } %> 
 <%end%>
        
    

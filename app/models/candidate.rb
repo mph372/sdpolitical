@@ -1,10 +1,11 @@
 class Candidate < ApplicationRecord
   belongs_to :campaign
+  # delegate :person, to: :campaign
   belongs_to :person, optional: true
   has_one :candidate_committee
 
   def vote_share
-    if campaign.election_date < Date.today
+    if campaign.election_date < Date.today && votes != nil
     calculation = (votes.to_f / campaign.total_votes) * 100
     "#{calculation.round(2)}%"
     else 
@@ -20,8 +21,8 @@ class Candidate < ApplicationRecord
   end
 
   def display_vote_share
-    if campaign.election_date < Date.today
-    number_with_delimiter(candidate.votes, :delimiter => ',')
+    if campaign.election_date < Date.today && votes != nil
+    "#{number_with_delimiter(self.votes, :delimiter => ',')}"
     else
     end
   end
