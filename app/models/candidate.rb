@@ -1,6 +1,6 @@
 class Candidate < ApplicationRecord
   belongs_to :campaign
-  belongs_to :person
+  belongs_to :person, optional: true
   has_one :candidate_committee
 
   def vote_share

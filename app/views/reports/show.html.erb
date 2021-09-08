@@ -15,7 +15,7 @@
     <div class="col-auto">
     
     <% if @report.committee.present? %><%= link_to "#{@report.committee.name}", @report.committee %><br><%end%>
-    <% if @report.candidate_committee.present? %><%= link_to "#{@report.candidate_committee.name}", @report.candidate_committee %><br><%end%>
+    <% if @report.candidate_committee.present? %><%= link_to "#{@report.candidate_committee.name}", @report.candidate_committee %> (<%= link_to "#{@report.candidate_committee.person.full_name}", @report.candidate_committee.person %>)<br><%end%>
     <%= @report.report_filed.to_formatted_s(:long) %><%if @report.is_amended?%> (Amended)<%end%><br>
     <%= @report.period_begin.to_formatted_s(:long) %><br>
     <%= @report.period_end.to_formatted_s(:long) %>

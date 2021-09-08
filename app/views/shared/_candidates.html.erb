@@ -31,8 +31,8 @@
                   <%end%>
                   <% if current_user.admin? %>(<%= link_to "Remove", candidate.candidates.last, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
                 <br><small>
-                <%if candidate.is_incumbent? %>
-                <%= candidate.title %>
+                <%if candidate.district.present? %>
+                <%= candidate.district.district_title %>
                 <%else%>
                 <%= candidate.professional_career %>
                 <%end%>
