@@ -61,6 +61,8 @@ gem 'stripe_event'
 gem "nilify_blanks"
 gem "font-ionicons-rails", git: 'https://github.com/ricardoemerson/font-ionicons-rails.git'
 gem 'recaptcha', '~> 5.8', '>= 5.8.1'
+gem 'rack-attack'
+gem 'invisible_captcha'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
