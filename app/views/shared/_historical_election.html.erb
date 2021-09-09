@@ -27,7 +27,7 @@
             <%else%>
             <%= candidate.display_name %>
             <%end%></td>
-            <td><%= candidate.display_vote_share %> <span ></span> </td>
+            <td><%= number_with_delimiter(candidate.votes, :delimiter => ',') %> <span ></span> </td>
             <td class="font-weight-bold"><%= candidate.vote_share %></td>
             <td class="pr-4">
             <% if candidate.campaign.election_date < Date.today%>
