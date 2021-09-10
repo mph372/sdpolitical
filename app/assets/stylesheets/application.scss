@@ -24,6 +24,15 @@ body {
   font-family: 'proxima-nova', sans-serif !important;
 }
 
+.hp{
+  display:none;
+  position:absolute;
+  overflow:hidden;
+  width:1px;
+  height:1px;
+  opacity:0;
+}
+
 .incumbent-image {
   height:auto;
   overflow:auto;
