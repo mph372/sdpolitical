@@ -37,7 +37,7 @@ class Person < ApplicationRecord
 
 
   def opponents
-    campaign.candidates.collect{|u| u.person}
+    campaign.candidates
   end
 
   def at_large_opponents

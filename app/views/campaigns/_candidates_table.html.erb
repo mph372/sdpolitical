@@ -11,7 +11,7 @@
       <% @campaign.candidates.each do |candidate| %>
         <tr>
           <td>
-         <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}", candidate.person %>
+         <% if candidate.person.present?%><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}", candidate.person %><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%>
           </td>
           <td><%= candidate.ballot_status %></td>
         </tr>

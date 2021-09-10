@@ -34,10 +34,10 @@ class Candidate < ApplicationRecord
   scope :active, -> {where('active = ?', true)}
 
   def set_active
-    if self.campaign.election_date >= Date.today
-    self.update_attribute(:active, true)
+    if campaign.election_date >= Date.today
+    update_attribute(:active, true)
     else
-    self.update_attribute(:active, false)
+    update_attribute(:active, false)
     end
   end
 
@@ -53,7 +53,7 @@ class Candidate < ApplicationRecord
         elsif party_registration == "Green"
           "(GREEN)"
         elsif party_registration == "Peace & Freedom"
-          "(P & F)"
+          "(P&F)"
         elsif party_registration == "Libertarian"
           "(LIB)"
         elsif party_registration == "Reform"
@@ -63,7 +63,7 @@ class Candidate < ApplicationRecord
         elsif party_registration == "American Independent"
           "(AIP)"      
         else
-          "(Unknown)"    
+          "(N/A)"    
         end
       else
       end

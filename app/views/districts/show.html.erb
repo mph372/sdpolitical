@@ -26,7 +26,7 @@
   <div class="row mb-3">
     <div class="col">
       <% if @district.campaigns.active.present?%>
-      <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates.collect{|u| u.person}.flatten}%>
+      <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates}%>
       <%end%>
     </div>
   </div>
