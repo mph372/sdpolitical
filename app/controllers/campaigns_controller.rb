@@ -28,7 +28,7 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(campaign_params)
 
-    end
+    
     
 
     respond_to do |format|
@@ -56,6 +56,7 @@ class CampaignsController < ApplicationController
         @campaign.candidates.each do |candidate|
           candidate.set_active
         end
+        
       else
         format.html { render :edit }
         format.json { render json: @campaign.errors, status: :unprocessable_entity }

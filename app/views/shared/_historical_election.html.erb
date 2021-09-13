@@ -26,13 +26,15 @@
           <tr>
             <td class="pl-4"> <% if index <= candidate.campaign.number_of_winners - 1 %> &#10004; <%end%></td>
             <td>
-              <% if candidate.person.present? && candidate.person.id == person.id %>
-                <% if candidate.person.present? %> <%= link_to "#{candidate.display_name}", candidate.person, { :class =>"heavy" } %>
+              <% if candidate.person.present? && show_district == true  %>
+                <% if candidate.person.id == person.id %> 
+                <%= link_to "#{candidate.display_name}", candidate.person, { :class =>"heavy" } %>
                 <%else%>
-                <%= candidate.display_name %>
+                <%= link_to "#{candidate.display_name}", candidate.person %>
                 <%end%>
               <%else%>
-                <% if candidate.person.present? %> <%= link_to "#{candidate.display_name}", candidate.person %>
+                <% if candidate.person.present? %>
+                <%= link_to "#{candidate.display_name}", candidate.person %>
                 <%else%>
                 <%= candidate.display_name %>
                 <%end%>

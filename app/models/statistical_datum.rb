@@ -139,5 +139,66 @@ class StatisticalDatum < ApplicationRecord
     end
   end
 
+  def pres_2020_result
+    if self.biden_2020.present?
+      if self.winner_2020 > 0
+          "Biden +#{self.winner_2020.abs.truncate(2)}%" 
+      else
+          "Trump +#{self.winner_2020.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
+
+  def gov_2018_result
+    if self.newsom_2018.present?
+      if self.winner_2018 > 0
+          "Newsom +#{self.winner_2018.abs.truncate(2)}%" 
+      else
+          "Cox +#{self.winner_2018.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
+  def pres_2016_result
+    if self.clinton_2016.present?
+      if self.winner_2016 > 0
+          "Clinton +#{self.winner_2016.abs.truncate(2)}%" 
+      else
+          "Trump +#{self.winner_2016.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+  
+  def gov_2014_result
+    if self.brown_2014.present?
+      if self.winner_2014 > 0
+          "Brown +#{self.winner_2014.abs.truncate(2)}%" 
+      else
+          "Kashkari +#{self.winner_2014.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
+  def pres_2012_result
+    if self.obama_2012.present?
+      if self.winner_2012 > 0
+          "Obama +#{self.winner_2012.abs.truncate(2)}%" 
+      else
+          "Romney +#{self.winner_2012.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
 
 end

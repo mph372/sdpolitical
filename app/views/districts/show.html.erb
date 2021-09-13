@@ -25,8 +25,14 @@
   </div>
   <div class="row mb-3">
     <div class="col">
-      <% if @district.campaigns.active.present?%>
-      <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates}%>
+      <% if @district.at_large_district? %>
+        <% if @district.campaigns.active.present?%>
+        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates}%>
+        <%end%>
+      <%else %>
+        <% if @district.jurisdiction.campaigns.active.present?%>
+        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.jurisdiction.campaigns.active.last.candidates}%>
+        <%end%>
       <%end%>
     </div>
   </div>
