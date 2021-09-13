@@ -84,7 +84,7 @@
   <% if @district.campaigns.historic.present? %> 
     <div class="row">
       <div class="col">
-      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.campaigns.historic.order("election_date desc") } %> 
+      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.campaigns.historic.order("election_date desc"), show_district: false } %> 
       </div>   
     </div>
   <% end %>
@@ -92,7 +92,7 @@
   <% if @district.jurisdiction.campaigns.historic.present? %> 
     <div class="row">
       <div class="col">
-      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.jurisdiction.campaigns.historic.order("election_date desc") } %> 
+      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.jurisdiction.campaigns.historic.order("election_date desc"), show_district: false } %> 
       </div>   
     </div>
   <%end%>
