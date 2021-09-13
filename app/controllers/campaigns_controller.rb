@@ -27,8 +27,7 @@ class CampaignsController < ApplicationController
   # POST /campaigns.json
   def create
     @campaign = Campaign.new(campaign_params)
-    @campaign.candidates.each do |candidate|
-      candidate.set_active
+
     end
     
 
@@ -36,6 +35,9 @@ class CampaignsController < ApplicationController
       if @campaign.save
         format.html { redirect_to @campaign, notice: 'Campaign was successfully created.' }
         format.json { render :show, status: :created, location: @campaign }
+        @campaign.candidates.each do |candidate|
+          candidate.set_active
+        end
       else
         format.html { render :new }
         format.json { render json: @campaign.errors, status: :unprocessable_entity }
@@ -46,13 +48,14 @@ class CampaignsController < ApplicationController
   # PATCH/PUT /campaigns/1
   # PATCH/PUT /campaigns/1.json
   def update
-    @campaign.candidates.each do |candidate|
-      candidate.set_active
-    end
+
     respond_to do |format|
       if @campaign.update(campaign_params)
         format.html { redirect_to @campaign, notice: 'Campaign was successfully updated.' }
         format.json { render :show, status: :ok, location: @campaign }
+        @campaign.candidates.each do |candidate|
+          candidate.set_active
+        end
       else
         format.html { render :edit }
         format.json { render json: @campaign.errors, status: :unprocessable_entity }

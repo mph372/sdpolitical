@@ -26,10 +26,18 @@
           <tr>
             <td class="pl-4"> <% if index <= candidate.campaign.number_of_winners - 1 %> &#10004; <%end%></td>
             <td>
-            <% if candidate.person.present? %> <%= link_to "#{candidate.display_name}", candidate.person %>
-            <%else%>
-            <%= candidate.display_name %>
-            <%end%></td>
+              <% if candidate.person.present? && candidate.person.id == person.id %>
+                <% if candidate.person.present? %> <%= link_to "#{candidate.display_name}", candidate.person, { :class =>"heavy" } %>
+                <%else%>
+                <%= candidate.display_name %>
+                <%end%>
+              <%else%>
+                <% if candidate.person.present? %> <%= link_to "#{candidate.display_name}", candidate.person %>
+                <%else%>
+                <%= candidate.display_name %>
+                <%end%>
+              <%end%>
+            </td>
             <td><%= number_with_delimiter(candidate.votes, :delimiter => ',') %> <span ></span> </td>
             <td class="font-weight-bold"><%= candidate.vote_share %></td>
             <td class="pr-4">
