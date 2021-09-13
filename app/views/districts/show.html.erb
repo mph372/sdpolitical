@@ -25,7 +25,7 @@
   </div>
   <div class="row mb-3">
     <div class="col">
-      <% if @district.at_large_district? %>
+      <% if @district.at_large_district == false %>
         <% if @district.campaigns.active.present?%>
         <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates}%>
         <%end%>
