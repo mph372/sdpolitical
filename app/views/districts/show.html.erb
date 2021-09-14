@@ -27,11 +27,11 @@
     <div class="col">
       <% if @district.at_large_district == false %>
         <% if @district.campaigns.active.present?%>
-        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates}%>
+        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates, campaign: @district.campaigns.active.last}%>
         <%end%>
       <%else %>
         <% if @district.jurisdiction.campaigns.active.present?%>
-        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.jurisdiction.campaigns.active.last.candidates}%>
+        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.jurisdiction.campaigns.active.last.candidates, campaign: @district.jurisdiction.campaigns.active.last}%>
         <%end%>
       <%end%>
     </div>
