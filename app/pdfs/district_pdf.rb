@@ -150,7 +150,7 @@ class DistrictPDF < Prawn::Document
 
 
     def candidate_rows
-        if @district.is_at_large == false
+        if @district.at_large_district == false
             candidates = @district.campaigns.active.last.candidates
         else
             candidates = @district.jurisdiction.campaigns.active.last.candidates
