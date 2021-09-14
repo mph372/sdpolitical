@@ -61,9 +61,11 @@ class Candidate < ApplicationRecord
         elsif party_registration == "Natural Law"
           "(NL)"
         elsif party_registration == "American Independent"
-          "(AIP)"      
-        else
-          "(N/A)"    
+          "(AIP)"    
+        elsif party_registration == "Unknown"
+          "(N/A)"   
+        elsif party_registration == ""
+          ""    
         end
       else
       end
