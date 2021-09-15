@@ -12,4 +12,19 @@ class FormerOffice < ApplicationRecord
     District.find_by(district_id: district_id)
   end
 
+  def header_former_office_name
+    if at_large == true
+      "#{district.jurisdiction.name} - #{district.district_name}"
+    else
+      "#{district.full_district_name}"
+    end
+  end
+
+  def true_former_office
+    if at_large == true
+     district.jurisdiction
+    else
+     district
+    end
+  end
 end

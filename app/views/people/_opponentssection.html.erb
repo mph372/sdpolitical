@@ -3,7 +3,7 @@
       <% if @person.campaign.district.at_large_district == false %>
       <%= render partial: 'shared/candidates', locals: {district: @person.campaign.district, candidates: @person.opponents, campaign: @person.campaign} %>
       <%else%>
-       <%= render partial: 'shared/candidates', locals: {district: @person.campaign.district, candidates: @person.campaign.district.jurisdiction.candidates, campaign: @person.district.jurisdiction.campaigns.active.last} %>
+       <%= render partial: 'shared/candidates', locals: {district: @person.campaign.district, candidates: @person.campaign.district.jurisdiction.candidates, campaign: @person.campaign.district.jurisdiction.campaigns.active.last} %>
       <%end%>
     </div>
 <%end%>

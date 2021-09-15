@@ -82,7 +82,9 @@
                 <tr>
                   <td class="heavy">Formerly Represented:</td>
                   <td>
-                    <%= link_to "#{person.former_offices.order("end_year desc").first.district.full_district_name}", person.former_offices.order("end_year desc").first.district %>
+ 
+                    <%= link_to "#{person.former_offices.order("end_year desc").first.header_former_office_name}", person.former_offices.order("end_year desc").first.true_former_office %>
+
                   </td>
                 </tr>
                 <%end%>

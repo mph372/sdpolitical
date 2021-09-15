@@ -219,6 +219,9 @@ class Person < ApplicationRecord
   end
 
 
+
+
+
   def description    
       if district.present?
       "#{self.full_name} currently serves as #{self.title} with the #{self.district.jurisdiction.name}."
