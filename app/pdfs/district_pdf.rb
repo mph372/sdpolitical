@@ -71,7 +71,7 @@ class DistrictPDF < Prawn::Document
     end
 
     def incumbent_atlarge
-        @district.jurisdiction.person.each do |incumbent|
+        @district.jurisdiction.people.each do |person|
             if person.district.at_large_district?
             text "Incumbent: #{person.first_name} #{person.last_name} (#{person.party}) - Term Expires: #{person.district.term_expires}"
             end
