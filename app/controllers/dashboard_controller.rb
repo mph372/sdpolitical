@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
     def index
         @districts = current_user.following_by_type('District')
         @updates = Update.all.limit(3)
-        @birthdays = Person.where(archived: false).where(birth_month: Time.zone.now.month).order(:birth_day).where("birth_day >= ?", Time.zone.now.day.to_i)
+        @birthdays = Person.where(active: true).where(birth_month: Time.zone.now.month).order(:birth_day).where("birth_day >= ?", Time.zone.now.day.to_i)
         @deadlines = Deadline.all.order('deadline_date ASC')
         @incumbents = current_user.following_by_type('District').includes(:person).collect{|u| u.person}.flatten
         @atlarge_candidates = current_user.following_by_type('District').includes(:campaigns).select{|c| c.at_large_district == true}.collect{|u| u.jurisdiction}.flatten.map(&:districts).flatten.map(&:campaigns).flatten.map(&:candidates).flatten.map(&:person).flatten

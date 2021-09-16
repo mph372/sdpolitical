@@ -111,7 +111,7 @@ class Person < ApplicationRecord
 
   def birthday_title
     if district.present?
-      district.district_title
+      "#{district.district_title}, #{district.jurisdiction.name}"
     else
       "Candidate, #{candidates.active.last.campaign.district.full_district_name}"
     end
