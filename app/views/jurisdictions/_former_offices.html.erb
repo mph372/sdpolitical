@@ -1,0 +1,33 @@
+<% if @jurisdiction.former_offices.present?  %>
+<div class="h3">Prior Elected Officials</div>
+<div class="card shadow-sm mb-3 bg-white rounded primary-border">
+    <table class="table table-sm bg-white" >
+      <thead class="card-header">
+        <tr>
+          <th class="pl-4">Elected Official</th>
+          <th>Years Served</th>
+          <% if current_user.admin? %><th></th><%end%>
+        </tr>
+      </thead>
+      
+      <tbody>
+
+        <% @jurisdiction.former_offices.order('end_year DESC').uniq.each do |former_office| %>
+        
+        <tr>
+            
+          <td class="pl-4"><%= link_to "#{former_office.person.full_name} - #{former_office.district.district_name}", former_office.person %></td>
+          <td><%= former_office.start_year %> - <%= former_office.end_year %> </td>
+        <% if current_user.admin? %><td><%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> </td> <%end%>
+        </tr>
+       
+        
+          <% end %>
+
+
+        
+
+        </tbody>
+    </table>
+    </div>
+<%end%>

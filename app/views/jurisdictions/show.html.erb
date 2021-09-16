@@ -1,19 +1,16 @@
 <div class="container">
-  <div class="row bg-light shadow-sm bg-white rounded primary-border mt-1 p-3">
-      <div class="row p-1 m-1">
-        <h2 class="primary-blue heavy"><%= @jurisdiction.name %></h2>
-      </div>
+  <div class="row bg-light bg-white mt-1">
+<h1 class="heavy text-nowrap primary-blue"><%= @jurisdiction.name %> </h1>
       
     </div> 
   </div>   
 
  
-<br>
 <hr>
-<% if @jurisdiction.registration_history.present? %>
+<% if @jurisdiction.statistical_datum.present? %>
 <div class="row">
     <div class="col">
-      <%= render 'registration_history'%>
+      <%= render 'jurisdiction_data'%>
     </div>
 </div>
 <%end%>
@@ -107,10 +104,10 @@
 <%end%>
 -->
 <br>
-<% if @jurisdiction.committees.present? && current_user.subscribed? %>
-<%= render 'committees'%>
+<%= render 'former_offices' %>
+
 <br>
-<%end%>
+
 
 
 <div class="row">
