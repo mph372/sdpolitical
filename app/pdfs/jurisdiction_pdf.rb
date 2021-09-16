@@ -30,8 +30,9 @@ class JurisdictionPDF < Prawn::Document
     end
 
     def candidate_rows(district)
+        candidates = district.campaigns.active.last.candidates
         [["Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Debt", "As of"]] +
-        district.candidates.map do |candidate|
+        candidates.map do |candidate|
             if candidate.person.has_reports
             reports = candidate.person.all_reports
             [ "#{candidate.person.full_name} #{candidate.person.party_abbreviation}", number_to_currency(reports.sum(:period_receipts)), number_to_currency(reports.sum(:period_disbursements)), number_to_currency(reports.order('period_end DESC').first.current_coh), number_to_currency(reports.order('period_end DESC').first.current_debt), reports.order('period_end DESC').first.period_end]
