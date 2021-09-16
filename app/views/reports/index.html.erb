@@ -2,7 +2,8 @@
 <div class="container">
 
     <div class="row">
-      <h3 class="primary-blue heavy m-4"><% if params[:person_id] %><%= Person.find(params[:person_id]).full_name %> - Historical Campaign Finance Reports <%else%>Campaign Finance Reports <%end%></h3>
+      <h3 class="primary-blue heavy m-4">Latest Campaign Finance Reports</h3>
+      
     </div>
     <div class="row">
                      <!--PUT TOP FUNDRAISERS HERE -->
@@ -30,7 +31,7 @@
       </thead>
 
       <tbody>
-        <% @reports.each do |report| %>
+        <% @reports.where('period_end > ?', Admin.last.period_end).order('created_at DESC').each do |report| %>
           <% if report.candidate_committee.present?%>
           <tr>
             

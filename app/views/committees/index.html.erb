@@ -3,6 +3,7 @@
     <div class="col">  
     <h1 class="primary-blue heavy">Committees</h1>
     <br>
+    <% if current_user.admin? && Admin.last.admin_mode == true %>
     <div class="panel panel-default">
       <div class="table-responsive shadow bg-white rounded primary-border p-4">
         <table class="table table-sm" id="committees">
@@ -33,6 +34,9 @@
           </tbody>
         </table>
        </div>
+       <%else%>
+       <p>Currently under construction.</p>
+       <%end%>
       </div>  
     </div>
   </div>

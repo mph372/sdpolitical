@@ -364,4 +364,19 @@ class District < ApplicationRecord
     end
   end
 
+  def latest_registration
+    if is_at_large == true
+    jurisdiction.statistical_datum.last.registration_snapshots.last
+    else
+    statistical_datum.last.registration_snapshots.last
+    end
+  end
+
+  def true_statistical_datum
+    if is_at_large == true
+    jurisdiction.statistical_datum.last
+    else
+    statistical_datum.last
+    end
+  end
 end

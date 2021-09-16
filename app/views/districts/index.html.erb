@@ -18,8 +18,9 @@
 
               <tbody>
                 <% @districts.where(:archived => false).each do |district| %>
+                <%if district.statistical_datum.present? && district.statistical_datum.last.registration_snapshots.present? %>
                   <tr>
-                    <td><strong><% if district.incumbent.present? %><%= link_to "#{district.incumbent.first_name} #{district.incumbent.last_name}", district.incumbent  %><%else%>Vacant<%end%></strong><br>        
+                    <td><strong><% if district.incumbent.present? %><%= link_to " #{district.incumbent.last_name}, #{district.incumbent.first_name}", district.incumbent  %><%else%>Vacant<%end%></strong><br>        
                     <% if district.incumbent.present? %>
                     <% if district.incumbent.party == "Democrat" %>
                     <small class="dem-text"><%= district.incumbent.party %></small>
@@ -41,15 +42,16 @@
                         <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
 
                     </td>
-                    <td><span class="float-right dem-text"><%= district.truncated_dem_voters.truncate(2) %>%</span></td>
-                    <td><span class="float-right gop-text"><%= district.truncated_rep_voters.truncate(2) %>%</span></td>
-                    <td class="text-nowrap"><% if district.registration_advantage > 0 %>
-                        <span class="float-right dem-text font-weight-bold" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+                    <td><span class="float-right dem-text"><%= number_with_precision(district.latest_registration.democrat_percentage, precision: 2) %>%</span></td>
+                    <td><span class="float-right gop-text"><%= number_with_precision(district.latest_registration.republican_percentage, precision: 2) %>%</span></td>
+                    <td class="text-nowrap"><% if district.latest_registration.registration_advantage > 0 %>
+                        <span class="float-right dem-text font-weight-bold" >D +<%= number_with_precision(district.latest_registration.registration_advantage.abs, precision: 2) %>%</span>
                         <% else %>
-                        <span class="float-right gop-text font-weight-bold" >R +<%= number_with_precision(district.absolute_registration_advantage, precision: 2) %>%</span>
+                        <span class="float-right gop-text font-weight-bold" >R +<%= number_with_precision(district.latest_registration.registration_advantage.abs, precision: 2) %>%</span>
                         <%end%>
                     </td>      
                   </tr>
+                  <%end%>
                 <% end %>
               </tbody>
             </table>
