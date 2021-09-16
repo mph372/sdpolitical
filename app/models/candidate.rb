@@ -3,6 +3,7 @@ class Candidate < ApplicationRecord
   # delegate :person, to: :campaign
   belongs_to :person, optional: true
   has_one :candidate_committee
+  belongs_to :district 
 
   def display_ballot_title
     if ballot_title != ""
@@ -80,6 +81,48 @@ class Candidate < ApplicationRecord
           ""    
         end
       else
+      end
+    end
+
+
+
+    def total_raised  
+      if candidate.person.has_reports
+        number_to_currency(candidate.person.all_reports.sum(:period_receipts))
+      else
+        "$0.00"
+      end
+    end
+
+    def total_spent
+      if candidate.person.has_reports
+        number_to_currency(candidate.person.all_reports.sum(:period_disbursements))
+      else
+        "$0.00"
+      end
+    end
+
+    def current_coh
+      if candidate.person.has_reports
+        number_to_currency(candidate.person.all_reports.order('period_end DESC').first.current_coh)
+      else
+        "$0.00"
+      end
+    end
+
+    def current_coh
+      if candidate.person.has_reports
+        number_to_currency(candidate.person.all_reports.order('period_end DESC').first.current_debt)
+      else
+        "$0.00"
+      end
+    end
+
+    def last_report
+      if candidate.person.has_reports
+        number_to_currency(candidate.person.all_reports.order('period_end DESC').first.period_end)
+      else
+        "N/A"
       end
     end
 

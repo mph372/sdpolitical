@@ -33,7 +33,7 @@ class JurisdictionsController < ApplicationController
       format.html
       format.pdf do
         pdf = Prawn::Document.new
-        pdf = JurisdictionPDF.new(@candidates)
+        pdf = JurisdictionPDF.new(@jurisdiction)
         send_data pdf.render, filename: "#{@jurisdiction.name}_campaign_finance_report-#{Time.now.strftime('%Y-%m-%d_')}.pdf",
                               type: "application/pdf"
       end
@@ -141,7 +141,7 @@ class JurisdictionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def jurisdiction_params
-      params.require(:jurisdiction).permit(:name, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :description, :map_url, :jurisdiction_type, :registration_history_id)
+      params.require(:jurisdiction).permit(:name, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :description, :map_url, :jurisdiction_type, :registration_history_id, :logo)
     end
 
     def is_subscriber?

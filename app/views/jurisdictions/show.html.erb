@@ -1,6 +1,9 @@
 <div class="container">
   <div class="row bg-light bg-white mt-1">
-<h1 class="heavy text-nowrap primary-blue"><%= @jurisdiction.name %> </h1>
+
+      <h1 class="heavy text-nowrap primary-blue"><%= @jurisdiction.name %> </h1>
+
+
       
     </div> 
   </div>   
@@ -37,7 +40,11 @@
 
 
                 <% if district.person.present? %>
-                <td class=" col-1"><%= image_tag district.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                  <% if district.person.image.url.present?%>
+                  <td class=" col-1"><%= image_tag district.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                  <%else%>
+                  <td class=" col-1"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                  <%end%>
                 <%else%>
                 <td class=" col-1"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <%end%>

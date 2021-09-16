@@ -1,14 +1,13 @@
 class JurisdictionPDF < Prawn::Document 
     include ActionView::Helpers::NumberHelper
-    def initialize(candidates)
+    def initialize(jurisdiction)
         super :page_layout => :landscape
-        @candidates = candidates
-        @jurisdiction = @candidates.first.district.jurisdiction.name
+        @districts = jurisdiction.districts
         logo = "#{Rails.root}/app/assets/images/logos/ballot.png"
         image logo, :position => :center, :scale => 0.25
         move_down 20
-        text "Campaign Finance Report for #{@jurisdiction}", size: 15, style: :bold
-        recent_fundraising
+        text "Campaign Finance Report for #{jurisdiction.name}", size: 15, style: :bold
+        district_display
         string = "Generated on #{Time.now.strftime('%m-%d-%Y')}"
     # Green page numbers 1 to 11
         options = { :at => [bounds.right - 150, 0],
@@ -18,6 +17,28 @@ class JurisdictionPDF < Prawn::Document
         number_pages string, options
         end
 
+    end
+
+    def district_display
+        @districts.order('district DESC').each do |district|
+            if district.campaigns.present?
+            move_down 20
+            text "#{district.district_name}", style: :bold
+            table candidate_rows(district)
+            end
+        end 
+    end
+
+    def candidate_rows(district)
+        [["Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Debt", "As of"]] +
+        district.candidates.map do |candidate|
+            if candidate.person.has_reports
+            reports = candidate.person.all_reports
+            [ "#{candidate.person.full_name} #{candidate.person.party_abbreviation}", number_to_currency(reports.sum(:period_receipts)), number_to_currency(reports.sum(:period_disbursements)), number_to_currency(reports.order('period_end DESC').first.current_coh), number_to_currency(reports.order('period_end DESC').first.current_debt), reports.order('period_end DESC').first.period_end]
+            else
+            [ "#{candidate.person.full_name} #{candidate.person.party_abbreviation}", "$0.00", "$0.00", "$0.00", "$0.00", "N/A"]
+            end
+        end
     end
 
     def aggregate_fundraising

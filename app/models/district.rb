@@ -15,6 +15,7 @@ class District < ApplicationRecord
   acts_as_followable
   cattr_accessor :current_user
   has_many :campaigns
+  has_many :candidates, through: :campaigns
   has_one :person
   has_one :campaign_finance_module
   accepts_nested_attributes_for :person

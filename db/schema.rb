@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_16_153731) do
+ActiveRecord::Schema.define(version: 2021_09_16_162638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -303,6 +303,7 @@ ActiveRecord::Schema.define(version: 2021_09_16_153731) do
     t.string "jurisdiction_type"
     t.bigint "registration_history_id"
     t.boolean "archived", default: false
+    t.string "logo"
     t.index ["registration_history_id"], name: "index_jurisdictions_on_registration_history_id"
   end
 
