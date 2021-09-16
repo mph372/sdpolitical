@@ -12,7 +12,7 @@
             <tr>
                     
                     <td class="condensed-column"><%= image_tag person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
-                    <td><strong><%= link_to "#{person.first_name} #{person.last_name}", person %></strong><br><small><% if person.incumbent_district.present? %><%= "#{person.title}, #{person.incumbent_district.jurisdiction.name}"%><%elsif person.on_ballot? %>Candidate for <%= "#{person.district.jurisdiction.name}, #{person.district.name}" %><%end%></small></td>
+                    <td><strong><%= link_to "#{person.first_name} #{person.last_name}", person %></strong><br><small><%= person.birthday_title %></small></td>
                     <td><%= person.birthdate.strftime("%b %d") %><br><small class="text-nowrap"><%= person.next_birthday %> years old<small></td>
                     <td><%if person.email.present?%>
                     <%= mail_to person.email, target: :_blank, :class => "nounderline"  do %>

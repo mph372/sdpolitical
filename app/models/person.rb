@@ -109,15 +109,33 @@ class Person < ApplicationRecord
     ballot_status == "Withdrew" || ballot_status == "Lost in Primary"
   end
 
+  def birthday_title
+    if district.present?
+      district.district_title
+    else
+      "Candidate, #{candidates.active.last.campaign.district.full_district_name}"
+    end
+  end
+
+
+
+
   def is_candidate
     candidates.active.present?
   end
 
-  def archived
-    if district.present?
-      district.archived == true
+  def set_active
+    if district.present? || candidates.where(active: true).present?
+      if district.present?
+        if district.jurisdiction.archived == true
+          update_attribute(:active, false)
+        end
+      end
+      if candidates.where(active: true).present?
+        update_attribute(:active, false)
+      end
     else
-      return true
+        update_attribute(:active, true)
     end
   end
 

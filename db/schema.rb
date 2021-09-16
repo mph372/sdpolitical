@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_16_162638) do
+ActiveRecord::Schema.define(version: 2021_09_16_175109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -384,6 +384,7 @@ ActiveRecord::Schema.define(version: 2021_09_16_162638) do
     t.bigint "historical_candidates_id"
     t.string "campaign_email"
     t.boolean "archived", default: false
+    t.boolean "active", default: true
     t.index ["district_id"], name: "index_people_on_district_id"
     t.index ["historical_candidates_id"], name: "index_people_on_historical_candidates_id"
   end

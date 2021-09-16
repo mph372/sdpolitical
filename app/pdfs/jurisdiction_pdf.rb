@@ -20,11 +20,11 @@ class JurisdictionPDF < Prawn::Document
     end
 
     def district_display
-        @districts.order('district DESC').each do |district|
+        @districts.order('district ASC').each do |district|
             if district.campaigns.active.present?
             move_down 20
             text "#{district.district_name}", style: :bold
-            table candidate_rows(district)
+            table candidate_rows(district), :cell_style => { :size => 10 }
             end
         end 
     end

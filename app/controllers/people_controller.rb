@@ -87,6 +87,7 @@ class PeopleController < ApplicationController
     end
   end
 
+
   # PATCH/PUT /people/1
   # PATCH/PUT /people/1.json
   def update
