@@ -24,7 +24,7 @@ class JurisdictionPDF < Prawn::Document
             if district.campaigns.active.present?
             move_down 20
             text "#{district.district_name}", style: :bold
-            table candidate_rows(district), :cell_style => { :size => 10 }
+            table candidate_rows(district), :cell_style => { :size => 10 }, width: bounds.width
             end
         end 
     end
