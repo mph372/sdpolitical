@@ -3,7 +3,7 @@ class Candidate < ApplicationRecord
   # delegate :person, to: :campaign
   belongs_to :person, optional: true
   has_one :candidate_committee
-  belongs_to :district 
+
 
   def display_ballot_title
     if ballot_title != ""

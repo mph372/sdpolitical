@@ -24,8 +24,10 @@
                 <td class="col-3">
                   <% if candidate.person.party == "Republican" %>
                   <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name} #{candidate.person.incumbent_asterisk}", candidate.person, { :class =>"gop-text" }%>
+                  <% if candidate.party_endorsement == "REP" %> <span class="gop-text"> &#10004; </span><%end%>
                   <%elsif candidate.person.party == "Democrat"%>
                   <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name} #{candidate.person.incumbent_asterisk}", candidate.person, { :class =>"dem-text" }%>
+                  <% if candidate.party_endorsement == "DEM" %> <span class="dem-text"> &#10004; </span><%end%>
                   <%else%>
                   <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name} #{candidate.person.incumbent_asterisk}",candidate, { :class =>"dts-text" }%>
                   <%end%>
