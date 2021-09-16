@@ -21,7 +21,7 @@ class JurisdictionPDF < Prawn::Document
 
     def district_display
         @districts.order('district DESC').each do |district|
-            if district.campaigns.present?
+            if district.campaigns.active.present?
             move_down 20
             text "#{district.district_name}", style: :bold
             table candidate_rows(district)
