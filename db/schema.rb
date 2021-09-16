@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_235024) do
+ActiveRecord::Schema.define(version: 2021_09_16_153731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2021_07_29_235024) do
     t.string "party_endorsement"
     t.string "party_registration"
     t.boolean "active"
+    t.string "ballot_title"
     t.index ["campaign_id"], name: "index_candidates_on_campaign_id"
     t.index ["candidate_committee_id"], name: "index_candidates_on_candidate_committee_id"
     t.index ["person_id"], name: "index_candidates_on_person_id"

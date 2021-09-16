@@ -70,6 +70,6 @@ class CandidatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def candidate_params
-      params.require(:candidate).permit(:campaign_id, :person_id, :ballot_status, :campaign_email, :campaign_phone, :campaign_twitter, :campaign_facebook, :campaign_website)
+      params.require(:candidate).permit(:campaign_id, :person_id, :ballot_status, :campaign_email, :campaign_phone, :campaign_twitter, :campaign_facebook, :campaign_website, :ballot_title)
     end
 end

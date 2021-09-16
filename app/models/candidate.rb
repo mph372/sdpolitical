@@ -4,6 +4,18 @@ class Candidate < ApplicationRecord
   belongs_to :person, optional: true
   has_one :candidate_committee
 
+  def display_ballot_title
+    if ballot_title != ""
+      ballot_title
+    else
+      if person.district.present? 
+        person.district.district_title 
+      else
+        person.professional_career 
+      end
+    end
+  end
+
   def vote_share
     if campaign.election_date < Date.today && votes != nil
     calculation = (votes.to_f / campaign.total_votes) * 100

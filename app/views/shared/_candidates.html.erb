@@ -1,7 +1,7 @@
 <div style="width:100%;">
       <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
         <div class="card-header">
-          Candidates for <%= link_to "#{district.full_district_name}", district %> <%if current_user.admin? %>(<%= link_to "Edit Campaign", edit_campaign_path(campaign) %>)<%end%> <span class="float-right"> Election Date: <%= campaign.election_date.strftime("%b %d, %Y") %></span> 
+          Candidates for <%= link_to "#{district.full_district_name}", district %> <%if current_user.admin? %>(<%= link_to "Edit Campaign", edit_campaign_path(campaign, :district_id => campaign.district.id) %>)<%end%> <span class="float-right"> Election Date: <%= campaign.election_date.strftime("%b %d, %Y") %></span> 
         </div>
 
       <div class="table-responsive">
@@ -31,11 +31,7 @@
                   <%end%>
                   <% if current_user.admin? %>(<%= link_to "Remove", candidate, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
                 <br><small>
-                <%if candidate.person.district.present? %>
-                <%= candidate.person.district.district_title %>
-                <%else%>
-                <%= candidate.person.professional_career %>
-                <%end%>
+                <%= candidate.display_ballot_title %>
                 </td>
                 <td> 
                 <%= candidate.ballot_status %>
