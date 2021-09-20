@@ -6,14 +6,21 @@ class Candidate < ApplicationRecord
 
 
   def display_ballot_title
-    if ballot_title != nil
+    if ballot_title != nil || ballot_title == ""
       ballot_title
     else
       if person.district.present? 
-        person.district.district_title 
+        "#{person.district.district_title}, #{person.district.jurisdiction}"
       else
         person.professional_career 
       end
+    end
+  end
+
+  def is_district_incumbent
+    if person == campaign.district.person
+      "*"
+    else
     end
   end
 

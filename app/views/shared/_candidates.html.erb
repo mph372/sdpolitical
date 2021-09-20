@@ -23,13 +23,13 @@
                                   </td>
                 <td class="col-3">
                   <% if candidate.person.party == "Republican" %>
-                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name} #{candidate.person.incumbent_asterisk}", candidate.person, { :class =>"gop-text" }%>
+                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%>
                   <% if candidate.party_endorsement == "REP" %> <span class="gop-text"> &#10004; </span><%end%>
                   <%elsif candidate.person.party == "Democrat"%>
-                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name} #{candidate.person.incumbent_asterisk}", candidate.person, { :class =>"dem-text" }%>
+                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"dem-text" }%>
                   <% if candidate.party_endorsement == "DEM" %> <span class="dem-text"> &#10004; </span><%end%>
                   <%else%>
-                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name} #{candidate.person.incumbent_asterisk}",candidate, { :class =>"dts-text" }%>
+                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}",candidate, { :class =>"dts-text" }%>
                   <%end%>
                   <% if current_user.admin? %>(<%= link_to "Remove", candidate, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
                 <br><small>
