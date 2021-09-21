@@ -12,7 +12,7 @@
   </thead>
 
   <tbody>
-    <% @jurisdictions.each do |jurisdiction| %>
+    <% @jurisdictions.where('archived = ?', false).each do |jurisdiction| %>
       <tr>
         <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
         <td><%= jurisdiction.jurisdiction_type %>
