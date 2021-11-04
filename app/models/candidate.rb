@@ -10,7 +10,7 @@ class Candidate < ApplicationRecord
       ballot_title
     else
       if person.district.present? 
-        "#{person.district.district_title}, #{person.district.jurisdiction}"
+        "#{person.district.district_title}, #{person.district.jurisdiction.name}"
       else
         person.professional_career 
       end
