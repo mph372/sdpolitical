@@ -15,6 +15,7 @@
         <%= f.number_field :registered_dem, label: "Registered Democrats" %>
         <%= f.number_field :registered_rep, label: "Registered Republicans" %>
         <%= f.number_field :total_registered, label: "Total Registered" %>
+        <%= f.text_field :district_code, label: "District Code (for Redistricting)" %>
         
       </div>
       <div class="col-md"></div>
@@ -22,7 +23,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <%= f.select(:statistical_datum_id, StatisticalDatum.all.collect { |v| ["#{v.statistical_datum_parent}", v.id ] }, {:selected => params[:statistical_datum_id]}) %>
+      <%= f.select(:statistical_datum_id, StatisticalDatum.all.collect { |v| ["#{v.statistical_datum_parent} - #{v.district_year}", v.id ] }, {:selected => params[:statistical_datum_id]}) %>
     </div>
   </div>
 </div>

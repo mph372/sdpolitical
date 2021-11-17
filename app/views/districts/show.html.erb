@@ -37,10 +37,13 @@
     </div>
   </div>
 
+
+
   <% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
   <div class="row">
     <div class="col">
-      <%= render 'district_data'%>
+    <%= render 'redistricting_data'%>
+    <%= render 'district_data'%>
     </div>
   </div>
   <%end%>  

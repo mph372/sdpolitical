@@ -72,6 +72,6 @@ class RegistrationSnapshotsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def registration_snapshot_params
-      params.require(:registration_snapshot).permit(:snapshot_date, :total_registered, :registered_dem, :registered_rep, :registered_other, :statistical_datum_id)
+      params.require(:registration_snapshot).permit(:snapshot_date, :total_registered, :registered_dem, :registered_rep, :registered_other, :statistical_datum_id, :district_code)
     end
 end
