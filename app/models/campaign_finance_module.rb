@@ -20,11 +20,15 @@ class CampaignFinanceModule < ApplicationRecord
   end
 
   def party_contribution_limit_output
+   if self.party == true
     if self.party_limit == 0 || self.party_limit == nil
        "No Limit"
     else
          "$#{self.party_limit}"
     end
+   else
+      "Prohibited"
+   end
   end
 
   def pac_contribution_output
@@ -36,3 +40,4 @@ class CampaignFinanceModule < ApplicationRecord
   end
 
 end
+

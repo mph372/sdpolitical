@@ -165,10 +165,14 @@ class District < ApplicationRecord
   end
 
   def party_contribution_limit_output
-    if self.party_contribution_limit == 0 || self.party_contribution_limit == nil
-       "No Limit"
+    if self.party == true
+      if self.party_contribution_limit == 0 || self.party_contribution_limit == nil
+        "No Limit"
+      else
+          "$#{self.party_contribution_limit}"
+      end
     else
-         "$#{self.party_contribution_limit}"
+      "Prohibited"
     end
   end
 
