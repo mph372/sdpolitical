@@ -5,7 +5,7 @@
 <% statistical_datum = StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction) %>
 <% elsif @district.is_at_large == false  %>
 <% statistical_datum = StatisticalDatum.where(district_year: "2010").find_by(district_id: @district) %>
-<% registration_snapshot = statistical_datum.registration_snapshots.last %>
+<% if statistical_datum.registration_snapshots.present? %><% registration_snapshot = statistical_datum.registration_snapshots.last %><%end%>
 
 <%end%>
 <hr>

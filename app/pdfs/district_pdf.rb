@@ -19,7 +19,13 @@ class DistrictPDF < Prawn::Document
         else
             vacant_district
         end
-        district_candidates
+        if @district.at_large_district == false && @district.campaigns.active.present?
+            district_candidates
+        elsif @district.jurisdiction.campaigns.active.present?
+            district_candidates
+        else
+        end
+        
         move_down 20
         if (@district.jurisdiction.statistical_datum.present? && @district.is_at_large) || @district.statistical_datum.present?
            registration
