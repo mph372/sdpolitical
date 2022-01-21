@@ -2,11 +2,16 @@
 <% statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district) %>
 <% registration_snapshot = statistical_datum.registration_snapshots.last %>
 
+<h3>New District Data</h3>
 <div class="card shadow-sm mb-3 bg-white rounded border-warning">
         <div class="card-header">
-        Preliminary Redistricting Data <%if current_user.admin? %>(<%= link_to "Edit", edit_registration_snapshot_path(registration_snapshot) %>)<%end%> <%if registration_snapshot.district_code != nil %><span class="float-right"> DISTRICT CODE: <%= registration_snapshot.district_code %> </span><%end%>
+     2022 District Registration 
         </div>
+        
         <table class="table table-sm">
+        
+        <% if statistical_datum.registration_snapshots.present? %>
+        <%if current_user.admin? %>(<%= link_to "Edit", edit_registration_snapshot_path(registration_snapshot) %>)<%end%> 
             <thead class="thead-light">
                     <th class="pl-4 col-3">Total Voters</th>
                     <th class="col-2">DEM</th>
@@ -27,6 +32,79 @@
                                 <strong><span class="text-nowrap" style="color: #911111;">R +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
                                 <%end%></td>
             </tbody>
+        <%else%>
+        <div class="pl-4 pt-3">Registration Data Not Yet Available</div>
+        <%end%>
         </table>
+
     </div>
+
+    <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+    <table class="table table-sm ">
+        <div class="card-header">
+         New District Historical Candidate Performance <%if  current_user.admin?%><%= link_to 'Update Registration', new_registration_snapshot_path(:statistical_datum_id => statistical_datum), :class => "btn btn-primary btn-sm float-right" %><%end%>
+        </div>    
+      <thead class="thead-light">
+        <th class="pl-4 col-3">Election</th>
+        <th class="col-2 d-none d-lg-table-cell">DEM</th>
+        <th class="col-2 d-none d-lg-table-cell">REP</th>
+        <th class="col-2">Margin</th>
+  
+      </thead>
+
+      <tbody>
+
+        <% if statistical_datum.biden_2020.present? %>
+        <tr>
+          <td class="pl-4">2020 Presidential</td>
+          <td class="d-none d-lg-table-cell">Biden - <%= statistical_datum.biden_2020 %>%</td>
+          <td class="d-none d-lg-table-cell">Trump - <%= statistical_datum.trump_2020 %>%</td>
+          <td>
+              <% if statistical_datum.winner_2020 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2020.abs, precision: 2) %>%</span>
+              <% else %>
+                <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2020.abs, precision: 2) %>%</span>
+              <%end%> 
+          </td>       
+          
+        </tr>
+        <%end%>
+
+        <% if statistical_datum.newsom_2018.present? %>
+        <tr>
+          <td class="pl-4">2018 Gubernatorial</td>
+          <td class="d-none d-lg-table-cell">Newsom - <%= statistical_datum.newsom_2018 %>%</td>
+          <td class="d-none d-lg-table-cell">Cox - <%= statistical_datum.cox_2018 %>%</td>
+          <td>
+              <% if statistical_datum.winner_2018 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2018.abs, precision: 2) %>%</span>
+              <% else %>
+                <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2018.abs, precision: 2) %>%</span>
+              <%end%> 
+          </td> 
+          
+        </tr>
+        <%end%>
+
+        <% if statistical_datum.clinton_2016.present? %>
+        <tr>
+          <td class="pl-4">2016 Presidential</td>
+          <td class="d-none d-lg-table-cell">Clinton - <%= statistical_datum.clinton_2016 %>%</td>
+          <td class="d-none d-lg-table-cell">Trump - <%= statistical_datum.trump_2016 %>%</td>
+          <td>
+              <% if statistical_datum.winner_2016 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2016.abs, precision: 2) %>%</span>
+              <% else %>
+                <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2016.abs, precision: 2) %>%</span>
+              <%end%> 
+          </td>       
+          
+        </tr>
+        <%end%>
+
+
+      </tbody>
+    </table>
+  </div>
+
 <%end%>

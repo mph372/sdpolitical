@@ -2,7 +2,7 @@ class Candidate < ApplicationRecord
   belongs_to :campaign
   # delegate :person, to: :campaign
   belongs_to :person, optional: true
-  has_one :candidate_committee
+  belongs_to :candidate_committee
 
 
   def display_ballot_title

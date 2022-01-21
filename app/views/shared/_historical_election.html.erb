@@ -17,7 +17,8 @@
             <th style="width: 40%" class="pl-4">Name</th>
             <th style="width: 10%">Votes</th>
             <th style="width: 10%">Vote %</th>
-            <th style="width: 40%">Vote Share</th>
+            <th style="width: 30%">Vote Share</th>
+            <th style="width: 10%">Total Spent</th>
           </tr>
         </thead>
         
@@ -49,6 +50,7 @@
             </div>
             <%end%>
             </td>
+            <td><%if candidate.candidate_committee.present? %><%= number_to_currency(candidate.candidate_committee.reports.sum(:period_disbursements)) %><%else%>N/A<%end%></td>
           </tr> 
         <% end %>
         </tbody>

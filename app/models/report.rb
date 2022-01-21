@@ -39,6 +39,18 @@ class Report < ApplicationRecord
     end
   end
 
+  scope :with_election, -> { where("candidate.candidate_committee.reports > 0") }
+
+  def gop_reports
+    republicans = Person.all.where(party: "Republican")     
+    gop_reports = []    
+    republicans.each do |republican|       
+      if republican.reports.present?         
+        gop_reports << republican.reports.each.period_receipts 
+      end 
+    end
+  end
+
 =begin   
   def district_followers
     district_followers = []
