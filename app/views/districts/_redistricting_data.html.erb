@@ -2,7 +2,7 @@
 <% statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district) %>
 <% registration_snapshot = statistical_datum.registration_snapshots.last %>
 
-<h3>New District Data</h3>
+<h3>New District Data</h3><%if  current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%>
 <div class="card shadow-sm mb-3 bg-white rounded border-warning">
         <div class="card-header">
      2022 District Registration 
@@ -104,6 +104,35 @@
 
 
       </tbody>
+    </table>
+  </div>
+
+      <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+    <table class="table table-sm ">
+        <div class="card-header">
+         2020 Census Data 
+        </div>    
+      <thead class="thead-light">
+        <th class="pl-4">Total Population</th>
+        <th>White</th>
+        <th>Hispanic</th>
+        <th>Black</th>
+        <th>Asian</th>
+        <th>Native</th>
+        <th>Pacific</th>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td class="pl-4"><%= number_with_delimiter(statistical_datum.total_population, delimiter: ",") %></td>
+        <td><%= statistical_datum.white %>%</td>
+        <td><%= statistical_datum.hispanic %>%</td>
+        <td><%= statistical_datum.black %>%</td>
+        <td><%= statistical_datum.asian %>%</td>
+        <td><%= statistical_datum.native %>%</td>
+        <td><%= statistical_datum.pacific %>%</td>
+      </tr>
+            </tbody>
     </table>
   </div>
 

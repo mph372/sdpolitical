@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_231936) do
+ActiveRecord::Schema.define(version: 2022_01_21_235542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -509,6 +509,13 @@ ActiveRecord::Schema.define(version: 2022_01_21_231936) do
     t.float "kashkari_2014"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "white"
+    t.float "hispanic"
+    t.float "black"
+    t.float "asian"
+    t.float "native"
+    t.float "pacific"
+    t.integer "total_population"
     t.index ["district_id"], name: "index_statistical_data_on_district_id"
     t.index ["jurisdiction_id"], name: "index_statistical_data_on_jurisdiction_id"
   end

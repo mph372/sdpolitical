@@ -73,6 +73,6 @@ class StatisticalDataController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def statistical_datum_params
-      params.require(:statistical_datum).permit(:district_id,:jurisdiction_id,:district_year,:measure_a_yes,:measure_a_no,:number_of_winners,:registered_2018,:voted_2018,:registered_2016,:voted_2016,:registered_2014,:voted_2014,:registered_2012,:voted_2012,:registered_2020,:voted_2020,:prop_6_yes,:prop_6_no,:prop_51_yes,:prop_51_no,:prop_62_yes,:prop_62_no,:prop_15_yes,:prop_15_no,:prop_16_yes,:prop_16_no,:prop_21_yes,:prop_21_no,:obama_2012,:romney_2012,:trump_2016,:clinton_2016,:trump_2020,:biden_2020,:newsom_2018,:cox_2018,:brown_2014,:kashkari_2014, :district_year)
+      params.require(:statistical_datum).permit(:district_id,:jurisdiction_id,:district_year,:measure_a_yes,:measure_a_no,:number_of_winners,:registered_2018,:voted_2018,:registered_2016,:voted_2016,:registered_2014,:voted_2014,:registered_2012,:voted_2012,:registered_2020,:voted_2020,:prop_6_yes,:prop_6_no,:prop_51_yes,:prop_51_no,:prop_62_yes,:prop_62_no,:prop_15_yes,:prop_15_no,:prop_16_yes,:prop_16_no,:prop_21_yes,:prop_21_no,:obama_2012,:romney_2012,:trump_2016,:clinton_2016,:trump_2020,:biden_2020,:newsom_2018,:cox_2018,:brown_2014,:kashkari_2014, :district_year, :white, :black, :hispanic, :asian, :native, :pacific, :total_population)
     end
 end

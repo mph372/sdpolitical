@@ -70,7 +70,8 @@
 <script>
     $( document ).on('turbolinks:load', function() {
     $('#districts').DataTable( {
-      retrieve: true
+      retrieve: true,
+      "dom": 'l<t>p'
     });
 });
 

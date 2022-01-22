@@ -25,52 +25,39 @@ params[:district_id] : f.object.district_id)) %>
   </div>
 </div>
 <hr>
+
+ <%= f.number_field :total_population, label: "Total Population", step: :any %>
 <div class="row">  
+
             <div class="col-md text-nowrap">
-              <%= f.number_field :registered_2020, label: "Reg. 2020", step: :any %>
-              <%= f.number_field :registered_2018, label: "Reg. 2018", step: :any %>
-              <%= f.number_field :registered_2016, label: "Reg. 2016", step: :any %>
-              <%= f.number_field :registered_2014, label: "Reg. 2014", step: :any %>
-              <%= f.number_field :registered_2012, label: "Reg. 2012", step: :any %>
+             
+              <%= f.number_field :white, label: "White", step: :any %>
+              <%= f.number_field :hispanic, label: "Hispanic", step: :any %>
+              <%= f.number_field :black, label: "Black", step: :any %>
+
             </div>
             <div class="col-md text-nowrap">
-              <%= f.number_field :voted_2020, label: "Voted 2020", step: :any %>
-              <%= f.number_field :voted_2018, label: "Voted 2018", step: :any %>
-              <%= f.number_field :voted_2016, label: "Voted 2016", step: :any %>
-              <%= f.number_field :voted_2014, label: "Voted 2014", step: :any %>          
-              <%= f.number_field :voted_2012, label: "Voted 2012", step: :any %>    
+              
+              <%= f.number_field :asian, label: "Asian", step: :any %>
+              <%= f.number_field :native, label: "Native", step: :any %>
+              <%= f.number_field :pacific, label: "Pacific", step: :any %>            
+  
             </div>
         
       
-      
+       
       
         <div class="col-md dem-text "> 
           <%= f.number_field :biden_2020, label: "Biden %", step: :any %>
           <%= f.number_field :newsom_2018, label: "Newsom %", step: :any %>
           <%= f.number_field :clinton_2016, label: "Clinton %", step: :any %>
-          <%= f.number_field :brown_2014, label: "Brown %", step: :any %>
-          <%= f.number_field :obama_2012, label: "Obama %", step: :any %>
-          <%= f.number_field :measure_a_yes, label: "Measure A Yes", step: :any %>
-          <%= f.number_field :prop_6_yes, label: "Prop 6 Yes", step: :any %>
-          <%= f.number_field :prop_15_yes, label: "Prop 15 Yes", step: :any %>
-          <%= f.number_field :prop_16_yes, label: "Prop 16 Yes", step: :any %>
-          <%= f.number_field :prop_21_yes, label: "Prop 21 Yes", step: :any %>
-          <%= f.number_field :prop_51_yes, label: "Prop 51 Yes", step: :any %>
-          <%= f.number_field :prop_62_yes, label: "Prop 62 Yes", step: :any %>
+         
         </div>
         <div class="col-md gop-text">
           <%= f.number_field :trump_2020, label: "Trump '20 %", step: :any %>
           <%= f.number_field :cox_2018, label: "Cox %", step: :any %>
           <%= f.number_field :trump_2016, label: "Trump '16 %", step: :any %>
-          <%= f.number_field :kashkari_2014, label: "Kashkari %", step: :any %>
-          <%= f.number_field :romney_2012, label: "Romney %", step: :any %>
-          <%= f.number_field :measure_a_no, label: "Measure A No", step: :any %>
-          <%= f.number_field :prop_6_no, label: "Prop 6 No", step: :any %>
-          <%= f.number_field :prop_15_no, label: "Prop 15 No", step: :any %>
-          <%= f.number_field :prop_16_no, label: "Prop 16 No", step: :any %>
-          <%= f.number_field :prop_21_no, label: "Prop 21 No", step: :any %>
-          <%= f.number_field :prop_51_no, label: "Prop 51 No", step: :any %>
-          <%= f.number_field :prop_62_no, label: "Prop 62 No", step: :any %>
+          
         </div>  
 
     </div>
