@@ -6,7 +6,7 @@ class Candidate < ApplicationRecord
 
 
   def display_ballot_title
-    if ballot_title != nil 
+    if ballot_title != "" 
       ballot_title
     else
       if person.district.present? 

@@ -9,7 +9,7 @@
   <div class="row">
     <div><%= f.hidden_field :person_id, :value => @person.id %></div>
     <div class="col">
-    <%= f.select(:campaign_id, Campaign.all.collect { |v| ["#{v.district.jurisdiction.name} - #{v.district.name} (District #{v.district.district}) #{v.district.term_expires}", v.id ] }, {:include_blank => true, label: "Add to Campaign"}) %></div>
+    <%= f.select(:campaign_id, Campaign.order('campaign.district ASC').all.collect { |v| ["#{v.district.jurisdiction.name} - #{v.district.name} (District #{v.district.district}) #{v.district.term_expires}", v.id ] }, {:include_blank => true, label: "Add to Campaign"}) %></div>
   </div>
   <div class="row">
   <div class="col">

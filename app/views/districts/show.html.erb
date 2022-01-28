@@ -8,7 +8,7 @@
     <% if @district.at_large_district? &&  current_user.admin? && Admin.last.admin_mode == true %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
-  <%= render 'map'%>
+  
   </div>
   <div class="col">
     <% if  current_user.admin? && Admin.last.admin_mode == true %><div class="float-right followers"><small><%= @district.district_followers %></small></div><%end%>
@@ -23,6 +23,13 @@
     <%= render 'incumbent' %>
     </div>
   </div>
+  <% if @district.note != nil %>
+  <div class="row mb-3">
+    <div class="col">
+    <%= render 'note' %>
+    </div>
+  </div>
+  <% end %>
   <div class="row mb-3">
     <div class="col">
       <% if @district.at_large_district == false %>

@@ -27,8 +27,8 @@ Date.today.strftime("%Y-%m-%d") : f.object.report_filed) %>
         <%= f.number_field :current_debt, step: :any, label: "Debt", required: true %>
         </div>
       <div class="col">
-        <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id], :include_blank => true},  label: "Candidate:" ) %>
-        <%= f.select(:candidate_committee_id, CandidateCommittee.order('name ASC').all.collect { |v| [ v.name, v.id ] }, {:selected => params[:candidate_committee_id], :include_blank => true }, label: "Candidate Committee:" ) %>
+
+        <%= f.select(:candidate_committee_id, CandidateCommittee.order('name ASC').all.collect { |v| [ "#{v.person.last_name}, #{v.person.first_name} - #{v.name}", v.id ] }, {:selected => params[:candidate_committee_id], :include_blank => true }, label: "Candidate Committee:" ) %>
         <%= f.select(:committee_id, Committee.order('name ASC').all.collect { |v| [ v.name, v.id ] }, {:selected => params[:committee_id], :include_blank => true }, label: "Non-Candidate Committee:" ) %>
         <%= f.check_box :is_amended, label: "Report is Amended" %>
         <br>

@@ -15,20 +15,6 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
-
   create_table "admins", force: :cascade do |t|
     t.date "period_begin"
     t.date "period_end"
@@ -104,7 +90,6 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.string "name"
     t.bigint "jurisdiction_id"
     t.string "committee_type"
-    t.bigint "candidate_id"
     t.bigint "measure_id"
     t.boolean "is_active", default: true
     t.datetime "created_at", null: false
@@ -112,7 +97,6 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.bigint "person_id"
     t.boolean "is_oppose", default: false
     t.boolean "is_support", default: false
-    t.index ["candidate_id"], name: "index_committees_on_candidate_id"
     t.index ["jurisdiction_id"], name: "index_committees_on_jurisdiction_id"
     t.index ["measure_id"], name: "index_committees_on_measure_id"
     t.index ["person_id"], name: "index_committees_on_person_id"
@@ -149,7 +133,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.float "obama_percent"
     t.float "romney_percent"
     t.float "average_percent"
-    t.integer "jurisdiction_id"
+    t.bigint "jurisdiction_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "map_url"
@@ -449,7 +433,6 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.float "current_debt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "candidate_id"
     t.bigint "committee_id"
     t.bigint "person_id"
     t.boolean "is_amended"
@@ -462,7 +445,6 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.string "pdf"
     t.bigint "candidate_committee_id"
     t.index ["candidate_committee_id"], name: "index_reports_on_candidate_committee_id"
-    t.index ["candidate_id"], name: "index_reports_on_candidate_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["district_id"], name: "index_reports_on_district_id"
     t.index ["person_id"], name: "index_reports_on_person_id"
@@ -560,6 +542,9 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
@@ -572,9 +557,6 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.integer "card_exp_year"
     t.string "card_type"
     t.boolean "subscribed"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -603,6 +585,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
   add_foreign_key "committees", "measures"
   add_foreign_key "committees", "people"
   add_foreign_key "districts", "former_offices"
+  add_foreign_key "districts", "jurisdictions"
   add_foreign_key "districts", "people"
   add_foreign_key "districts", "registration_histories"
   add_foreign_key "election_histories", "districts"
