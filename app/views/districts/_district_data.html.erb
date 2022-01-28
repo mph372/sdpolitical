@@ -1,4 +1,4 @@
-<% if (@district.jurisdiction.statistical_datum.present? && @district.is_at_large) || @district.statistical_datum.present?%>
+<% if (@district.jurisdiction.statistical_datum.present? && @district.is_at_large) || @district.statistical_datum.where(district_year: "2010").present?%>
 
 <% if @district.is_at_large == true  %>
 <% registration_snapshot = RegistrationSnapshot.all.order("snapshot_date desc").limit(1).find_by(statistical_datum_id: @district.jurisdiction.statistical_datum)%>
