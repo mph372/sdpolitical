@@ -9,7 +9,7 @@
     <td><%= f.select :party_registration, ['Republican', 'Democrat', 'Declined to State', 'Green', 'Peace & Freedom', 'Libertarian', 'Reform', 'Natural Law', 'American Independent', 'Unknown'], {:include_blank => true, hide_label: true} %></td>
     <td><%= f.text_field :ballot_title, hide_label: true  %></td>
     <td><%= f.select :ballot_status, ['Opened Committee', 'Pulled Papers', 'Rumored', 'Filed Paperwork', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary', 'Winner by Default'],  { :include_blank => true, hide_label: true } %></td>
-    <td><%= f.select(:candidate_committee_id, CandidateCommittee.order('name ASC').all.collect { |v| [ " #{v.name}", v.id ] }, {:include_blank => true, hide_label: true }) %></td>
+    <td><%= f.select(:candidate_committee_id, CandidateCommittee.order('name ASC').all.collect { |v| [ "#{v.person.last_name}, #{v.person.first_name} - #{v.name}", v.id ] }, {:include_blank => true, hide_label: true }) %></td>
     <td><%= f.select :party_endorsement, ['', 'DEM', 'REP'], hide_label: true %></td>
     <td><%= f.number_field :votes, hide_label: true  %></td>
 

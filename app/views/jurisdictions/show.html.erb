@@ -43,10 +43,10 @@
                   <% if district.person.image.url.present?%>
                   <td class=" col-1"><%= image_tag district.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                   <%else%>
-                  <td class=" col-1"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                  <td class=" col-1"><%= image_tag 'blank-headshot.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                   <%end%>
                 <%else%>
-                <td class=" col-1"><%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
+                <td class=" col-1"><%= image_tag 'blank-headshot.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
                 <%end%>
 
             <td class="col-3"><% if district.person.present? %>

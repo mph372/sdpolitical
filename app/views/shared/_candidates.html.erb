@@ -18,7 +18,7 @@
                 <td class="col-1"><%if candidate.person.image.present? %>
                                   <%= image_tag candidate.person.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%else%>
-                                  <%= image_tag 'https://nex3.com/wp-content/uploads/2019/12/placeholder-headshot-300x300.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
+                                  <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%end%>
                                   </td>
                 <td class="col-3">
