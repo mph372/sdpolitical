@@ -43,7 +43,6 @@
             <%= f.text_field :professional_career %>
           </div>
         </div>    
-        <%= f.text_area :bio %>
         <%= f.number_field :term, { label: "Term Limit Year" } %> 
         <div class="row">
             <div class="col"><%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires} - #{v.incumbent_name}", v.id ] }, {:include_blank => true, label: false} ) %></div>
@@ -52,105 +51,7 @@
 
   </div>
 
-<hr>
 
-  <div class="row p-3">
-    <div class="col-md-3">
-      <h5 class="heavy">Candidate Information</h5>
-    </div>
-    <div class="col-md-9">
-        <div class="row">
-         
-          
-        </div>
-        <div class="row">
-          <div class="col">
-            <%= f.form_group  label: { text: "Party Endorsement" } do %>
-            <%= f.check_box :endorsed_republican, label: "Endorsed Republican" %>
-            <%= f.check_box :endorsed_democrat, label: "Endorsed Democrat" %>
-            <%end%>
-          </div>
-          <div class="col">
-           <%= f.select :ballot_status, ['','Rumored', 'Filed Paperwork', 'On Ballot', 'Advanced to General', 'Withdrew', 'Lost in Primary', 'Winner by Default'] %></div>    
-          </div>
-          <div class="row">
-            <div class="col">
-            <%= f.text_field :campaign_website %>
-            </div>
-
-            <div class="col">
-            <%= f.text_field :campaign_email %>
-            </div>
-          </div>
-
-          
-        </div>          
-    </div>
-
-  <hr> 
-
-
-<hr>  
-
-<div class="row p-3">
-    <div class="col-md-3">
-      <h5 class="heavy">District Information</h5>
-    </div>
-    <div class="col-md-9">
-        <div class="row">
-          <div class="col">
-          <%= f.collection_select(:congressional_district, District.order('district ASC').all.where(name: "U.S. House of Representatives"), :district, :district, label: "Congressional District", :include_blank => true ) %>    
-          </div>
-          <div class="col">
-            <%= f.collection_select(:senate_district, District.order('district ASC').all.where(name: "State Senate"), :district, :district, label: "Senate District", :include_blank => true ) %>    
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <%= f.collection_select(:assembly_district, District.order('district ASC').all.where(name: "State Assembly"), :district, :district, label: "Assembly District", :include_blank => true ) %>    
-          </div>
-          <div class="col">
-            <%= f.collection_select(:supe_district, District.order('district ASC').all.where(name: "Board of Supervisors"), :district, :district, label: "Supervisor District", :include_blank => true ) %>    
-          </div>
-        </div>    
-    </div>   
-</div>
-
-
-
-   <br>
-<div class="row p-3">
-    <div class="col-md-3">
-      <h5 class="heavy">Contact Information</h5>
-    </div>
-    <div class="col-md-9">   
-  <div class="row">
-      <div class="col">
-        <%= f.email_field :email %>  
-      </div>
-      <div class="col">
-        <%= f.text_field :phone %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <%= f.text_field :twitter %> 
-      </div>
-      <div class="col">
-        <%= f.text_field :facebook %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <%= f.text_field :official_website %>
-      </div>
-      <div class="col">
-        <%= f.text_field :linkedin_url %>
-      </div>
-    </div>
-    
-  </div>
- <br>  
     
       
   

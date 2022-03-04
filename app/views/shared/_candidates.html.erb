@@ -14,14 +14,14 @@
                 
                 
 
-                          
+       
                 <td class="col-1"><%if candidate.person.image.present? %>
                                   <%= image_tag candidate.person.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%else%>
                                   <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%end%>
                                   </td>
-                <td class="col-3">
+                <td class="col-2">
                   <% if candidate.person.party == "Republican" %>
                   <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%>
                   <% if candidate.party_endorsement == "REP" %> <span class="gop-text"> &#10004; </span><%end%>
@@ -35,14 +35,7 @@
                 <br><small>
                 <%= candidate.display_ballot_title %>
                 </td>
-                <td> 
-                <%= candidate.ballot_status %>
-                <br><small>
-                <%if candidate.person.campaign_website.present? %><%= link_to "Website", candidate.campaign_website, target: :_blank %><%end%>
-                <%if candidate.person.campaign_website.present? && candidate.campaign_email.present? %> | <%end%>
-                <%if candidate.person.campaign_email.present? %><%= mail_to candidate.campaign_email, "E-Mail", target: :_blank %><%end%>
-                
-                </td>
+
 
                 
 
