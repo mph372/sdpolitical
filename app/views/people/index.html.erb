@@ -55,7 +55,7 @@
 <br>
 
 <br>
-<% if  current_user.admin? %>
+<% if user_signed_in? && current_user.admin? %>
 
   <%= link_to 'New Person', new_person_path, :class => "btn btn-primary mr-2" %> 
 

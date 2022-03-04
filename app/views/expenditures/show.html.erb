@@ -51,7 +51,7 @@
 
 </div>
 
-<% if  current_user.admin? %>
+<% if  user_signed_in? && current_user.admin? %>
 <%= link_to 'Edit', edit_expenditure_path(@expenditure, :committee_id => expenditure.committee.id) %> |
 <%= link_to 'Delete Expenditure', @expenditure, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%end%>

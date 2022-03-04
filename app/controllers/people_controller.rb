@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   # before_action :is_subscriber?
   before_action :authorize_admin, except: [ :show]
   before_action :admin_mode, except: [ :show]

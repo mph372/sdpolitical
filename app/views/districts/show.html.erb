@@ -5,7 +5,7 @@
     <h3 class="mb-0 mt-2 header-text text-nowrap nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
     <h1 class="heavy primary-blue"><%= @district.district_name %> </h1>
 
-    <% if @district.at_large_district? &&  current_user.admin? && Admin.last.admin_mode == true %>
+    <% if @district.at_large_district? && user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
   
@@ -116,12 +116,8 @@
  <div class="col float-right">
         <%= link_to "Download District (PDF)", district_path(@district, format: "pdf"), :class => "float-right btn btn-primary ml-4" %>
 
-      <% if  current_user.following?(@district) %>
-        <%= link_to "Stop Tracking District", unfollow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
-      <%elsif  current_user != @district %>
-        <%= link_to "Track District", follow_district_path(@district), :class => "float-right btn btn-outline-secondary" %>
-      <%end%>
-      <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-right align-bottom mt-auto mr-4", :target => "_blank"%>
+
+      <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-right align-bottom mt-auto", :target => "_blank"%>
     </div>
 </div>
   

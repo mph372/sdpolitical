@@ -20,7 +20,7 @@
             <tbody>
               <% @expenditures.each do |expenditure| %>
                 <tr>
-                  <td class=""><%= expenditure.expenditure_date.strftime("%y-%m-%d") %><% if expenditure.is_amendment? %>*<%end%><%if current_user.admin?%><br><small><%= link_to 'Edit', edit_expenditure_path(expenditure, :committee_id => expenditure.committee_id) %> </small><%end%></td>
+                  <td class=""><%= expenditure.expenditure_date.strftime("%y-%m-%d") %><% if expenditure.is_amendment? %>*<%end%><%if user_signed_in? && current_user.admin?%><br><small><%= link_to 'Edit', edit_expenditure_path(expenditure, :committee_id => expenditure.committee_id) %> </small><%end%></td>
                   <td class=""><%= expenditure.description %></td>
                   <td class=""><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>
                   <td class=""><%= number_to_currency(expenditure.amount) %></td>

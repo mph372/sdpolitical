@@ -2,7 +2,7 @@
 <% statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district) %>
 <% registration_snapshot = statistical_datum.registration_snapshots.last %>
 
-<h3>New District Data</h3><%if  current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%>
+<h3>New District Data</h3><%if user_signed_in? && current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%>
 <div class="card shadow-sm mb-3 bg-white rounded border-warning">
         <div class="card-header">
      2022 District Registration <% if statistical_datum.registration_snapshots.present? %>(As of <%= registration_snapshot.snapshot_date.strftime("%B %d, %Y") %>)<%end%>
@@ -11,7 +11,7 @@
         <table class="table table-sm">
         
         <% if statistical_datum.registration_snapshots.present? %>
-        <%if current_user.admin? %><%end%> 
+        <%if user_signed_in? && current_user.admin? %><%end%> 
             <thead class="thead-light">
                     <th class="pl-4 col-3">Total Voters</th>
                     <th class="col-2">DEM</th>
@@ -42,7 +42,7 @@
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <table class="table table-sm ">
         <div class="card-header">
-         New District Historical Candidate Performance <%if  current_user.admin?%><%= link_to 'Update Registration', new_registration_snapshot_path(:statistical_datum_id => statistical_datum), :class => "btn btn-primary btn-sm float-right" %><%end%>
+         New District Historical Candidate Performance <%if user_signed_in? && current_user.admin?%><%= link_to 'Update Registration', new_registration_snapshot_path(:statistical_datum_id => statistical_datum), :class => "btn btn-primary btn-sm float-right" %><%end%>
         </div>    
       <thead class="thead-light">
         <th class="pl-4 col-3">Election</th>

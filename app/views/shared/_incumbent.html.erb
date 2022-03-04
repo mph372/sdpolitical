@@ -13,7 +13,7 @@
               
               <div class="col-md text-center text-md-right">
 
-              <% if current_user.admin? %>    
+              <% if user_signed_in? && current_user.admin? %>    
                 <%= link_to "Edit", edit_person_path(person), :class => "btn btn-sm btn-primary text-md-right my-auto" %>
               <%end%>    
 
@@ -24,7 +24,7 @@
               </div>
             </div>
            
-              <% if person.district.present? && (person.district.archived == false || current_user.admin?) %>
+              <% if person.district.present? && (person.district.archived == false ||  (user_signed_in? && current_user.admin?)) %>
               <h5 class="text-center text-md-left"><%= link_to "#{person.district.jurisdiction.name}", person.district.jurisdiction, :class => "nounderline" %> - 
                 <% if person.incumbent_district.district != "At Large" && person.incumbent_district.is_seat == false && person.incumbent_district.is_area == false %>
                 <%= link_to "#{person.district.district_title}, #{person.incumbent_district.district.to_i.ordinalize} District", person.incumbent_district, :class => "nounderline" %> 

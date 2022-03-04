@@ -1,7 +1,7 @@
 <div style="width:100%;">
       <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
         <div class="card-header">
-          Candidates for <%= link_to "#{district.full_district_name}", district %> <%if current_user.admin? %>(<%= link_to "Edit Campaign", edit_campaign_path(campaign, :district_id => campaign.district.id) %>)<%end%> <span class="float-right"> Election Date: <%= campaign.election_date.strftime("%b %d, %Y") %></span> 
+          Candidates for <%= link_to "#{district.full_district_name}", district %> <%if user_signed_in? && current_user.admin? %>(<%= link_to "Edit Campaign", edit_campaign_path(campaign, :district_id => campaign.district.id) %>)<%end%> <span class="float-right"> Election Date: <%= campaign.election_date.strftime("%b %d, %Y") %></span> 
         </div>
 
       <div class="table-responsive">
@@ -21,7 +21,7 @@
                                   <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%end%>
                                   </td>
-                <td class="col-2">
+                <td class="col-3">
                   <% if candidate.person.party == "Republican" %>
                   <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%>
                   <% if candidate.party_endorsement == "REP" %> <span class="gop-text"> &#10004; </span><%end%>
@@ -31,7 +31,7 @@
                   <%else%>
                   <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}",candidate, { :class =>"dts-text" }%>
                   <%end%>
-                  <% if current_user.admin? %>(<%= link_to "Remove", candidate, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
+                  <% if user_signed_in? && current_user.admin? %>(<%= link_to "Remove", candidate, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
                 <br><small>
                 <%= candidate.display_ballot_title %>
                 </td>

@@ -6,7 +6,7 @@
         <tr>
           <th class="pl-4">Elected Official</th>
           <th>Years Served</th>
-          <% if current_user.admin? %><th></th><%end%>
+          <% if user_signed_in? && current_user.admin? %><th></th><%end%>
         </tr>
       </thead>
       
@@ -18,7 +18,7 @@
             
           <td class="pl-4"><%= link_to "#{former_office.person.full_name}", former_office.person %></td>
           <td><%= former_office.start_year %> - <%= former_office.end_year %> </td>
-        <% if current_user.admin? %><td><%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> </td> <%end%>
+        <% if user_signed_in? && current_user.admin? %><td><%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> </td> <%end%>
         </tr>
        
         
@@ -29,7 +29,7 @@
         <tr>    
           <td class="pl-4"><%= link_to "#{former_office.person.full_name}", former_office.person %></td>
           <td><%= former_office.start_year %> - <%= former_office.end_year %> </td>
-            <% if  current_user.admin? %><td><%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> </td> <%end%>
+            <% if user_signed_in? && current_user.admin? %><td><%= link_to "Edit", edit_former_office_path(former_office) %> | <%= link_to 'Delete', former_office, method: :delete, data: { confirm: 'Are you sure?' } %> </td> <%end%>
         </tr>
         <%end%>
         <%end%>
