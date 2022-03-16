@@ -1,17 +1,17 @@
 
 <div class="row bg-light shadow-sm bg-white section-border rounded mb-4 p-3">
-        <div class="col-sm-3 my-auto"  >
+        <div class="col-lg-3 my-auto"  >
           <% if person.image.present? %>
           <%= image_tag person.image.url(:headshot), alt: 'headshot', :class => " center-image avatar shadow ", size: "200x200"  %><br>
           <% else %>
            <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "200x200"  %><br>
           <%end%>     
         </div>
-        <div class="col-md my-auto px-2">
+        <div class="col-lg-9 my-auto px-4">
             <div class="row">
-              <div class="col-md-9"> <h1 class=" primary-blue text-center text-md-left"><strong><% if page_source == "district" %><%= link_to "#{person.first_name} #{person.last_name} #{person.party_abbreviation}", person %><%end%><% if page_source == "person" %><%= "#{person.first_name} #{person.last_name} #{person.party_abbreviation}" %><%end%></strong></h1></div>
+              <div class="col-lg-9"> <h1 class=" primary-blue text-center text-lg-left"><strong><% if page_source == "district" %><%= link_to "#{person.first_name} #{person.last_name} #{person.party_abbreviation}", person %><%end%><% if page_source == "person" %><%= "#{person.first_name} #{person.last_name} #{person.party_abbreviation}" %><%end%></strong></h1></div>
               
-              <div class="col-md text-center text-md-right">
+              <div class="col-lg text-center text-md-right">
 
               <% if user_signed_in? && current_user.admin? %>    
                 <%= link_to "Edit", edit_person_path(person), :class => "btn btn-sm btn-primary text-md-right my-auto" %>
@@ -25,7 +25,7 @@
             </div>
            
               <% if person.district.present? && (person.district.archived == false ||  (user_signed_in? && current_user.admin?)) %>
-              <h5 class="text-center text-md-left"><%= link_to "#{person.district.jurisdiction.name}", person.district.jurisdiction, :class => "nounderline" %> - 
+              <h5 class="text-center text-lg-left"><%= link_to "#{person.district.jurisdiction.name}", person.district.jurisdiction, :class => "nounderline" %> - 
                 <% if person.incumbent_district.district != "At Large" && person.incumbent_district.is_seat == false && person.incumbent_district.is_area == false %>
                 <%= link_to "#{person.district.district_title}, #{person.incumbent_district.district.to_i.ordinalize} District", person.incumbent_district, :class => "nounderline" %> 
                 <% elsif person.incumbent_district.is_seat %>
@@ -38,7 +38,7 @@
 
               <%elsif person.district.present?%>
 
-                <h5 class="text-center text-md-left"><%= person.district.jurisdiction.name  %> - 
+                <h5 class="text-center text-lg-left"><%= person.district.jurisdiction.name  %> - 
                 <% if person.incumbent_district.district != "At Large" && person.incumbent_district.is_seat == false && person.incumbent_district.is_area == false %>
                 <%=  "#{person.district.district_title}, #{person.incumbent_district.district.to_i.ordinalize} District"  %> 
                 <% elsif person.incumbent_district.is_seat %>

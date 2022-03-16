@@ -19,24 +19,32 @@ class DistrictPDF < Prawn::Document
         else
             vacant_district
         end
-        if @district.at_large_district == false && @district.campaigns.active.present?
+        if @district.at_large_district == false 
+            if @district.campaigns.active.present?
             district_candidates
-        elsif @district.jurisdiction.campaigns.active.present?
+            end
+        else @district.jurisdiction.campaigns.active.present?
             district_candidates
-        else
         end
+        
         
         move_down 20
         if (@district.jurisdiction.statistical_datum.present? && @district.is_at_large) || @district.statistical_datum.present?
-           registration
-           move_down 20
-           past_performance
+            if @district.statistical_datum.find_by(district_year: "2020").present?
+                new_registration
+                move_down 20
+                new_past_performance
+            else
+            registration
+            move_down 20
+            past_performance
+            end
            
            
         end
             
         
-        campaign_finance
+        # campaign_finance
         
         string = "Generated on #{Time.now.strftime('%m-%d-%Y')}"
         # Green page numbers 1 to 11
@@ -71,6 +79,11 @@ class DistrictPDF < Prawn::Document
         table registration_rows, :cell_style => { :size => 10 }
     end
 
+    def new_registration
+        text "Registration Breakdown", style: :bold
+        table new_registration_rows, :cell_style => { :size => 10 }
+    end
+
 
     def incumbent_not_atlarge
         text "Incumbent: #{@district.person.first_name} #{@district.person.last_name} (#{@district.person.party}) - Term Expires: #{@district.term_expires}"
@@ -89,6 +102,11 @@ class DistrictPDF < Prawn::Document
         table past_performance_rows, :cell_style => { :size => 10 }
     end
 
+    def new_past_performance
+        text "Past Performance", style: :bold
+        table new_past_performance_rows, :cell_style => { :size => 10 }
+    end
+
     def past_performance_rows
         if @district.is_at_large == true  
             statistical_datum = StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction)
@@ -101,6 +119,24 @@ class DistrictPDF < Prawn::Document
             ["2016 President", "#{statistical_datum.pres_2016_result}"],
             ["2014 Governor", "#{statistical_datum.gov_2014_result}"],
             ["2012 President", "#{statistical_datum.pres_2012_result}"],
+        ])
+    
+    end
+
+    def new_past_performance_rows
+        if @district.is_at_large == true  
+            statistical_datum = StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction)
+        elsif @district.is_at_large == false  
+            statistical_datum = StatisticalDatum.find_by(district_id: @district) 
+            new_statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district)
+        end
+        ([
+            ["", "Old District", "New District"],
+            ["2020 President", "#{statistical_datum.pres_2020_result}", "#{new_statistical_datum.pres_2020_result}"],
+            ["2018 Governor", "#{statistical_datum.gov_2018_result}", "#{new_statistical_datum.gov_2018_result}"],
+            ["2016 President", "#{statistical_datum.pres_2016_result}", "#{new_statistical_datum.pres_2016_result}"],
+            ["2014 Governor", "#{statistical_datum.gov_2014_result}", "N/A"],
+            ["2012 President", "#{statistical_datum.pres_2012_result}", "N/A"],
         ])
     
     end
@@ -122,6 +158,27 @@ class DistrictPDF < Prawn::Document
             else
                 ["Advantage", "R +#{number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2)}%"]
             end
+        ])
+
+    end
+
+    def new_registration_rows
+
+        if @district.is_at_large == true  
+            registration_snapshot = RegistrationSnapshot.all.order("snapshot_date desc").limit(1).find_by(statistical_datum_id: @district.jurisdiction.statistical_datum)
+        elsif @district.is_at_large == false  
+            registration_snapshot = StatisticalDatum.where(district_year: "2010").find_by(district_id: @district).registration_snapshots.last
+            new_registration_snapshot = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district).registration_snapshots.last
+        end
+         ([
+            [" ", "Old District", "New District"],
+            ["Total Voters", "#{number_with_delimiter(registration_snapshot.total_registered, :delimiter => ',')}", "#{number_with_delimiter(new_registration_snapshot.total_registered, :delimiter => ',')}"],
+            ["Democrat", "#{number_with_precision(registration_snapshot.democrat_percentage, precision: 2)}%", "#{number_with_precision(new_registration_snapshot.democrat_percentage, precision: 2)}%"],
+            ["Republican", "#{number_with_precision(registration_snapshot.republican_percentage, precision: 2)}%", "#{number_with_precision(new_registration_snapshot.republican_percentage, precision: 2)}%"],
+            ["Other", "#{number_with_precision(registration_snapshot.other_percentage, precision: 2)}%", "#{number_with_precision(new_registration_snapshot.other_percentage, precision: 2)}%"],
+            ["Advantage", "#{registration_snapshot.display_registration_advantage}%", "#{new_registration_snapshot.display_registration_advantage}%"]
+        
+
         ])
 
     end

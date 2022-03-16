@@ -1,7 +1,7 @@
 <div style="width:100%;">
       <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
-        <div class="card-header">
-          Candidates for <%= link_to "#{district.full_district_name}", district %> <%if user_signed_in? && current_user.admin? %>(<%= link_to "Edit Campaign", edit_campaign_path(campaign, :district_id => campaign.district.id) %>)<%end%> <span class="float-right"> Election Date: <%= campaign.election_date.strftime("%b %d, %Y") %></span> 
+        <div class="card-header ">
+          <span class="d-none d-lg-table-cell">Candidates for <%= link_to "#{district.full_district_name}", district %> <%if user_signed_in? && current_user.admin? %>(<%= link_to "Edit Campaign", edit_campaign_path(campaign, :district_id => campaign.district.id) %>)<%end%></span> <span class="float-right"> Election Date: <%= campaign.election_date.strftime("%b %d, %Y") %></span> 
         </div>
 
       <div class="table-responsive">
@@ -41,13 +41,17 @@
 
                    <%if candidate.person.has_reports %>
                       <% reports = candidate.person.all_reports %>   
-                      <td class="text-right col-2"><span class="green-text"><%= number_to_currency(reports.sum(:period_receipts)) %></span><br><small>Total Raised</small></td>
-                      <td class=" text-right col-2"><span class="red-text"><%= number_to_currency(reports.sum(:period_disbursements)) %></span><br><small>Total Spent</small></td>          
-                      <td class="text-right col-2 pr-4"><span class="green-text font-weight-bold"><%= number_to_currency(reports.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small></td>
+                      <td class="text-right col-2 d-none d-lg-table-cell"><span class="green-text"><%= number_to_currency(reports.sum(:period_receipts)) %></span><br><small>Total Raised</small></td>
+                      <td class=" text-right col-2 d-none d-lg-table-cell"><span class="red-text"><%= number_to_currency(reports.sum(:period_disbursements)) %></span><br><small>Total Spent</small></td>    
+                      <td class=" text-right col-2 d-none d-lg-table-cell"><span class="red-text">(<%= number_to_currency(reports.last.current_debt) %>)</span><br><small>Debt</small></td>       
+                      <td class="text-right col-2 d-none d-lg-table-cell"><span class="green-text "><%= number_to_currency(reports.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small></td>
+                      <td class="text-right col-2  pr-4"><span class="green-text font-weight-bold"><%= number_to_currency(reports.order('period_end DESC').first.net_coh) %></span><br><small>Net COH</small></td>
                       <%else%>
-                      <td class="green-text text-right col-2">$0.00<br><small>Total Raised</small><br><small></td>
-                      <td class="red-text text-right col-2">$0.00<br><small>Total Spent</small></td>          
-                      <td class="text-right col-2 pr-4"><span class="green-text font-weight-bold">$0.00</span><br><small>Cash-on-Hand</small></td>
+                      <td class="green-text text-right col-2 d-none d-lg-table-cell">$0.00<br><small>Total Raised</small><br><small></td>
+                      <td class="red-text text-right col-2 d-none d-lg-table-cell">$0.00<br><small>Total Spent</small></td>          
+                      <td class="text-right col-2 d-none d-lg-table-cell"><span class="red-text">($0.00)</span><br><small>Debt</small></td>
+                      <td class="text-right col-2 d-none d-lg-table-cell"><span class="green-text ">$0.00</span><br><small>Cash-on-Hand</small></td>
+                      <td class="text-right col-2 pr-4 "><span class="green-text font-weight-bold">$0.00</span><br><small>Net COH</small></td>
                   <%end%>
                   
                   
