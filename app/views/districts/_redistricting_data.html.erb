@@ -88,10 +88,10 @@
 
         <% if statistical_datum.clinton_2016.present? %>
         <tr>
-          <td class="pl-4">2016 Presidential</td>
-          <td class="d-none d-lg-table-cell">Clinton - <%= statistical_datum.clinton_2016 %>%</td>
-          <td class="d-none d-lg-table-cell">Trump - <%= statistical_datum.trump_2016 %>%</td>
-          <td>
+          <td class="col-4 pl-4">2016 Presidential</td>
+          <td class="col-3 d-none d-lg-table-cell">Clinton - <%= statistical_datum.clinton_2016 %>%</td>
+          <td class="col-3 d-none d-lg-table-cell">Trump - <%= statistical_datum.trump_2016 %>%</td>
+          <td class="col-2 text-nowrap">
               <% if statistical_datum.winner_2016 > 0 %>
                 <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2016.abs, precision: 2) %>%</span>
               <% else %>
