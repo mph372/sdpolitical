@@ -9,7 +9,7 @@
     <%= "#{historical_campaign.election_date.strftime("%Y")} #{historical_campaign.election_type} Election Results" %> <span class="font-weight-light"><%= "(#{historical_campaign.election_date.strftime("%B %e, %Y")})" %></span> <%if user_signed_in? && current_user.admin?%> - <%= link_to 'Edit', edit_campaign_path(historical_campaign, :election_date => historical_campaign.election_date, :district_id => historical_campaign.district_id) %><%end%>
     <%end%>  
     </div>
-    <div class="table-responsive ">
+    <div class="table-responsive">
       <table class="table-sm table bg-white " >
         <thead>
           <tr>

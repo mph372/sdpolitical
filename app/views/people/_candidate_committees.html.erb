@@ -6,6 +6,7 @@
     <% @person.candidate_committees.order(primary_committee: :desc, cycle: :desc).each do |committee| %>
         
         <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+        <div class="table-responsive">
             <table class="table table-sm bg-white p-4" >
             <thead >
                 <tr class="card-header">
@@ -49,7 +50,7 @@
                 <%end%>
             </tbody>
         </table>
-
+        </div>
         </div>
         <%end%>
 <%end%>
