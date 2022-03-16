@@ -29,10 +29,10 @@
                   <span class="gop-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
                   <% if candidate.party_endorsement == "REP" %> <span class="gop-text"> &#10004; </span><%end%>
                   <%elsif candidate.display_party == "Democrat"%>
-                  <span class="dem-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
+                  <span class="dem-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"dem-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
                   <% if candidate.party_endorsement == "DEM" %> <span class="dem-text"> &#10004; </span><%end%>
                   <%else%>
-                  <span class="dts-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
+                  <span class="dts-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"dts-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
                   <%end%>
                   <% if user_signed_in? && current_user.admin? %>(<%= link_to "Remove", candidate, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
                 <br><small>

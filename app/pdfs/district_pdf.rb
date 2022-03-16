@@ -220,11 +220,11 @@ class DistrictPDF < Prawn::Document
         end
         [[ "Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Debt", "As Of"]] +
         candidates.map do |candidate|
-            if candidate.person.has_reports
+            if candidate.person.present? && candidate.person.has_reports
             reports = candidate.person.all_reports
             [ "#{candidate.person.full_name} #{candidate.person.party_abbreviation}", number_to_currency(reports.sum(:period_receipts)), number_to_currency(reports.sum(:period_disbursements)), number_to_currency(reports.order('period_end DESC').first.current_coh), number_to_currency(reports.order('period_end DESC').first.current_debt), reports.order('period_end DESC').first.period_end]
             else
-            [ "#{candidate.person.full_name} #{candidate.person.party_abbreviation}", "$0.00", "$0.00", "$0.00", "$0.00", "N/A"]
+            [ "#{candidate.display_name}", "$0.00", "$0.00", "$0.00", "$0.00", "N/A"]
             end
         end
     end

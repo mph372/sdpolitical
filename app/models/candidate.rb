@@ -71,28 +71,28 @@ class Candidate < ApplicationRecord
 
 
     def party_abbreviation
-      if party_registration != nil
-        if party_registration == "Republican"
+      if display_party != nil
+        if display_party == "Republican"
           "(R)"
-        elsif party_registration == "Democrat"
+        elsif display_party == "Democrat"
           "(D)"
-        elsif party_registration == "Declined to State"
+        elsif display_party == "Declined to State"
           "(DTS)"
-        elsif party_registration == "Green"
+        elsif display_party == "Green"
           "(GREEN)"
-        elsif party_registration == "Peace & Freedom"
+        elsif display_party == "Peace & Freedom"
           "(P&F)"
-        elsif party_registration == "Libertarian"
+        elsif display_party == "Libertarian"
           "(LIB)"
-        elsif party_registration == "Reform"
+        elsif display_party == "Reform"
           "(REF)"
-        elsif party_registration == "Natural Law"
+        elsif display_party == "Natural Law"
           "(NL)"
-        elsif party_registration == "American Independent"
+        elsif display_party == "American Independent"
           "(AIP)"    
-        elsif party_registration == "Unknown"
+        elsif display_party == "Unknown"
           "(N/A)"   
-        elsif party_registration == ""
+        elsif display_party == ""
           ""    
         end
       else
