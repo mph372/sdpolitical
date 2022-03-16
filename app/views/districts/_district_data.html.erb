@@ -20,7 +20,7 @@
                     <th class="pl-4 col-3">Total Voters</th>
                     <th class="col-2">DEM</th>
                     <th class="col-2">REP</th>
-                    <th class="col-2">OTHER</th>
+                    <th class="col-2 d-none d-md-table-cell">OTHER</th>
                     <th class="col-2">MARGIN</th>
             </thead>
 
@@ -29,7 +29,7 @@
                 <td class="pl-4"><%= number_with_delimiter(registration_snapshot.total_registered, :delimiter => ',') %></td>
                 <td><%= number_with_precision(registration_snapshot.democrat_percentage, precision: 2) %>%</td>
                 <td><%= number_with_precision(registration_snapshot.republican_percentage, precision: 2) %>%</td>
-                <td><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
+                <td class="d-none d-md-table-cell"><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
                 <td><% if registration_snapshot.registration_advantage > 0 %>
                                 <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
                                 <% else %>
@@ -145,7 +145,7 @@
         </div> 
       <thead class="thead-light">
         <th class="pl-4 col-3">Ballot Item</th>
-        <th class="col-4">Description</th>
+        <th class="col-4 d-none d-md-table-cell">Description</th>
         <th>Yes</th>
         <th>No</th>
         <th>Margin</th>
@@ -159,7 +159,7 @@
         <% if statistical_datum.prop_51_yes.present? %>
           <tr>
             <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_51,_Public_School_Facility_Bonds_(2016)" target="_blank">Prop 51 (2016)</a></td>
-            <td>School Facility Bonds</td>
+            <td class="d-none d-md-table-cell">School Facility Bonds</td>
             <td><%= number_with_precision(statistical_datum.prop_51_yes_result.abs, precision: 2) %>%</td>
             <td><%= number_with_precision(statistical_datum.prop_51_no_result.abs, precision: 2) %>%</td>
             <td>
@@ -176,7 +176,7 @@
         <% if statistical_datum.prop_62_yes.present? %>
           <tr>
             <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_62,_Repeal_of_the_Death_Penalty_(2016)" target="_blank">Prop 62 (2016)</a></td>
-            <td>Death Penalty Repeal</td>
+            <td class="d-none d-md-table-cell">Death Penalty Repeal</td>
             <td><%= number_with_precision(statistical_datum.prop_62_yes_result.abs, precision: 2) %>%</td>
             <td><%= number_with_precision(statistical_datum.prop_62_no_result.abs, precision: 2) %>%</td>
             <td>
@@ -193,7 +193,7 @@
         <% if statistical_datum.prop_6_yes.present? %>
           <tr>
             <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_6,_Voter_Approval_for_Future_Gas_and_Vehicle_Taxes_and_2017_Tax_Repeal_Initiative_(2018)" target="_blank">Prop 6 (2018)</a></td>
-            <td>Gas Tax Repeal</td>
+            <td class="d-none d-md-table-cell">Gas Tax Repeal</td>
             <td><%= number_with_precision(statistical_datum.prop_6_yes_result.abs, precision: 2) %>%</td>
             <td><%= number_with_precision(statistical_datum.prop_6_no_result.abs, precision: 2) %>%</td>
             <td>
@@ -210,7 +210,7 @@
         <% if statistical_datum.prop_15_yes.present? %>
           <tr>
             <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_15,_Tax_on_Commercial_and_Industrial_Properties_for_Education_and_Local_Government_Funding_Initiative_(2020)" target="_blank">Prop 15 (2020)</a></td>
-            <td>Prop 13 Split-Roll</td>
+            <td class="d-none d-md-table-cell">Prop 13 Split-Roll</td>
             <td><%= number_with_precision(statistical_datum.prop_15_yes_result.abs, precision: 2) %>%</td>
             <td><%= number_with_precision(statistical_datum.prop_15_no_result.abs, precision: 2) %>%</td>
             <td>
@@ -227,7 +227,7 @@
         <% if statistical_datum.prop_16_yes.present? %>
           <tr>
             <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_16,_Repeal_Proposition_209_Affirmative_Action_Amendment_(2020)" target="_blank">Prop 16 (2020)</a></td>
-            <td>Repeal Affirmative Action</td>
+            <td class="d-none d-md-table-cell">Repeal Affirmative Action</td>
             <td><%= number_with_precision(statistical_datum.prop_16_yes_result.abs, precision: 2) %>%</td>
             <td><%= number_with_precision(statistical_datum.prop_16_no_result.abs, precision: 2) %>%</td>
             <td>
@@ -244,7 +244,7 @@
         <% if statistical_datum.prop_21_yes.present? %>
           <tr>
             <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_21,_Local_Rent_Control_Initiative_(2020)" target="_blank">Prop 21 (2020)</a></td>
-            <td>Allow Local Rent Control</td>
+            <td class="d-none d-md-table-cell">Allow Local Rent Control</td>
             <td><%= number_with_precision(statistical_datum.prop_21_yes_result.abs, precision: 2) %>%</td>
             <td><%= number_with_precision(statistical_datum.prop_21_no_result.abs, precision: 2) %>%</td>
             <td>

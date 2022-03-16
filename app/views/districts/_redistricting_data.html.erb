@@ -16,7 +16,7 @@
                     <th class="pl-4 col-3">Total Voters</th>
                     <th class="col-2">DEM</th>
                     <th class="col-2">REP</th>
-                    <th class="col-2">OTHER</th>
+                    <th class="col-2 d-none d-md-table-cell"">OTHER</th>
                     <th class="col-2">MARGIN</th>
             </thead>
 
@@ -25,7 +25,7 @@
                 <td class="pl-4"><%= number_with_delimiter(registration_snapshot.total_registered, :delimiter => ',') %></td>
                 <td><%= number_with_precision(registration_snapshot.democrat_percentage, precision: 2) %>%</td>
                 <td><%= number_with_precision(registration_snapshot.republican_percentage, precision: 2) %>%</td>
-                <td><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
+                <td class="d-none d-md-table-cell"><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
                 <td><% if registration_snapshot.registration_advantage > 0 %>
                                 <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
                                 <% else %>
@@ -113,13 +113,14 @@
          2020 Census Data 
         </div>    
       <thead class="thead-light">
-        <th class="pl-4">Total Population</th>
+        <th class="pl-4 d-none d-md-table-cell">Total Population</th>
+        <th class="pl-4 d-md-none">Total</th>
         <th>White</th>
         <th>Hispanic</th>
         <th>Black</th>
         <th>Asian</th>
-        <th>Native</th>
-        <th>Pacific</th>
+        <th class="d-none d-md-table-cell">Native</th>
+        <th class="d-none d-md-table-cell">Pacific</th>
       </thead>
 
       <tbody>
@@ -129,8 +130,8 @@
         <td><%= statistical_datum.hispanic %>%</td>
         <td><%= statistical_datum.black %>%</td>
         <td><%= statistical_datum.asian %>%</td>
-        <td><%= statistical_datum.native %>%</td>
-        <td><%= statistical_datum.pacific %>%</td>
+        <td class="d-none d-md-table-cell"><%= statistical_datum.native %>%</td>
+        <td class="d-none d-md-table-cell"><%= statistical_datum.pacific %>%</td>
       </tr>
             </tbody>
     </table>

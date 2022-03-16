@@ -38,7 +38,7 @@
 
               <%elsif person.district.present?%>
 
-                <h5 class="text-center text-lg-left"><%= person.district.jurisdiction.name  %> - 
+                <h5 class="text-center text-lg-left"><%= person.district.jurisdiction.name  %> -
                 <% if person.incumbent_district.district != "At Large" && person.incumbent_district.is_seat == false && person.incumbent_district.is_area == false %>
                 <%=  "#{person.district.district_title}, #{person.incumbent_district.district.to_i.ordinalize} District"  %> 
                 <% elsif person.incumbent_district.is_seat %>
@@ -51,45 +51,61 @@
 
               <%end%>
               
-              <div class="row text-center text-md-left mb-1 pl-2">
-              <table class="table borderless table-sm">
+              
+             
                 
                 <% if person.is_candidate == true %>
-                <tr>
-                  <td class="heavy">Candidate for:</td>
-                  <td>
-                    <%= link_to "#{person.campaign.district.full_district_name}", person.campaign.district %>
-                  </td>
-                </tr>
+                <hr class="m-1">
+                <div class="row">
+                
+                  <div class="heavy col-md-3">Candidate for:</div>
+                  <div class="col-md-9">
+                    
+                    <div>
+                    <%= link_to "#{person.campaign.district.jurisdiction.name}", person.campaign.district.jurisdiction %> - <span class="no-wrap"><%= link_to "#{person.campaign.district.district_name}", person.campaign.district %><span>
+                    </div>
+                    
+                    
+                    
+                    
+                  </div>
+                </div>
+                <hr class="m-1">
                 <%end%>
+
                 <% if person.former_offices.present? && person.district.nil? %>
-                <tr>
-                  <td class="heavy">Formerly Represented:</td>
-                  <td>
+                <div class="row">
+                  <div class="heavy col-md">Formerly Represented:</div>
+                   <div class="col-md">
  
                     <%= link_to "#{person.former_offices.order("end_year desc").first.header_former_office_name}", person.former_offices.order("end_year desc").first.true_former_office %>
 
-                  </td>
-                </tr>
+                  </div>
+                </div>
+                <hr class="m-1">
                 <%end%>
 
-                <tr>
-                  <td class="heavy col-4">Birthdate:</td>
-                  <td><% if person.birthday_unknown %>Unknown<%else%><%= person.birthdate.to_formatted_s(:long) %> (Age <%= person.calculated_age %>)<%end%></td>
-                </tr>
-
+                <div class="row">
+                  <div class="heavy col-md-3">Birthdate:</div>
+                  <div class="col-md-9"><% if person.birthday_unknown %>Unknown<%else%><%= person.birthdate.to_formatted_s(:long) %> (Age <%= person.calculated_age %>)<%end%></div>
+                </div>
+                <hr class="m-1">
+                
                 <% if person.district.present? && person.term_expires.present?%>
-                  <tr>
-                  <td class="heavy col-4">Term Expires:</td>
-                  <td><%= person.district.term_expires %> <%if person.term? %><%= "(Term Limited in #{person.term})" %><%end%></td>
-                  </tr>
+                <div class="row">
+                 
+                  <div class="heavy col-md-3">Term Expires:</div>
+                  <div class=" col-md-9"><%= person.district.term_expires %> <%if person.term? %><%= "(Term Limited in #{person.term})" %><%end%></div>
+                  
+                </div>
+                <hr class="m-1">
                 <%end%>
 
   
 
                
-              </table>      
-              </div> 
+               
+              
       </div>
 
 
