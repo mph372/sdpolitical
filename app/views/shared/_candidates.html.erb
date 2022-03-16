@@ -17,21 +17,22 @@
                 
 
        
-                <td class="col-1 d-none d-md-table-cell pl-4"><%if candidate.person.image.present? %>
+                <td class="col-1 d-none d-md-table-cell pl-4">
+                                  <%if candidate.person.present? && candidate.person.image.present? %>
                                   <%= image_tag candidate.person.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "75x75"  %>
                                   <%else%>
                                   <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "75x75"  %>
                                   <%end%>
                                   </td>
                 <td class="col-3">
-                  <% if candidate.person.party == "Republican" %>
-                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%>
+                  <% if candidate.display_party == "Republican" %>
+                  <span class="gop-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
                   <% if candidate.party_endorsement == "REP" %> <span class="gop-text"> &#10004; </span><%end%>
-                  <%elsif candidate.person.party == "Democrat"%>
-                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"dem-text" }%>
+                  <%elsif candidate.display_party == "Democrat"%>
+                  <span class="dem-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
                   <% if candidate.party_endorsement == "DEM" %> <span class="dem-text"> &#10004; </span><%end%>
                   <%else%>
-                  <%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}",candidate, { :class =>"dts-text" }%>
+                  <span class="dts-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
                   <%end%>
                   <% if user_signed_in? && current_user.admin? %>(<%= link_to "Remove", candidate, method: :delete, data: { confirm: 'Are you sure?' } %>)<%end%>
                 <br><small>
@@ -41,7 +42,7 @@
 
                 
 
-                   <%if candidate.person.has_reports %>
+                   <%if candidate.person.present? && candidate.person.has_reports %>
                       <% reports = candidate.person.all_reports %>   
                       <td class="text-right col-2 d-none d-md-table-cell"><span class="green-text"><%= number_to_currency(reports.sum(:period_receipts)) %></span><br><small>Total Raised</small></td>
                       <td class=" text-right col-2 d-none d-md-table-cell"><span class="red-text"><%= number_to_currency(reports.sum(:period_disbursements)) %></span><br><small>Total Spent</small></td>    

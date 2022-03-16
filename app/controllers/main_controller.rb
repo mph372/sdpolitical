@@ -4,8 +4,8 @@ class MainController < ApplicationController
     end
 
     def search
-        @people = Person.ransack(last_name_cont: params[:q]).result(distinct:true)
-        @jurisdictions = Jurisdiction.ransack(name_cont: params[:q]).result(distinct:true)
+        @people = Person.where('archived = ?', false).ransack(last_name_cont: params[:q]).result(distinct:true)
+        @jurisdictions = Jurisdiction.where('archived = ?', false).ransack(name_cont: params[:q]).result(distinct:true)
 
 
         respond_to do |format|

@@ -61,6 +61,14 @@ class Candidate < ApplicationRecord
     end
   end
 
+  def display_party
+    if person.present?
+      person.party
+    else
+      party_registration
+    end
+  end
+
 
     def party_abbreviation
       if party_registration != nil

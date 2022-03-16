@@ -21,7 +21,7 @@
                 </tr>
 
                 <tr >
-                <th class="pl-4">Committee Totals<br><%if user_signed_in? && current_user.admin? || Admin.last.admin_mode == true%><%= link_to "Add Report", new_report_path(:candidate_committee_id => committee.id), 
+                <th class="pl-4">Committee Totals<br><%if user_signed_in? && current_user.admin?%><%= link_to "Add Report", new_report_path(:candidate_committee_id => committee.id), 
                     :class => "", :action => "new", :method => :get %><%end%>&nbsp</th>
                 <th class="text-right"><%= number_to_currency(committee.reports.sum(:period_receipts)) %><br><small>Loans: <%= number_to_currency(committee.reports.sum(:loans_received)) %></small></th>
                 <th class="text-right pr-4"><%= number_to_currency(committee.reports.sum(:period_disbursements)) %><br>&nbsp</th>
