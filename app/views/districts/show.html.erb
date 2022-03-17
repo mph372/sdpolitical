@@ -31,7 +31,9 @@
   <% if @district.note != nil %>
   <div class="row mb-3">
     <div class="col">
+    <%if @district.note.length > 1%>
     <%= render 'note' %>
+    <%end%>
     </div>
   </div>
   <% end %>
@@ -54,7 +56,9 @@
   <% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
   <div class="row">
     <div class="col">
+    <% if @district.is_at_large == false %>
     <%= render 'redistricting_data'%>
+    <%end%>
     <%= render 'district_data'%>
     </div>
   </div>
