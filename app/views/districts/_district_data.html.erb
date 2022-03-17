@@ -8,8 +8,16 @@
 <% if statistical_datum.registration_snapshots.present? %><% registration_snapshot = statistical_datum.registration_snapshots.last %><%end%>
 
 <%end%>
-<hr>
-<div><h3>Old District Data</h3> <%if user_signed_in? && current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%> </div>
+
+
+<div>
+<% if @district.is_at_large == false %>
+<h3>Old District Data</h3> 
+<%else%>
+<h3>District Data</h3> 
+<%end%>
+
+<%if user_signed_in? && current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%> </div>
     <% if registration_snapshot.present? %>
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
         <div class="card-header">
