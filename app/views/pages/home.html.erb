@@ -9,72 +9,35 @@
 
 <div class="container bg-white">
 
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3  bg-white">
-<div class="row">
-  <div class="col-md-7 p-lg-3 my-auto order-md-2">
-    <div class="embed-responsive embed-responsive-16by9">
-      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/kF4f9AgB6IA" allowfullscreen, title="Welcome to The Ballot Book Video"></iframe>
-    </div>
+<div class="position-relative overflow-hidden my-5 bg-white">
+<div class="row text-center">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <%= image_tag 'logos/ballot_logo_square.png', class: "", alt: 'The Ballot Book Logo' %>
+    <br>
+    <h1 class="heavy mt-4">Welcome to The Ballot Book</h1>
+    <br>
+    <h3 class="">A comprehensive database of elected officials, districts, and campaign finance for San Diego County.</h3>
+    <br>
+    <p>The Ballot Book contains data regarding voter registration, past voter behavior, census data, elected officials, candidates, and campaign finance for the San Diego delegation of the California State Legislature & US Congress, as well as all San Diego County offices, and the 18 incorporated cities throughout San Diego County.</p>
+    <br>
+    <div>  
+
+
+      <%= link_to 'Explore Districts', districts_path, :class => "btn btn-primary btn-large m-2" %>         
+  
+   
+      <%= link_to 'Explore Jurisdictions', jurisdictions_path, :class => "btn btn-primary btn-large m-2" %>         
+  
+  
+    </div>    
   </div>
-  <div class="col-md-5 p-lg-3 my-5 order-md-1">
-    <h1 class="heavy">Welcome to The Ballot Book</h1>
-    <p class=" font-weight-normal">A comprehensive database of elected officials, districts, and campaign finance for San Diego County.</p>
-    
-  </div>
+  <div class="col-2"></div>
 
   </div>
 </div>
 
 
-<div class="container marketing">
-
-
-
-    <!-- START THE FEATURETTES -->
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette p-3">
-      <div class="col-md-7 my-auto mb-2">
-        <h4 class="heavy primary-blue">Elected Officials & Candidates <span class="text-muted"></span></h4>
-        <p class="font-weight-normal">In-depth information on incumbent elected officials and candidates throughout San Diego County.</p>
-       
-      </div>
-      <div class="col-md-5 p-3">
-        <div class="shadow p-3"><%= image_tag '/scott_peters_sample.png', :class=> "homepage-images img-fluid", alt: 'Sample Candidate'%></div>
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette p-3">
-      <div class="col-md-7 order-md-2 my-auto">
-        <h4 class="heavy primary-blue">Detailed information about every district<span class="text-muted"></span></h4>
-        <p class="font-weight-normal">From U.S. Congress to municipalities, The Ballot Book has detailed information on dozens of districts, including registration data, historical performance, redistricting data, and more.</p>
-        
-      </div>
-      <div class="col-md-5 order-md-1 p-3"">
-        <div class="shadow p-3"><%= image_tag '/52nd_district_sample.png', :class=> "homepage-images img-fluid", alt: 'Sample District'%></div>
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette p-3">
-      <div class="col-md-7 my-auto">
-        <h4 class="heavy primary-blue">In-depth campaign finance data<span class="text-muted"></span></h4>
-        <p class="font-weight-normal">Campaign finance data for elected officials, candidates, and Political Action Committee throughout the county.</p>
-      </div>
-      <div class="col-md-5">
-        <div class="shadow p-3 shadow"><%= image_tag 'fundraising_data.png', :class=> "homepage-images img-fluid ", alt: 'Campaign Finance Example' %></div>
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <!-- /END THE FEATURETTES -->
-
-  </div><!-- /.container -->
 
 
 

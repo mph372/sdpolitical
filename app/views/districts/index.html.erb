@@ -12,7 +12,7 @@
                   <th>OFFICE</th>
                   <th class="text-right">DEM%</th>
                   <th class="text-right">REP%</span></th>
-                  <th class="text-right">ADVANTAGE</th>
+
                 </tr>
               </thead>
 
@@ -44,12 +44,7 @@
                     </td>
                     <td><span class="float-right dem-text"><%= number_with_precision(district.latest_registration.democrat_percentage, precision: 2) %>%</span></td>
                     <td><span class="float-right gop-text"><%= number_with_precision(district.latest_registration.republican_percentage, precision: 2) %>%</span></td>
-                    <td class="text-nowrap"><% if district.latest_registration.registration_advantage > 0 %>
-                        <span class="float-right dem-text font-weight-bold" >D +<%= number_with_precision(district.latest_registration.registration_advantage.abs, precision: 2) %>%</span>
-                        <% else %>
-                        <span class="float-right gop-text font-weight-bold" >R +<%= number_with_precision(district.latest_registration.registration_advantage.abs, precision: 2) %>%</span>
-                        <%end%>
-                    </td>      
+    
                   </tr>
                   <%end%>
                 <% end %>
@@ -71,7 +66,7 @@
     $( document ).on('turbolinks:load', function() {
     $('#districts').DataTable( {
       retrieve: true,
-      "dom": 'l<t>p'
+      
     });
 });
 

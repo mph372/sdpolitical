@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   end
   resources :subscriptions
   resources :dashboard
+  resources :help
   resources :notifications do
     collection do
       post :mark_as_read

@@ -19,9 +19,9 @@
        
                 <td class="col-1 d-none d-md-table-cell pl-4">
                                   <%if candidate.person.present? && candidate.person.image.present? %>
-                                  <%= image_tag candidate.person.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "75x75"  %>
+                                  <%= image_tag candidate.person.image.url(:headshot), alt: 'headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%else%>
-                                  <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "75x75"  %>
+                                  <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%end%>
                                   </td>
                 <td class="col-3">
