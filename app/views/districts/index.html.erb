@@ -4,14 +4,14 @@
       <h1 class="primary-blue heavy">Districts</h1>
       <br>
         <div class="panel panel-default">
-          <div class="table-responsive shadow bg-white rounded primary-border p-4">
+          <div class=" shadow bg-white rounded primary-border p-4">
             <table class="table table-sm" id="districts">
               <thead class="thead-light rounded">
                 <tr>
                   <th>INCUMBENT</th>
                   <th>OFFICE</th>
-                  <th class="text-right">DEM%</th>
-                  <th class="text-right">REP%</span></th>
+                  <th class="text-right d-none d-lg-table-cell">DEM%</th>
+                  <th class="text-right d-none d-lg-table-cell">REP%</span></th>
 
                 </tr>
               </thead>
@@ -42,8 +42,8 @@
                         <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
 
                     </td>
-                    <td><span class="float-right dem-text"><%= number_with_precision(district.latest_registration.democrat_percentage, precision: 2) %>%</span></td>
-                    <td><span class="float-right gop-text"><%= number_with_precision(district.latest_registration.republican_percentage, precision: 2) %>%</span></td>
+                    <td><span class="float-right dem-text d-none d-lg-table-cell"><%= number_with_precision(district.latest_registration.democrat_percentage, precision: 2) %>%</span></td>
+                    <td><span class="float-right gop-text d-none d-lg-table-cell"><%= number_with_precision(district.latest_registration.republican_percentage, precision: 2) %>%</span></td>
     
                   </tr>
                   <%end%>
