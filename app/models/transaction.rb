@@ -127,7 +127,9 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
       
      
       t.entity_first_name = row["NAME OF CONTRIBUTOR"].titlecase
-      t.entity_city = row["CITY"].titlecase
+      if row["CITY"] != nil
+        t.entity_city = row["CITY"].titlecase
+      end
       t.entity_state = row["STATE"]
       t.entity_zip = row["ZIP"]
       if row["OCCUPATION"] != nil
@@ -158,7 +160,7 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
     end
 
   elsif spreadsheet.cell(1,3) == "EXPENDITURE CODE"
-    # State Contributions
+    # State Expenditures
     (2..spreadsheet.last_row).each do |i|
       row = Hash[[header, spreadsheet.row(i)].transpose]
       t = Transaction.new
