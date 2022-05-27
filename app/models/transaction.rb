@@ -126,14 +126,16 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
 
       
      
-      t.entity_first_name = row["NAME OF CONTRIBUTOR"].titlecase
+      t.entity_first_name = row["NAME OF CONTRIBUTOR"]
       if row["CITY"] != nil
         t.entity_city = row["CITY"].titlecase
       end
       t.entity_state = row["STATE"]
       t.entity_zip = row["ZIP"]
       if row["OCCUPATION"] != nil
-      t.entity_employer = row["EMPLOYER"].titlecase
+        if row["EMPLOYER"] != nil
+          t.entity_employer = row["EMPLOYER"].titlecase
+        end
       t.entity_occupation = row["OCCUPATION"].titlecase
       end
       if t.entity_occupation != "N/A"
