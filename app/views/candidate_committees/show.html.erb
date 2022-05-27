@@ -8,6 +8,7 @@
     <%= submit_tag "Import" %>
     <%end%>
 <br>
+<% if @candidate_committee.imports.present? %>
 <table class="table">
   <thead>
     <tr>
@@ -36,7 +37,7 @@
      <%end%>
   </tbody>
 </table>
-
+<%end%>
 <%end%>
 
 <h1><%= @candidate_committee.name %></h1>
