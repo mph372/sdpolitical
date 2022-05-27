@@ -193,6 +193,34 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
       t.generate_full_name
     end
 
+  elsif spreadsheet.cell(1,3) == "CONTEST"
+    # State Expenditures
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      t = Transaction.new
+      t.candidate_committee_id = candidate_committee.id
+      t.import_id = import.id
+      t.transaction_type = "CTB"
+
+      
+     
+      t.entity_first_name = row["PAYEE"].titlecase
+      
+
+   
+      
+
+      if row["DATE"] != nil 
+        t.transaction_date = row["DATE"]
+      end
+      t.amount = row["AMOUNT"]
+      
+      t.unique_key = "#{row["DATE"]}#{row["PAYEE"]}#{row["AMOUNT"]}"
+      t.save
+
+      t.generate_full_name
+    end
+
   end
 
 end

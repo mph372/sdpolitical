@@ -43,6 +43,12 @@ class CandidateCommittee < ApplicationRecord
         end
     end
 
+    def individual_percentage
+        total_contributions = transactions.where(transaction_type: "RCPT").sum(:amount)
+        individual_contributions = transactions.where(transaction_type: "RCPT").where(entity_type: "IND").sum(:amount)
+        (individual_contributions / total_contributions) * 100
+    end
+
 
     
 
