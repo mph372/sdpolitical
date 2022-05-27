@@ -106,9 +106,10 @@
   <table class="display table table-sm" id="">
     <thead>
       <tr>
-        <th>Amount</th>
+        
         <th>Contributor</th>
         <th>Occupation</th>
+        <th>Amount</th>
         <th>Date</th>
         <% if user_signed_in? %><th></th><%end%>
       </tr>
@@ -117,11 +118,13 @@
     <tbody>
       <% @candidate_committee.transactions.where(transaction_type: "RCPT").each do |transaction| %>
         <tr>
-        <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.payment_type%></span></td>
+        
           <td><% if transaction.contributor.present? %><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.contributor  %><%else%><%= "#{transaction.entity_first_name} " "#{transaction.entity_last_name}" %><%end%>
               <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%= transaction.entity_zip %></span>
           </td>
           <td><%if transaction.entity_occupation != "N/A" %><%= transaction.entity_occupation %><br><span class="small"><%= transaction.entity_employer %></span><%end%></td>
+          <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.payment_type%></span></td>
+          
           <td><%= transaction.transaction_date %></td>
           
           <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
@@ -215,8 +218,9 @@
       <tr>
         <th>Expense Type</th>
         <th>Recipient</th>
-        <th>Date</th>
         <th>Amount</th>
+        <th>Date</th>
+        
         <% if user_signed_in? %><th></th><%end%>
       </tr>
     </thead>
@@ -226,9 +230,9 @@
         <tr>
           <td><%= transaction.full_expense_type %></td>
           <td><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.vendor %> </td>
-
-          <td><%= transaction.transaction_date %></td>
           <td><%= number_to_currency(transaction.amount) %></td>
+          <td><%= transaction.transaction_date %></td>
+          
           <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
         </tr>
       <% end %>
@@ -283,7 +287,7 @@
   <table class="display table table-sm" id="">
     <thead>
       <tr>
-        <th>Expense Type</th>
+
         <th>Recipient</th>
         <th>Date</th>
         <th>Amount</th>
@@ -292,9 +296,9 @@
     </thead>
 
     <tbody>
-      <% @candidate_committee.transactions.where(transaction_type: "EXPN").where(expense_code: "CTB").or(@candidate_committee.transactions.where(transaction_type: "EXPN").where(expense_code: "Contribution")).each do |transaction| %>
+      <% @candidate_committee.transactions.where(expense_code: "CTB").or(@candidate_committee.transactions.where(expense_code: "CONTRIBUTION")).each do |transaction| %>
         <tr>
-          <td><%= transaction.full_expense_type %></td>
+
           <td><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.vendor %> </td>
 
           <td><%= transaction.transaction_date %></td>
@@ -312,7 +316,9 @@
 
 <script>
 $(document).ready(function () {
-    $('table.display').DataTable();
+    $('table.display').DataTable({
+        order: [[2, 'desc']],
+    });
 });
 </script>
 
