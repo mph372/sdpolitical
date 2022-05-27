@@ -215,7 +215,6 @@
       <tr>
         <th>Expense Type</th>
         <th>Recipient</th>
-        
         <th>Date</th>
         <th>Amount</th>
         <% if user_signed_in? %><th></th><%end%>
@@ -272,8 +271,42 @@
 
   </div>
 
-</div>
+
 <%end%>
+
+
+<br>
+
+<div class="card">
+  <div class="card-header" style="max-width: 100%;">List of Contributions Made</div>
+  <div class="p-4">
+  <table class="display table table-sm" id="">
+    <thead>
+      <tr>
+        <th>Expense Type</th>
+        <th>Recipient</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <% if user_signed_in? %><th></th><%end%>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @candidate_committee.transactions.where(transaction_type: "EXPN").where(expense_code: "CTB").or(@candidate_committee.transactions.where(transaction_type: "EXPN").where(expense_code: "Contribution")).each do |transaction| %>
+        <tr>
+          <td><%= transaction.full_expense_type %></td>
+          <td><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.vendor %> </td>
+
+          <td><%= transaction.transaction_date %></td>
+          <td><%= number_to_currency(transaction.amount) %></td>
+          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+
 
 <% if user_signed_in? %><%= link_to 'Edit', edit_candidate_committee_path(@candidate_committee) %> <%end%>
 
