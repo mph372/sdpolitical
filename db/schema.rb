@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_235542) do
+ActiveRecord::Schema.define(version: 2022_05_26_230258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,9 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "total_votes"
+    t.bigint "itemized_expenditures_id"
     t.index ["district_id"], name: "index_campaigns_on_district_id"
+    t.index ["itemized_expenditures_id"], name: "index_campaigns_on_itemized_expenditures_id"
   end
 
   create_table "candidate_committees", force: :cascade do |t|
@@ -100,6 +102,53 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.index ["jurisdiction_id"], name: "index_committees_on_jurisdiction_id"
     t.index ["measure_id"], name: "index_committees_on_measure_id"
     t.index ["person_id"], name: "index_committees_on_person_id"
+  end
+
+  create_table "contributors", force: :cascade do |t|
+    t.bigint "transaction_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "full_name"
+    t.index ["transaction_id"], name: "index_contributors_on_transaction_id"
+  end
+
+  create_table "county_transactions", force: :cascade do |t|
+    t.bigint "candidate_committee_id"
+    t.bigint "import_id"
+    t.string "filer_name"
+    t.datetime "rpt_date"
+    t.string "rec_type"
+    t.string "loan_type"
+    t.string "entity_cd"
+    t.string "entity_name_last"
+    t.string "entity_name_first"
+    t.string "ctrib_prefix"
+    t.string "ctrib_suffix"
+    t.string "entity_adr1"
+    t.string "entity_adr2"
+    t.string "entity_city"
+    t.string "entity_st"
+    t.string "entity_zip4"
+    t.string "entity_emp"
+    t.string "entity_occ"
+    t.string "entity_self"
+    t.string "tran_type"
+    t.date "tran_date"
+    t.float "amount"
+    t.float "amt_beg"
+    t.integer "expn_code"
+    t.string "description"
+    t.string "agent_name_last"
+    t.string "agent_name_first"
+    t.string "agent_prefix"
+    t.string "agent_suffix"
+    t.string "cmte_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidate_committee_id"], name: "index_county_transactions_on_candidate_committee_id"
+    t.index ["import_id"], name: "index_county_transactions_on_import_id"
   end
 
   create_table "dashboards", force: :cascade do |t|
@@ -225,6 +274,8 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.integer "election_cycle"
     t.boolean "is_oppose", default: false
     t.string "pdf"
+    t.bigint "candidate_id"
+    t.index ["candidate_id"], name: "index_expenditures_on_candidate_id"
     t.index ["committee_id"], name: "index_expenditures_on_committee_id"
     t.index ["district_id"], name: "index_expenditures_on_district_id"
     t.index ["measure_id"], name: "index_expenditures_on_measure_id"
@@ -275,6 +326,25 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.index ["election_history_id"], name: "index_historical_candidates_on_election_history_id"
     t.index ["people_id"], name: "index_historical_candidates_on_people_id"
     t.index ["person_id"], name: "index_historical_candidates_on_person_id"
+  end
+
+  create_table "imports", force: :cascade do |t|
+    t.bigint "candidate_committee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["candidate_committee_id"], name: "index_imports_on_candidate_committee_id"
+  end
+
+  create_table "itemized_expenditures", force: :cascade do |t|
+    t.bigint "expenditure_id"
+    t.date "date"
+    t.string "description"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "campaign_id"
+    t.index ["campaign_id"], name: "index_itemized_expenditures_on_campaign_id"
+    t.index ["expenditure_id"], name: "index_itemized_expenditures_on_expenditure_id"
   end
 
   create_table "jurisdictions", force: :cascade do |t|
@@ -529,6 +599,36 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "candidate_committee_id"
+    t.bigint "import_id"
+    t.string "transaction_type"
+    t.string "entity_type"
+    t.string "entity_last_name"
+    t.string "entity_first_name"
+    t.string "entity_addr1"
+    t.string "entity_addr2"
+    t.string "entity_city"
+    t.string "entity_state"
+    t.string "entity_zip"
+    t.string "entity_employer"
+    t.string "entity_occupation"
+    t.date "transaction_date"
+    t.float "amount"
+    t.string "expense_code"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "contributor_id"
+    t.bigint "vendor_id"
+    t.string "full_name"
+    t.string "unique_key"
+    t.index ["candidate_committee_id"], name: "index_transactions_on_candidate_committee_id"
+    t.index ["contributor_id"], name: "index_transactions_on_contributor_id"
+    t.index ["import_id"], name: "index_transactions_on_import_id"
+    t.index ["vendor_id"], name: "index_transactions_on_vendor_id"
+  end
+
   create_table "updates", force: :cascade do |t|
     t.text "message"
     t.datetime "created_at", null: false
@@ -542,9 +642,6 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
@@ -557,6 +654,9 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.integer "card_exp_year"
     t.string "card_type"
     t.boolean "subscribed"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
@@ -572,9 +672,18 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "vendors", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "full_name"
+  end
+
   add_foreign_key "campaign_finance_modules", "districts"
   add_foreign_key "campaign_finance_modules", "jurisdictions"
   add_foreign_key "campaigns", "districts"
+  add_foreign_key "campaigns", "itemized_expenditures", column: "itemized_expenditures_id"
   add_foreign_key "candidate_committees", "candidates"
   add_foreign_key "candidate_committees", "people"
   add_foreign_key "candidate_committees", "reports"
@@ -584,12 +693,16 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
   add_foreign_key "committees", "people"
+  add_foreign_key "contributors", "transactions"
+  add_foreign_key "county_transactions", "candidate_committees"
+  add_foreign_key "county_transactions", "imports"
   add_foreign_key "districts", "former_offices"
   add_foreign_key "districts", "jurisdictions"
   add_foreign_key "districts", "people"
   add_foreign_key "districts", "registration_histories"
   add_foreign_key "election_histories", "districts"
   add_foreign_key "elections", "districts"
+  add_foreign_key "expenditures", "candidates"
   add_foreign_key "expenditures", "committees"
   add_foreign_key "expenditures", "districts"
   add_foreign_key "expenditures", "measures"
@@ -600,6 +713,9 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
   add_foreign_key "historical_candidates", "election_histories"
   add_foreign_key "historical_candidates", "people"
   add_foreign_key "historical_candidates", "people", column: "people_id"
+  add_foreign_key "imports", "candidate_committees"
+  add_foreign_key "itemized_expenditures", "campaigns"
+  add_foreign_key "itemized_expenditures", "expenditures"
   add_foreign_key "jurisdictions", "registration_histories"
   add_foreign_key "measures", "jurisdictions"
   add_foreign_key "people", "districts"
@@ -616,4 +732,8 @@ ActiveRecord::Schema.define(version: 2022_01_21_235542) do
   add_foreign_key "statistical_data", "districts"
   add_foreign_key "statistical_data", "jurisdictions"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "transactions", "candidate_committees"
+  add_foreign_key "transactions", "contributors"
+  add_foreign_key "transactions", "imports"
+  add_foreign_key "transactions", "vendors"
 end

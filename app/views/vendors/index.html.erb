@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vendors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Transactions</th>
+      <th>Name</th>
+      <th>Total Received</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%  Transaction.select('vendor_id, sum(amount) as total').group('vendor_id').order('total desc').each do |transaction| %>
+      <tr>
+        <%if transaction.vendor.present?%>
+        <td><% if transaction.vendor.present? %><%= transaction.vendor.transactions.count %><%else%>0<%end%></td>
+        <td><%= link_to "#{transaction.vendor.first_name} " "#{transaction.vendor.last_name}", transaction.vendor  %> </td>
+        <td><%= number_to_currency(transaction.total) %></td>
+        <td><%= link_to 'Show', transaction.vendor %></td>
+        <td><%= link_to 'Edit', edit_vendor_path(transaction.vendor) %></td>
+        <td><%= link_to 'Destroy', transaction.vendor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vendor', new_vendor_path %>

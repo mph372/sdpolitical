@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :vendors
+  resources :contributors
+  resources :imports
+  resources :transactions do
+    collection { post :import }
+  end
+  resources :county_transactions
+  resources :city_sd_transactions
+  resources :itemized_expenditures
   resources :campaign_finance_modules
   resources :admins
   resources :candidate_committees

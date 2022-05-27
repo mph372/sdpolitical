@@ -24,7 +24,7 @@
                                   <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "mx-auto my-auto d-block avatar shadow-sm", size: "50x50"  %>
                                   <%end%>
                                   </td>
-                <td class="col-3">
+                <td class="col-2">
                   <% if candidate.display_party == "Republican" %>
                   <span class="gop-text"><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"gop-text" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></span>
                   <% if candidate.party_endorsement == "REP" %> <span class="gop-text"> &#10004; </span><%end%>
@@ -47,15 +47,15 @@
                       <td class="text-right col-2 d-none d-md-table-cell"><span class=""><%= reports.last.period_end.strftime("%m-%d-%y") %></span><br><small>Last Report</small></td>
                       <td class="text-right col-2 d-none d-md-table-cell"><span class="green-text"><%= number_to_currency(reports.sum(:period_receipts)) %></span><br><small>Total Raised</small></td>
                       <td class=" text-right col-2 d-none d-md-table-cell"><span class="red-text"><%= number_to_currency(reports.sum(:period_disbursements)) %></span><br><small>Total Spent</small></td>    
-                      <td class=" text-right col-2 d-none d-md-table-cell"><span class="red-text">(<%= number_to_currency(reports.last.current_debt) %>)</span><br><small>Debt</small></td>       
-                      <td class="text-right col-2 pr-4 "><span class="green-text "><%= number_to_currency(reports.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small></td>
+                      <td class=" text-right col-1 d-none d-md-table-cell"><span class="red-text">(<%= number_to_currency(reports.last.current_debt) %>)</span><br><small>Debt</small></td>       
+                      <td class="text-right col-1 pr-4 "><span class="green-text "><%= number_to_currency(reports.order('period_end DESC').first.current_coh) %></span><br><small>Cash-on-Hand</small></td>
                       <td class="text-right col-2 d-none d-lg-table-cell pr-4"><span class="green-text font-weight-bold"><%= number_to_currency(reports.order('period_end DESC').first.net_coh) %></span><br><small>Net COH</small></td>
                       <%else%>
                       <td class="text-right col-2 d-none d-md-table-cell"><span class="">No Reports</span><br><small>Last Report</small></td>
                       <td class="green-text text-right col-2 d-none d-md-table-cell">$0.00<br><small>Total Raised</small><br><small></td>
                       <td class="red-text text-right col-2 d-none d-md-table-cell">$0.00<br><small>Total Spent</small></td>          
-                      <td class="text-right col-2 d-none d-md-table-cell"><span class="red-text">($0.00)</span><br><small>Debt</small></td>
-                      <td class="text-right col-2 pr-4  "><span class="green-text ">$0.00</span><br><small>Cash-on-Hand</small></td>
+                      <td class="text-right col-1 d-none d-md-table-cell"><span class="red-text">($0.00)</span><br><small>Debt</small></td>
+                      <td class="text-right col-1 pr-4  "><span class="green-text ">$0.00</span><br><small>COH</small></td>
                       <td class="text-right col-2 d-none d-lg-table-cell pr-4 "><span class="green-text font-weight-bold">$0.00</span><br><small>Net COH</small></td>
                   <%end%>
                   
@@ -77,4 +77,91 @@
       </div>
       </div>
   
+<% if campaign.itemized_expenditures.present?%>
+<div class="row">
+<div style="width:100%;">
+      <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header ">
+          <div class="row">
+                  
+                  <div class="col-8">
+                  <span class="d-none d-md-table-cell">Independent Expenditures for <%= link_to "#{district.full_district_name}", district %></span>
+                  </div> 
+                  <div class="col-4">
+                   <span class="pull-right font-weight-light font-italic"> Last Updated: <%= campaign.itemized_expenditures.last.created_at.strftime("%b %d, %Y") %></span>
+                  </div>
+          </div>
+        
+        </div>
 
+        <div >
+        <% if false %>
+        <table class="table">
+          <% campaign.itemized_expenditures.each do |expenditure| %>
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Committee</th>
+              <th>Support/Oppose</th>
+              <th>Candidate</th>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+              <td><%= expenditure.date.strftime("%m-%d-%y") %></td>
+              <td><%= expenditure.expenditure.committee.name %></td>
+              <td><% if expenditure.expenditure.is_oppose == true%>Oppose<%else%>Support<%end%></td>
+              <td><% if expenditure.expenditure.candidate.person.present? %><%= link_to "#{expenditure.expenditure.candidate.person.first_name} #{expenditure.expenditure.candidate.person.last_name}", expenditure.expenditure.candidate.person, { :class =>"" }%><%else%><%= "#{expenditure.expenditure.candidate.first_name} #{expenditure.expenditure.candidate.last_name}" %><%end%></td>
+              <td><%= expenditure.description %></td>
+              <td><%= number_to_currency(expenditure.amount) %></td>
+            </tbody>
+          <%end%>
+        </table>
+        
+        </div>
+
+   </div>  
+  </div>      
+</div>
+
+
+
+<div style="width:100%;">
+    <div class="card shadow-sm mb-3 bg-white rounded primary-border" style="max-width: 100%;">
+        <div class="card-header">
+            Aggregate Expenditures Supporting/Opposing 
+        </div>
+        <div class="table-responsive p-3">
+            <table class="table bg-white table-sm" style="width:100%">
+            <thead class="thead-light rounded">
+            <tr>
+                <th>Committee</th>
+                <th>Total Support</th>
+                <th>Total Oppose</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% campaign.itemized_expenditures.collect{|u| u.candidate}.flatten.uniq.each do |candidate| %>
+                <tr>
+                <td><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}", candidate.person, { :class =>"" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></td>
+                <td><% if candidate.itemized_expenditures.where(:is_support => true).where(person: @person).sum(:amount) > 0 %><span class="green-text "><%= number_to_currency(committee.expenditures.where(:is_support => true).where(person: @person).sum(:amount)) %></span><% end %></td>
+                <td><% if committee.expenditures.where(:is_oppose => true).where(person: @person).sum(:amount) > 0 %><span class="red-text "><%= number_to_currency(committee.expenditures.where(:is_oppose => true).where(person: @person).sum(:amount)) %></span><% end %></td>
+                </tr>
+                <% end %>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td><strong>Totals</strong></td>
+                    <td><span class="green-text heavy text-right"><%= number_to_currency(@expenditures.where(:is_support => true).sum(:amount)) %></span></td>
+                    <td><span class="red-text heavy text-right"><%= number_to_currency(@expenditures.where(:is_oppose => true).sum(:amount)) %></span></td>
+                </tr>
+            </tfoot>
+            </table>
+        </div>
+    </div>
+</div> 
+<%end%>
+<%end%>

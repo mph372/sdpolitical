@@ -14,10 +14,8 @@
 
 <p>
   <strong>Recipient:</strong>
-  <% if @expenditure.person.present? %>
-  <%= link_to "#{@expenditure.person.full_name}", @expenditure.person %>
-  <% elsif @expenditure.measure.present? %>
-  <%= link_to "Measure #{@expenditure.measure.letter}", @expenditure.measure %>
+  <% if @expenditure.candidate.present? %>
+  <%= link_to "#{@expenditure.candidate.display_name}", @expenditure.candidate.person %>
   <%end%>
 </p>
 
@@ -52,7 +50,7 @@
 </div>
 
 <% if  user_signed_in? && current_user.admin? %>
-<%= link_to 'Edit', edit_expenditure_path(@expenditure, :committee_id => expenditure.committee.id) %> |
+<%= link_to 'Edit', edit_expenditure_path(@expenditure, :committee_id => @expenditure.committee.id) %> |
 <%= link_to 'Delete Expenditure', @expenditure, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%end%>
 <%= link_to 'Back', expenditures_path %>

@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Transactions</h1>
+
+<table>
+  <thead>
+    <tr>
+
+      <th>Transaction type</th>
+      <th>Entity type</th>
+      <th>Entity last name</th>
+      <th>Entity first name</th>
+      <th>Entity addr1</th>
+      <th>Entity addr2</th>
+      <th>Entity city</th>
+      <th>Entity state</th>
+      <th>Entity zip</th>
+      <th>Entity employer</th>
+      <th>Entity occupation</th>
+      <th>Transaction date</th>
+      <th>Amount</th>
+      <th>Expense code</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @transactions.each do |transaction| %>
+      <tr>
+
+        <td><%= transaction.transaction_type %></td>
+        <td><%= transaction.entity_type %></td>
+        <td><%= transaction.entity_last_name %></td>
+        <td><%= transaction.entity_first_name %></td>
+        <td><%= transaction.entity_addr1 %></td>
+        <td><%= transaction.entity_addr2 %></td>
+        <td><%= transaction.entity_city %></td>
+        <td><%= transaction.entity_state %></td>
+        <td><%= transaction.entity_zip %></td>
+        <td><%= transaction.entity_employer %></td>
+        <td><%= transaction.entity_occupation %></td>
+        <td><%= transaction.transaction_date %></td>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.expense_code %></td>
+        <td><%= transaction.description %></td>
+        <td><%= link_to 'Show', transaction %></td>
+        <td><%= link_to 'Edit', edit_transaction_path(transaction) %></td>
+        <td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Transaction', new_transaction_path %>

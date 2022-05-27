@@ -63,6 +63,10 @@ gem "font-ionicons-rails", git: 'https://github.com/ricardoemerson/font-ionicons
 gem 'recaptcha', '~> 5.8', '>= 5.8.1'
 gem 'rack-attack'
 gem 'invisible_captcha'
+gem 'cocoon'
+gem "chartkick"
+gem "roo"
+gem 'roo-xls'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

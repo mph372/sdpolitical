@@ -23,10 +23,12 @@ class ExpendituresController < ApplicationController
   # GET /expenditures/new
   def new
     @expenditure = Expenditure.new
+    @expenditure.itemized_expenditures.build
   end
 
   # GET /expenditures/1/edit
   def edit
+    @expenditure.itemized_expenditures.build
   end
 
   # POST /expenditures
@@ -36,15 +38,7 @@ class ExpendituresController < ApplicationController
 
     respond_to do |format|
       if @expenditure.save
-        if @expenditure.person.present?
-          # Create E-Mail Notification
-            @expenditure.district_followers.uniq.each do |user|
-            if user.notify_when_new_expenditure? && user.subscribed?
-              ExpenditureMailer.with(user: user, expenditure: @expenditure).tracked_expenditure.deliver
-            end
-          end
-        end
-
+        
         format.html { redirect_to @expenditure, notice: 'Expenditure was successfully created.' }
         format.json { render :show, status: :created, location: @expenditure }
       else
@@ -86,7 +80,7 @@ class ExpendituresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def expenditure_params
-      params.require(:expenditure).permit(:expenditure_date, :description, :amount, :person_id, :measure_id, :is_support, :is_amendment, :committee_id, :district_id, :election_type, :election_cycle, :is_oppose, :pdf)
+      params.require(:expenditure).permit(:expenditure_date, :description, :amount, :person_id, :measure_id, :is_support, :is_amendment, :committee_id, :district_id, :election_type, :election_cycle, :is_oppose, :pdf, :candidate_id, itemized_expenditures_attributes: [:id, :_destroy, :expenditure_id, :date, :description, :amount])
     end
 
     def is_subscriber?

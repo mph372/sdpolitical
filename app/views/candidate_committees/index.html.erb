@@ -17,7 +17,7 @@
     <% @candidate_committees.each do |candidate_committee| %>
       <tr>
 
-        <td><%= candidate_committee.name %></td>
+        <td><%= link_to "#{candidate_committee.name}", candidate_committee %></td>
         <td><%= candidate_committee.cycle %></td>
         <td><%= candidate_committee.status %></td>
         <td><%= link_to 'Show', candidate_committee %></td>

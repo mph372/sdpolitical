@@ -1,9 +1,12 @@
 class Expenditure < ApplicationRecord
-  belongs_to :person, optional: true
+  # belongs_to :person, optional: true
+  belongs_to :candidate, optional: true
   belongs_to :measure, optional: true
   belongs_to :committee
+  has_many :itemized_expenditures, dependent: :destroy 
   mount_uploader :pdf, ExpenditureUploader
   cattr_accessor :current_user
+  accepts_nested_attributes_for :itemized_expenditures, allow_destroy: true, reject_if: :all_blank
 
   def strip_trailing_zero(n)
     n.to_s.sub(/\.?0+$/, '')

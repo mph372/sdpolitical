@@ -3,6 +3,7 @@ class Candidate < ApplicationRecord
   # delegate :person, to: :campaign
   belongs_to :person, optional: true
   belongs_to :candidate_committee, optional: true
+  has_many :expenditures
 
 
   def display_ballot_title
@@ -37,6 +38,14 @@ class Candidate < ApplicationRecord
       "#{person.full_name} #{party_abbreviation}"
     else
       "#{first_name} #{last_name} #{party_abbreviation}"
+    end
+  end
+
+  def reverse_display_name
+    if person.present?
+      "#{person.last_name}, #{person.first_name} "
+    else
+      "#{last_name}, #{first_name} "
     end
   end
 

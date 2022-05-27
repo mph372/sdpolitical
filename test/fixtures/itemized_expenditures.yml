@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  expenditure: one
+  date: 2022-05-11
+  description: MyString
+  amount: 1.5
+
+two:
+  expenditure: two
+  date: 2022-05-11
+  description: MyString
+  amount: 1.5

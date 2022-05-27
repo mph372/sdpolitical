@@ -1,33 +1,53 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Candidates</h1>
+<h1>Active Candidates</h1>
 
 <table>
   <thead>
     <tr>
       <th>Campaign</th>
       <th>Person</th>
-      <th>Ballot status</th>
-      <th>Campaign email</th>
-      <th>Campaign phone</th>
-      <th>Campaign twitter</th>
-      <th>Campaign facebook</th>
-      <th>Campaign website</th>
+      <th>Last Report</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% @candidates.each do |candidate| %>
+    <% @candidates.where(:active => true).sort {|a,b| a.campaign.district.full_district_name <=> b.campaign.district.full_district_name}.each do |candidate| %>
       <tr>
-        <td><%= candidate.campaign %></td>
-        <td><%= candidate.person %></td>
-        <td><%= candidate.ballot_status %></td>
-        <td><%= candidate.campaign_email %></td>
-        <td><%= candidate.campaign_phone %></td>
-        <td><%= candidate.campaign_twitter %></td>
-        <td><%= candidate.campaign_facebook %></td>
-        <td><%= candidate.campaign_website %></td>
+        <td><% if candidate.campaign.present? %><%= link_to "#{candidate.campaign.district.full_district_name}", candidate.campaign.district %><%end%></td>
+        <td><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></td>
+        <td><%if candidate.person.present? && candidate.person.has_reports %><%= candidate.person.all_reports.last.period_end.strftime("%m-%d-%y") %><%end%></td>
+        
+        <td><%= link_to 'Show', candidate %></td>
+        <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
+        <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<h1>Inactive Candidates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Campaign</th>
+      <th>Person</th>
+      <th>Active</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @candidates.where(:active => false).each do |candidate| %>
+      <tr>
+        <td><% if candidate.campaign.present? %><%= candidate.campaign.district.full_district_name %><%end%></td>
+        <td><%= candidate.display_name %></td>
+
+        <td><% if candidate.active? %>True<%else%>False<%end%></td>
         <td><%= link_to 'Show', candidate %></td>
         <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
         <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>

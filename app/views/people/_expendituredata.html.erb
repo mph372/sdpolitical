@@ -38,7 +38,7 @@
     </thead>
 
     <tbody>
-      <% @expenditures.each do |expenditure| %>
+      <% @itemized_expenditures.each do |expenditure| %>
         <tr>
           <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= expenditure.expenditure_date.to_formatted_s(:long) %></td>
           <td class="<%= expenditure.is_amendment? ? 'amended' : 'not-amended' %>"><%= link_to "#{expenditure.committee.name}", expenditure.committee %></td>

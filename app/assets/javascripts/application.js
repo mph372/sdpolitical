@@ -20,11 +20,14 @@
 //= require jquery.easy-autocomplete
 //= require_tree .
 //= require raphael
+//= require cocoon
 //= require morris
+//= require chartkick
+//= require Chart.bundle
 
-$(document).on('change', '#incumbentOffice', function(){
+$(document).on('change', '#incumbentOffice', function () {
     debugger;
-    if($(this).prop('checked')){
+    if ($(this).prop('checked')) {
         $('#incumbentOfficePicker').removeAttr('disabled');
         $('#reElection').removeAttr('disabled');
     } else {
@@ -33,36 +36,36 @@ $(document).on('change', '#incumbentOffice', function(){
     }
 });
 
-$(document).on('change', '#runningFor', function(){
+$(document).on('change', '#runningFor', function () {
     debugger;
-    if($(this).prop('checked')){
+    if ($(this).prop('checked')) {
         $('#runningForPicker').removeAttr('disabled');
-        
+
     } else {
         $('#runningForPicker').attr('disabled', 'disabled');
-        
+
     }
 });
 
-$(document).on('change', '#reElection', function(){
+$(document).on('change', '#reElection', function () {
     debugger;
-    if($(this).prop('checked')){
+    if ($(this).prop('checked')) {
         $('#runningFor').attr('disabled', 'disabled');
     } else {
         $('#runningFor').removeAttr('disabled');
-        
+
     }
 });
 
-$(document).on('turbolinks:load', function() {
+$(document).on('turbolinks:load', function () {
 
-    $('form').on('click', '.remove_record', function(event) {
+    $('form').on('click', '.remove_record', function (event) {
         $(this).prev('input[type=hidden').val('1');
         $(this).closest('tr').hide();
         return event.preventDefault();
     });
 
-    $('form').on('click', '.add_fields', function(event) {
+    $('form').on('click', '.add_fields', function (event) {
         var regexp, time;
         time = new Date().getTime();
         regexp = new RegExp($(this).data('id'), 'g');
