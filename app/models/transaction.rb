@@ -132,7 +132,7 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
       end
       t.entity_state = row["STATE"]
       t.entity_zip = row["ZIP"]
-      if row["OCCUPATION"] != nil
+      if row["OCCUPATION"] != nil 
         if row["EMPLOYER"] != nil
           t.entity_employer = row["EMPLOYER"].titlecase
         end
@@ -283,7 +283,15 @@ def self.import_expenditures(monetary_expenditures)
      
   end
 
-def full_expense_type
+def set_individual
+  if entity_occupation != nil
+    update_attributes(entity_type: "IND")
+  elsif entity_occupation == nil
+    update_attributes(entity_type: "")
+  end
+end
+
+  def full_expense_type
   if expense_code == "CMP"
     "Campaign Paraphernalia/Misc"
   elsif expense_code == "CNS"
