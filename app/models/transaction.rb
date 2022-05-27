@@ -138,7 +138,7 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
         end
       t.entity_occupation = row["OCCUPATION"].titlecase
       end
-      if t.entity_occupation != "N/A"
+      if t.entity_occupation != nil
         t.entity_type = "IND"
         t.entity_first_name = row["NAME OF CONTRIBUTOR"].titlecase
       else
