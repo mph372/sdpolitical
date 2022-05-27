@@ -99,7 +99,7 @@
         </div>
     
 
-<% if @candidate_committee.transactions.present? %>
+<% if @candidate_committee.transactions.where(transaction_type: "RCPT").present? %>
 <div class="card">
   <div class="card-header" style="max-width: 100%;">Contributions</div>
   <div class="p-4">
@@ -117,7 +117,7 @@
     <tbody>
       <% @candidate_committee.transactions.where(transaction_type: "RCPT").each do |transaction| %>
         <tr>
-        <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.description%></span></td>
+        <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.payment_type%></span></td>
           <td><% if transaction.contributor.present? %><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.contributor  %><%else%><%= "#{transaction.entity_first_name} " "#{transaction.entity_last_name}" %><%end%>
               <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%= transaction.entity_zip %></span>
           </td>
@@ -202,6 +202,8 @@
     </div>
     </div>
 </div>
+<%end%>
+<% if @candidate_committee.transactions.where(transaction_type: "EXPN").present? %>
 <br>
 <div class="card">
   <div class="card-header" style="max-width: 100%;">Expenditures</div>

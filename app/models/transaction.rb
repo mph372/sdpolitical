@@ -123,7 +123,7 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
       t.candidate_committee_id = candidate_committee.id
       t.import_id = import.id
       t.transaction_type = "RCPT"
-
+      t.payment_type = row["PAYMENT TYPE"]
       
      
       t.entity_first_name = row["NAME OF CONTRIBUTOR"]
