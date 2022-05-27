@@ -139,7 +139,6 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
       t.entity_occupation = row["OCCUPATION"].titlecase
       end
       if t.entity_occupation != nil
-        t.entity_type = "IND"
         t.entity_first_name = row["NAME OF CONTRIBUTOR"].titlecase
       else
         t.entity_first_name = row["NAME OF CONTRIBUTOR"]
@@ -159,6 +158,7 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
         t.add_to_vendor
       end
       t.generate_full_name
+      t.set_individual
     end
 
   elsif spreadsheet.cell(1,3) == "EXPENDITURE CODE"
@@ -284,10 +284,10 @@ def self.import_expenditures(monetary_expenditures)
   end
 
 def set_individual
-  if entity_occupation != nil
-    update_attributes(entity_type: "IND")
-  elsif entity_occupation == nil
+  if entity_occupation == nil || entity_occupation == "N/A"
     update_attributes(entity_type: "")
+  elsif entity_occupation != nil 
+      update_attributes(entity_type: "IND")
   end
 end
 
