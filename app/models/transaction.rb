@@ -217,7 +217,7 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
       
       t.unique_key = "#{row["DATE"]}#{row["PAYEE"]}#{row["AMOUNT"]}"
       t.save
-
+      t.convert_expense_code
       t.generate_full_name
     end
 
@@ -291,6 +291,12 @@ def set_individual
   end
 end
 
+def convert_expense_code
+  if expense_code == nil
+    update_attributes(expense_code: description)
+  end
+end
+
   def full_expense_type
   if expense_code == "CMP"
     "Campaign Paraphernalia/Misc"
@@ -352,7 +358,7 @@ end
     if expense_code != nil
     expense_code.titlecase
     else
-      "Unidentified"
+      "#{description}"
     end
   end
 end
