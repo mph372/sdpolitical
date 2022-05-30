@@ -34,7 +34,7 @@ class Transaction < ApplicationRecord
       end
       t.amount = row["Amount"]
       t.expense_code = row["Expn_Code"]
-      t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+      t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
       t.save
       if t.transaction_type == "RCPT"
         t.add_to_contributor
@@ -74,7 +74,7 @@ class Transaction < ApplicationRecord
     end
     t.amount = row["Tran_Amt1"]
     t.expense_code = row["Expn_Code"]
-    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
     t.save
     if t.transaction_type == "RCPT"
       t.add_to_contributor
@@ -108,7 +108,7 @@ class Transaction < ApplicationRecord
     end
     t.amount = row["Amount"]
     t.expense_code = row["Expn_Code"]
-    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
     t.save
     if t.transaction_type == "RCPT"
       t.add_to_contributor
@@ -140,7 +140,7 @@ class Transaction < ApplicationRecord
       end
       t.amount = row["Amount"]
       t.expense_code = row["Expn_Code"]
-      t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+      t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
       t.save
       if t.transaction_type == "RCPT"
         t.add_to_contributor
@@ -179,7 +179,7 @@ class Transaction < ApplicationRecord
     end
     t.amount = row["Amount"]
     t.expense_code = row["Expn_Code"]
-    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
     t.save
     if t.transaction_type == "RCPT"
       t.add_to_contributor
@@ -213,7 +213,7 @@ class Transaction < ApplicationRecord
     end
     t.amount = row["Amount"]
     t.expense_code = row["Expn_Code"]
-    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
     t.save
     if t.transaction_type == "RCPT"
       t.add_to_contributor
@@ -244,7 +244,7 @@ class Transaction < ApplicationRecord
     end
     t.amount = row["Amount"]
     t.expense_code = row["Expn_Code"]
-    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
     t.save
     if t.transaction_type == "RCPT"
       t.add_to_contributor
