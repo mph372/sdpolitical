@@ -106,7 +106,7 @@
 <%end%>
 
 
-<% @candidate_committee.transactions.where(transaction_type: "RCPT").present? do |transaction| %>
+<% if @candidate_committee.transactions.where(transaction_type: "RCPT").present?  %>
 
 <div class="card">
   <div class="card-header" style="max-width: 100%;">Contributions</div>
