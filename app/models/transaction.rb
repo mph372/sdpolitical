@@ -45,16 +45,53 @@ class Transaction < ApplicationRecord
       t.generate_full_name
     end
       
-  elsif spreadsheet.cell(1,3) == "Report_Num"
-contributions = spreadsheet.sheet_for("F460-A-Contribs")
-expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
-# City Contributions Spreadsheet
-  header = contributions.row(1)
-  (2..contributions.last_row).each do |i|
-    row = Hash[[header, contributions.row(i)].transpose]
+  elsif spreadsheet.cell(1,15) == "Tran_NamL"
+
+    cv_contributions = spreadsheet.sheet_for("A-Contributions")
+    cv_expenditures = spreadsheet.sheet_for("E-Expenditure")
+    cv_nonmonetary = spreadsheet.sheet_for("C-Contributions")
+  # CV City Contributions Spreadsheet
+  header = cv_contributions.row(1)
+  (2..cv_contributions.last_row).each do |i|
+    row = Hash[[header, cv_contributions.row(i)].transpose]
     t = Transaction.new
     t.candidate_committee_id = candidate_committee.id
     t.import_id = import.id
+    t.payment_type = row['Form_Type'] 
+    t.transaction_type = row['Rec_Type'] 
+    t.entity_type = row["Entity_Cd"]
+    t.entity_last_name = row["Tran_NamL"]
+    t.entity_first_name = row["Tran_NamF"]
+    t.entity_city = row["Tran_City"]
+    t.entity_state = row["Tran_State"]
+    t.entity_zip = row["Tran_ZIP4"]
+    t.entity_employer = row["Tran_Emp"]
+    t.entity_occupation = row["Tran_Occ"]
+    t.description = row["Tran_Dscr"]
+    if row["Tran_Date"] != nil 
+       
+        t.transaction_date = row["Tran_Date"]
+    end
+    t.amount = row["Tran_Amt1"]
+    t.expense_code = row["Expn_Code"]
+    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.save
+    if t.transaction_type == "RCPT"
+      t.add_to_contributor
+    end
+    if t.transaction_type == "EXPN"
+      t.add_to_vendor
+    end
+    t.generate_full_name
+  end
+  #CV Non-Monetary Contributions
+  header = cv_nonmonetary.row(1)
+  (2..cv_nonmonetary.last_row).each do |i|
+    row = Hash[[header, cv_nonmonetary.row(i)].transpose]
+    t = Transaction.new
+    t.candidate_committee_id = candidate_committee.id
+    t.import_id = import.id
+    t.payment_type = row['Form_Type'] 
     t.transaction_type = row['Rec_Type'] 
     t.entity_type = row["Entity_Cd"]
     t.entity_last_name = row["Ctrib_NamL"]
@@ -81,10 +118,11 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
     end
     t.generate_full_name
   end
-# City Expenditures Spreadsheet
-  header = expenditures.row(1)
-    (2..expenditures.last_row).each do |i|
-      row = Hash[[header, expenditures.row(i)].transpose]
+
+    #Chula Vista Expenditures
+    header = cv_expenditures.row(1)
+    (2..cv_expenditures.last_row).each do |i|
+      row = Hash[[header, cv_expenditures.row(i)].transpose]
       t = Transaction.new
       t.candidate_committee_id = candidate_committee.id
       t.import_id = import.id
@@ -98,8 +136,7 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
 
       t.description = row["Expn_Dscr"]
       if row["Expn_Date"] != nil 
-          date = Date.strptime(row["Expn_Date"], '%Y%m%d')
-          t.transaction_date = date
+        t.transaction_date = row["Expn_Date"]
       end
       t.amount = row["Amount"]
       t.expense_code = row["Expn_Code"]
@@ -114,7 +151,110 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
       t.generate_full_name
     end
 
-   
+  elsif spreadsheet.cell(1,15) == "Ctrib_NamL"
+    sd_contributions = spreadsheet.sheet_for("F460-A-Contribs")
+    sd_expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
+    sd_nonmonetary = spreadsheet.sheet_for("F460-C-Contribs")
+    # SD City Contributions Spreadsheet
+  header = sd_contributions.row(1)
+  (2..sd_contributions.last_row).each do |i|
+    row = Hash[[header, sd_contributions.row(i)].transpose]
+    t = Transaction.new
+    t.candidate_committee_id = candidate_committee.id
+    t.import_id = import.id
+    t.payment_type = row['Form_Type'] 
+    t.transaction_type = row['Rec_Type'] 
+    t.entity_type = row["Entity_Cd"]
+    t.entity_last_name = row["Ctrib_NamL"]
+    t.entity_first_name = row["Ctrib_NamF"]
+    t.entity_city = row["Ctrib_City"]
+    t.entity_state = row["Ctrib_ST"]
+    t.entity_zip = row["Ctrib_ZIP4"]
+    t.entity_employer = row["Ctrib_Emp"]
+    t.entity_occupation = row["Ctrib_Occ"]
+    t.description = row["Ctrib_Dscr"]
+    if row["Rcpt_Date"] != nil 
+        date = Date.strptime(row["Rcpt_Date"], '%Y%m%d')
+        t.transaction_date = date
+    end
+    t.amount = row["Amount"]
+    t.expense_code = row["Expn_Code"]
+    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.save
+    if t.transaction_type == "RCPT"
+      t.add_to_contributor
+    end
+    if t.transaction_type == "EXPN"
+      t.add_to_vendor
+    end
+    t.generate_full_name
+  end
+  #SD Non-Monetary Contributions
+  header = sd_nonmonetary.row(1)
+  (2..sd_nonmonetary.last_row).each do |i|
+    row = Hash[[header, sd_nonmonetary.row(i)].transpose]
+    t = Transaction.new
+    t.candidate_committee_id = candidate_committee.id
+    t.import_id = import.id
+    t.payment_type = row['Form_Type'] 
+    t.transaction_type = row['Rec_Type'] 
+    t.entity_type = row["Entity_Cd"]
+    t.entity_last_name = row["Ctrib_NamL"]
+    t.entity_first_name = row["Ctrib_NamF"]
+    t.entity_city = row["Ctrib_City"]
+    t.entity_state = row["Ctrib_ST"]
+    t.entity_zip = row["Ctrib_ZIP4"]
+    t.entity_employer = row["Ctrib_Emp"]
+    t.entity_occupation = row["Ctrib_Occ"]
+    t.description = row["Ctrib_Dscr"]
+    if row["Rcpt_Date"] != nil 
+        date = Date.strptime(row["Rcpt_Date"], '%Y%m%d')
+        t.transaction_date = date
+    end
+    t.amount = row["Amount"]
+    t.expense_code = row["Expn_Code"]
+    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.save
+    if t.transaction_type == "RCPT"
+      t.add_to_contributor
+    end
+    if t.transaction_type == "EXPN"
+      t.add_to_vendor
+    end
+    t.generate_full_name
+  end
+    # SD City Expenditures Spreadsheet
+  header = sd_expenditures.row(1)
+  (2..sd_expenditures.last_row).each do |i|
+    row = Hash[[header, sd_expenditures.row(i)].transpose]
+    t = Transaction.new
+    t.candidate_committee_id = candidate_committee.id
+    t.import_id = import.id
+    t.transaction_type = row['Rec_Type'] 
+    t.entity_type = row["Entity_Cd"]
+    t.entity_last_name = row["Payee_NamL"]
+    t.entity_first_name = row["Payee_NamF"]
+    t.entity_city = row["Payee_City"]
+    t.entity_state = row["Payee_ST"]
+    t.entity_zip = row["Payee_ZIP4"]
+
+    t.description = row["Expn_Dscr"]
+    if row["Expn_Date"] != nil 
+      t.transaction_date = row["Expn_Date"]
+    end
+    t.amount = row["Amount"]
+    t.expense_code = row["Expn_Code"]
+    t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+    t.save
+    if t.transaction_type == "RCPT"
+      t.add_to_contributor
+    end
+    if t.transaction_type == "EXPN"
+      t.add_to_vendor
+    end
+    t.generate_full_name
+  end
+
   elsif spreadsheet.cell(1,7) == "EMPLOYER"
     # State Contributions
     (2..spreadsheet.last_row).each do |i|
@@ -198,6 +338,18 @@ expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
 
   end
 
+end
+
+
+
+def full_payment_type
+  if payment_type == "A"
+    "Monetary"
+  elsif payment_type == "C"
+    "Non-Monetary"
+  elsif payment_type != nil
+    payment_type.titlecase
+  end
 end
 
 def generate_full_name

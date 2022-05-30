@@ -67,6 +67,7 @@ gem 'cocoon'
 gem "chartkick"
 gem "roo"
 gem 'roo-xls'
+gem 'similar_text'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

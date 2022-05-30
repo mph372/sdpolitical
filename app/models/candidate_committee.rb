@@ -5,6 +5,8 @@ class CandidateCommittee < ApplicationRecord
     has_many :transactions
     has_many :imports
     before_save :only_one_primary
+    
+    
 
     def committee_status
         if status == "Open"
@@ -49,7 +51,16 @@ class CandidateCommittee < ApplicationRecord
         (individual_contributions / total_contributions) * 100
     end
 
-
+    def self_fund
+        a = Array.new
+        transactions.where(transaction_type: "RCPT").each do |transaction|
+         if "#{transaction.full_name}".similar(person.full_name) > 90
+           a << transaction
+         end
+          
+       end
+       a
+    end
     
 
 

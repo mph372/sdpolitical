@@ -321,6 +321,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    similar_text (0.0.4)
     simple_form (5.0.3)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -418,6 +419,7 @@ DEPENDENCIES
   safe_target_blank
   sass-rails (~> 5.0)
   selenium-webdriver
+  similar_text
   simple_form
   sort-by-alphabet
   spring
