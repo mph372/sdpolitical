@@ -21,6 +21,14 @@ class ContributorsController < ApplicationController
   def edit
   end
 
+  def cleanup
+    Contributor.all.each do |contributor|
+      if contributor.transactions.count == 0
+        self.class.delete(id)
+      end
+    end
+  end
+
   # POST /contributors
   # POST /contributors.json
   def create

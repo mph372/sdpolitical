@@ -72,6 +72,7 @@ Rails.application.routes.draw do
       post :mark_as_read
     end
   end
+  post 'contributor/cleanup'
   root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
