@@ -69,8 +69,8 @@
                 <th class="pl-4">Committee Totals<%if user_signed_in? && current_user.admin?%> - <%= link_to "Add Report", new_report_path(:candidate_committee_id => @candidate_committee.id), 
                     :class => "", :action => "new", :method => :get %><%end%></th>
                 <th class="text-right"><%= number_to_currency(@candidate_committee.reports.sum(:period_receipts)) %><%if @candidate_committee.reports.present?%><br><small>Loans: <%= number_to_currency(@candidate_committee.reports.sum(:loans_received)) %></small><%end%></th>
-                <th class="text-right pr-4"><%= number_to_currency(@candidate_committee.reports.sum(:period_disbursements)) %></th>
-                <th class="text-right d-none d-lg-table-cell"><%if @candidate_committee.reports.present?%><%= number_to_currency(@candidate_committee.reports.order('period_end DESC').first.current_debt) %><%else%>$0.00<%end%></th>
+                <th class="text-right pr-4"><%= number_to_currency(@candidate_committee.reports.sum(:period_disbursements)) %><%if @candidate_committee.reports.present?%><br>&nbsp<%end%></th>
+                <th class="text-right d-none d-lg-table-cell"><%if @candidate_committee.reports.present?%><%= number_to_currency(@candidate_committee.reports.order('period_end DESC').first.current_debt) %><br>&nbsp<%else%>$0.00<%end%></th>
                 <th class="text-right pr-4 d-none d-lg-table-cell"><%if @candidate_committee.reports.present?%><%= number_to_currency(@candidate_committee.reports.order('period_end DESC').first.current_coh) %><br><small>Net: <%= number_to_currency(@candidate_committee.reports.order('period_end DESC').first.net_coh) %></small><%else%>$0.00<%end%></th>
 
                 </tr>
@@ -373,9 +373,28 @@
 <% if user_signed_in? %><%= link_to 'Edit', edit_candidate_committee_path(@candidate_committee) %> <%end%>
 
 <script>
+
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "currency-pre": function ( a ) {
+        a = (a==="-") ? 0 : a.replace( /[^\d\-\.]/g, "" );
+        return parseFloat( a );
+    },
+ 
+    "currency-asc": function ( a, b ) {
+        return a - b;
+    },
+ 
+    "currency-desc": function ( a, b ) {
+        return b - a;
+    }
+} );
+
 $(document).ready(function () {
     $('table.display').DataTable({
         order: [[2, 'desc']],
+        columnDefs: [
+       { type: 'currency', targets: 2 }
+     ],
     });
 });
 </script>
