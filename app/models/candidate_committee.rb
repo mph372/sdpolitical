@@ -33,7 +33,7 @@ class CandidateCommittee < ApplicationRecord
         transactions.where(transaction_type: "RCPT").each do |t|
            a << t.amount
         end
-        sorted = a.sort # required
+        sorted = a.sort_by! { |u| u.to_f } # required
         #=> [1, 2, 3, 4, 5, 6, 7, 8]
         midpoint = a.length / 2 # integer division
         #=> 4

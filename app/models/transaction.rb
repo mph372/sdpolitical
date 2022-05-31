@@ -95,19 +95,18 @@ class Transaction < ApplicationRecord
     t.payment_type = row['Form_Type'] 
     t.transaction_type = row['Rec_Type'] 
     t.entity_type = row["Entity_Cd"]
-    t.entity_last_name = row["Ctrib_NamL"]
-    t.entity_first_name = row["Ctrib_NamF"]
-    t.entity_city = row["Ctrib_City"]
-    t.entity_state = row["Ctrib_ST"]
-    t.entity_zip = row["Ctrib_ZIP4"]
-    t.entity_employer = row["Ctrib_Emp"]
-    t.entity_occupation = row["Ctrib_Occ"]
-    t.description = row["Ctrib_Dscr"]
-    if row["Rcpt_Date"] != nil 
-        date = Date.strptime(row["Rcpt_Date"], '%Y%m%d')
-        t.transaction_date = date
+    t.entity_last_name = row["Tran_NamL"]
+    t.entity_first_name = row["Tran_NamF"]
+    t.entity_city = row["Tran_City"]
+    t.entity_state = row["Tran_ST"]
+    t.entity_zip = row["Tran_ZIP4"]
+    t.entity_employer = row["Tran_Emp"]
+    t.entity_occupation = row["Tran_Occ"]
+    t.description = row["Tran_Dscr"]
+    if row["Tran_Date"] != nil 
+        t.transaction_date = row["Tran_Date"]
     end
-    t.amount = row["Amount"]
+    t.amount = row["Tran_Amt1"]
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
     t.save

@@ -243,7 +243,7 @@
     </div>
     <div class="col">
       <div class="card">
-  <div class="card-header" style="max-width: 100%;">Top Companies</div>
+  <div class="card-header" style="max-width: 100%;">Top Employers</div>
       <table class="table">
       <thead>
         <tr>
@@ -252,7 +252,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @candidate_committee.transactions.where(transaction_type: "RCPT").where.not(entity_employer: "N/A").where.not(entity_employer: "").select('entity_employer, sum(amount) as total').group('entity_employer').order('total desc').limit(10).each do |transaction| %>
+        <% @candidate_committee.transactions.where(transaction_type: "RCPT").where.not(entity_employer: "N/A").where.not(entity_employer: "").where.not(entity_employer: "None").select('entity_employer, sum(amount) as total').group('entity_employer').order('total desc').limit(10).each do |transaction| %>
         <tr>
           <td><%= transaction.entity_employer %></td>
           <td><%= number_to_currency(transaction.total) %></td>
