@@ -2,29 +2,21 @@
 
 <h1>Contributors</h1>
 
-<table>
+<table class="table table-sm" id="contributors">
   <thead>
     <tr>
       <th>Transactions</th>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>Name</th>
       <th>Donations</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
-    <%  Transaction.select('contributor_id, sum(amount) as total').group('contributor_id').order('total desc').each do |transaction| %>
+    <%  Contributor.all.each do |contributor| %>
       <tr>
-        <%if transaction.contributor.present?%>
-        <td><% if transaction.contributor.present? %><%= transaction.contributor.transactions.count %><%else%>0<%end%></td>
-        <td><%= transaction.contributor.first_name %></td>
-        <td><%= transaction.contributor.last_name %></td>
-        <td><%= number_to_currency(transaction.total) %></td>
-        <td><%= link_to 'Show', transaction.contributor %></td>
-        <td><%= link_to 'Edit', edit_contributor_path(transaction.contributor) %></td>
-        <td><%= link_to 'Destroy', transaction.contributor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <%end%>
+        <td><%= contributor.transactions.count %></td>
+        <td><%= link_to "#{contributor.first_name} #{contributor.last_name}", contributor %></td>
+        <td><%= number_to_currency(contributor.transactions.sum(:amount)) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -32,4 +24,29 @@
 
 <br>
 
-<%= link_to 'New Contributor', new_contributor_path %>
+<script>
+
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "currency-pre": function ( a ) {
+        a = (a==="-") ? 0 : a.replace( /[^\d\-\.]/g, "" );
+        return parseFloat( a );
+    },
+ 
+    "currency-asc": function ( a, b ) {
+        return a - b;
+    },
+ 
+    "currency-desc": function ( a, b ) {
+        return b - a;
+    }
+} );
+
+$(document).ready(function () {
+    $('#contributors').DataTable({
+        order: [[2, 'desc']],
+        columnDefs: [
+       { type: 'currency', targets: 2 }
+     ],
+    });
+});
+</script>

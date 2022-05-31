@@ -33,7 +33,7 @@ class CandidateCommittee < ApplicationRecord
         transactions.where(transaction_type: "RCPT").each do |t|
            a << t.amount
         end
-        sorted = a.sort_by! { |u| u.to_f } # required
+        sorted = a.sort # required
         #=> [1, 2, 3, 4, 5, 6, 7, 8]
         midpoint = a.length / 2 # integer division
         #=> 4
@@ -54,7 +54,7 @@ class CandidateCommittee < ApplicationRecord
     def self_fund
         a = Array.new
         transactions.where.not(transaction_type: "EXPN").each do |transaction|
-         if "#{transaction.full_name}".similar(person.full_name) > 90 && transaction.amount > 0
+         if "#{transaction.full_name}".similar(person.full_name) > 90 
            a << transaction
          end
           
