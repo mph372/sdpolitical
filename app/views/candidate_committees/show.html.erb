@@ -98,12 +98,14 @@
         </div>
         </div>
     
-
+<% if false %>
 <% if @candidate_committee.self_fund.count > 0 %>
   <% @candidate_committee.self_fund.each do |transaction| %>
   <%= transaction.amount %>
   <%end%>
 <%end%>
+<%end%>
+
 
 
 <% if @candidate_committee.transactions.where(transaction_type: "RCPT").present?  %>

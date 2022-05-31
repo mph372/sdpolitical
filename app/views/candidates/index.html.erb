@@ -18,10 +18,9 @@
         <td><% if candidate.campaign.present? %><%= link_to "#{candidate.campaign.district.full_district_name}", candidate.campaign.district %><%end%></td>
         <td><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></td>
         <td><%if candidate.person.present? && candidate.person.has_reports %><%= candidate.person.all_reports.last.period_end.strftime("%m-%d-%y") %><%end%></td>
-        
-        <td><%= link_to 'Show', candidate %></td>
-        <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
-        <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%if candidate.person.present? && candidate.person.has_reports %><%= link_to "Add Report", new_report_path(:candidate_committee_id => candidate.person.candidate_committees.order(primary_committee: :desc, cycle: :desc).last.id), 
+                    :class => "", :action => "new", :method => :get %> <%end%></td>
+
       </tr>
     <% end %>
   </tbody>
