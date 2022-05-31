@@ -50,6 +50,7 @@ class Transaction < ApplicationRecord
     cv_contributions = spreadsheet.sheet_for("A-Contributions")
     cv_expenditures = spreadsheet.sheet_for("E-Expenditure")
     cv_nonmonetary = spreadsheet.sheet_for("C-Contributions")
+    cv_loans = spreadsheet.sheet_for("B1-Loans")
   # CV City Contributions Spreadsheet
   header = cv_contributions.row(1)
   (2..cv_contributions.last_row).each do |i|
@@ -151,10 +152,45 @@ class Transaction < ApplicationRecord
       t.generate_full_name
     end
 
+        #Chula Vista Loans
+        header = cv_loans.row(1)
+        (2..cv_loans.last_row).each do |i|
+          row = Hash[[header, cv_loans.row(i)].transpose]
+          t = Transaction.new
+          t.candidate_committee_id = candidate_committee.id
+          t.import_id = import.id
+          t.transaction_type = row['Rec_Type'] 
+          t.entity_type = row["Entity_Cd"]
+          t.entity_last_name = row["Lndr_NamL"]
+          t.entity_first_name = row["Lndr_NamF"]
+          t.entity_city = row["Loan_City"]
+          t.entity_state = row["Loan_ST"]
+          t.entity_zip = row["Loan_ZIP4"]
+    
+          t.description = row["Expn_Dscr"]
+          if row["Loan_Date1"] != nil 
+            t.transaction_date = row["Loan_Date1"]
+          end
+          t.amount = row["Loan_Amt1"]
+          t.expense_code = row["Expn_Code"]
+          t.unique_key = "#{row["Filer_ID"]} #{row["Loan_Amt1"]} #{row["Tran_ID"]}"
+          if row["Loan_Amt1"] != 0.00
+          t.save
+          end
+          if t.transaction_type == "RCPT"
+            t.add_to_contributor
+          end
+          if t.transaction_type == "EXPN"
+            t.add_to_vendor
+          end
+          t.generate_full_name
+        end
+
   elsif spreadsheet.cell(1,15) == "Ctrib_NamL"
     sd_contributions = spreadsheet.sheet_for("F460-A-Contribs")
     sd_expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
     sd_nonmonetary = spreadsheet.sheet_for("F460-C-Contribs")
+    sd_loans = spreadsheet.sheet_for("F460-B1-Loans")
     # SD City Contributions Spreadsheet
   header = sd_contributions.row(1)
   (2..sd_contributions.last_row).each do |i|
@@ -246,6 +282,40 @@ class Transaction < ApplicationRecord
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"]} #{row["Tran_ID"]}"
     t.save
+    if t.transaction_type == "RCPT"
+      t.add_to_contributor
+    end
+    if t.transaction_type == "EXPN"
+      t.add_to_vendor
+    end
+    t.generate_full_name
+  end
+
+  #City of SD Loans
+  header = sd_loans.row(1)
+  (2..sd_loans.last_row).each do |i|
+    row = Hash[[header, sd_loans.row(i)].transpose]
+    t = Transaction.new
+    t.candidate_committee_id = candidate_committee.id
+    t.import_id = import.id
+    t.transaction_type = row['Rec_Type'] 
+    t.entity_type = row["Entity_Cd"]
+    t.entity_last_name = row["Lndr_NamL"]
+    t.entity_first_name = row["Lndr_NamF"]
+    t.entity_city = row["Loan_City"]
+    t.entity_state = row["Loan_ST"]
+    t.entity_zip = row["Loan_ZIP4"]
+
+    t.description = row["Expn_Dscr"]
+    if row["Loan_Date1"] != nil 
+      t.transaction_date = row["Loan_Date1"]
+    end
+    t.amount = row["Loan_Amt1"]
+    t.expense_code = row["Expn_Code"]
+    t.unique_key = "#{row["Filer_ID"]} #{row["Loan_Amt1"]} #{row["Tran_ID"]}"
+    if row["Loan_Amt1"] != 0.00
+    t.save
+    end
     if t.transaction_type == "RCPT"
       t.add_to_contributor
     end
@@ -347,6 +417,8 @@ def full_payment_type
     "Monetary"
   elsif payment_type == "C"
     "Non-Monetary"
+  elsif transaction_type == "LOAN"
+    "Loan"
   elsif payment_type != nil
     payment_type.titlecase
   end
@@ -421,6 +493,14 @@ end
 def convert_expense_code
   if expense_code == nil 
     update_attributes(expense_code: description)
+  end
+end
+
+def full_transaction_type
+  if transaction_type == "RCPT"
+    "Contribution"
+  elsif transaction_type == "LOAN"
+    "Loan"
   end
 end
 

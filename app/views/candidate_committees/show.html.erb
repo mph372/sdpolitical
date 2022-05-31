@@ -98,20 +98,45 @@
         </div>
         </div>
     
-<% if false %>
+
 <% if @candidate_committee.self_fund.count > 0 %>
-  <% @candidate_committee.self_fund.each do |transaction| %>
-  <%= transaction.amount %>
-  <%end%>
-<%end%>
+  <div class="card">
+    <div class="card-header" style="max-width: 100%;">Contributions/Loans from the Candidate</div>
+ 
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th class="pl-4">Name</th>
+              <th>Contribution Type</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <% @candidate_committee.self_fund.each do |transaction| %>
+              <tr>
+                <td class="pl-4"><%= transaction.full_name %></td>
+                <td><%= transaction.full_transaction_type %></td>
+                <td><%= number_to_currency(transaction.amount) %></td>
+                <td><%= transaction.transaction_date %></td>
+            </tr>
+            <%end%>
+          </tbody>
+
+        </table>
+
+
+  </div>
 <%end%>
 
+<br>
 
 
 <% if @candidate_committee.transactions.where(transaction_type: "RCPT").present?  %>
 
 <div class="card">
-  <div class="card-header" style="max-width: 100%;">Contributions</div>
+  <div class="card-header" style="max-width: 100%;">Contributions to Committee</div>
   <div class="p-4">
   <table class="display table table-sm" id="">
     <thead>
@@ -205,9 +230,31 @@
         </tr>
       </thead>
       <tbody>
-        <% @candidate_committee.transactions.where(transaction_type: "RCPT").where.not(entity_occupation: "N/A").select('entity_occupation, sum(amount) as total').group('entity_occupation').order('total desc').limit(10).each do |transaction| %>
+        <% @candidate_committee.transactions.where(transaction_type: "RCPT").where.not(entity_occupation: "N/A").where.not(entity_occupation: "").select('entity_occupation, sum(amount) as total').group('entity_occupation').order('total desc').limit(10).each do |transaction| %>
         <tr>
           <td><%= transaction.entity_occupation %></td>
+          <td><%= number_to_currency(transaction.total) %></td>
+        </tr>
+        <%end%>
+      </tbody>
+    
+    </table>
+    </div>
+    </div>
+    <div class="col">
+      <div class="card">
+  <div class="card-header" style="max-width: 100%;">Top Companies</div>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>Occupation</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @candidate_committee.transactions.where(transaction_type: "RCPT").where.not(entity_employer: "N/A").where.not(entity_employer: "").select('entity_employer, sum(amount) as total').group('entity_employer').order('total desc').limit(10).each do |transaction| %>
+        <tr>
+          <td><%= transaction.entity_employer %></td>
           <td><%= number_to_currency(transaction.total) %></td>
         </tr>
         <%end%>
@@ -257,7 +304,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Expense Type</th>
+          <th class="pl-4">Expense Type</th>
           <th>Amount</th>
           <th>% of Spend</th>
           <th></th>
@@ -267,7 +314,7 @@
         <% @candidate_committee.transactions.where(transaction_type: "EXPN").select('expense_code, sum(amount) as total').group('expense_code').order('total desc').each do |transaction| %>
         <tr>
         
-          <td class="col-5"><%= transaction.full_expense_type %></td>
+          <td class="pl-4 col-5"><%= transaction.full_expense_type %></td>
           <td class="col-1"><%= number_to_currency(transaction.total) %></td>
           <td class="col-1"><%= number_with_precision((transaction.total / @candidate_committee.total_expenditures)*100, precision: 2) %>%</td>
           <td class="col-5">
@@ -295,6 +342,7 @@
   <div class="card-header" style="max-width: 100%;">List of Contributions Made</div>
   <div class="p-4">
   <table class="display table table-sm" id="">
+
     <thead>
       <tr>
 
