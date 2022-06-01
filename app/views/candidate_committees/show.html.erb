@@ -154,7 +154,7 @@
       <% @candidate_committee.transactions.where(transaction_type: "RCPT").each do |transaction| %>
         <tr>
         
-          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.entity_first_name.titlecase} " "#{transaction.entity_last_name.titlecase}", transaction.contributor  %><%else%><%= "#{transaction.entity_first_name} " "#{transaction.entity_last_name}" %><%end%>
+          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.contributor  %><%else%><%= "#{transaction.entity_first_name} " "#{transaction.entity_last_name}" %><%end%>
               <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%= transaction.entity_zip %></span>
           </td>
           <td><%if transaction.entity_occupation != "N/A" %><%= transaction.entity_occupation %><br><span class="small"><%= transaction.entity_employer %></span><%end%></td>
