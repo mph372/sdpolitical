@@ -77,13 +77,14 @@ class Transaction < ApplicationRecord
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
     t.save
+    t.generate_full_name
     if t.transaction_type == "RCPT"
       t.add_to_contributor
     end
     if t.transaction_type == "EXPN"
       t.add_to_vendor
     end
-    t.generate_full_name
+    
   end
   #CV Non-Monetary Contributions
   header = cv_nonmonetary.row(1)
@@ -110,13 +111,14 @@ class Transaction < ApplicationRecord
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
     t.save
+    t.generate_full_name
     if t.transaction_type == "RCPT"
       t.add_to_contributor
     end
     if t.transaction_type == "EXPN"
       t.add_to_vendor
     end
-    t.generate_full_name
+    
   end
 
     #Chula Vista Expenditures
@@ -142,13 +144,15 @@ class Transaction < ApplicationRecord
       t.expense_code = row["Expn_Code"]
       t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
       t.save
+      t.generate_full_name
       if t.transaction_type == "RCPT"
         t.add_to_contributor
       end
       if t.transaction_type == "EXPN"
         t.add_to_vendor
       end
-      t.generate_full_name
+      
+      t.convert_expense_code
     end
 
         #Chula Vista Loans
@@ -176,13 +180,14 @@ class Transaction < ApplicationRecord
           if row["Loan_Amt1"] != 0.00
           t.save
           end
+          t.generate_full_name
           if t.transaction_type == "RCPT"
             t.add_to_contributor
           end
           if t.transaction_type == "EXPN"
             t.add_to_vendor
           end
-          t.generate_full_name
+         
         end
 
   elsif spreadsheet.cell(1,15) == "Ctrib_NamL"
@@ -216,13 +221,14 @@ class Transaction < ApplicationRecord
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
     t.save
+    t.generate_full_name
     if t.transaction_type == "RCPT"
       t.add_to_contributor
     end
     if t.transaction_type == "EXPN"
       t.add_to_vendor
     end
-    t.generate_full_name
+    
   end
   #SD Non-Monetary Contributions
   header = sd_nonmonetary.row(1)
@@ -250,13 +256,14 @@ class Transaction < ApplicationRecord
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
     t.save
+    t.generate_full_name
     if t.transaction_type == "RCPT"
       t.add_to_contributor
     end
     if t.transaction_type == "EXPN"
       t.add_to_vendor
     end
-    t.generate_full_name
+    
   end
     # SD City Expenditures Spreadsheet
   header = sd_expenditures.row(1)
@@ -281,13 +288,15 @@ class Transaction < ApplicationRecord
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
     t.save
+    t.generate_full_name
     if t.transaction_type == "RCPT"
       t.add_to_contributor
     end
     if t.transaction_type == "EXPN"
       t.add_to_vendor
     end
-    t.generate_full_name
+    
+    t.convert_expense_code
   end
 
   #City of SD Loans
@@ -446,9 +455,9 @@ def self.import_expenditures(monetary_expenditures)
 
   def add_to_contributor
     entity_full_name = "#{entity_first_name} #{entity_last_name}"
-      if Contributor.where(:full_name => entity_full_name).exists? 
+      if Contributor.where(:full_name => full_name).exists? 
         Contributor.all.each do |c|
-          if entity_full_name == c.full_name
+          if full_name == c.full_name
             update_attributes(contributor_id: c.id)
           end
         end
@@ -456,17 +465,15 @@ def self.import_expenditures(monetary_expenditures)
         contributor = Contributor.create!
         contributor.update_attributes(first_name: entity_first_name)
         contributor.update_attributes(last_name: entity_last_name)
-        contributor.update_attributes(full_name: "#{contributor.first_name} #{contributor.last_name}")
+        contributor.update_attributes(full_name: full_name)
         update_attributes(contributor_id: contributor.id)
       end 
     end
 
     def add_to_vendor
-        entity_full_name = "#{entity_first_name} #{entity_last_name}"
-        trimmed_full_name = entity_full_name.strip
-        if Vendor.where(:full_name => trimmed_full_name).exists? 
+        if Vendor.where(:full_name => full_name).exists? 
           Vendor.all.each do |c|
-            if trimmed_full_name == c.full_name
+            if full_name == c.full_name
               update_attributes(vendor_id: c.id)
             end
           end
@@ -474,7 +481,7 @@ def self.import_expenditures(monetary_expenditures)
           vendor = Vendor.create!
           vendor.update_attributes(first_name: entity_first_name)
           vendor.update_attributes(last_name: entity_last_name)
-          vendor.update_attributes(full_name: "#{vendor.first_name} #{vendor.last_name}".strip)
+          vendor.update_attributes(full_name: full_name)
           update_attributes(vendor_id: vendor.id)
         end
       

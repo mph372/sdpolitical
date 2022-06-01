@@ -116,7 +116,7 @@
             
               <% @candidate_committee.self_fund.each do |transaction| %>
               <tr>
-                <td class="pl-4"><%= transaction.full_name %></td>
+                <td class="pl-4"><%= transaction.full_name.titlecase %></td>
                 <td><%= transaction.full_transaction_type %></td>
                 <td><%= number_to_currency(transaction.amount) %></td>
                 <td><%= transaction.transaction_date %></td>
@@ -154,7 +154,7 @@
       <% @candidate_committee.transactions.where(transaction_type: "RCPT").each do |transaction| %>
         <tr>
         
-          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.contributor  %><%else%><%= "#{transaction.entity_first_name} " "#{transaction.entity_last_name}" %><%end%>
+          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.entity_first_name.titlecase} " "#{transaction.entity_last_name.titlecase}", transaction.contributor  %><%else%><%= "#{transaction.entity_first_name} " "#{transaction.entity_last_name}" %><%end%>
               <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%= transaction.entity_zip %></span>
           </td>
           <td><%if transaction.entity_occupation != "N/A" %><%= transaction.entity_occupation %><br><span class="small"><%= transaction.entity_employer %></span><%end%></td>
@@ -286,7 +286,7 @@
       <% @candidate_committee.transactions.where(transaction_type: "EXPN").each do |transaction| %>
         <tr>
           <td><%= transaction.full_expense_type %></td>
-          <td><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.vendor %> </td>
+          <td><%= link_to "#{transaction.full_name} ", transaction.vendor %> </td>
           <td><%= number_to_currency(transaction.amount) %></td>
           <td><%= transaction.transaction_date %></td>
           
@@ -357,7 +357,7 @@
       <% @candidate_committee.transactions.where(expense_code: "CTB").or(@candidate_committee.transactions.where(expense_code: "CONTRIBUTION")).each do |transaction| %>
         <tr>
 
-          <td><%= link_to "#{transaction.entity_first_name} " "#{transaction.entity_last_name}", transaction.vendor %> </td>
+          <td><%= link_to "#{transaction.entity_first_name.titlecase} " "#{transaction.entity_last_name.titlecase}", transaction.vendor %> </td>
 
           <td><%= transaction.transaction_date %></td>
           <td><%= number_to_currency(transaction.amount) %></td>
