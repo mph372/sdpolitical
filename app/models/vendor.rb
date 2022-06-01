@@ -12,4 +12,15 @@ class Vendor < ApplicationRecord
         end
       end
 
+      def vendor_merge
+        Vendor.all.each do |c|
+          if full_name.downcase.similar(c.full_name.downcase) > 90
+            c.transactions.each do |t|
+              t.update_attributes(vendor_id: id)
+            end
+            c.full_name.titlecase
+          end
+        end
+      end  
+
 end
