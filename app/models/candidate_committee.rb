@@ -53,7 +53,7 @@ class CandidateCommittee < ApplicationRecord
 
     def self_fund
         a = Array.new
-        transactions.where.not(transaction_type: "EXPN").each do |transaction|
+        transactions.where.not(transaction_type: "EXPN").where.not(transaction_type: "DEBT").each do |transaction|
          if "#{transaction.full_name}".similar(person.full_name) > 90 && transaction.amount != 0
            a << transaction
          end
