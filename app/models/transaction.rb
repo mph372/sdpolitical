@@ -436,7 +436,7 @@ end
 
 def generate_full_name
   entity_full_name = "#{entity_first_name} #{entity_last_name}"
-  update_attributes(full_name: entity_full_name.strip)
+  update_attributes(full_name: entity_full_name.titlecase.strip)
 end
 
 def self.import_expenditures(monetary_expenditures)
@@ -456,9 +456,9 @@ def self.import_expenditures(monetary_expenditures)
   end
 
   def add_to_contributor
-      if Contributor.where(:full_name => full_name).exists? 
+      if Contributor.where(:full_name.downcase => full_name.downcase).exists? 
         Contributor.all.each do |c|
-          if full_name == c.full_name
+          if full_name.downcase == c.full_name.downcase
             update_attributes(contributor_id: c.id)
           end
         end
@@ -472,9 +472,9 @@ def self.import_expenditures(monetary_expenditures)
     end
 
     def add_to_vendor
-        if Vendor.where(:full_name => full_name).exists? 
+        if Vendor.where(:full_name.downcase => full_name.downcase).exists? 
           Vendor.all.each do |c|
-            if full_name == c.full_name
+            if full_name.downcase == c.full_name.downcase
               update_attributes(vendor_id: c.id)
             end
           end
