@@ -20,6 +20,7 @@ class Transaction < ApplicationRecord
       t.candidate_committee_id = candidate_committee.id
       t.import_id = import.id
       t.transaction_type = row['Rec_Type'] 
+      t.payment_type = row['Form_Type']
       t.entity_type = row["Entity_Cd"]
       t.entity_last_name = row["Entity_Nam L"]
       t.entity_first_name = row["Entity_Nam F"]
