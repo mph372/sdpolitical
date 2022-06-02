@@ -23,4 +23,14 @@ class Vendor < ApplicationRecord
         end
       end  
 
+      def vendor_similar
+        a = Array.new
+        Vendor.all.where.not(:id => id).each do |c|
+          if full_name.downcase.similar(c.full_name.downcase) > 70
+            a << c
+          end
+        end
+        return a 
+      end 
+
 end

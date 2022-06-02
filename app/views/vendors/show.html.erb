@@ -1,14 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @vendor.first_name %>
-</p>
-
-<p>
-  <strong>Last name:</strong>
-  <%= @vendor.last_name %>
-</p>
+<h1><%= @vendor.full_name.titleize %></h1>
 
 <table class=table>
   <thead>
@@ -39,6 +31,14 @@
   </tr>
   </tbody>
 </table>
+<br>
+<h4>Possible Similar Vendors</h4>
+<% if @vendor.vendor_similar.count > 0 %>
+  <% @vendor.vendor_similar.each do |vendor| %>
+  <tr>
+  <%= link_to "#{vendor.full_name.titlecase}", vendor %>
+  </tr>
+  
+  <%end%>
+<%end%>
 
-<%= link_to 'Edit', edit_vendor_path(@vendor) %> |
-<%= link_to 'Back', vendors_path %>

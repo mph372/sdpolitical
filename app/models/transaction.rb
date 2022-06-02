@@ -34,7 +34,7 @@ class Transaction < ApplicationRecord
       end
       t.amount = row["Amount"]
       t.expense_code = row["Expn_Code"]
-      t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
+      t.unique_key = "#{row["Filer_ID"]} #{row["Filer_Nam L"].downcase} #{row["Tran_ID"]}"
       t.save
       if t.transaction_type == "RCPT"
         t.add_to_contributor
