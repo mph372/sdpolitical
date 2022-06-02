@@ -68,6 +68,7 @@ class TransactionsController < ApplicationController
    redirect_to @candidate_committee, notice: 'Transactions were successfully uploaded!'
   end  
 
+
   
 
   private

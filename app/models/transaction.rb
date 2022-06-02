@@ -36,13 +36,14 @@ class Transaction < ApplicationRecord
       t.expense_code = row["Expn_Code"]
       t.unique_key = "#{row["Filer_ID"]} #{row["Filer_Nam L"].downcase} #{row["Tran_ID"]}"
       t.save
+      t.generate_full_name
       if t.transaction_type == "RCPT"
         t.add_to_contributor
       end
       if t.transaction_type == "EXPN"
         t.add_to_vendor
       end
-      t.generate_full_name
+      
     end
       
   elsif spreadsheet.cell(1,15) == "Tran_NamL"
@@ -454,7 +455,6 @@ def self.import_expenditures(monetary_expenditures)
   end
 
   def add_to_contributor
-    entity_full_name = "#{entity_first_name} #{entity_last_name}"
       if Contributor.where(:full_name => full_name).exists? 
         Contributor.all.each do |c|
           if full_name == c.full_name

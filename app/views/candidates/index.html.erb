@@ -1,33 +1,40 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Active Candidates</h1>
-
-<table>
+<br>
+<div class="card p-3">
+<table class="table table-sm" id="candidates">
   <thead>
     <tr>
-      <th>Campaign</th>
       <th>Person</th>
+      <th>District</th>
+      <th>Campaign Finance Details</th>
+      <%if user_signed_in? && current_user.admin? %>
       <th>Last Report</th>
-      <th colspan="3"></th>
+      <th>Add Report</th>
+      <%end%>
     </tr>
   </thead>
 
   <tbody>
     <% @candidates.where(:active => true).sort {|a,b| a.campaign.district.full_district_name <=> b.campaign.district.full_district_name}.each do |candidate| %>
       <tr>
-        <td><% if candidate.campaign.present? %><%= link_to "#{candidate.campaign.district.full_district_name}", candidate.campaign.district %><%end%></td>
         <td><% if candidate.person.present? %><%= link_to "#{candidate.person.first_name} #{candidate.person.last_name}#{candidate.is_district_incumbent}", candidate.person, { :class =>"" }%><%else%><%= "#{candidate.first_name} #{candidate.last_name}" %><%end%></td>
+        <td><% if candidate.campaign.present? %><%= link_to "#{candidate.campaign.district.full_district_name}", candidate.campaign.district %><%end%></td>
+        <td><%if candidate.person.present? && candidate.person.has_reports %><%= link_to "View", candidate.person.candidate_committees.order(primary_committee: :desc, cycle: :desc).last, :class => "" %><%end%> </td>
+        <%if user_signed_in? && current_user.admin? %>
         <td><%if candidate.person.present? && candidate.person.has_reports %><%= candidate.person.all_reports.last.period_end.strftime("%m-%d-%y") %><%end%></td>
         <td><%if candidate.person.present? && candidate.person.has_reports %><%= link_to "Add Report", new_report_path(:candidate_committee_id => candidate.person.candidate_committees.order(primary_committee: :desc, cycle: :desc).last.id), 
                     :class => "", :action => "new", :method => :get %> <%end%></td>
+                    <%end%>
 
       </tr>
     <% end %>
   </tbody>
 </table>
-
+</div>
 <br>
-
+<%if user_signed_in? && current_user.admin? %>
 <h1>Inactive Candidates</h1>
 
 <table>
@@ -55,6 +62,16 @@
   </tbody>
 </table>
 
-<br>
 
-<%= link_to 'New Candidate', new_candidate_path %>
+<%end%>
+
+<script>
+
+
+$(document).ready(function () {
+    $('#candidates').DataTable({
+        order: [[1, 'asc']],
+        
+    });
+});
+</script>
