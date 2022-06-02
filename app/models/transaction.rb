@@ -457,9 +457,9 @@ def self.import_expenditures(monetary_expenditures)
   end
 
   def add_to_contributor
-      if Contributor.where(:full_name.downcase => full_name.downcase).exists? 
+      if Contributor.where(:full_name => full_name).exists? 
         Contributor.all.each do |c|
-          if full_name.downcase == c.full_name.downcase
+          if full_name == c.full_name
             update_attributes(contributor_id: c.id)
           end
         end
@@ -473,9 +473,9 @@ def self.import_expenditures(monetary_expenditures)
     end
 
     def add_to_vendor
-        if Vendor.where(:full_name.downcase => full_name.downcase).exists? 
+        if Vendor.where(:full_name => full_name).exists? 
           Vendor.all.each do |c|
-            if full_name.downcase == c.full_name.downcase
+            if full_name == c.full_name
               update_attributes(vendor_id: c.id)
             end
           end
