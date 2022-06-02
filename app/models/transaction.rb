@@ -43,6 +43,7 @@ class Transaction < ApplicationRecord
       end
       if t.transaction_type == "EXPN"
         t.add_to_vendor
+        t.convert_expense_code
       end
       
     end
@@ -466,7 +467,7 @@ def self.import_expenditures(monetary_expenditures)
         contributor = Contributor.create!
         contributor.update_attributes(first_name: entity_first_name)
         contributor.update_attributes(last_name: entity_last_name)
-        contributor.update_attributes(full_name: full_name)
+        contributor.update_attributes(full_name: full_name.titlecase)
         update_attributes(contributor_id: contributor.id)
       end 
     end
@@ -482,7 +483,7 @@ def self.import_expenditures(monetary_expenditures)
           vendor = Vendor.create!
           vendor.update_attributes(first_name: entity_first_name)
           vendor.update_attributes(last_name: entity_last_name)
-          vendor.update_attributes(full_name: full_name)
+          vendor.update_attributes(full_name: full_name.titlecase)
           update_attributes(vendor_id: vendor.id)
         end
       
@@ -498,7 +499,7 @@ def set_individual
 end
 
 def convert_expense_code
-  if expense_code == nil 
+  if expense_code == nil || expense_code == ""
     update_attributes(expense_code: description)
   end
 end
