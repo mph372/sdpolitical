@@ -5,10 +5,17 @@ class Transaction < ApplicationRecord
   belongs_to :vendor, optional: :true
   validates :unique_key, uniqueness: true
   validate :exclude_actblue
+  validate :require_amount
 
   def exclude_actblue
     if organization_name != nil && organization_name.downcase.similar("Act Blue".downcase) > 90
       errors.add(:organization_name, "Cannot be ActBlue")
+    end
+  end
+
+  def require_amount
+    if amount == nil 
+      errors.add(:amount, "Amount Required")
     end
   end
   
@@ -474,11 +481,11 @@ class Transaction < ApplicationRecord
     end
     #Federal Expenditures
     (2..fed_expenditures.last_row).each do |i|
-      row = header.zip(fed_expenditures.row(i)).to_h
+      row = Hash[[header, fed_expenditures.row(i)].transpose]
       t = Transaction.new
       t.candidate_committee_id = candidate_committee.id
       t.import_id = import.id
-      t.transaction_type = "RCPT"
+      t.transaction_type = "EXPN"
       t.payment_type = "Monetary"
       t.organization_name = row['PAYEE ORGANIZATION NAME']
      
@@ -506,7 +513,7 @@ class Transaction < ApplicationRecord
       end
       t.amount = row["EXPENDITURE AMOUNT {F3L Bundled}"]
       t.expense_code = row["EXPENDITURE PURPOSE DESCRIP"]
-      t.unique_key = row['TRANSACTION ID NUMBER']
+      t.unique_key = "#{row["FILER COMMITTEE ID NUMBER"]} #{row['PAYEE ZIP']} #{row["EXPENDITURE DATE"]} #{row['EXPENDITURE AMOUNT {F3L Bundled}']}"
       t.save
       t.generate_full_name
       if t.transaction_type == "EXPN"
