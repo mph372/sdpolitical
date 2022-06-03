@@ -62,7 +62,11 @@ class CandidateCommittee < ApplicationRecord
        a
     end
     
+def committee_compare
+    CandidateCommittee.all.each do |c|
 
+    end
+end
 
 
 end

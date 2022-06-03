@@ -4,7 +4,17 @@ class Transaction < ApplicationRecord
   belongs_to :contributor, optional: :true
   belongs_to :vendor, optional: :true
   validates :unique_key, uniqueness: true
+  validate :exclude_actblue
+
+  def exclude_actblue
+    if organization_name != nil && organization_name.downcase.similar("Act Blue".downcase) > 90
+      errors.add(:organization_name, "Cannot be ActBlue")
+    end
+  end
+  
   require "roo-xls"
+
+  
 
   def self.import(candidate_committee, file)
     import = Import.new
@@ -415,7 +425,128 @@ class Transaction < ApplicationRecord
       t.convert_expense_code
     end
 
-  
+  elsif spreadsheet.cell(1,3) == "TRANSACTION ID"
+    fed_contributions = spreadsheet.sheet_for("Schedule A")
+    fed_expenditures = spreadsheet.sheet_for("Schedule B")
+    fed_loans = spreadsheet.sheet_for("Schedule C")
+    # Federal Contributions
+    (2..fed_contributions.last_row).each do |i|
+      row = Hash[[header, fed_contributions.row(i)].transpose]
+      t = Transaction.new
+      t.candidate_committee_id = candidate_committee.id
+      t.import_id = import.id
+      t.transaction_type = "RCPT"
+      t.payment_type = "Monetary"
+      t.entity_type = row['ENTITY TYPE']
+      t.organization_name = row['CONTRIBUTOR ORGANIZATION NAME']
+      t.entity_first_name = row["CONTRIBUTOR FIRST NAME"]
+      t.entity_last_name = row["CONTRIBUTOR LAST NAME"]
+      if row["CONTRIBUTOR CITY"] != nil
+        t.entity_city = row["CONTRIBUTOR CITY"].titlecase
+      end
+      t.entity_state = row["CONTRIBUTOR STATE"]
+      if row["CONTRIBUTOR ZIP"] != nil
+        zip = row["CONTRIBUTOR ZIP"]
+        t.entity_zip = zip
+      end
+      
+      if row["CONTRIBUTOR OCCUPATION"] != nil 
+        if row["CONTRIBUTOR EMPLOYER"] != nil
+          t.entity_employer = row["CONTRIBUTOR EMPLOYER"].titlecase
+        end
+      t.entity_occupation = row["CONTRIBUTOR OCCUPATION"].titlecase
+      end
+      
+      t.description = row["CONTRIBUTION PURPOSE DESCRIP"]
+      if row["CONTRIBUTION DATE"] != nil 
+        t.transaction_date = row["CONTRIBUTION DATE"]
+      end
+      t.amount = row["CONTRIBUTION AMOUNT {F3L Bundled}"]
+      t.expense_code = row["Expn_Code"]
+      t.unique_key = "#{row["FILER COMMITTEE ID NUMBER"]} #{row['TRANSACTION ID']}"
+   
+      t.save
+ 
+      t.generate_full_name
+      if t.transaction_type == "RCPT"
+        t.add_to_contributor
+      end
+    end
+    #Federal Expenditures
+    (2..fed_expenditures.last_row).each do |i|
+      row = header.zip(fed_expenditures.row(i)).to_h
+      t = Transaction.new
+      t.candidate_committee_id = candidate_committee.id
+      t.import_id = import.id
+      t.transaction_type = "RCPT"
+      t.payment_type = "Monetary"
+      t.organization_name = row['PAYEE ORGANIZATION NAME']
+     
+      t.entity_first_name = row["PAYEE FIRST NAME"]
+      t.entity_last_name = row["PAYEE LAST NAME"]
+      if row["PAYEE CITY"] != nil
+        t.entity_city = row["PAYEE CITY"].titlecase
+      end
+      t.entity_state = row["PAYEE STATE"]
+      if row["PAYEE ZIP"] != nil
+        zip = row["PAYEE ZIP"]
+        t.entity_zip = zip[0,5]
+      end
+      
+      if row["CONTRIBUTOR OCCUPATION"] != nil 
+        if row["CONTRIBUTOR EMPLOYER"] != nil
+          t.entity_employer = row["CONTRIBUTOR EMPLOYER"].titlecase
+        end
+      t.entity_occupation = row["CONTRIBUTOR OCCUPATION"].titlecase
+      end
+      
+      t.description = row["CONTRIBUTION PURPOSE DESCRIP"]
+      if row["EXPENDITURE DATE"] != nil 
+        t.transaction_date = row["EXPENDITURE DATE"]
+      end
+      t.amount = row["EXPENDITURE AMOUNT {F3L Bundled}"]
+      t.expense_code = row["EXPENDITURE PURPOSE DESCRIP"]
+      t.unique_key = row['TRANSACTION ID NUMBER']
+      t.save
+      t.generate_full_name
+      if t.transaction_type == "EXPN"
+        t.add_to_vendor
+      end
+
+    end
+
+    (2..fed_loans.last_row).each do |i|
+      row = header.zip(fed_loans.row(i)).to_h
+      t = Transaction.new
+      t.candidate_committee_id = candidate_committee.id
+      t.import_id = import.id
+      t.transaction_type = "LOAN"
+      
+      
+      t.organization_name = row['LENDER ORGANIZATION NAME']
+      t.entity_first_name = row["LENDER FIRST NAME"]
+      t.entity_last_name = row["LENDER LAST NAME"]
+      if row["LENDER CITY"] != nil
+        t.entity_city = row["LENDER CITY"].titlecase
+      end
+      t.entity_state = row["LENDER STATE"]
+      if row["LENDER ZIP"] != nil
+        zip = row["LENDER ZIP"]
+        t.entity_zip = zip[0,5]
+      end
+      
+
+      
+     
+      if row["LOAN INCURRED DATE (Terms)"] != nil 
+        t.transaction_date = row["LOAN INCURRED DATE (Terms)"]
+      end
+      t.amount = row["LOAN AMOUNT (Original)"]
+
+      t.unique_key = "#{row["FILER COMMITTEE ID NUMBER"]} #{row['TRANSACTION ID NUMBER']}"
+      t.save
+      t.generate_full_name
+    end
 
   end
 
@@ -436,8 +567,12 @@ def full_payment_type
 end
 
 def generate_full_name
+  if organization_name != nil 
+    update_attributes(full_name: organization_name.titlecase.strip)
+  else
   entity_full_name = "#{entity_first_name} #{entity_last_name}"
   update_attributes(full_name: entity_full_name.titlecase.strip)
+  end
 end
 
 def self.import_expenditures(monetary_expenditures)
@@ -576,7 +711,13 @@ end
   end
 end
 
-
+def display_name
+  if organization_name != nil
+    organization_name.titlecase
+  else
+    full_name.titlecase
+  end
+end
 
 
 

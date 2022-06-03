@@ -15,17 +15,20 @@
               <li class="nav-item">
                   <a class="nav-link " href="/jurisdictions/">Jurisdictions</a>
               </li>
-              <!--
+              <li class="nav-item">
+                  <a class="nav-link " href="/candidates/">Candidates</a>
+              </li>
+              
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria="Campaign Finance">
                     Campaign Finance
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/reports/">Campaign Finance Reports</a>
-                    <a class="dropdown-item" href="/committees/">Committees</a>
+                    <a class="dropdown-item" href="/contributors/">Donors</a>
+                    <a class="dropdown-item" href="/vendors/">Vendors</a>
                   </div>
                 </li>
-                -->
+                
                 <% if user_signed_in? %>
                 <% if current_user.admin? && Admin.first.admin_mode? %><li><%= link_to 'New Person', new_person_path, :class => "nav-link" %></li><%end%> 
                 <%end%>

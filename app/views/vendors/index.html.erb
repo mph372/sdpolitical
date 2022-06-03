@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Vendors</h1>
-
+<div class="card p-2">
 <table class="table table-sm" id="vendors">
   <thead>
     <tr>
@@ -21,7 +21,7 @@
     <% end %>
   </tbody>
 </table>
-
+</div>
 <br>
 
 <script>
@@ -44,6 +44,7 @@ jQuery.extend( jQuery.fn.dataTableExt.oSort, {
 $(document).ready(function () {
     $('#vendors').DataTable({
         order: [[2, 'desc']],
+        "iDisplayLength": 50,
         columnDefs: [
        { type: 'currency', targets: 2 }
      ],
