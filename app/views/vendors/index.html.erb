@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Vendors</h1>
+<h5>Top 500 Vendors</h5>
+<p>Note: This list shows the top 500 vendors, drawn from the campaigns where vendor data is made easily available.</p>
 <div class="card p-2">
 <table class="table table-sm" id="vendors">
   <thead>
@@ -12,7 +14,7 @@
   </thead>
 
   <tbody>
-    <%  Vendor.all.each do |vendor| %>
+    <%  Vendor.all.limit(500).each do |vendor| %>
       <tr>
         <td><%= vendor.transactions.count %></td>
         <td><%= link_to "#{vendor.full_name.titlecase}", vendor %></td>
