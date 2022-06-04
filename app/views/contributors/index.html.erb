@@ -18,15 +18,15 @@
   </thead>
 
   <tbody>
-  <% Contributor.find_in_batches do |contributors| %>
-    <%  contributors.each do |contributor| %>
+  
+    <%  Contributor.order_by_transaction.limit(250).each do |contributor| %>
 
       <tr>
         <td><%= contributor.transactions.count %></td>
         <td><%= link_to "#{contributor.full_name}", contributor %></td>
         <td><%= number_to_currency(contributor.transactions.sum(:amount)) %></td>
       </tr>
-      <%end%>
+      
   <%end%>
   </tbody>
 </table>

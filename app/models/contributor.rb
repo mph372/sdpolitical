@@ -24,6 +24,6 @@ def contributor_merge
   end
 end
 
-
+scope :order_by_transaction, -> { joins(:transactions).select('contributors.id, contributors.full_name, sum(transactions.amount) as total_amount').group('contributors.id').order('total_amount desc') }
 
 end
