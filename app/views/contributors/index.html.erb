@@ -1,8 +1,12 @@
 <p id="notice"><%= notice %></p>
 
+
+
+
+
 <h1>Contributors</h1>
-<h5>Top 500 Contributors</h5>
-<p>Note: This list shows the top 500 contributors, drawn from the campaigns where contributor data is made easily available.</p>
+
+<p>Note: This table shows all contributors, drawn from the campaigns where contributor data is made easily available.</p>
 <div class="card p-3">
 <table class="table table-sm" id="contributors">
   <thead>
@@ -14,13 +18,16 @@
   </thead>
 
   <tbody>
-    <%  Contributor.all.limit(500).each do |contributor| %>
+  <% Contributor.find_in_batches do |contributors| %>
+    <%  contributors.each do |contributor| %>
+
       <tr>
         <td><%= contributor.transactions.count %></td>
         <td><%= link_to "#{contributor.full_name}", contributor %></td>
         <td><%= number_to_currency(contributor.transactions.sum(:amount)) %></td>
       </tr>
-    <% end %>
+      <%end%>
+  <%end%>
   </tbody>
 </table>
 </div>

@@ -29,7 +29,7 @@ class VendorsController < ApplicationController
     respond_to do |format|
       if @vendor.save
         @vendor.generate_full_name
-        @vendor.vendor_merge
+        
         format.html { redirect_to @vendor, notice: 'Vendor was successfully created.' }
         format.json { render :show, status: :created, location: @vendor }
       else

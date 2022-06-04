@@ -14,13 +14,15 @@
   </thead>
 
   <tbody>
-    <%  Vendor.all.limit(500).each do |vendor| %>
+    <% Vendor.find_in_batches do |vendors| %>
+    <%  vendors.each do |vendor| %>
       <tr>
         <td><%= vendor.transactions.count %></td>
         <td><%= link_to "#{vendor.full_name.titlecase}", vendor %></td>
         <td><%= number_to_currency(vendor.transactions.sum(:amount)) %></td>
       </tr>
     <% end %>
+    <%end%>
   </tbody>
 </table>
 </div>

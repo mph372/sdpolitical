@@ -4,7 +4,8 @@ class ContributorsController < ApplicationController
   # GET /contributors
   # GET /contributors.json
   def index
-    @contributors = Contributor.all.limit(1000)
+    @q = Contributor.ransack(params[:q])
+    @contributors = @q.result(distinct: true)
   end
 
   # GET /contributors/1
@@ -37,7 +38,7 @@ class ContributorsController < ApplicationController
     respond_to do |format|
       if @contributor.save
         @contributor.generate_full_name
-        @contributor.contributor_merge
+       
         format.html { redirect_to @contributor, notice: 'Contributor was successfully created.' }
         format.json { render :show, status: :created, location: @contributor }
       else
