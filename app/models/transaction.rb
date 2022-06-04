@@ -432,11 +432,93 @@ class Transaction < ApplicationRecord
       t.convert_expense_code
     end
 
+  elsif spreadsheet.cell(1,9) == "committee_name"
+    # Federal Contributions Single-Sheet
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      t = Transaction.new
+      t.candidate_committee_id = candidate_committee.id
+      t.import_id = import.id
+      t.transaction_type = "RCPT"
+
+      t.fec_receipt_type = row['receipt_type']
+      t.entity_type = row['entity_type']
+      if row['receipt_type'] == "15C" || row['receipt_type'] == "16C"
+      t.entity_first_name = candidate_committee.person.first_name
+      t.entity_last_name = candidate_committee.person.last_name
+      else
+      t.entity_last_name = row['contributor_last_name']
+      t.entity_first_name = row['contributor_first_name']
+      end
+
+      t.entity_employer = row["contributor_employer"]
+    
+      t.entity_occupation = row["contributor_occupation"]
+      
+      t.entity_state = row["contributor_state"]
+      t.entity_zip = row["contributor_zip"]
+      t.entity_city = row['contributor_city']
+      if row['entity_type'] != "IND"
+      t.organization_name = row['contributor_name']
+      end
+      
+      if row["contribution_receipt_date"] != nil 
+        t.transaction_date = row["contribution_receipt_date"]
+      end
+      t.amount = row["contribution_receipt_amount"]
+      
+      t.unique_key = "#{row["transaction_id"]}#{row["committee_id"]}"
+      t.save
+      t.generate_full_name
+      if t.transaction_type == "RCPT"
+        t.add_to_contributor
+      end
+      
+      t.convert_expense_code
+    end   
+
+  elsif spreadsheet.cell(1,9) == "entity_type"
+    # Federal Expenditures Single-Sheet
+    (2..spreadsheet.last_row).each do |i|
+      row = Hash[[header, spreadsheet.row(i)].transpose]
+      t = Transaction.new
+      t.candidate_committee_id = candidate_committee.id
+      t.import_id = import.id
+      t.transaction_type = "EXPN"
+
+      
+      t.entity_type = row['entity_type']
+      t.entity_first_name = row["payee_first_name"]
+      t.entity_last_name = row['payee_last_name']
+      
+      t.entity_state = row["recipient_state"]
+      t.entity_zip = row["recipient_zip"]
+      t.entity_city = row['recipient_city']
+      if row['entity_type'] != "IND"
+      t.organization_name = row['recipient_name']
+      end
+      t.description = row["disbursement_description"]
+      if row["disbursement_date"] != nil 
+        t.transaction_date = row["disbursement_date"]
+      end
+      t.amount = row["disbursement_amount"]
+      
+      t.unique_key = "#{row["transaction_id"]}#{row["committee_id"]}"
+      t.save
+      t.generate_full_name
+      if t.transaction_type == "EXPN"
+        t.add_to_vendor
+      end
+      
+      t.convert_expense_code
+    end  
+
   elsif spreadsheet.cell(1,3) == "TRANSACTION ID"
     fed_contributions = spreadsheet.sheet_for("Schedule A")
     fed_expenditures = spreadsheet.sheet_for("Schedule B")
     fed_loans = spreadsheet.sheet_for("Schedule C")
     # Federal Contributions
+    header = fed_contributions.row(1)
     (2..fed_contributions.last_row).each do |i|
       row = Hash[[header, fed_contributions.row(i)].transpose]
       t = Transaction.new
@@ -480,6 +562,7 @@ class Transaction < ApplicationRecord
       end
     end
     #Federal Expenditures
+    header = fed_expenditures.row(1)
     (2..fed_expenditures.last_row).each do |i|
       row = Hash[[header, fed_expenditures.row(i)].transpose]
       t = Transaction.new
@@ -497,7 +580,7 @@ class Transaction < ApplicationRecord
       t.entity_state = row["PAYEE STATE"]
       if row["PAYEE ZIP"] != nil
         zip = row["PAYEE ZIP"]
-        t.entity_zip = zip[0,5]
+        t.entity_zip = zip
       end
       
       if row["CONTRIBUTOR OCCUPATION"] != nil 
@@ -513,7 +596,7 @@ class Transaction < ApplicationRecord
       end
       t.amount = row["EXPENDITURE AMOUNT {F3L Bundled}"]
       t.expense_code = row["EXPENDITURE PURPOSE DESCRIP"]
-      t.unique_key = "#{row["FILER COMMITTEE ID NUMBER"]} #{row['PAYEE ZIP']} #{row["EXPENDITURE DATE"]} #{row['EXPENDITURE AMOUNT {F3L Bundled}']}"
+      t.unique_key = "#{row["FILER COMMITTEE ID NUMBER"]} #{row['TRANSACTION ID NUMBER']}"
       t.save
       t.generate_full_name
       if t.transaction_type == "EXPN"
@@ -521,7 +604,7 @@ class Transaction < ApplicationRecord
       end
 
     end
-
+    header = fed_loans.row(1)
     (2..fed_loans.last_row).each do |i|
       row = header.zip(fed_loans.row(i)).to_h
       t = Transaction.new
@@ -591,7 +674,7 @@ def self.import_expenditures(monetary_expenditures)
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
-    when ".csv" then Roo::CSV.new(file.path, nil, :ignore)
+    when ".csv" then Roo::CSV.new(file.path, csv_options: {encoding: "iso-8859-1:utf-8"})
     when ".xls" then Roo::Excel.new(file.path, packed: nil, file_warning: :ignore)
     when ".xlsx" then Roo::Excelx.new(file.path, packed: nil, file_warning: :ignore)
     else raise "Unknown file type: #{file.original_filename}"
@@ -600,11 +683,9 @@ def self.import_expenditures(monetary_expenditures)
 
   def add_to_contributor
       if Contributor.where(:full_name => full_name).exists? 
-        Contributor.all.each do |c|
-          if full_name == c.full_name
+        c = Contributor.where(:full_name => full_name).last
             update_attributes(contributor_id: c.id)
-          end
-        end
+        
       else
         contributor = Contributor.create!
         contributor.update_attributes(first_name: entity_first_name)
@@ -616,11 +697,9 @@ def self.import_expenditures(monetary_expenditures)
 
     def add_to_vendor
         if Vendor.where(:full_name => full_name).exists? 
-          Vendor.all.each do |c|
-            if full_name == c.full_name
+          c = Vendor.where(:full_name => full_name).last
               update_attributes(vendor_id: c.id)
-            end
-          end
+          
         else
           vendor = Vendor.create!
           vendor.update_attributes(first_name: entity_first_name)
@@ -648,7 +727,11 @@ end
 
 def full_transaction_type
   if transaction_type == "RCPT"
-    "Contribution"
+    if fec_receipt_type == "16C"
+    "Loan"
+    else
+      "Contribution"
+    end
   elsif transaction_type == "LOAN"
     "Loan"
   end
@@ -722,7 +805,9 @@ def display_name
   if organization_name != nil
     organization_name.titlecase
   else
+    if full_name != nil
     full_name.titlecase
+    end
   end
 end
 

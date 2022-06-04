@@ -57,15 +57,33 @@ class CandidateCommittee < ApplicationRecord
          if "#{transaction.full_name}".similar(person.full_name) > 90 && transaction.amount != 0
            a << transaction
          end
-          
        end
+       transactions.where(fec_receipt_type: "15C").or(transactions.where(fec_receipt_type: "16C")).each do |transaction|
+          a << transaction
+      end       
        a
     end
     
 def committee_compare
-    CandidateCommittee.all.each do |c|
-
+    committees = Hash.new
+    a = Array.new
+    transactions.each do |t| 
+        a << t.full_name
     end
+    CandidateCommittee.all.each do |c|
+        b = Array.new
+        if c.transactions.present?
+            c.transactions.each do |t|
+                b << t.full_name
+            end
+        end
+        difference = a.count - b.count
+        similar = a.count - difference
+        percentage = (similar / a.count)*100
+        committees[c] = percentage
+    end
+    committees.sort_by { |c, percentage| percentage }[0..2].map(&:first)
+    
 end
 
 

@@ -37,6 +37,7 @@ class ContributorsController < ApplicationController
     respond_to do |format|
       if @contributor.save
         @contributor.generate_full_name
+        @contributor.contributor_merge
         format.html { redirect_to @contributor, notice: 'Contributor was successfully created.' }
         format.json { render :show, status: :created, location: @contributor }
       else

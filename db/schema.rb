@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_03_000653) do
+ActiveRecord::Schema.define(version: 2022_06_03_212624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -640,6 +640,7 @@ ActiveRecord::Schema.define(version: 2022_06_03_000653) do
     t.string "unique_key"
     t.string "payment_type"
     t.string "organization_name"
+    t.string "fec_receipt_type"
     t.index ["candidate_committee_id"], name: "index_transactions_on_candidate_committee_id"
     t.index ["contributor_id"], name: "index_transactions_on_contributor_id"
     t.index ["import_id"], name: "index_transactions_on_import_id"

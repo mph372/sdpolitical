@@ -154,8 +154,8 @@
       <% @candidate_committee.transactions.where(transaction_type: "RCPT").each do |transaction| %>
         <tr>
         
-          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.display_name} ", transaction.contributor  %><%else%><%= "#{transaction.entity_first_name} " "#{transaction.entity_last_name}" %><%end%>
-              <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%= transaction.entity_zip %></span>
+          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.display_name} ", transaction.contributor  %><%else%><%= "#{transaction.display_name} " %><%end%>
+              <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%if transaction.entity_zip != nil%> <%= transaction.entity_zip[0,5] %><%end%></span>
           </td>
           <td><%if transaction.entity_occupation != "N/A" %><%= transaction.entity_occupation %><br><span class="small"><%= transaction.entity_employer %></span><%end%></td>
           <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.full_payment_type %></span></td>
@@ -210,7 +210,7 @@
       <tbody>
         <% @candidate_committee.transactions.where(transaction_type: "RCPT").select('entity_city, sum(amount) as total').group('entity_city').order('total desc').limit(10).each do |transaction| %>
         <tr>
-          <td><%= transaction.entity_city %></td>
+          <td><%= transaction.entity_city.titlecase %></td>
           <td><%= number_to_currency(transaction.total) %></td>
         </tr>
         <%end%>
@@ -232,7 +232,7 @@
       <tbody>
         <% @candidate_committee.transactions.where(transaction_type: "RCPT").where.not(entity_occupation: "N/A").where.not(entity_occupation: "").select('entity_occupation, sum(amount) as total').group('entity_occupation').order('total desc').limit(10).each do |transaction| %>
         <tr>
-          <td><%= transaction.entity_occupation %></td>
+          <td><%= transaction.entity_occupation.titlecase %></td>
           <td><%= number_to_currency(transaction.total) %></td>
         </tr>
         <%end%>
@@ -254,7 +254,7 @@
       <tbody>
         <% @candidate_committee.transactions.where(transaction_type: "RCPT").where.not(entity_employer: "N/A").where.not(entity_employer: "").where.not(entity_employer: "None").select('entity_employer, sum(amount) as total').group('entity_employer').order('total desc').limit(10).each do |transaction| %>
         <tr>
-          <td><%= transaction.entity_employer %></td>
+          <td><%= transaction.entity_employer.titlecase %></td>
           <td><%= number_to_currency(transaction.total) %></td>
         </tr>
         <%end%>
@@ -285,10 +285,10 @@
     <tbody>
       <% @candidate_committee.transactions.where(transaction_type: "EXPN").each do |transaction| %>
         <tr>
-          <td><%= transaction.full_expense_type %></td>
-          <td><%= link_to "#{transaction.full_name} ", transaction.vendor %> </td>
-          <td><%= number_to_currency(transaction.amount) %></td>
-          <td><%= transaction.transaction_date %></td>
+          <td class="col-3"><%= transaction.full_expense_type %></td>
+          <td class="col-5"><%= link_to "#{transaction.full_name} ", transaction.vendor %> </td>
+          <td class="col-2"><%= number_to_currency(transaction.amount) %></td>
+          <td class="col-2"><%= transaction.transaction_date %></td>
           
           <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
         </tr>
@@ -311,7 +311,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @candidate_committee.transactions.where(transaction_type: "EXPN").select('expense_code, sum(amount) as total').group('expense_code').order('total desc').each do |transaction| %>
+        <% @candidate_committee.transactions.where(transaction_type: "EXPN").select('expense_code, sum(amount) as total').group('expense_code').order('total desc').limit(15).each do |transaction| %>
         <tr>
         
           <td class="pl-4 col-5"><%= transaction.full_expense_type %></td>
