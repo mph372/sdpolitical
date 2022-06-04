@@ -4,7 +4,7 @@ class ContributorsController < ApplicationController
   # GET /contributors
   # GET /contributors.json
   def index
-    @contributors = Contributor.all
+    @contributors = Contributor.all.limit(1000)
   end
 
   # GET /contributors/1
