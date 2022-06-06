@@ -14,7 +14,7 @@ end
 
 def contributor_merge
   Contributor.all.each do |c|
-    if full_name.downcase.similar(c.full_name.downcase) > 80
+    if full_name.downcase.similar(c.full_name.downcase) > 90
       c.transactions.each do |t|
         t.update_attributes(contributor_id: id)
       end
