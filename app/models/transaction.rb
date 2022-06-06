@@ -470,9 +470,8 @@ class Transaction < ApplicationRecord
       t.unique_key = "#{row["transaction_id"]}#{row["committee_id"]}"
       t.save
       t.generate_full_name
-      if t.transaction_type == "RCPT"
-        t.add_to_contributor
-      end
+      t.add_to_contributor
+      
       
       t.convert_expense_code
     end   
