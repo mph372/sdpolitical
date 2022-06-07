@@ -33,8 +33,7 @@
   <thead>
   <tr>
     <th class="pl-4">Committee</th>
-    <th>Amount</th>
-
+    <th>Total</th>
   </tr>
   </thead>
   <tbody>
@@ -42,8 +41,9 @@
   <tr>
     <td class="pl-4"><%= link_to "#{transaction.candidate_committee.name}", transaction.candidate_committee %></td>
     <td><%= number_to_currency(transaction.total) %></td>
+
  
-    </td>
+    </tr>
     <%end%>
   </tbody>
 </table>

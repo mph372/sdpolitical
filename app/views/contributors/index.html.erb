@@ -19,7 +19,7 @@
 
   <tbody>
   
-    <%  Contributor.order_by_transaction.limit(250).each do |contributor| %>
+    <%  Contributor.order_by_transaction.limit(1000).each do |contributor| %>
 
       <tr>
         <td><%= contributor.transactions.count %></td>
