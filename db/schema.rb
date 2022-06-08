@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_03_212624) do
+ActiveRecord::Schema.define(version: 2022_06_08_164939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2022_06_03_212624) do
     t.string "party_registration"
     t.boolean "active"
     t.string "ballot_title"
+    t.string "display_name"
     t.index ["campaign_id"], name: "index_candidates_on_campaign_id"
     t.index ["candidate_committee_id"], name: "index_candidates_on_candidate_committee_id"
     t.index ["person_id"], name: "index_candidates_on_person_id"
@@ -641,7 +642,15 @@ ActiveRecord::Schema.define(version: 2022_06_03_212624) do
     t.string "payment_type"
     t.string "organization_name"
     t.string "fec_receipt_type"
+    t.bigint "candidate_id"
+    t.bigint "committee_id"
+    t.string "support_oppose_code"
+    t.string "candidate_last_name"
+    t.string "candidate_first_name"
+    t.string "candidate_full_name"
     t.index ["candidate_committee_id"], name: "index_transactions_on_candidate_committee_id"
+    t.index ["candidate_id"], name: "index_transactions_on_candidate_id"
+    t.index ["committee_id"], name: "index_transactions_on_committee_id"
     t.index ["contributor_id"], name: "index_transactions_on_contributor_id"
     t.index ["import_id"], name: "index_transactions_on_import_id"
     t.index ["vendor_id"], name: "index_transactions_on_vendor_id"
@@ -751,6 +760,8 @@ ActiveRecord::Schema.define(version: 2022_06_03_212624) do
   add_foreign_key "statistical_data", "jurisdictions"
   add_foreign_key "taggings", "tags"
   add_foreign_key "transactions", "candidate_committees"
+  add_foreign_key "transactions", "candidates"
+  add_foreign_key "transactions", "committees"
   add_foreign_key "transactions", "contributors"
   add_foreign_key "transactions", "imports"
   add_foreign_key "transactions", "vendors"

@@ -68,7 +68,11 @@ class TransactionsController < ApplicationController
    redirect_to @candidate_committee, notice: 'Transactions were successfully uploaded!'
   end  
 
-
+  def committee_import
+    @committee = Committee.find(params[:committee_id])
+   Transaction.import(@committee, params[:file])
+   redirect_to @committee, notice: 'Transactions were successfully uploaded!'
+  end
   
 
   private

@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @vendor.full_name.titleize %></h1>
+<h1><%= @vendor.full_name.titlecase %></h1>
 <div class="card p-2">
 <table class=table>
   <thead>
@@ -33,11 +33,42 @@
 </table>
 </div>
 <br>
+<div class="card p-2">
+<div class="card-header">Receipts by Expenditure Type</div>
+<table class=table>
+  <thead>
+  <tr>
+    <th>Expense</th>
+    <th>Amount</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <% @vendor.transactions.select('expense_code, sum(amount) as total').group('expense_code').order('total desc').each do |transaction| %> 
+  <tr>
+
+    <td class="pl-4 col-5"><%= transaction.full_expense_type %></td>
+    <td class="col-1"><%= number_to_currency(transaction.total) %></td>
+   
+  </tr>
+ <%end%>
+    
+    <tr class="heavy table-primary">
+    <td>Total</td>
+    <td><%= number_to_currency(@vendor.transactions.sum(:amount)) %></td>
+
+  </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
 <h4>Possible Similar Vendors</h4>
 <% if @vendor.vendor_similar.count > 0 %>
   <% @vendor.vendor_similar.each do |vendor| %>
   <%= link_to "#{vendor.full_name.titlecase}", vendor %>
   <hr>
   <%end%>
+<%end%>
 <%end%>
 

@@ -3,6 +3,8 @@ class Transaction < ApplicationRecord
   belongs_to :import, optional: :true 
   belongs_to :contributor, optional: :true
   belongs_to :vendor, optional: :true
+  belongs_to :candidate, optional: :true
+  belongs_to :committee, optional: :true
   validates :unique_key, uniqueness: true
   validate :exclude_actblue
   validate :require_amount
@@ -21,7 +23,72 @@ class Transaction < ApplicationRecord
   
   require "roo-xls"
 
+  def self.committee_import(committee, file)
+    import = Import.new
+    import.committee_id = committee.id
+    import.save
+    spreadsheet = open_spreadsheet(file) # open spreadsheet
+    header = spreadsheet.row(1) # get header row
+    if spreadsheet.cell(1,3) == "Committee_Type"
+      # County Master Spreadsheet
+      (2..spreadsheet.last_row).each do |i|
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+        t = Transaction.new
+        t.candidate_committee_id = committee.id
+        t.import_id = import.id
+        t.transaction_type = row['Rec_Type'] 
+        t.payment_type = row['Form_Type']
+        t.entity_type = row["Entity_Cd"]
+        t.entity_last_name = row["Entity_Nam L"]
+        t.entity_first_name = row["Entity_Nam F"]
+        t.entity_city = row["Entity_City"]
+        t.entity_state = row["Entity_ST"]
+        t.entity_zip = row["Entity_ZIP4"]
+        t.entity_employer = row["Entity_Emp"]
+        t.entity_occupation = row["Entity_Occ"]
+        t.description = row["Description"]
+        if row["Tran_Date"] != nil 
+          t.transaction_date = row["Tran_Date"]
+        end
+        t.amount = row["Amount"]
+        t.candidate_first_name = row['Cand_Nam F']
+        t.candidate_last_name = row['Cand_Nam L']
+        t.expense_code = row["Expn_Code"]
+        t.unique_key = "#{row["Filer_ID"]} #{row["Tran_ID"]}"
+        t.save
+        t.generate_full_name
+        t.generate_candidate
+        if t.transaction_type == "RCPT"
+          t.add_to_contributor
+        end
+        if t.transaction_type == "EXPN"
+          t.add_to_vendor
+          t.convert_expense_code
+        end
+        
+      end
+  end
+
+  def generate_candidate
+    if candidate_last_name != nil
+      update_attributes(candidate_full_name: "#{candidate_first_name} #{candidate_last_name}".strip)
+      if 
   
+    end
+
+
+
+  if Contributor.where(:full_name => full_name).exists? 
+    c = Contributor.where(:full_name => full_name).last
+        update_attributes(contributor_id: c.id)
+    
+  else
+    contributor = Contributor.create!
+    contributor.update_attributes(first_name: entity_first_name)
+    contributor.update_attributes(last_name: entity_last_name)
+    contributor.update_attributes(full_name: full_name.titlecase)
+    update_attributes(contributor_id: contributor.id)
+  end 
 
   def self.import(candidate_committee, file)
     import = Import.new
