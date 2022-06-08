@@ -68,6 +68,7 @@ class Transaction < ApplicationRecord
         
       end
   end
+end
 =begin
   def generate_candidate
     if candidate_last_name != nil
