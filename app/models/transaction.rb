@@ -68,13 +68,14 @@ class Transaction < ApplicationRecord
         
       end
   end
-
+=begin
   def generate_candidate
     if candidate_last_name != nil
       update_attributes(candidate_full_name: "#{candidate_first_name} #{candidate_last_name}".strip)
       if 
   
     end
+  end
 
 
 
@@ -89,7 +90,7 @@ class Transaction < ApplicationRecord
     contributor.update_attributes(full_name: full_name.titlecase)
     update_attributes(contributor_id: contributor.id)
   end 
-
+=end
   def self.import(candidate_committee, file)
     import = Import.new
     import.candidate_committee_id = candidate_committee.id
