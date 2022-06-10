@@ -5,6 +5,9 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   def index
     @candidates = Candidate.all
+
+    set_meta_tags title: 'Candidates',
+                  site: 'The Ballot Book'
   end
 
   # GET /candidates/1

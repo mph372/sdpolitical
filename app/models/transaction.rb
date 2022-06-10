@@ -16,7 +16,7 @@ class Transaction < ApplicationRecord
   end
 
   def require_amount
-    if amount == nil 
+    if amount == nil || amount < 100
       errors.add(:amount, "Amount Required")
     end
   end
@@ -34,7 +34,7 @@ class Transaction < ApplicationRecord
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
         t = Transaction.new
-        t.candidate_committee_id = committee.id
+        t.committee_id = committee.id
         t.import_id = import.id
         t.transaction_type = row['Rec_Type'] 
         t.payment_type = row['Form_Type']
@@ -47,6 +47,7 @@ class Transaction < ApplicationRecord
         t.entity_employer = row["Entity_Emp"]
         t.entity_occupation = row["Entity_Occ"]
         t.description = row["Description"]
+        t.support_oppose_code = row['Sup_Opp_Cd']
         if row["Tran_Date"] != nil 
           t.transaction_date = row["Tran_Date"]
         end
@@ -58,6 +59,7 @@ class Transaction < ApplicationRecord
         t.save
         t.generate_full_name
         t.generate_candidate
+        t.generate_committee
         if t.transaction_type == "RCPT"
           t.add_to_contributor
         end
@@ -67,31 +69,27 @@ class Transaction < ApplicationRecord
         end
         
       end
+    
+     
+    
+    end
   end
-end
-=begin
+
+
   def generate_candidate
     if candidate_last_name != nil
       update_attributes(candidate_full_name: "#{candidate_first_name} #{candidate_last_name}".strip)
-      if 
-  
+      if Candidate.active.where(:display_name => candidate_full_name).exists? 
+        c = Candidate.active.where(:display_name => candidate_full_name).last
+        update_attributes(candidate_id: c.id)
+      end
     end
   end
 
 
 
-  if Contributor.where(:full_name => full_name).exists? 
-    c = Contributor.where(:full_name => full_name).last
-        update_attributes(contributor_id: c.id)
-    
-  else
-    contributor = Contributor.create!
-    contributor.update_attributes(first_name: entity_first_name)
-    contributor.update_attributes(last_name: entity_last_name)
-    contributor.update_attributes(full_name: full_name.titlecase)
-    update_attributes(contributor_id: contributor.id)
-  end 
-=end
+
+
   def self.import(candidate_committee, file)
     import = Import.new
     import.candidate_committee_id = candidate_committee.id
@@ -710,7 +708,13 @@ end
 
 end
 
-
+def display_committee
+  if candidate_committee.present?
+    return candidate_committee
+  elsif committee.present?
+    return committee
+  end
+end
 
 def full_payment_type
   if payment_type == "A"
@@ -879,10 +883,64 @@ def display_name
   end
 end
 
+def generate_committee
+  if entity_type == "COM"
+    output = nil 
+    Committee.all.each do |committee|
+      if full_name.downcase.similar(committee.name.downcase) > 90
+        output = committee
+      end
+    end
+    if output == nil
+    c = Committee.new
+    c.name = full_name.titlecase
+    c.save
+    end
+  end
+end
 
 
 
-    
+
+def support_oppose
+  if support_oppose_code == "S"
+    "Support"
+  elsif support_oppose_code == "O"
+    "Oppose"
+  end
+end
+
+def committee_or_vendor
+  output = nil
+  Committee.all.each do |committee|
+    if full_name.downcase.similar(committee.name.downcase) > 90
+      output = committee
+    end
+  end
+  if output == nil
+    return self.vendor
+  elsif output != nil
+    return output
+  end
+end
+
+def committee_or_contributor
+  output = nil
+  Committee.all.each do |committee|
+    if full_name.downcase.similar(committee.name.downcase) > 90
+      output = committee
+    end
+  end
+  if output == nil
+    return self.contributor
+  elsif output != nil
+    return output
+  end
+end
+
+   
 
 
 end
+
+ 

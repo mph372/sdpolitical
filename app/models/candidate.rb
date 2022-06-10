@@ -4,6 +4,7 @@ class Candidate < ApplicationRecord
   belongs_to :person, optional: true
   belongs_to :candidate_committee, optional: true
   has_many :expenditures
+  has_many :transactions
  
 
 
@@ -34,11 +35,19 @@ class Candidate < ApplicationRecord
     end
   end
 
-  def display_name
+  def party_display_name
     if person.present?
       "#{person.full_name} #{party_abbreviation}"
     else
       "#{first_name} #{last_name} #{party_abbreviation}"
+    end
+  end
+
+  def generate_display_name
+    if person.present?
+     update_attributes(display_name: person.full_name)
+    else
+      update_attributes(display_name: "#{first_name} #{last_name}")
     end
   end
 

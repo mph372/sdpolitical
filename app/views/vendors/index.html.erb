@@ -18,7 +18,7 @@
     <%  vendors.each do |vendor| %>
       <tr>
         <td><%= vendor.transactions.count %></td>
-        <td><%= link_to "#{vendor.full_name.titlecase}", vendor %></td>
+        <td><%if vendor.committee.present?%><%= link_to "#{vendor.committee.name}", vendor.committee %> <%else%><%= link_to "#{vendor.full_name.titlecase}", vendor %><%end%></td>
         <td><%= number_to_currency(vendor.transactions.sum(:amount)) %></td>
       </tr>
     <% end %>

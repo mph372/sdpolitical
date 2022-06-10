@@ -6,11 +6,16 @@ class ContributorsController < ApplicationController
   def index
     @q = Contributor.ransack(params[:q])
     @contributors = @q.result(distinct: true)
+
+    set_meta_tags title: 'Donors',
+                  site: 'The Ballot Book'
   end
 
   # GET /contributors/1
   # GET /contributors/1.json
   def show
+    set_meta_tags title: @contributor.full_name,
+                  site: 'The Ballot Book'
   end
 
   # GET /contributors/new

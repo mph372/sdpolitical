@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_08_164939) do
+ActiveRecord::Schema.define(version: 2022_06_10_030742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,8 @@ ActiveRecord::Schema.define(version: 2022_06_08_164939) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "full_name"
+    t.bigint "committee_id"
+    t.index ["committee_id"], name: "index_contributors_on_committee_id"
     t.index ["transaction_id"], name: "index_contributors_on_transaction_id"
   end
 
@@ -348,7 +350,9 @@ ActiveRecord::Schema.define(version: 2022_06_08_164939) do
     t.bigint "candidate_committee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "committee_id"
     t.index ["candidate_committee_id"], name: "index_imports_on_candidate_committee_id"
+    t.index ["committee_id"], name: "index_imports_on_committee_id"
   end
 
   create_table "itemized_expenditures", force: :cascade do |t|
@@ -705,6 +709,8 @@ ActiveRecord::Schema.define(version: 2022_06_08_164939) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "full_name"
+    t.bigint "committee_id"
+    t.index ["committee_id"], name: "index_vendors_on_committee_id"
   end
 
   add_foreign_key "campaign_finance_modules", "districts"
@@ -720,6 +726,7 @@ ActiveRecord::Schema.define(version: 2022_06_08_164939) do
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "measures"
   add_foreign_key "committees", "people"
+  add_foreign_key "contributors", "committees"
   add_foreign_key "contributors", "transactions"
   add_foreign_key "county_transactions", "candidate_committees"
   add_foreign_key "county_transactions", "imports"
@@ -741,6 +748,7 @@ ActiveRecord::Schema.define(version: 2022_06_08_164939) do
   add_foreign_key "historical_candidates", "people"
   add_foreign_key "historical_candidates", "people", column: "people_id"
   add_foreign_key "imports", "candidate_committees"
+  add_foreign_key "imports", "committees"
   add_foreign_key "itemized_expenditures", "campaigns"
   add_foreign_key "itemized_expenditures", "expenditures"
   add_foreign_key "jurisdictions", "registration_histories"
@@ -765,4 +773,5 @@ ActiveRecord::Schema.define(version: 2022_06_08_164939) do
   add_foreign_key "transactions", "contributors"
   add_foreign_key "transactions", "imports"
   add_foreign_key "transactions", "vendors"
+  add_foreign_key "vendors", "committees"
 end

@@ -14,7 +14,7 @@
   <tbody>
   <% @vendor.transactions.each do |transaction| %>
   <tr>
-    <td><%= link_to "#{transaction.candidate_committee.name}", transaction.candidate_committee %></td>
+    <td><%= link_to "#{transaction.display_committee.name}", transaction.display_committee %></td>
     <td><%= number_to_currency(transaction.amount) %></td>
     <td><%= transaction.full_expense_type %></td>
     <td><%= transaction.transaction_date %></td>

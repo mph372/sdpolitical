@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :imports
   resources :transactions do
     collection { post :import }
+    collection { post :committee_import }
   end
   resources :county_transactions
   resources :city_sd_transactions

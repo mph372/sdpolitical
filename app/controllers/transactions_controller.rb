@@ -70,7 +70,7 @@ class TransactionsController < ApplicationController
 
   def committee_import
     @committee = Committee.find(params[:committee_id])
-   Transaction.import(@committee, params[:file])
+   Transaction.committee_import(@committee, params[:file])
    redirect_to @committee, notice: 'Transactions were successfully uploaded!'
   end
   

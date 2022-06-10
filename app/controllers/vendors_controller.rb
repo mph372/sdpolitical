@@ -5,11 +5,17 @@ class VendorsController < ApplicationController
   # GET /vendors.json
   def index
     @vendors = Vendor.all.limit(500)
+
+    set_meta_tags title: 'Vendors',
+                  site: 'The Ballot Book'
   end
 
   # GET /vendors/1
   # GET /vendors/1.json
   def show
+    set_meta_tags title: @vendor.full_name,
+                  site: 'The Ballot Book'
+
   end
 
   # GET /vendors/new

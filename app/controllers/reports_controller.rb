@@ -18,6 +18,12 @@ class ReportsController < ApplicationController
     site: 'The Ballot Book'
   end
 
+  def import
+    @candidate_committee = CandidateCommittee.find(params[:candidate_committee_id])
+    Transaction.import(@candidate_committee, params[:file])
+    redirect_to @candidate_committee, notice: 'Transactions were successfully uploaded!'
+   end  
+
 
 
   # GET /reports/1

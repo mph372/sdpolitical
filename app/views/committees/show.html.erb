@@ -1,11 +1,228 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <%= render 'header'%>
+     <h3 class="primary-blue heavy text-responsive"><%= @committee.name %></h3>
 
       <% if @committee.reports.present? %>
         <%= render 'reports'%>
       <%end%> 
+<h5>Import Transactions</h5>
+    <%= form_tag committee_import_transactions_path(:committee_id => @committee.id), multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import" %>
+    <%end%>
+<br>
+
+<% if @committee.imports.present? %>
+<table class="table">
+  <thead>
+    <tr>
+    <th>ID</th>
+      <th>Created At</th>
+      <th># of Transactions</th>
+      <th>Begins</th>
+      <th>Ends</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @committee.imports.each do |import| %>
+    <tr>
+      
+      <% if import.transactions.present? %>
+      <td><%=import.id%></td>
+      <td><%=import.created_at %></td>
+      <td><%=import.transactions.count %></td>
+      <td><%= import.transactions.order('transaction_date desc').last.transaction_date %></td>
+      <td><%= import.transactions.order('transaction_date desc').first.transaction_date %></td>
+      <td><%= link_to 'Destroy', import, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <%end%>
+     
+    </tr>
+     <%end%>
+  </tbody>
+</table>
+<%end%>
+
+<% if @committee.transactions.where(transaction_type: "RCPT").present?  %>
+
+<div class="card">
+  <div class="card-header" style="max-width: 100%;">Contributions to Committee</div>
+  <div class="p-4">
+  <table class="display table table-sm" id="">
+    <thead>
+      <tr>
+        
+        <th>Contributor</th>
+        <th>Occupation</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <% if user_signed_in? %><th></th><%end%>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @committee.transactions.where(transaction_type: "RCPT").each do |transaction| %>
+        <tr>
+        
+          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.display_name} ", transaction.committee_or_contributor  %><%else%><%= "#{transaction.display_name} " %><%end%>
+              <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%if transaction.entity_zip != nil%> <%= transaction.entity_zip[0,5] %><%end%></span>
+          </td>
+          <td><%if transaction.entity_occupation != "N/A" %><%= transaction.entity_occupation %><br><span class="small"><%= transaction.entity_employer %></span><%end%></td>
+          <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.full_payment_type %></span></td>
+          
+          <td><%= transaction.transaction_date %></td>
+          
+          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  </div>
+<%end%>
+
+<% if @committee.likely_independent_expenditures.present?  %>
+<br>
+<div class="card">
+  <div class="card-header" style="max-width: 100%;">Independent Expenditures Supporting/Opposing Candidates</div>
+  <div class="p-4">
+  <table class="display table table-sm" id="">
+    <thead>
+      <tr>
+        
+        <th>Candidate</th>
+        <th>Support/Oppose</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <% if user_signed_in? %><th></th><%end%>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @committee.likely_independent_expenditures.each do |transaction| %>
+        <tr>
+        
+          <td><%= transaction.candidate_full_name %>          </td>
+          <td><%= transaction.support_oppose %></td>
+          <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.description %></span></td>
+          
+          <td><%= transaction.transaction_date %></td>
+          
+          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+  </div>
+<br>
+  <div class="card">
+  <div class="card-header" style="max-width: 100%;">Expenditures by Candidate</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="pl-4">Expense Type</th>
+          <th>Amount</th>
+          <th>% of Spend</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @committee.likely_independent_expenditures.select('candidate_full_name, sum(amount) as total').group('candidate_full_name').order('total desc').each do |transaction| %>
+        <tr>
+        
+          <td class="pl-4 col-5"><%= transaction.candidate_full_name %></td>
+          <td class="col-1"><%= number_to_currency(transaction.total) %></td>
+          <td class="col-1"><%= number_with_precision((transaction.total / @committee.total_independent_expenditures)*100, precision: 2) %>%</td>
+          <td class="col-5">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: <%= (transaction.total / @committee.total_independent_expenditures)*100 %>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>  
+            
+            
+            </td>
+        </tr>
+        <%end%>
+      </tbody>
+    
+    </table>
+
+  </div>
+<%end%>
+
+<% if @committee.transactions.where(transaction_type: "EXPN").present? %>
+<br>
+<div class="card">
+  <div class="card-header" style="max-width: 100%;">Expenditures</div>
+  <div class="p-4">
+  <table class="display table table-sm" id="">
+    <thead>
+      <tr>
+        <th>Expense Type</th>
+        <th>Recipient</th>
+        <th>Amount</th>
+        <th>Date</th>
+        
+        <% if user_signed_in? %><th></th><%end%>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @committee.committee_vendor_expenditures.each do |transaction| %>
+        <tr>
+          <td class="col-3"><%= transaction.full_expense_type %></td>
+          <td class="col-5"><%= link_to "#{transaction.full_name} ", transaction.vendor %> </td>
+          <td class="col-2"><%= number_to_currency(transaction.amount) %></td>
+          <td class="col-2"><%= transaction.transaction_date %></td>
+          
+          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<br>
+
+<% if @committee.committee_contributions.present? %>
+<div class="card">
+  <div class="card-header" style="max-width: 100%;">List of Contributions Made</div>
+  <div class="p-4">
+  <table class="display table table-sm" id="">
+
+    <thead>
+      <tr>
+
+        <th>Recipient</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <% if user_signed_in? %><th></th><%end%>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @committee.committee_contributions.each do |transaction| %>
+        <tr>
+
+          <td><%= link_to "#{transaction.display_name} ", transaction.committee_or_vendor %> </td>
+
+          <td><%= transaction.transaction_date %></td>
+          <td><%= number_to_currency(transaction.amount) %></td>
+          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+<%end%>
+
+<%end%>
+
+
+
       <br>
       <% if  user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
       <%= link_to("Add Report", new_report_path(:committee_id => @committee.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%>
@@ -20,3 +237,29 @@
 
     
 
+<script>
+
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "currency-pre": function ( a ) {
+        a = (a==="-") ? 0 : a.replace( /[^\d\-\.]/g, "" );
+        return parseFloat( a );
+    },
+ 
+    "currency-asc": function ( a, b ) {
+        return a - b;
+    },
+ 
+    "currency-desc": function ( a, b ) {
+        return b - a;
+    }
+} );
+
+$(document).ready(function () {
+    $('table.display').DataTable({
+        order: [[2, 'desc']],
+        columnDefs: [
+       { type: 'currency', targets: 2 }
+     ],
+    });
+});
+</script>
