@@ -70,6 +70,7 @@ gem 'roo-xls'
 gem 'similar_text'
 gem 'delayed_job_active_record'
 gem 'sidekiq'
+gem 'httparty'
 
 
 # Reduces boot times through caching; required in config/boot.rb

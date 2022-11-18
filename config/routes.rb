@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   resources :candidate_committees
   resources :candidates
   resources :former_offices
-  resources :registration_snapshots
+  resources :registration_snapshots do
+    collection { post :import }
+  end
   resources :statistical_data
   resources :historical_candidates
   resources :election_histories

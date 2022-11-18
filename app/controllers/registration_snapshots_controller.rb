@@ -24,6 +24,11 @@ class RegistrationSnapshotsController < ApplicationController
   def edit
   end
 
+  def import
+    RegistrationSnapshot.import(params[:file])
+    redirect_to districts_url, notice: 'Registrations were successfully uploaded!'
+   end  
+
   # POST /registration_snapshots
   # POST /registration_snapshots.json
   def create

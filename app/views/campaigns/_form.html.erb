@@ -18,12 +18,12 @@
       </div>
       <div class="col">
         <%= f.select :election_type, ['General', 'Primary', 'Special'], required: true, value: (f.object.new_record? ? 
-'Primary' : f.object.election_type) %>
+'General' : f.object.election_type) %>
 
       </div>
       <div class="col">
         <%= f.date_field :election_date, value: (f.object.new_record? ? 
-Date.new(2022,06,07) : f.object.election_date) %>
+Date.new(2022,11,08) : f.object.election_date) %>
       </div>
 
       <div class="col">

@@ -2,9 +2,16 @@
 
 <h1>Statistical Data</h1>
 
+<h5>Import Registrations</h5>
+    <%= form_tag import_registration_snapshots_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import" %>
+<%end%>
+<br>
 <table class="table">
   <thead>
     <tr>
+      <th>ID</th>
       <th>District</th>
       <th>Jurisdiction</th>
       <th>District year</th>
@@ -15,6 +22,7 @@
   <tbody>
     <% @statistical_data.each do |statistical_datum| %>
       <tr>
+        <td><%= statistical_datum.id %></td>
         <td><%if statistical_datum.district.present? %><%= link_to "#{statistical_datum.district.district_name}", statistical_datum.district %><%end%></td>
         <td><%if statistical_datum.jurisdiction.present? %><%= link_to "#{statistical_datum.jurisdiction.name}", statistical_datum.jurisdiction %><%end%></td>
         <td><%= statistical_datum.district_year %></td>
