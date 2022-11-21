@@ -30,7 +30,7 @@
                 </li>
                 
                 <% if user_signed_in? %>
-                <% if current_user.admin? && Admin.first.admin_mode? %><li><%= link_to 'New Person', new_person_path, :class => "nav-link" %></li><%end%> 
+                <% if current_user.admin? %><li><%= link_to 'New Person', new_person_path, :class => "nav-link" %></li><%end%> 
                 <%end%>
                 
           </ul>

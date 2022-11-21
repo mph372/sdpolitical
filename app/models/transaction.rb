@@ -215,6 +215,7 @@ class Transaction < ApplicationRecord
     sd_expenditures = spreadsheet.sheet_for("F460-E-Expenditures")
     sd_nonmonetary = spreadsheet.sheet_for("F460-C-Contribs")
     sd_loans = spreadsheet.sheet_for("F460-B1-Loans")
+    sd_reports = spreadsheet.sheet_for("F460-Summary")
     # SD City Contributions Spreadsheet
   header = sd_contributions.row(1)
   (2..sd_contributions.last_row).each do |i|
@@ -352,6 +353,53 @@ class Transaction < ApplicationRecord
     end
     t.generate_full_name
   end
+
+    # SD City Reports Spreadsheet
+    header = sd_reports.row(1)
+    (2..sd_reports.last_row).each do |i|
+      row = Hash[[header, sd_reports.row(i)].transpose]
+
+      orig_e_filing_id = row["orig_e_filing_id"]
+
+      if Report.where(:orig_e_filing_id => orig_e_filing_id).exists? 
+        r = Report.find_by orig_e_filing_id: orig_e_filing_id
+        if row["Line_Item"] == "5"
+            r.period_receipts = row["Amount_A"]
+            r.save
+        elsif row["Line_Item"] == "11"
+          r.period_disbursements = row["Amount_A"]
+          r.save
+        elsif row["Line_Item"] == "16"
+          r.current_coh = row["Amount_A"]
+          r.save
+        elsif row["Line_Item"] == "19"
+          r.current_debt = row["Amount_A"]
+          r.save
+        end
+        
+        
+      else
+        filer_id = row["Filer_ID"]
+        r = Report.new
+        if Committee.where(:filer_id => filer_id).exists? 
+          c = Committee.find_by filer_id: filer_id
+          r.committee_id = c.id
+          r.save
+        else
+          c = Committee.new
+          c.filer_id = row["Filer_ID"]
+          c.name = row["Filer_NamL"]
+          c.save
+          r.committee_id = c.id
+          r.save
+        end
+        r.orig_e_filing_id = row["orig_e_filing_id"]
+        r.period_begin = row["From_Date"]
+        r.period_end = row["Thru_Date"]
+        r.report_filed = row["Rpt_Date"]
+        r.save
+      end  
+    end
 
   elsif spreadsheet.cell(1,7) == "EMPLOYER"
     # State Contributions
@@ -641,7 +689,19 @@ class Transaction < ApplicationRecord
 
 end
 
-
+def add_to_report
+  if Report.where(:full_name => full_name).exists? 
+    c = Contributor.where(:full_name => full_name).last
+        update_attributes(contributor_id: c.id)
+    
+  else
+    contributor = Contributor.create!
+    contributor.update_attributes(first_name: entity_first_name)
+    contributor.update_attributes(last_name: entity_last_name)
+    contributor.update_attributes(full_name: full_name.titlecase)
+    update_attributes(contributor_id: contributor.id)
+  end 
+end
 
 def full_payment_type
   if payment_type == "A"

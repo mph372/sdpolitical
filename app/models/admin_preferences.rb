@@ -1,0 +1,2 @@
+class AdminPreferences < ApplicationRecord
+end

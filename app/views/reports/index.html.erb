@@ -33,7 +33,7 @@
       </thead>
 
       <tbody>
-        <% @reports.where('period_end >= ?', Admin.last.period_end).order('created_at DESC').each do |report| %>
+        <% Report.where('created_at >= ?', Date.yesterday).order('created_at DESC').each do |report| %>
           <% if report.candidate_committee.present?%>
           <tr>
             
