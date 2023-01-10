@@ -4,6 +4,7 @@ class Committee < ApplicationRecord
   belongs_to :measure, optional: true
   has_many :reports
   has_many :expenditures
+  has_many :transactions
 
   def aggregate_support
     "#{self.expenditures.where(:is_support => true).sum(:amount)}"

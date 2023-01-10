@@ -5,7 +5,9 @@ class Report < ApplicationRecord
   delegate :jurisdiction, to: :person
   delegate :incumbent_district, to: :person
   belongs_to :person, optional: true
+  belongs_to :import, optional: true
   cattr_accessor :current_user
+  has_many :transactions
 
   mount_uploader :pdf, ReportUploader
 
@@ -24,6 +26,10 @@ class Report < ApplicationRecord
   def burn_rate
     period_disbursements / period_receipts
   end
+
+  def total_expenditures
+    transactions.where(transaction_type: "EXPN").sum(:amount)
+end
 
   def current_period
     if period_begin == most_recent_filing_period_start

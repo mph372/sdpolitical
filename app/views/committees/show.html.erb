@@ -2,11 +2,46 @@
   <div class="row">
     <div class="col">
       <%= render 'header'%>
-
+      
       <% if @committee.reports.present? %>
         <%= render 'reports'%>
       <%end%> 
       <br>
+<% if @committee.transactions.where(transaction_type: "S496").present? %>
+<br>
+<div class="card">
+  <div class="card-header" style="max-width: 100%;">Expenditures</div>
+  <div class="p-4">
+  <table class="display table table-sm" id="">
+    <thead>
+      <tr>
+        <th>Expense Type</th>
+        <th>Candidate</th>
+        <th>Support/Oppose</th>
+        <th>Amount</th>
+        <th>Date</th>
+        
+        <% if user_signed_in? %><th></th><%end%>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @committee.transactions.where(transaction_type: "S496").each do |transaction| %>
+        <tr>
+          <td class="col-3"><%= transaction.description %></td>
+          <td class="col-5"><%= transaction.candidate_full_name %> </td>
+          <td class="col-5"><%= transaction.support_oppose_code %> </td>
+          <td class="col-2"><%= number_to_currency(transaction.amount) %></td>
+          <td class="col-2"><%= transaction.transaction_date %></td>
+          
+          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+<%end%>      
       <% if  user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
       <%= link_to("Add Report", new_report_path(:committee_id => @committee.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%>
       <%= link_to("Add Expenditure", new_expenditure_path(:committee_id => @committee.id), :action => "new", :method => :get, :class => "btn btn-primary mr-2")%>

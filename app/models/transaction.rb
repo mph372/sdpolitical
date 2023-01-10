@@ -1,8 +1,10 @@
 class Transaction < ApplicationRecord
   belongs_to :candidate_committee, optional: :true 
+  belongs_to :committee, optional: :true 
   belongs_to :import, optional: :true 
   belongs_to :contributor, optional: :true
   belongs_to :vendor, optional: :true
+  belongs_to :report, optional: :true
   validates :unique_key, uniqueness: true
   validate :exclude_actblue
   validate :require_amount
@@ -216,12 +218,77 @@ class Transaction < ApplicationRecord
     sd_nonmonetary = spreadsheet.sheet_for("F460-C-Contribs")
     sd_loans = spreadsheet.sheet_for("F460-B1-Loans")
     sd_reports = spreadsheet.sheet_for("F460-Summary")
+    sd_independent_expenditures = spreadsheet.sheet_for("S496")
+
+    # SD City Reports Spreadsheet
+    header = sd_reports.row(1)
+    (2..sd_reports.last_row).each do |i|
+      row = Hash[[header, sd_reports.row(i)].transpose]
+
+      orig_e_filing_id = row["orig_e_filing_id"]
+
+      if Report.where(:orig_e_filing_id => orig_e_filing_id).exists? 
+        r = Report.find_by orig_e_filing_id: orig_e_filing_id
+        if row["Line_Item"] == "5"
+            r.period_receipts = row["Amount_A"]
+            r.save
+        elsif row["Line_Item"] == "11"
+          r.period_disbursements = row["Amount_A"]
+          r.save
+        elsif row["Line_Item"] == "16"
+          r.current_coh = row["Amount_A"]
+          r.save
+        elsif row["Line_Item"] == "19"
+          r.current_debt = row["Amount_A"]
+          r.save
+        end
+        
+        
+      else
+        filer_id = row["Filer_ID"]
+        r = Report.new
+        r.import_id = import.id
+        if Committee.where(:filer_id => filer_id).exists? 
+          c = Committee.find_by filer_id: filer_id
+          r.committee_id = c.id
+          r.save
+        else
+          c = Committee.new
+          c.filer_id = row["Filer_ID"]
+          c.name = row["Filer_NamL"]
+          c.save
+          r.committee_id = c.id
+          r.save
+        end
+        r.orig_e_filing_id = row["orig_e_filing_id"]
+        r.period_begin = row["From_Date"]
+        r.period_end = row["Thru_Date"]
+        r.report_filed = row["Rpt_Date"]
+        r.save
+      end  
+    end
     # SD City Contributions Spreadsheet
   header = sd_contributions.row(1)
   (2..sd_contributions.last_row).each do |i|
     row = Hash[[header, sd_contributions.row(i)].transpose]
     t = Transaction.new
-    t.candidate_committee_id = candidate_committee.id
+    orig_e_filing_id = row["orig_e_filing_id"]
+    if Report.where(:orig_e_filing_id => orig_e_filing_id).exists? 
+      r = Report.find_by orig_e_filing_id: orig_e_filing_id
+      t.report_id = r.id
+    end
+    filer_id = row["Filer_ID"]
+    if Committee.where(:filer_id => filer_id).exists? 
+      c = Committee.find_by filer_id: filer_id
+      t.committee_id = c.id
+    else
+      c = Committee.new
+      c.filer_id = row["Filer_ID"]
+      c.name = row["Filer_NamL"]
+      c.save
+      t.committee_id = c.id
+      t.save
+    end
     t.import_id = import.id
     t.payment_type = row['Form_Type'] 
     t.transaction_type = row['Rec_Type'] 
@@ -241,6 +308,7 @@ class Transaction < ApplicationRecord
     t.amount = row["Amount"]
     t.expense_code = row["Expn_Code"]
     t.unique_key = "#{row["Filer_ID"]} #{row["Filer_NamL"].downcase} #{row["Tran_ID"]}"
+
     t.save
     t.generate_full_name
     if t.transaction_type == "RCPT"
@@ -251,12 +319,67 @@ class Transaction < ApplicationRecord
     end
     
   end
+  #SD Independent Expenditures
+  header = sd_independent_expenditures.row(1)
+    (2..sd_independent_expenditures.last_row).each do |i|
+      row = Hash[[header, sd_independent_expenditures.row(i)].transpose]
+
+      orig_e_filing_id = row["orig_e_filing_id"]
+
+      t = Transaction.new
+      t.import_id = import.id
+      filer_id = row["Filer_ID"]
+        if Committee.where(:filer_id => filer_id).exists? 
+          c = Committee.find_by filer_id: filer_id
+          t.committee_id = c.id
+          t.save
+        else
+          c = Committee.new
+          c.filer_id = row["Filer_ID"]
+          c.name = row["Filer_NamL"]
+          c.save
+          t.committee_id = c.id
+          t.save
+        end
+      t.transaction_type = row['Rec_Type']
+      t.description = row['Expn_Dscr']
+      t.support_oppose_code = row["Supp_Opp_Cd"]   
+      if row["Exp_Date"] != nil 
+        date = Date.strptime(row["Exp_Date"], '%Y%m%d')
+        t.transaction_date = date
+      end
+      t.candidate_last_name = row["Cand_NamL"]
+      t.candidate_first_name = row["Cand_NamF"]
+      
+      t.amount = row["Amount"]
+      t.unique_key = row["Tran_ID"]
+      t.save
+      t.generate_candidate_full_name 
+
+    end
   #SD Non-Monetary Contributions
   header = sd_nonmonetary.row(1)
   (2..sd_nonmonetary.last_row).each do |i|
     row = Hash[[header, sd_nonmonetary.row(i)].transpose]
     t = Transaction.new
-    t.candidate_committee_id = candidate_committee.id
+    orig_e_filing_id = row["orig_e_filing_id"]
+    if Report.where(:orig_e_filing_id => orig_e_filing_id).exists? 
+      r = Report.find_by orig_e_filing_id: orig_e_filing_id
+      t.report_id = r.id
+    end
+    filer_id = row["Filer_ID"]
+    if Committee.where(:filer_id => filer_id).exists? 
+      c = Committee.find_by filer_id: filer_id
+      t.committee_id = c.id
+    else
+      c = Committee.new
+      c.filer_id = row["Filer_ID"]
+      c.name = row["Filer_NamL"]
+      c.save
+      t.committee_id = c.id
+      t.save
+    end
+    
     t.import_id = import.id
     t.payment_type = row['Form_Type'] 
     t.transaction_type = row['Rec_Type'] 
@@ -291,7 +414,23 @@ class Transaction < ApplicationRecord
   (2..sd_expenditures.last_row).each do |i|
     row = Hash[[header, sd_expenditures.row(i)].transpose]
     t = Transaction.new
-    t.candidate_committee_id = candidate_committee.id
+    orig_e_filing_id = row["orig_e_filing_id"]
+    if Report.where(:orig_e_filing_id => orig_e_filing_id).exists? 
+      r = Report.find_by orig_e_filing_id: orig_e_filing_id
+      t.report_id = r.id
+    end
+    filer_id = row["Filer_ID"]
+    if Committee.where(:filer_id => filer_id).exists? 
+      c = Committee.find_by filer_id: filer_id
+      t.committee_id = c.id
+    else
+      c = Committee.new
+      c.filer_id = row["Filer_ID"]
+      c.name = row["Filer_NamL"]
+      c.save
+      t.committee_id = c.id
+      t.save
+    end
     t.import_id = import.id
     t.transaction_type = row['Rec_Type'] 
     t.entity_type = row["Entity_Cd"]
@@ -325,7 +464,23 @@ class Transaction < ApplicationRecord
   (2..sd_loans.last_row).each do |i|
     row = Hash[[header, sd_loans.row(i)].transpose]
     t = Transaction.new
-    t.candidate_committee_id = candidate_committee.id
+    orig_e_filing_id = row["orig_e_filing_id"]
+    if Report.where(:orig_e_filing_id => orig_e_filing_id).exists? 
+      r = Report.find_by orig_e_filing_id: orig_e_filing_id
+      t.report_id = r.id
+    end
+    filer_id = row["Filer_ID"]
+    if Committee.where(:filer_id => filer_id).exists? 
+      c = Committee.find_by filer_id: filer_id
+      t.committee_id = c.id
+    else
+      c = Committee.new
+      c.filer_id = row["Filer_ID"]
+      c.name = row["Filer_NamL"]
+      c.save
+      t.committee_id = c.id
+      t.save
+    end
     t.import_id = import.id
     t.transaction_type = row['Rec_Type'] 
     t.entity_type = row["Entity_Cd"]
@@ -354,52 +509,7 @@ class Transaction < ApplicationRecord
     t.generate_full_name
   end
 
-    # SD City Reports Spreadsheet
-    header = sd_reports.row(1)
-    (2..sd_reports.last_row).each do |i|
-      row = Hash[[header, sd_reports.row(i)].transpose]
-
-      orig_e_filing_id = row["orig_e_filing_id"]
-
-      if Report.where(:orig_e_filing_id => orig_e_filing_id).exists? 
-        r = Report.find_by orig_e_filing_id: orig_e_filing_id
-        if row["Line_Item"] == "5"
-            r.period_receipts = row["Amount_A"]
-            r.save
-        elsif row["Line_Item"] == "11"
-          r.period_disbursements = row["Amount_A"]
-          r.save
-        elsif row["Line_Item"] == "16"
-          r.current_coh = row["Amount_A"]
-          r.save
-        elsif row["Line_Item"] == "19"
-          r.current_debt = row["Amount_A"]
-          r.save
-        end
-        
-        
-      else
-        filer_id = row["Filer_ID"]
-        r = Report.new
-        if Committee.where(:filer_id => filer_id).exists? 
-          c = Committee.find_by filer_id: filer_id
-          r.committee_id = c.id
-          r.save
-        else
-          c = Committee.new
-          c.filer_id = row["Filer_ID"]
-          c.name = row["Filer_NamL"]
-          c.save
-          r.committee_id = c.id
-          r.save
-        end
-        r.orig_e_filing_id = row["orig_e_filing_id"]
-        r.period_begin = row["From_Date"]
-        r.period_end = row["Thru_Date"]
-        r.report_filed = row["Rpt_Date"]
-        r.save
-      end  
-    end
+    
 
   elsif spreadsheet.cell(1,7) == "EMPLOYER"
     # State Contributions
@@ -871,7 +981,9 @@ def display_name
 end
 
 
-
+def generate_candidate_full_name 
+  update_attributes(candidate_full_name: "#{candidate_first_name} #{candidate_last_name}")
+end
 
     
 

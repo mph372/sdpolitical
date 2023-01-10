@@ -7,6 +7,7 @@
     <tr>
       <th>Candidate Committee</th>
       <th>Created At</th>
+      <th>Reports</th>
       <th>Show</th>
       <th>Edit</th>
       <th>Destroy</th>
@@ -16,8 +17,9 @@
   <tbody>
     <% @imports.each do |import| %>
       <tr>
-        <td><%= link_to "#{import.candidate_committee.name}", import.candidate_committee %></td>
+        <td><% if import.candidate_committee.present? %><%= link_to "#{import.candidate_committee.name}", import.candidate_committee %><%end%></td>
         <td><%= import.created_at %></td>
+        <td><% if import.reports.present? %><%= import.reports.count %><%end%></td>
         <td><%= link_to 'Show', import %></td>
         <td><%= link_to 'Edit', edit_import_path(import) %></td>
         <td><%= link_to 'Destroy', import, method: :delete, data: { confirm: 'Are you sure?' } %></td>
