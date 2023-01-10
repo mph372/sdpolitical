@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_10_161959) do
+ActiveRecord::Schema.define(version: 2023_01_10_211102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,7 +85,9 @@ ActiveRecord::Schema.define(version: 2023_01_10_161959) do
     t.boolean "primary_committee", default: false
     t.bigint "candidate_id"
     t.string "filer_id"
+    t.bigint "jurisdiction_id"
     t.index ["candidate_id"], name: "index_committees_on_candidate_id"
+    t.index ["jurisdiction_id"], name: "index_committees_on_jurisdiction_id"
     t.index ["person_id"], name: "index_committees_on_person_id"
     t.index ["report_id"], name: "index_committees_on_report_id"
   end
@@ -331,7 +333,9 @@ ActiveRecord::Schema.define(version: 2023_01_10_161959) do
     t.bigint "committee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "jurisdiction_id"
     t.index ["committee_id"], name: "index_imports_on_committee_id"
+    t.index ["jurisdiction_id"], name: "index_imports_on_jurisdiction_id"
   end
 
   create_table "itemized_expenditures", force: :cascade do |t|
@@ -703,6 +707,7 @@ ActiveRecord::Schema.define(version: 2023_01_10_161959) do
   add_foreign_key "candidates", "committees"
   add_foreign_key "candidates", "people"
   add_foreign_key "committees", "candidates"
+  add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "people"
   add_foreign_key "committees", "reports"
   add_foreign_key "contributors", "transactions"
@@ -725,6 +730,7 @@ ActiveRecord::Schema.define(version: 2023_01_10_161959) do
   add_foreign_key "historical_candidates", "people"
   add_foreign_key "historical_candidates", "people", column: "people_id"
   add_foreign_key "imports", "committees"
+  add_foreign_key "imports", "jurisdictions"
   add_foreign_key "itemized_expenditures", "campaigns"
   add_foreign_key "itemized_expenditures", "expenditures"
   add_foreign_key "jurisdictions", "registration_histories"

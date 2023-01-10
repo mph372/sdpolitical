@@ -1,35 +1,6 @@
 <div class="rounded primary-border p-4 shadow-sm">
 <h3 class="primary-blue heavy text-responsive"><%= @committee.name %></h3>
 
-          <div class="row">
-            <div class="col">
-              <strong>Jurisdiction:</strong><br>
-              <strong>Committee Type:</strong><br>
-              <% if @committee.committee_type == "Primarily Formed" %>
-              <strong>Candidate or Measure Supporting or Opposing:</strong><br>
-              <%end%>
-              <%if @committee.is_active?%>
-              <em>Committee is currently active</em>
-              <%else%>
-              <em>Commitee is no longer active.</em>
-              <%end%>
-            </div>
+         
 
-            <div class="col">
-              
-              <%= @committee.committee_type %><br>
-                <% if @committee.person.present? %>
-                  <%= link_to "#{@committee.person.first_name} #{@committee.person.last_name}", @committee.person %>
-                <%elsif @committee.measure.present? %>
-                  <%= link_to "Measure #{@committee.measure.letter}", @committee.measure%> 
-                <%end%>
-                <% if @committee.is_support? %>
-                  (Support)
-                <%elsif @committee.is_oppose? %>
-                  (Oppose)
-                <%elsif @committee.committee_type == "General Purpose"%>
-                (General Purposes Committees do not Oppose/Support specific candidates/measures)  
-                <%end%>
-            </div>
-</div>
 </div>

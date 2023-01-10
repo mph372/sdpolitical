@@ -13,7 +13,14 @@
     </div> 
   </div>   
 
- 
+ <% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
+
+<h5>Import Transactions</h5>
+    <%= form_tag import_transactions_path(:jurisdiction_id => @jurisdiction.id), multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import" %>
+    <%end%>
+<%end%> 
 <hr>
 <% if @jurisdiction.statistical_datum.present? %>
 <div class="row">
@@ -115,6 +122,10 @@
 </div>
 <%end%>
 -->
+<br>
+<%= render 'committees' %>
+
+<br>
 <br>
 <%= render 'former_offices' %>
 

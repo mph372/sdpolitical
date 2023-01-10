@@ -25,9 +25,9 @@ class Transaction < ApplicationRecord
 
   
 
-  def self.import(candidate_committee, file)
+  def self.import(jurisdiction, file)
     import = Import.new
-    import.candidate_committee_id = candidate_committee.id
+    import.jurisdiction_id = jurisdiction.id
     import.save
     spreadsheet = open_spreadsheet(file) # open spreadsheet
     header = spreadsheet.row(1) # get header row
@@ -256,6 +256,7 @@ class Transaction < ApplicationRecord
           c = Committee.new
           c.filer_id = row["Filer_ID"]
           c.name = row["Filer_NamL"]
+          c.jurisdiction_id = jurisdiction.id
           c.save
           r.committee_id = c.id
           r.save
@@ -285,6 +286,7 @@ class Transaction < ApplicationRecord
       c = Committee.new
       c.filer_id = row["Filer_ID"]
       c.name = row["Filer_NamL"]
+      c.jurisdiction_id = jurisdiction.id
       c.save
       t.committee_id = c.id
       t.save
@@ -337,6 +339,7 @@ class Transaction < ApplicationRecord
           c = Committee.new
           c.filer_id = row["Filer_ID"]
           c.name = row["Filer_NamL"]
+          c.jurisdiction_id = jurisdiction.id
           c.save
           t.committee_id = c.id
           t.save
@@ -375,6 +378,7 @@ class Transaction < ApplicationRecord
       c = Committee.new
       c.filer_id = row["Filer_ID"]
       c.name = row["Filer_NamL"]
+      c.jurisdiction_id = jurisdiction.id
       c.save
       t.committee_id = c.id
       t.save
@@ -427,6 +431,7 @@ class Transaction < ApplicationRecord
       c = Committee.new
       c.filer_id = row["Filer_ID"]
       c.name = row["Filer_NamL"]
+      c.jurisdiction_id = jurisdiction.id
       c.save
       t.committee_id = c.id
       t.save
@@ -477,6 +482,7 @@ class Transaction < ApplicationRecord
       c = Committee.new
       c.filer_id = row["Filer_ID"]
       c.name = row["Filer_NamL"]
+      c.jurisdiction_id = jurisdiction.id
       c.save
       t.committee_id = c.id
       t.save
