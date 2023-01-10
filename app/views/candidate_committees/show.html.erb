@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
- <% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
+<% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
 
 <h5>Import Transactions</h5>
     <%= form_tag import_transactions_path(:candidate_committee_id => @candidate_committee.id), multipart: true do %>
