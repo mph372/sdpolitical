@@ -63,9 +63,9 @@
           <td class="d-none d-lg-table-cell">Dahle - <%= statistical_datum.dahle_2022 %>%</td>
           <td>
               <% if statistical_datum.winner_2020 > 0 %>
-                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2022.abs, precision: 2) %>%</span>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2022.abs, precision: 1) %>%</span>
               <% else %>
-                <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2022.abs, precision: 2) %>%</span>
+                <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2022.abs, precision: 1) %>%</span>
               <%end%> 
           </td>       
           

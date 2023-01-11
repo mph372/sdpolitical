@@ -45,6 +45,22 @@
 
       <tbody>
 
+      <% if statistical_datum.newsom_2022.present? %>
+        <tr>
+          <td class="pl-4">2022 Gubernatorial</td>
+          <td class="d-none d-lg-table-cell">Newsom - <%= statistical_datum.newsom_2022 %>%</td>
+          <td class="d-none d-lg-table-cell">Dahle - <%= statistical_datum.dahle_2022 %>%</td>
+          <td>
+              <% if statistical_datum.winner_2020 > 0 %>
+                <span class="dem-text font-weight-bold">D +<%= number_with_precision(statistical_datum.winner_2022.abs, precision: 1) %>%</span>
+              <% else %>
+                <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2022.abs, precision: 1) %>%</span>
+              <%end%> 
+          </td>       
+          
+        </tr>
+        <%end%>
+
         <% if statistical_datum.biden_2020.present? %>
         <tr>
           <td class="pl-4">2020 Presidential</td>

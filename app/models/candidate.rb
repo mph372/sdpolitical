@@ -28,7 +28,7 @@ class Candidate < ApplicationRecord
 
   def vote_share
     if campaign.election_date < Date.today && votes != nil
-    calculation = (votes.to_f / campaign.total_votes) * 100
+    calculation = (votes.to_f / campaign.candidates.sum(:votes)) * 100
     "#{calculation.round(2)}%"
     else 
     end
@@ -56,6 +56,8 @@ class Candidate < ApplicationRecord
     else
     end
   end
+
+
 
   def active_campaign
     campaign.election_date >= Date.today
