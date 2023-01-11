@@ -48,12 +48,14 @@ params[:district_id] : f.object.district_id)) %>
        
       
         <div class="col-md dem-text "> 
+          <%= f.number_field :newsom_2022, label: "Newsom %", step: :any %>
           <%= f.number_field :biden_2020, label: "Biden %", step: :any %>
           <%= f.number_field :newsom_2018, label: "Newsom %", step: :any %>
           <%= f.number_field :clinton_2016, label: "Clinton %", step: :any %>
          
         </div>
         <div class="col-md gop-text">
+          <%= f.number_field :dahle_2022, label: "Dahle %", step: :any %>
           <%= f.number_field :trump_2020, label: "Trump '20 %", step: :any %>
           <%= f.number_field :cox_2018, label: "Cox %", step: :any %>
           <%= f.number_field :trump_2016, label: "Trump '16 %", step: :any %>

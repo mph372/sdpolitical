@@ -23,6 +23,10 @@ class StatisticalDatum < ApplicationRecord
     (voted_2012.to_f / registered_2012.to_f) * 100
   end
 
+  def winner_2022
+    newsom_2022 - dahle_2022
+  end
+
   def winner_2020
     biden_2020 - trump_2020
   end
