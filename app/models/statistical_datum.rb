@@ -1,7 +1,7 @@
 class StatisticalDatum < ApplicationRecord
   belongs_to :district, optional: true
   belongs_to :jurisdiction, optional: true
-  has_many :registration_snapshots
+  has_many :registration_snapshots, dependent: :destroy
 
   def turnout_2020
     (voted_2020.to_f / registered_2020.to_f) * 100
