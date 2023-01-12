@@ -1,7 +1,11 @@
 
 
-<% if @district.statistical_datum.find_by(district_year: "2020").present? %>
+<% if @district.statistical_datum.find_by(district_year: "2020").present? || @district.jurisdiction.statistical_datum.present? %>
+<% if @district.district != "At Large" %>
 <% statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district) %>
+<% elsif @district.district == "At Large" %>
+<% statistical_datum = @district.jurisdiction.statistical_datum.last %>
+<%end%>
 <% registration_snapshot = statistical_datum.registration_snapshots.last %>
 <%if user_signed_in? && current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%>
 

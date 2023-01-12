@@ -56,7 +56,7 @@
   <% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
   <div class="row">
     <div class="col">
-    <% if @district.is_at_large == false %>
+    <% if @district.at_large_district == false %>
     <%= render 'redistricting_data'%>
     <hr>
     <%end%>

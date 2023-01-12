@@ -14,7 +14,7 @@ class District < ApplicationRecord
   has_many :former_offices
   acts_as_followable
   cattr_accessor :current_user
-  has_many :campaigns
+  has_many :campaigns, dependent: :destroy
   has_many :candidates, through: :campaigns
   has_one :person
   has_one :campaign_finance_module
