@@ -143,6 +143,18 @@ class StatisticalDatum < ApplicationRecord
     end
   end
 
+  def gov_2022_result
+    if self.newsom_2022.present?
+      if self.winner_2022 > 0
+          "Newsom +#{self.winner_2022.abs.truncate(2)}%" 
+      else
+          "Dahle +#{self.winner_2022.abs.truncate(2)}%"
+      end
+    else
+      "N/A"
+    end
+  end
+
   def pres_2020_result
     if self.biden_2020.present?
       if self.winner_2020 > 0

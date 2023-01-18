@@ -114,6 +114,7 @@ class DistrictPDF < Prawn::Document
             statistical_datum = StatisticalDatum.find_by(district_id: @district) 
         end
         ([
+            ["2022 Governor", "#{statistical_datum.gov_2022_result}"],
             ["2020 President", "#{statistical_datum.pres_2020_result}"],
             ["2018 Governor", "#{statistical_datum.gov_2018_result}"],
             ["2016 President", "#{statistical_datum.pres_2016_result}"],
@@ -131,12 +132,11 @@ class DistrictPDF < Prawn::Document
             new_statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district)
         end
         ([
-            ["", "Old District", "New District"],
-            ["2020 President", "#{statistical_datum.pres_2020_result}", "#{new_statistical_datum.pres_2020_result}"],
-            ["2018 Governor", "#{statistical_datum.gov_2018_result}", "#{new_statistical_datum.gov_2018_result}"],
-            ["2016 President", "#{statistical_datum.pres_2016_result}", "#{new_statistical_datum.pres_2016_result}"],
-            ["2014 Governor", "#{statistical_datum.gov_2014_result}", "N/A"],
-            ["2012 President", "#{statistical_datum.pres_2012_result}", "N/A"],
+            
+            ["2022 Governor", "#{new_statistical_datum.gov_2022_result}"],
+            ["2020 President", "#{new_statistical_datum.pres_2020_result}"],
+            ["2018 Governor",  "#{new_statistical_datum.gov_2018_result}"],
+            ["2016 President",  "#{new_statistical_datum.pres_2016_result}"],
         ])
     
     end
@@ -171,12 +171,12 @@ class DistrictPDF < Prawn::Document
             new_registration_snapshot = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district).registration_snapshots.last
         end
          ([
-            [" ", "Old District", "New District"],
-            ["Total Voters", "#{number_with_delimiter(registration_snapshot.total_registered, :delimiter => ',')}", "#{number_with_delimiter(new_registration_snapshot.total_registered, :delimiter => ',')}"],
-            ["Democrat", "#{number_with_precision(registration_snapshot.democrat_percentage, precision: 2)}%", "#{number_with_precision(new_registration_snapshot.democrat_percentage, precision: 2)}%"],
-            ["Republican", "#{number_with_precision(registration_snapshot.republican_percentage, precision: 2)}%", "#{number_with_precision(new_registration_snapshot.republican_percentage, precision: 2)}%"],
-            ["Other", "#{number_with_precision(registration_snapshot.other_percentage, precision: 2)}%", "#{number_with_precision(new_registration_snapshot.other_percentage, precision: 2)}%"],
-            ["Advantage", "#{registration_snapshot.display_registration_advantage}%", "#{new_registration_snapshot.display_registration_advantage}%"]
+            
+            ["Total Voters", "#{number_with_delimiter(new_registration_snapshot.total_registered, :delimiter => ',')}"],
+            ["Democrat",  "#{number_with_precision(new_registration_snapshot.democrat_percentage, precision: 2)}%"],
+            ["Republican", "#{number_with_precision(new_registration_snapshot.republican_percentage, precision: 2)}%"],
+            ["Other",  "#{number_with_precision(new_registration_snapshot.other_percentage, precision: 2)}%"],
+            ["Advantage",  "#{new_registration_snapshot.display_registration_advantage}%"]
         
 
         ])

@@ -52,9 +52,9 @@ class RegistrationSnapshot < ApplicationRecord
 
   def display_registration_advantage
     if registration_advantage > 0 
-      "D+ #{ActionController::Base.helpers.number_with_precision(registration_advantage.abs, precision: 2)}"
+      "D +#{ActionController::Base.helpers.number_with_precision(registration_advantage.abs, precision: 2)}"
     else
-      "R+ #{ActionController::Base.helpers.number_with_precision(registration_advantage.abs, precision: 2)}"
+      "R +#{ActionController::Base.helpers.number_with_precision(registration_advantage.abs, precision: 2)}"
     end
   end
 end

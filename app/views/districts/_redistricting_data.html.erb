@@ -51,10 +51,10 @@
          District Historical Candidate Performance <%if user_signed_in? && current_user.admin?%><%= link_to 'Update Registration', new_registration_snapshot_path(:statistical_datum_id => statistical_datum), :class => "btn btn-primary btn-sm float-right" %><%end%>
         </div>    
       <thead class="thead-light">
-        <th class="pl-4 col-3">Election</th>
-        <th class="col-2 d-none d-lg-table-cell">DEM</th>
-        <th class="col-2 d-none d-lg-table-cell">REP</th>
-        <th class="col-2">Margin</th>
+        <th class="pl-4 col-auto">Election</th>
+        <th class="col-auto d-none d-lg-table-cell">DEM</th>
+        <th class="col-auto d-none d-lg-table-cell">REP</th>
+        <th class="col-auto">Margin</th>
   
       </thead>
 
