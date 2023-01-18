@@ -24,15 +24,30 @@
     <div>  
 
 
-      <%= link_to 'Explore Districts', districts_path, :class => "btn btn-primary btn-large m-2" %>         
-      <%= link_to 'Explore Jurisdictions', jurisdictions_path, :class => "btn btn-primary btn-large m-2" %> 
-      <%= link_to 'Explore Candidates', candidates_path, :class => "btn btn-primary btn-large m-2" %>             
-  
-  
+  <h2>Select a Jurisdiction</h2>         
+ 
+     <table class="table border mt-5" id="jurisdictions">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class=" d-none d-lg-table-cell">Jurisdiction Type</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% Jurisdiction.all.where('archived = ?', false).order('name ASC').each do |jurisdiction| %>
+      <tr>
+        <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
+        <td class=" d-none d-lg-table-cell"><%= jurisdiction.jurisdiction_type %>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
     </div>    
   </div>
   <div class="col-2"></div>
-
+   
   </div>
 </div>
 

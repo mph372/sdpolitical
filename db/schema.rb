@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_10_211102) do
+ActiveRecord::Schema.define(version: 2023_01_12_183435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -706,7 +706,6 @@ ActiveRecord::Schema.define(version: 2023_01_10_211102) do
   add_foreign_key "candidates", "campaigns"
   add_foreign_key "candidates", "committees"
   add_foreign_key "candidates", "people"
-  add_foreign_key "committees", "candidates"
   add_foreign_key "committees", "jurisdictions"
   add_foreign_key "committees", "people"
   add_foreign_key "committees", "reports"

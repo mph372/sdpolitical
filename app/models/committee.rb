@@ -1,10 +1,11 @@
 class Committee < ApplicationRecord
   belongs_to :jurisdiction, optional: true
   belongs_to :person, optional: true
+  belongs_to :candidate, optional: true
   belongs_to :measure, optional: true
-  has_many :reports
-  has_many :expenditures
-  has_many :transactions
+  has_many :reports, dependent: :destroy
+  has_many :expenditures, dependent: :destroy
+  has_many :transactions, dependent: :destroy
 
   def aggregate_support
     "#{self.expenditures.where(:is_support => true).sum(:amount)}"

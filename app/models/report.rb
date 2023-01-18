@@ -7,7 +7,7 @@ class Report < ApplicationRecord
   belongs_to :person, optional: true
   belongs_to :import, optional: true
   cattr_accessor :current_user
-  has_many :transactions
+  has_many :transactions, dependent: :destroy
 
   mount_uploader :pdf, ReportUploader
 
