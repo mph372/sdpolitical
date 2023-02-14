@@ -1,0 +1,14 @@
+PID 83466 received SIGSEGV for address: 0x0
+0   segfault-handler.node               0x00000001093e4fa0 _ZL16segfault_handleriP9__siginfoPv + 304
+1   libsystem_platform.dylib            0x00007fff20374d7d _sigtramp + 29
+2   ???                                 0x000027f4b7d535b1 0x0 + 43932009706929
+3   ironfish-rust-nodejs.darwin-x64.nod 0x000000011574d006 _ZN4napi15bindgen_runtime15module_register9custom_gc17he50083b9ac22005fE + 22
+4   node                                0x0000000103b575e8 _ZN6v8impl12_GLOBAL__N_118ThreadSafeFunction7AsyncCbEP10uv_async_s + 536
+5   node                                0x0000000104640cbb uv__async_io + 379
+6   node                                0x000000010465575a uv__io_poll + 2266
+7   node                                0x0000000104641288 uv_run + 504
+8   node                                0x0000000103ac1773 _ZN4node13SpinEventLoopEPNS_11EnvironmentE + 307
+9   node                                0x0000000103c4697f _ZN4node6worker6Worker3RunEv + 2079
+10  node                                0x0000000103c4a103 _ZZN4node6worker6Worker11StartThreadERKN2v820FunctionCallbackInfoINS2_5ValueEEEEN3$_38__invokeEPv + 51
+11  libsystem_pthread.dylib             0x00007fff2032f8fc _pthread_start + 224
+12  libsystem_pthread.dylib             0x00007fff2032b443 thread_start + 15
