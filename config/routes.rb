@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   resources :vendors
   resources :contributors
   resources :imports
@@ -23,7 +25,6 @@ Rails.application.routes.draw do
   get 'emails/unsubscribe'
   resources :registration_histories
   resources :updates
-  resources :deadlines
   get 'pages/home'
   devise_for :users, controllers: {registrations: "registrations", confirmations: 'confirmations'}
   authenticated :user do

@@ -1,0 +1,43 @@
+class RemoveUnwantedColumnsFromDistricts < ActiveRecord::Migration[6.1]
+  def change
+    remove_column :districts, :total_voters, :integer
+    remove_column :districts, :dem_percent, :float
+    remove_column :districts, :rep_percent, :float
+    remove_column :districts, :other_percent, :float
+    remove_column :districts, :newsom_percent, :float
+    remove_column :districts, :cox_percent, :float
+    remove_column :districts, :clinton_percent, :float
+    remove_column :districts, :trump_percent, :float
+    remove_column :districts, :brown_percent, :float
+    remove_column :districts, :kashkari_percent, :float
+    remove_column :districts, :obama_percent, :float
+    remove_column :districts, :romney_percent, :float
+    remove_column :districts, :average_percent, :float
+    remove_column :districts, :map_url, :string
+    remove_column :districts, :contribution_limit, :integer
+    remove_column :districts, :corporate_contributions, :boolean
+    remove_column :districts, :pac_contributions, :boolean
+    remove_column :districts, :party_contributions, :boolean
+    remove_column :districts, :party_contribution_limit, :integer
+    remove_column :districts, :measure_a_yes, :integer
+    remove_column :districts, :measure_a_no, :integer
+    remove_column :districts, :registered_2018, :integer
+    remove_column :districts, :voted_2018, :integer
+    remove_column :districts, :registered_2016, :integer
+    remove_column :districts, :voted_2016, :integer
+    remove_column :districts, :registered_2014, :integer
+    remove_column :districts, :voted_2014, :integer
+    remove_column :districts, :registered_2012, :integer
+    remove_column :districts, :voted_2012, :integer
+    remove_column :districts, :registered_2020, :integer
+    remove_column :districts, :voted_2020, :integer
+    remove_column :districts, :prop_6_yes, :integer
+    remove_column :districts, :prop_6_no, :integer
+    remove_column :districts, :prop_51_yes, :integer
+    remove_column :districts, :prop_51_no, :integer
+    remove_column :districts, :prop_62_yes, :integer
+    remove_column :districts, :prop_62_no, :integer
+    remove_column :districts, :biden_percent, :float
+    remove_column :districts, :trump20_percent, :float
+  end
+end

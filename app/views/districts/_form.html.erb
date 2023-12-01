@@ -32,18 +32,12 @@
          <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
         </div>  
         <div class="col-md">  
-          <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, {:include_blank => true}) %>
+          <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, selected: @district.person_id, include_blank: true) %>
         </div>
         <div class="col-md">  
            <%= f.select :term_expires, ['', '2024', '2026', '2028'], {:include_blank => true}, label: "Ballot Cycle" %>  
         </div>
       </div>  
-
-        <div class="row">
-          <div class="col">
-              <%= f.text_field :map_url, label: "Map URL" %>
-          </div>
-        </div>
 
         <div class="row">
           <div class="col"><%= f.select :district_title, ["Representative", "Senator", "Assemblymember", "Supervisor", "Mayor", "Councilmember", "Trustee", "Board Member", "Director", "District Attorney", "Sheriff", "Treasurer-Tax Collector", "Assessor/ Recorder/ County Clerk", "City Clerk", "City Treasurer", "City Attorney"], {:include_blank => true} %></div>

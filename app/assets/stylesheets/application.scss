@@ -20,9 +20,29 @@
  *= require ionicons
  */
 
+ @import "rails_bootstrap_forms";
+ @import "bootstrap";
+ @import 'morrisjs-rails';
+ @import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Roboto&display=swap');
+ @import url("https://use.typekit.net/suq4glw.css");
+
+
 body {
   font-family: 'proxima-nova', sans-serif !important;
 }
+
+a {
+  color: #486581;
+  text-decoration: none;  /* Removes the underline */
+}
+
+// This increases the specificity by targeting only table cells within .table with the .pl-4 class
+.table td.pl-4,
+.table th.pl-4 {
+  padding-left: 1.5rem;
+}
+
+
 
 .hp{
   display:none;
@@ -414,16 +434,9 @@ font-style: normal !important;
   }
 }
 
-.incumbent-card {
-  text-align: center;
-}
+
 
  
- @import "rails_bootstrap_forms";
- @import "bootstrap";
- @import 'morrisjs-rails';
- @import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat&family=Roboto&display=swap');
- @import url("https://use.typekit.net/suq4glw.css");
- @import url("https://use.typekit.net/suq4glw.css");
+
 
 

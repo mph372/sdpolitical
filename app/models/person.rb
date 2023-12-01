@@ -11,7 +11,13 @@ class Person < ApplicationRecord
   has_many :reports, through: :candidate_committees 
 
  
+  def self.ransackable_attributes(auth_object = nil)
+    %w[first_name last_name]
+  end
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 
   
   has_many :reports do
@@ -319,7 +325,9 @@ class Person < ApplicationRecord
    # end
   #end
 
-
+  def full_name_with_party
+    "#{first_name} #{last_name} #{party_abbreviation}"
+  end
 
 
 end

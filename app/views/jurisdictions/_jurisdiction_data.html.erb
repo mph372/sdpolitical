@@ -16,27 +16,32 @@
             </thead>
 
             <tbody>
-                
+              <tr>
                 <td class="pl-4"><%= number_with_delimiter(registration_snapshot.total_registered, :delimiter => ',') %></td>
                 <td><%= number_with_precision(registration_snapshot.democrat_percentage, precision: 2) %>%</td>
                 <td><%= number_with_precision(registration_snapshot.republican_percentage, precision: 2) %>%</td>
                 <td><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
-                <td><% if registration_snapshot.registration_advantage > 0 %>
-                                <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
-                                <% else %>
-                                <strong><span class="text-nowrap" style="color: #911111;">R +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
-                                <%end%></td>
+                <td>
+                  <% if registration_snapshot.registration_advantage > 0 %>
+                    <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
+                  <% else %>
+                    <strong><span class="text-nowrap" style="color: #911111;">R +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
+                  <% end %>
+                </td>
+              </tr>
             </tbody>
+
         </table>
     </div>
     <%end%>
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
-    <table class="table table-sm ">
-        <div class="card-header">
+    <div class="card-header">
         Candidate Performance <%if user_signed_in? && current_user.admin?%><%end%>
-        </div>    
+        </div>   
+    <table class="table table-sm">
+         
       <thead class="thead-light">
-        <th class="pl-4 col-3">Election</th>
+        <th class="col-3 pl-4">Election</th>
         <th class="col-2 d-none d-lg-table-cell">DEM</th>
         <th class="col-2 d-none d-lg-table-cell">REP</th>
         <th class="col-2">Margin</th>

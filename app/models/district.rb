@@ -12,7 +12,6 @@ class District < ApplicationRecord
   has_many :registration_snapshots, through: :statistical_datum
   belongs_to :registration_history, optional: true
   has_many :former_offices
-  acts_as_followable
   cattr_accessor :current_user
   has_many :campaigns, dependent: :destroy
   has_many :candidates, through: :campaigns
@@ -20,6 +19,29 @@ class District < ApplicationRecord
   has_one :campaign_finance_module
   accepts_nested_attributes_for :person
   nilify_blanks only: [:person_id]
+
+  def person_id=(new_person_id)
+    return if new_person_id.blank?
+    
+    # Unlink current incumbent if different
+    if incumbent_id != new_person_id
+      Person.where(district_id: id).update_all(district_id: nil, archived: true)
+    end
+
+    # Link new incumbent
+    Person.find_by(id: new_person_id).try(:update, district_id: id, archived: false)
+
+    # Set the new incumbent_id
+    self[:incumbent_id] = new_person_id
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name district term_expires number_of_winners district_title archived note] + _ransackers.keys
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [] # Specify any associations you want to include in search
+  end
   
 
   def district_name

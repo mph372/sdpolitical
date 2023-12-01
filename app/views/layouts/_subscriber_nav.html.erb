@@ -40,11 +40,6 @@
             <li class="nav-item mr-4">
                   <a class="nav-link " href="/pages/about">About</a>
             </li>
-          <li>
-              <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
-                <%= form.text_field :q, placeholder: "Search...", data: { behavior: "autocomplete" }, class: "form-control mdb-autocomplete", aria: { label: 'Search for Candidates and Elected Officials' }  %>
-                <%= form.button "Search", class: "d-none" %>    
-          </li>
           <%end%>
           <!-- 
           <li class="nav-item  btn-group" data-behavior="notifications" data-notifications='<%= render template: "notifications/index", formats: [:json] %>'>

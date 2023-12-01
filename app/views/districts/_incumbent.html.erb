@@ -16,7 +16,8 @@
 
   <div class="col">
    <% if @district.person.present?%>
-    <%= render partial: 'shared/incumbent', locals: {person: @district.person, page_source: "district"} %>
+    <%= render 'shared/incumbent', person: @district.person, page_source: 'district' %>
+
     </div>
     <%else%>
 

@@ -2,14 +2,14 @@ class DistrictsController < ApplicationController
   
   before_action :set_district, only: [:show, :edit, :update, :import, :destroy, :dashboard]
   # before_action :is_subscriber?, except: [:index]
-  
+ 
   before_action :authorize_admin, except: [:index, :show, :follow, :unfollow]
   before_action :admin_mode, except: [:index, :show, :follow, :unfollow]
 
   # GET /districts
   # GET /districts.json
   def index
-    @districts = District.all
+    @districts = District.includes(:jurisdiction, :person, :registration_history).all
     set_meta_tags title: 'Districts',
         site: 'The Ballot Book'
     
@@ -21,12 +21,12 @@ class DistrictsController < ApplicationController
   # GET /districts/1.json
   def show
 
-  set_meta_tags title: @district.full_district_name,
+    set_meta_tags title: @district.full_district_name,
                 site: 'The Ballot Book',
                 description: @district.description,
-                keywords: @district.keywords
+                keywords: @district.keywords  
 
-    @district = District.find(params[:id])
+    @district = District.includes(:person, :statistical_datum).find(params[:id])
     @incumbents = @district.person
     # @candidates = @district.campaigns.last.candidates
     @people = Person.all
@@ -89,21 +89,6 @@ class DistrictsController < ApplicationController
     end
   end
 
-  def follow
-    @district = District.find(params[:id])
-    current_user.follow(@district)
-    flash[:notice] = "You are now following #{@district.jurisdiction.name} - #{@district.name}!"
-    redirect_back(fallback_location: dashboard_index_path)
-  end
-
-  def unfollow
-    @district = District.find(params[:id])
-    current_user.stop_following(@district)
-    flash[:notice] = "You are no longer following #{@district.jurisdiction.name} - #{@district.name}!"
-    redirect_back(fallback_location: dashboard_index_path)
-  end
-
-
   # DELETE /districts/1
   # DELETE /districts/1.json
   def destroy
@@ -147,11 +132,27 @@ class DistrictsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def district_params
-      params.require(:district).permit(:id, :name, :district, :total_voters, :dem_percent, :rep_percent, :other_percent, :newsom_percent, :cox_percent, :clinton_percent, :trump_percent, :brown_percent, :kashkari_percent, :obama_percent, :romney_percent, :average_percent, :jurisdiction_id, :map_url, :contribution_limit, :corporate_contributions, :party_contributions, :pac_contributions, :party_contribution_limit, :term_expires, :measure_a_yes, :measure_a_no, :at_large_district, :number_of_winners, :registered_2018, :registered_2016, :registered_2014, :registered_2012, :voted_2018, :voted_2016, :voted_2014, :voted_2012, :voted_2020, :registered_2020, :prop_6_yes, :prop_6_no, :prop_51_yes, :prop_51_no, :prop_62_yes, :prop_62_no, :is_seat, :is_area, :registration_history_id, :election_history_id, :former_office_id, :person_id, :district_title, :note)
+      params.require(:district).permit(
+        :id, 
+        :name, 
+        :district, 
+        :jurisdiction_id, 
+        :incumbent_id, 
+        :at_large_district, 
+        :term_expires, 
+        :number_of_winners, 
+        :is_seat, 
+        :is_area, 
+        :registration_history_id, 
+        :former_office_id, 
+        :person_id, 
+        :district_title, 
+        :archived, 
+        :note
+      )
     end
+    
 
-    def is_subscriber?
-      redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
-    end
+    
 
 end
