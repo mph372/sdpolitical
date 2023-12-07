@@ -1,13 +1,11 @@
 class Report < ApplicationRecord
-  belongs_to :committee, optional: true
   belongs_to :candidate_committee, optional: true
   delegate :district, to: :person
   delegate :jurisdiction, to: :person
   delegate :incumbent_district, to: :person
   belongs_to :person, optional: true
-  belongs_to :import, optional: true
   cattr_accessor :current_user
-  has_many :transactions, dependent: :destroy
+
 
   mount_uploader :pdf, ReportUploader
 

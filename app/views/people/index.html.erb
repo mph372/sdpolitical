@@ -39,7 +39,7 @@
         <td><%= person.party %></td>
         <td><% if person.birthdate.present? %><%= person.calculated_age %><%else%>N/A<%end%></td>
         <td><% if person.incumbent_district.present? %><%= person.term_expires %><%else%>Candidate<% end %></td>
-        <td><%if current_user.subscribed? %><span class="float-right green-pill"><% if (person.on_ballot || person.running_reelection) && person.reports.where(candidate_report: true).present? %>
+        <td><%if current_user.subscribed? %><span class="float-end green-pill"><% if (person.on_ballot || person.running_reelection) && person.reports.where(candidate_report: true).present? %>
             <%= number_to_currency(person.reports.where(candidate_report: true).most_recent.current_coh ) %>
             <% elsif person.incumbent_district.present? && person.reports.where(incumbent_report: true).present? %>
             <%= number_to_currency(person.reports.where(incumbent_report: true).most_recent.current_coh ) %>

@@ -41,9 +41,9 @@
                 </td>
             <td class=""><%= "#{report.period_begin.strftime("%b-%d-%y")}" %></td>
             <td><%= "#{report.period_end.strftime("%b-%d-%y")}" %></td>
-            <td class=""><span class="float-right green-text"><%= number_to_currency(report.period_receipts) %></span></td>
-            <td class=""><span class="float-right red-text"><%= number_to_currency(report.period_disbursements) %></span></td>
-            <td class=""><%if report.net_coh < 0 %><span class="float-right gop-text">(<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-right"><%= number_to_currency(report.net_coh) %></span><%end%></td>
+            <td class=""><span class="float-end green-text"><%= number_to_currency(report.period_receipts) %></span></td>
+            <td class=""><span class="float-end red-text"><%= number_to_currency(report.period_disbursements) %></span></td>
+            <td class=""><%if report.net_coh < 0 %><span class="float-end gop-text">(<%= number_to_currency(report.net_coh) %>)</span><%else%><span class="float-end"><%= number_to_currency(report.net_coh) %></span><%end%></td>
             <td class><% if report.pdf.url.present? %><%= link_to "View", report.pdf.url, :class => "btn btn-primary", target: :_blank %><%end%></td>
           </tr>
           

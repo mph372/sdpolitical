@@ -42,8 +42,8 @@
                         <%end%><br><small class="text-muted"><%= district.jurisdiction.name %></small>
 
                     </td>
-                    <td><span class="float-right dem-text d-none d-lg-table-cell"><%= number_with_precision(district.latest_registration.democrat_percentage, precision: 2) %>%</span></td>
-                    <td><span class="float-right gop-text d-none d-lg-table-cell"><%= number_with_precision(district.latest_registration.republican_percentage, precision: 2) %>%</span></td>
+                    <td><span class="float-end dem-text d-none d-lg-table-cell"><%= number_with_precision(district.latest_registration.democrat_percentage, precision: 2) %>%</span></td>
+                    <td><span class="float-end gop-text d-none d-lg-table-cell"><%= number_with_precision(district.latest_registration.republican_percentage, precision: 2) %>%</span></td>
     
                   </tr>
                   <%end%>

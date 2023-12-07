@@ -10,7 +10,6 @@ class District < ApplicationRecord
   has_many :historical_candidates, through: :election_histories
   has_many :statistical_datum, dependent: :destroy
   has_many :registration_snapshots, through: :statistical_datum
-  belongs_to :registration_history, optional: true
   has_many :former_offices
   cattr_accessor :current_user
   has_many :campaigns, dependent: :destroy

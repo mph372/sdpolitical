@@ -20,7 +20,7 @@
                       <td class="condensed-column text-center"><%if report.person.image.present?%><%= image_tag report.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %><%end%></td>
                       <td><% if report.person.running_reelection? %><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.incumbent_district.name %>
                       <%else%><%= link_to "#{report.person.first_name} #{report.person.last_name}", report.person  %><br><small><%= report.person.district.name %><%end%></td>
-                      <td><span class="float-right green-pill"><%= number_to_currency(report.period_receipts) %></span></td>
+                      <td><span class="float-end green-pill"><%= number_to_currency(report.period_receipts) %></span></td>
                     
                     <tr>
                     <%end%>
@@ -49,7 +49,7 @@
                   <tr>
                     <% if report.committee.present? %>
                     <td><%= link_to "#{report.committee.name}", report.committee  %><br><small><%= report.committee.jurisdiction.name %></td>
-                    <td><span class="float-right green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
+                    <td><span class="float-end green-pill">$<%= number_with_delimiter(report.current_coh, :delimiter => ',') %></span></td>
                     <%end%>
                   <tr>
                   <%end%>

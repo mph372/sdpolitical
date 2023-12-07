@@ -48,7 +48,7 @@
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <table class="table table-sm ">
         <div class="card-header">
-         District Historical Candidate Performance <%if user_signed_in? && current_user.admin?%><%= link_to 'Update Registration', new_registration_snapshot_path(:statistical_datum_id => statistical_datum), :class => "btn btn-primary btn-sm float-right" %><%end%>
+         District Historical Candidate Performance <%if user_signed_in? && current_user.admin?%><%= link_to 'Update Registration', new_registration_snapshot_path(:statistical_datum_id => statistical_datum), :class => "btn btn-primary btn-sm float-end" %><%end%>
         </div>    
       <thead class="thead-light">
         <th class="pl-4 col-auto">Election</th>

@@ -19,13 +19,11 @@ class JurisdictionsController < ApplicationController
   # GET /jurisdictions/1
   # GET /jurisdictions/1.json
   def show
-    @measures = @jurisdiction.measures
 
     set_meta_tags title: @jurisdiction.name,
     site: 'The Ballot Book'
 
     @candidates = @jurisdiction.people.sort_by{|a| [a.district.name, a.district.district]}
-    @election_histories = @jurisdiction.election_histories 
     @statistical_datum = @jurisdiction.statistical_datum
     @former_offices = @jurisdiction.former_offices
 

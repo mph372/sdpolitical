@@ -9,56 +9,56 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
               Contribution Limit:
-              <div class="green-text heavy float-right">
-               <div class="green-text heavy float-right"><strong><%if @person.district.contribution_limit == 0 || @person.district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.district.contribution_limit, delimiter: ",") %><%end%></strong>
+              <div class="green-text heavy float-end">
+               <div class="green-text heavy float-end"><strong><%if @person.district.contribution_limit == 0 || @person.district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.district.contribution_limit, delimiter: ",") %><%end%></strong>
             </div></li>
           <li class="list-group-item">Corporate Contributions:
               <% if @person.district.corporate_contributions?%>
-              <div class="green-text float-right"> <%= material_icon.check_circle %>
+              <div class="green-text float-end"> <%= material_icon.check_circle %>
               <%else%>
-              <div class="gop-text heavy float-right"> <%= material_icon.cancel %>
+              <div class="gop-text heavy float-end"> <%= material_icon.cancel %>
               <%end%></li>
           <li class="list-group-item">PAC Contributions:
               <% if @person.district.pac_contributions?%>
-              <div class="green-text float-right"><%= material_icon.check_circle %>
+              <div class="green-text float-end"><%= material_icon.check_circle %>
               <%else%>
-              <div class="gop-text float-right"><%= material_icon.cancel %>
+              <div class="gop-text float-end"><%= material_icon.cancel %>
               <%end%></li>
           <li class="list-group-item">
               <% if @person.district.party_contributions?%>
               Party Contribution Limit:
-              <div class="green-text heavy float-right"><strong><%if @person.district.party_contribution_limit == 0 || @person.district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.district.party_contribution_limit, delimiter: ",") %><%end%></strong>
+              <div class="green-text heavy float-end"><strong><%if @person.district.party_contribution_limit == 0 || @person.district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.district.party_contribution_limit, delimiter: ",") %><%end%></strong>
               <%else%>
               Party Contributions:
-              <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
+              <div class="gop-text font-size-12 float-end"><%= material_icon.cancel %>
               <%end%></li></li>
         </ul>
         <%elsif @person.running_reelection? %>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
               Contribution Limit:
-              <div class="green-text heavy float-right"><strong>
-              <div class="green-text heavy float-right"><%if @person.incumbent_district.contribution_limit == 0 || @person.incumbent_district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.contribution_limit, delimiter: ",") %><%end%>
+              <div class="green-text heavy float-end"><strong>
+              <div class="green-text heavy float-end"><%if @person.incumbent_district.contribution_limit == 0 || @person.incumbent_district.contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.contribution_limit, delimiter: ",") %><%end%>
           </strong></div></li>
           <li class="list-group-item">Corporate Contributions:
               <% if @person.incumbent_district.corporate_contributions?%>
-              <div class="green-text float-right"> <%= material_icon.check_circle %>
+              <div class="green-text float-end"> <%= material_icon.check_circle %>
               <%else%>
-              <div class="gop-text heavy float-right"> <%= material_icon.cancel %>
+              <div class="gop-text heavy float-end"> <%= material_icon.cancel %>
               <%end%></li>
           <li class="list-group-item">PAC Contributions:
               <% if @person.incumbent_district.pac_contributions?%>
-              <div class="green-text float-right"><%= material_icon.check_circle %>
+              <div class="green-text float-end"><%= material_icon.check_circle %>
               <%else%>
-              <div class="gop-text float-right"><%= material_icon.cancel %>
+              <div class="gop-text float-end"><%= material_icon.cancel %>
               <%end%></li>
           <li class="list-group-item">
               <% if @person.incumbent_district.party_contributions?%>
               Party Contribution Limit:
-              <div class="green-text heavy float-right"><strong><%if @person.incumbent_district.party_contribution_limit == 0 || @person.incumbent_district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %><%end%></strong>
+              <div class="green-text heavy float-end"><strong><%if @person.incumbent_district.party_contribution_limit == 0 || @person.incumbent_district.party_contribution_limit == nil %>No Limit<%else%>$<%= number_with_delimiter(@person.incumbent_district.party_contribution_limit, delimiter: ",") %><%end%></strong>
               <%else%>
               Party Contributions:
-              <div class="gop-text font-size-12 float-right"><%= material_icon.cancel %>
+              <div class="gop-text font-size-12 float-end"><%= material_icon.cancel %>
               <%end%></li></li>
         </ul>
         <%end%>

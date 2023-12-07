@@ -10,9 +10,9 @@
         <td class="no-border">Reg Advantage</td>
         <td class="no-border"></td>
             <td class="text-nowrap no-border"><% if @person.incumbent_district.registration_advantage > 0 %>
-            <span class="float-right dem-pill">D +<%= number_with_precision(@person.incumbent_district.registration_advantage, precision: 2) %>%</span>
+            <span class="float-end dem-pill">D +<%= number_with_precision(@person.incumbent_district.registration_advantage, precision: 2) %>%</span>
             <% else %>
-            <span class="float-right gop-pill">R +<%= number_with_precision(@person.incumbent_district.absolute_registration_advantage, precision: 2) %>%</span>
+            <span class="float-end gop-pill">R +<%= number_with_precision(@person.incumbent_district.absolute_registration_advantage, precision: 2) %>%</span>
             <%end%>
             </td>
         </tr>
@@ -27,9 +27,9 @@
             </td>
             <td >
             <% if @person.incumbent_district.gov_2018 > 0 %>
-            <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2018.abs, precision: 2) %>%</span>
+            <span class="dem-pill float-end">+<%= number_with_precision(@person.incumbent_district.gov_2018.abs, precision: 2) %>%</span>
           <% else %>
-            <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2018.abs, precision: 2) %>%</span>
+            <span class="gop-pill float-end">+<%= number_with_precision(@person.incumbent_district.gov_2018.abs, precision: 2) %>%</span>
           <%end%> 
             </td>   
           </tr>
@@ -45,9 +45,9 @@
          <%end%>
           </td>
           <td><% if @person.incumbent_district.pres_2016 > 0 %>
-          <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2016.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-end">+<%= number_with_precision(@person.incumbent_district.pres_2016.abs, precision: 2) %>%</span>
           <% else %>
-          <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2016.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-end">+<%= number_with_precision(@person.incumbent_district.pres_2016.abs, precision: 2) %>%</span>
           <%end%>
           </td>        
         </tr>
@@ -62,9 +62,9 @@
         <%end%>
           </td>
           <td><% if @person.incumbent_district.gov_2014 > 0 %>
-          <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2014.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-end">+<%= number_with_precision(@person.incumbent_district.gov_2014.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.gov_2014.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-end">+<%= number_with_precision(@person.incumbent_district.gov_2014.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
@@ -79,9 +79,9 @@
         <%end%>
           </td>
           <td><% if @person.incumbent_district.pres_2012 > 0 %>
-          <span class="dem-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2012.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-end">+<%= number_with_precision(@person.incumbent_district.pres_2012.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-pill float-right">+<%= number_with_precision(@person.incumbent_district.pres_2012.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-end">+<%= number_with_precision(@person.incumbent_district.pres_2012.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>

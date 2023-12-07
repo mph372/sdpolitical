@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
+<% if user_signed_in? && current_user.admin? %>
 
 <h5>Import Transactions</h5>
     <%= form_tag import_transactions_path(:candidate_committee_id => @candidate_committee.id), multipart: true do %>
@@ -171,7 +171,7 @@
   <table class="table-sm table table-success">
     <thead>
       <tr>
-        <% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %><th>Total Raised</th><%end%>
+        <% if user_signed_in? && current_user.admin? %><th>Total Raised</th><%end%>
         <th class="pl-3"># of Donations</th>
         <th># of Donors</th>
         <th>Avg. Donation</th>
@@ -181,7 +181,7 @@
     </thead>
     <tbody>
       <tr>
-          <% if user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %><td><%= number_to_currency(@candidate_committee.transactions.where(transaction_type: "RCPT").sum(:amount)) %></td><%end%>
+          <% if user_signed_in? && current_user.admin? %><td><%= number_to_currency(@candidate_committee.transactions.where(transaction_type: "RCPT").sum(:amount)) %></td><%end%>
          <td class="pl-3"><%= @candidate_committee.transactions.where(transaction_type: "RCPT").count %></td>
          <td><%= @candidate_committee.transactions.where(transaction_type: "RCPT").pluck(:full_name).uniq.count %></td>
          <td><%= number_to_currency(@candidate_committee.transactions.where(transaction_type: "RCPT").average(:amount)) %></td>

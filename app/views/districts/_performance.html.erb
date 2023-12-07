@@ -25,9 +25,9 @@
             </td>
             <td class="no-border">
             <% if @district.gov_2018 > 0 %>
-            <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+            <span class="dem-pill float-end">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
           <% else %>
-            <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
+            <span class="gop-pill float-end">+<%= number_with_precision(@district.gov_2018.abs, precision: 2) %>%</span>
           <%end%> 
             </td>   
           </tr>
@@ -43,9 +43,9 @@
          <%end%>
           </td>
           <td><% if @district.pres_2016 > 0 %>
-          <span class="dem-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-end">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
           <% else %>
-          <span class="gop-pill float-right">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-end">+<%= number_with_precision(@district.pres_2016.abs, precision: 2) %>%</span>
           <%end%>
           </td>        
         </tr>
@@ -60,9 +60,9 @@
         <%end%>
           </td>
           <td><% if @district.gov_2014 > 0 %>
-          <span class="dem-pill float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-end">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-pill float-right">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-end">+<%= number_with_precision(@district.gov_2014.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
@@ -77,9 +77,9 @@
         <%end%>
           </td>
           <td><% if @district.pres_2012 > 0 %>
-          <span class="dem-pill float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
+          <span class="dem-pill float-end">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
         <% else %>
-          <span class="gop-pill float-right">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
+          <span class="gop-pill float-end">+<%= number_with_precision(@district.pres_2012.abs, precision: 2) %>%</span>
         <%end%>
           </td>        
         </tr>
@@ -90,11 +90,11 @@
             <td></td>
             <td >
             <% if @district.measure_a_result > 50 %>
-            <span class="green-performance-pill float-right"><%= number_with_precision(@district.measure_a_result.to_f, precision: 2) %>%</span>
+            <span class="green-performance-pill float-end"><%= number_with_precision(@district.measure_a_result.to_f, precision: 2) %>%</span>
           <% else %>
-            <span class="red-performance-pill float-right"><%= number_with_precision(@district.measure_a_result.to_f, precision: 2) %>%</span>
+            <span class="red-performance-pill float-end"><%= number_with_precision(@district.measure_a_result.to_f, precision: 2) %>%</span>
           <%end%> 
-          <br><small class="float-right text-nowrap"><% if @district.measure_a_difference > 0 %>
+          <br><small class="float-end text-nowrap"><% if @district.measure_a_difference > 0 %>
                       <%= %"#{@district.measure_a_difference.abs.truncate(2)}% above Countywide" %>
                       <% elsif @district.measure_a_difference < 0 %>
                       <%= %"#{@district.measure_a_difference.abs.truncate(2)}% below Countywide" %>
@@ -108,11 +108,11 @@
             <td></td>
             <td >
             <% if @district.prop_6_result > 50 %>
-            <span class="green-performance-pill float-right"><%= number_with_precision(@district.prop_6_result.to_f, precision: 2) %>%</span>
+            <span class="green-performance-pill float-end"><%= number_with_precision(@district.prop_6_result.to_f, precision: 2) %>%</span>
           <% else %>
-            <span class="red-performance-pill float-right"><%= number_with_precision(@district.prop_6_result.to_f, precision: 2) %>%</span>
+            <span class="red-performance-pill float-end"><%= number_with_precision(@district.prop_6_result.to_f, precision: 2) %>%</span>
           <%end%> 
-                    <br><small class="float-right text-nowrap"><% if @district.prop_6_difference > 0 %>
+                    <br><small class="float-end text-nowrap"><% if @district.prop_6_difference > 0 %>
                       <%= %"#{@district.prop_6_difference.abs.truncate(2)}% above Statewide" %>
                       <% elsif @district.prop_6_difference < 0 %>
                       <%= %"#{@district.prop_6_difference.abs.truncate(2)}% below Statewide" %>
@@ -126,11 +126,11 @@
             <td></td>
             <td >
             <% if @district.prop_51_result > 50 %>
-            <span class="green-performance-pill float-right"><%= number_with_precision(@district.prop_51_result.to_f, precision: 2) %>%</span>
+            <span class="green-performance-pill float-end"><%= number_with_precision(@district.prop_51_result.to_f, precision: 2) %>%</span>
           <% else %>
-            <span class="red-performance-pill float-right"><%= number_with_precision(@district.prop_51_result.to_f, precision: 2) %>%</span>
+            <span class="red-performance-pill float-end"><%= number_with_precision(@district.prop_51_result.to_f, precision: 2) %>%</span>
           <%end%> 
-                      <br><small class="float-right text-nowrap"><% if @district.prop_51_difference > 0 %>
+                      <br><small class="float-end text-nowrap"><% if @district.prop_51_difference > 0 %>
                       <%= %"#{@district.prop_51_difference.abs.truncate(2)}% above Statewide" %>
                       <% elsif @district.prop_51_difference < 0 %>
                       <%= %"#{@district.prop_51_difference.abs.truncate(2)}% below Statewide" %>
@@ -144,11 +144,11 @@
             <td></td>
             <td >
             <% if @district.prop_62_result > 50 %>
-            <span class="green-performance-pill float-right"><%= number_with_precision(@district.prop_62_result.to_f, precision: 2) %>%</span>
+            <span class="green-performance-pill float-end"><%= number_with_precision(@district.prop_62_result.to_f, precision: 2) %>%</span>
           <% else %>
-            <span class="red-performance-pill float-right"><%= number_with_precision(@district.prop_62_result.to_f, precision: 2) %>%</span>
+            <span class="red-performance-pill float-end"><%= number_with_precision(@district.prop_62_result.to_f, precision: 2) %>%</span>
           <%end%> 
-                      <br><small class="float-right text-nowrap"><% if @district.prop_62_difference > 0 %>
+                      <br><small class="float-end text-nowrap"><% if @district.prop_62_difference > 0 %>
                       <%= %"#{@district.prop_62_difference.abs.truncate(2)}% above Statewide" %>
                       <% elsif @district.prop_62_difference < 0 %>
                       <%= %"#{@district.prop_62_difference.abs.truncate(2)}% below Statewide" %>

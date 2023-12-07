@@ -10,7 +10,7 @@
             <table class="table table-sm bg-white p-4" >
             <thead >
                 <tr class="card-header">
-                <th class="pl-4 col-4"><u><%if user_signed_in? && current_user.admin? || Admin.last.admin_mode == true%><%= link_to "#{committee.name}", committee %> <%else%><%= committee.name %><%end%></u>
+                <th class="pl-4 col-4"><u><%if user_signed_in? && current_user.admin? %><%= link_to "#{committee.name}", committee %> <%else%><%= committee.name %><%end%></u>
                 <%= committee.committee_status %>
                     </th>
                 <th class="col-2 text-right">Raised</th>

@@ -38,7 +38,6 @@ class PeopleController < ApplicationController
     @candidate = Candidate.new
     @person = Person.find(params[:id])
     @reports = @person.reports.order(period_end: :desc)
-    @expenditures = @person.expenditures.order(expenditure_date: :desc)
 
     set_meta_tags title: @person.full_name,
                   site: 'The Ballot Book',

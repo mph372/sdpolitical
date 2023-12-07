@@ -28,11 +28,7 @@
   <body class="bg-white">
 
 
-    <div class="alert alert-info text-center">
-     Learn more about campaigns & politics at <%= link_to "Operative-Wisdom.com", "https://www.Operative-Wisdom.com", :target => '_blank' %>
-      
-     
-    </div>
+
     <% flash.each do |type, msg| %>
       <div class="alert alert-info">
        
@@ -64,7 +60,7 @@
 
   <!-- FOOTER -->
   <footer class="container mt-3">
-    <p class="float-right">                    
+    <p class="float-end">                    
       <%= link_to "https://twitter.com/TheBallotBook", target: :_blank, aria: { label: 'Follow Us on Twitter' }   do %>
       <%= fa_icon "twitter" %>
       <% end %>

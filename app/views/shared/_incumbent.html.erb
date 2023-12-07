@@ -13,7 +13,7 @@
       </div>
       <% if user_signed_in? && current_user.admin? %>
         <div class="col-lg text-md-right">
-          <%= link_to "Edit", edit_person_path(person), class: "btn btn-sm btn-primary text-md-right my-auto" %>
+          <%= link_to "Edit", edit_person_path(person), class: "btn btn-sm btn-primary text-md-right my-auto float-end" %>
         </div>
       <% end %>
     </div>
@@ -38,12 +38,6 @@
       <div class="col-md-9"><%= display_birthdate(person) %></div>
     </div>
     <hr class="m-1">
-    <% if person.district.present? && person.term_expires.present? %>
-      <div class="row">
-        <div class="heavy col-md-3">Term Expires:</div>
-        <div class="col-md-9"><%= display_term_expiration(person) %></div>
-      </div>
-      <hr class="m-1">
-    <% end %>
+
   </div>
 </div>

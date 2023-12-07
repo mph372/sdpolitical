@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
+  # Devise routes
   devise_for :admin_users, ActiveAdmin::Devise.config
+  devise_for :users, controllers: { registrations: "registrations", confirmations: 'confirmations' }
+
+  # ActiveAdmin routes
   ActiveAdmin.routes(self)
+
+  # Stripe routes
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
+
+  # Resource routes
   resources :vendors
-  resources :contributors
-  resources :imports
-  resources :transactions do
+  resources :transactions, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
     collection { post :import }
   end
   resources :campaign_finance_modules
@@ -18,37 +25,16 @@ Rails.application.routes.draw do
   resources :statistical_data
   resources :historical_candidates
   resources :election_histories
-  mount StripeEvent::Engine, at: '/stripe-webhooks'
-  get 'emails/unsubscribe'
-  resources :registration_histories
   resources :updates
-  get 'pages/home'
-  devise_for :users, controllers: {registrations: "registrations", confirmations: 'confirmations'}
-  authenticated :user do
-    root 'dashboard#index', as: :authenticated_root
-  end
-  
-  match "users/unsubscribe/:unsubscribe_hash" => "emails#unsubscribe", as: "unsubscribe", via: :all
-  
-  unauthenticated :user do
-    root 'pages#home', as: :unauthenticated_root
-  end
-  match 'users/:id' => 'users#destroy', :via => :delete, :as => :admin_destroy_user
-  resources :users, only: [:index]
-  get :search, controller: :main
-  resources :expenditures
   resources :elections
   resources :people do 
-    resources :reports, only:
-    [:index]
+    resources :reports, only: [:index]
     member do
       get 'archive'
     end
   end
-  resources :committees
   resources :campaigns
   resources :campaign_candidates
-  resources :measures
   resources :pricing, only: [:index]
   resources :reports
   resources :districts do
@@ -56,7 +42,7 @@ Rails.application.routes.draw do
       get :follow
       get :unfollow
     end
-    collection {post :import}
+    collection { post :import }
   end
   resources :jurisdictions do
     member do
@@ -72,7 +58,17 @@ Rails.application.routes.draw do
       post :mark_as_read
     end
   end
-  post 'contributor/cleanup'
+  resources :users, only: [:index, :destroy]
+
+  # Custom routes
+  get 'emails/unsubscribe'
+  get :search, controller: :main
+  match "users/unsubscribe/:unsubscribe_hash" => "emails#unsubscribe", as: "unsubscribe", via: :all
+  match 'users/:id' => 'users#destroy', via: :delete, as: :admin_destroy_user
+
+  # Root path
   root 'pages#home'
+
+  # Additional information
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,17 +1,15 @@
 
 <div class="wrapper">
 <div class="row ">
-  <div class="col-md order-2 d-md-none ">
-        <%= link_to "Export District (PDF)", district_path(@district, format: "pdf"), :class => "btn btn-primary " %>
-  </div>
+
     <div class="col-md order-2 d-none d-md-table-cell text-right">
-        <%= link_to "Export District (PDF)", district_path(@district, format: "pdf"), :class => "btn btn-primary " %>
+        <%= link_to "Export District (PDF)", district_path(@district, format: "pdf"), :class => "btn btn-primary float-end" %>
   </div>
   <div class="col-md order-1">
     <h3 class="mb-0 mt-2 header-text text-nowrap nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
     <h1 class="heavy primary-blue"><%= @district.district_name %> </h1>
     
-    <% if @district.at_large_district? && user_signed_in? && current_user.admin? && Admin.last.admin_mode == true %>
+    <% if @district.at_large_district? && user_signed_in? && current_user.admin?  %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
     <%end%>
   
@@ -81,29 +79,7 @@
     </div>
   </div>
   <%end%>
-<!-- 
-<% if @district.campaign_finance_module.present? %>
-<div class="row">
-  <div class="col">
-    <%= render partial: 'campaignfinance', locals: {district: @district.campaign_finance_module} %>
-  </div>
-</div>
 
-<% elsif @district.jurisdiction.campaign_finance_module.present? %>
-<div class="row">
-  <div class="col">
-    <%= render partial: 'campaignfinance', locals: {district: @district.jurisdiction.campaign_finance_module } %>
-  </div>
-</div>
-<%end%>
-   
-
-<div class="row">
-    <div class="col">
-      <%= render 'former_offices'%>
-    </div>
-  </div>  
--->
 
 
 <%if @district.at_large_district == false %>
@@ -125,10 +101,10 @@
 <%end%>
 
 <div class="row">
- <div class="col float-right">
+ <div class="col float-end">
 
 
-      <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-right align-bottom mt-auto", :target => "_blank"%>
+      <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-end align-bottom mt-auto", :target => "_blank"%>
     </div>
 </div>
   
