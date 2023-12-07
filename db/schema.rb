@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_01_155945) do
+ActiveRecord::Schema.define(version: 2023_12_01_160535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,43 +142,6 @@ ActiveRecord::Schema.define(version: 2023_12_01_155945) do
     t.bigint "committee_id"
     t.index ["committee_id"], name: "index_contributors_on_committee_id"
     t.index ["transaction_id"], name: "index_contributors_on_transaction_id"
-  end
-
-  create_table "county_transactions", force: :cascade do |t|
-    t.bigint "candidate_committee_id"
-    t.bigint "import_id"
-    t.string "filer_name"
-    t.datetime "rpt_date"
-    t.string "rec_type"
-    t.string "loan_type"
-    t.string "entity_cd"
-    t.string "entity_name_last"
-    t.string "entity_name_first"
-    t.string "ctrib_prefix"
-    t.string "ctrib_suffix"
-    t.string "entity_adr1"
-    t.string "entity_adr2"
-    t.string "entity_city"
-    t.string "entity_st"
-    t.string "entity_zip4"
-    t.string "entity_emp"
-    t.string "entity_occ"
-    t.string "entity_self"
-    t.string "tran_type"
-    t.date "tran_date"
-    t.float "amount"
-    t.float "amt_beg"
-    t.integer "expn_code"
-    t.string "description"
-    t.string "agent_name_last"
-    t.string "agent_name_first"
-    t.string "agent_prefix"
-    t.string "agent_suffix"
-    t.string "cmte_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["candidate_committee_id"], name: "index_county_transactions_on_candidate_committee_id"
-    t.index ["import_id"], name: "index_county_transactions_on_import_id"
   end
 
   create_table "dashboards", force: :cascade do |t|
@@ -718,8 +681,6 @@ ActiveRecord::Schema.define(version: 2023_12_01_155945) do
   add_foreign_key "committees", "people"
   add_foreign_key "contributors", "committees"
   add_foreign_key "contributors", "transactions"
-  add_foreign_key "county_transactions", "candidate_committees"
-  add_foreign_key "county_transactions", "imports"
   add_foreign_key "districts", "former_offices"
   add_foreign_key "districts", "jurisdictions"
   add_foreign_key "districts", "people"
