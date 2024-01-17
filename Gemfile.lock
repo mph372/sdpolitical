@@ -450,7 +450,7 @@ DEPENDENCIES
   bootstrap (~> 5.3.2)
   bootstrap_form
   byebug
-  capybara (>= 2.15)
+  capybara (~> 3.39, >= 3.39.2)
   carrierwave
   chartkick
   cocoon
@@ -471,11 +471,12 @@ DEPENDENCIES
   jquery-rails
   listen (>= 3.0.5, < 3.2)
   material_icons
+  matrix
   meta-tags
   morrisjs-rails
   nilify_blanks
   pg
-  prawn
+  prawn (~> 2.1)
   prawn-table
   puma (>= 4.3.8)
   rack-attack

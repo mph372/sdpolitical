@@ -45,7 +45,7 @@ gem 'material_icons'
 gem "font-awesome-rails"
 gem 'figaro'
 gem 'fog-aws'
-gem 'prawn'
+gem 'prawn', '~> 2.1'
 gem 'acts_as_follower', github: 'tcocca/acts_as_follower'
 gem 'gibbon', github: 'amro/gibbon'
 gem 'prawn-table'
@@ -70,6 +70,8 @@ gem 'delayed_job_active_record'
 gem 'sidekiq'
 gem 'httparty'
 gem 'activeadmin'
+gem 'matrix'
+
 
 
 
@@ -96,7 +98,7 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  gem 'capybara', '~> 3.39', '>= 3.39.2'
   # gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   # gem 'chromedriver-helper'
