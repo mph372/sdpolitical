@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     collection { post :import }
   end
   resources :campaign_finance_modules
-  resources :admins
   resources :candidate_committees
   resources :candidates
   resources :former_offices
