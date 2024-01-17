@@ -20,5 +20,7 @@ module Sdpolitical
     config.middleware.use Rack::Deflater
     config.time_zone = "Pacific Time (US & Canada)"
     # the framework and any gems in your application.
+    
   end
 end
+
