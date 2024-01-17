@@ -1,43 +1,20 @@
-<div class="row bg-light shadow-sm bg-white section-border rounded mb-4 p-3">
-<div class="col-lg-3 my-auto">
-    <% if person.respond_to?(:image) && person.image.present? %>
-      <%= image_tag person.image.url(:headshot), alt: 'headshot', class: "center-image avatar shadow", size: "200x200" %>
-    <% else %>
-      <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', class: "center-image avatar shadow", size: "200x200" %>
-    <% end %>
-  </div>
-  <div class="col-lg-9 my-auto px-4">
-    <div class="row">
-      <div class="col-lg-9">
-        <h1 class="primary-blue text-lg-left"><strong><%= display_name_link(person, page_source) %></strong></h1>
-      </div>
-      <% if user_signed_in? && current_user.admin? %>
-        <div class="col-lg text-md-right">
-          <%= link_to "Edit", edit_person_path(person), class: "btn btn-sm btn-primary text-md-right my-auto float-end" %>
-        </div>
-      <% end %>
-    </div>
-    <h5 class="text-lg-left"><%= display_district_info(person) if person.district.present? %></h5>
-    <% if person.is_candidate %>
-      <hr class="m-1">
-      <div class="row">
-        <div class="heavy col-md-3">Candidate for:</div>
-        <div class="col-md-9"><%= display_candidate_for(person) %></div>
-      </div>
-      <hr class="m-1">
-    <% end %>
-    <% if person.former_offices.present? && person.district.nil? %>
-      <div class="row">
-        <div class="heavy col-md">Formerly Represented:</div>
-        <div class="col-md"><%= display_former_office(person) %></div>
-      </div>
-      <hr class="m-1">
-    <% end %>
-    <div class="row">
-      <div class="heavy col-md-3">Birthdate:</div>
-      <div class="col-md-9"><%= display_birthdate(person) %></div>
-    </div>
-    <hr class="m-1">
 
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-3 mx-auto rounded primary-border" style="padding: 20px;">
+        <div class="card-body text-center">
+          <% if person.image.present? %>
+            <%= image_tag person.image.url, alt: "#{person.first_name} #{person.last_name}", class: "img-fluid rounded-circle mb-4", style: "max-width: 250px; height: auto;" %>
+          <% else %>
+            <%= image_tag 'blank-headshot.png', alt: 'Headshot placeholder', class: "img-fluid rounded-circle mb-4", style: "max-width: 250px; height: auto;" %>
+          <% end %>
+          <h1 class="card-title mb-2">
+            <%= link_to "#{person.first_name} #{person.last_name}", person_path(person) %>
+          </h1>
+          <p class="card-text mb-1"><%= "#{person.party} | Birthdate: #{person.birthdate.strftime('%B %d, %Y') if person.birthdate}" %></p>
+          <h5 class="card-text"><%= person.district_title %></h5>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+

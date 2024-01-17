@@ -1,4 +1,101 @@
-// Place all the styles related to the Districts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.party-registration {
+  display: flex;
+  justify-content: space-between; /* This will space out the child elements */
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+  .party-name {
+    font-size: smaller; /* You can adjust this as needed for your design */
+    margin-right: 10px; /* Smaller margin for smaller screens, adjust as needed */
+  }
+
+  .advantage-text {
+    font-size: 1em; /* Smaller font size on mobile */
+  }
+}
+
+@media (max-width: 991px) {
+  #incumbent-card {
+    float: none;
+    width: 100%;
+    margin-bottom: 20px; /* Add space between the card and text */
+  }
+
+  #analysis-text {
+    width: 100%;
+  }
+}
+
+
+.party-name {
+  font-weight: bold;
+  width: 10%;
+  white-space: nowrap; /* Prevent wrapping */
+
+  min-width: 0; /* For flexbox to allow shrinking below content size */
+}
+
+.bar-container {
+  position: relative;
+  background-color: #eee;
+  height: 20px;
+  width: 90%;
+  margin-left: 10px;
+}
+
+.bar {
+  position: absolute;
+  height: 100%;
+}
+
+.percentage-badge {
+  position: absolute;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white; /* Increased border width */
+  background-color: #000; /* Set a distinct background color; change as needed */
+  top: 50%;
+  transform: translateY(-50%);
+
+}
+
+/* Color classes for the bars and text */
+.rep-bar {
+  background-color: #A61B1B; /* Assuming REP is Republican and should be red */
+}
+
+.dem-bar {
+  background-color: #0F609B;
+}
+
+.other-bar {
+  background-color: #7069FA; /* Assuming OTHER should be purple */
+}
+
+.rep-text, .dem-text, .other-text {
+  /* Consolidated text color styles */
+  color: white;
+}
+
+.total-voters {
+  margin-left: auto;
+  padding-left: 10px; /* or adjust as needed for spacing */
+  white-space: nowrap; /* This prevents wrapping to a new line */
+
+}
+
+.advantage-text {
+  font-weight: bold;
+  font-size: 1.5em; /* Larger font size */
+  white-space: nowrap; /* Prevents wrapping */
+}
 

@@ -75,7 +75,7 @@
                   <td><%if person.birthdate.present? %><%= person.birthdate.to_formatted_s(:long) %> (Age <%= person.calculated_age %>)<%else%><em>Unknown</em><%end%></td>
                 </tr>
 
-                <% if person.district.present? && person.term_expires.present?%>
+                <% if person.district.present?%>
                   <tr>
                   <td class="heavy col-4">Term Expires:</td>
                   <td><%= person.district.term_expires %> <%if person.term? %><%= "(Term Limited in #{person.term})" %><%end%></td>

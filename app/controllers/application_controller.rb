@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
      end
 
      def admin_mode
-          redirect_to root_path, alert: 'Access Denied' unless current_user.admin? unless Admin.last.admin_mode == false 
+          redirect_to root_path, alert: 'Access Denied' unless current_user.admin?
      end
      
 

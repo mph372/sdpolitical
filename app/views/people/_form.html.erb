@@ -1,61 +1,64 @@
-
 <div class="container bg-white shadow-sm border rounded mt-2">
-<br>
-<%= bootstrap_form_for(@person) do |f| %>
+  <%= bootstrap_form_for(@person) do |f| %>
+    <br>
 
+    <!-- Biographical Section -->
+    <div class="row p-3">
+      <div class="col-md-3">
+        <h5 class="heavy">Biographical</h5>
+      </div>
 
-  <div class="row p-3">
-    <div class="col-md-3">
-      <h5 class="heavy">Biographical</h5>
-    </div>
-
-    <div class="col-md-9">
+      <div class="col-md-9">
         <div class="row">
           <div class="col">
-          <%= f.text_field :first_name, :required => true %>
+            <%= f.text_field :first_name, required: true, placeholder: 'First Name' %>
           </div>
           <div class="col">
-          <%= f.text_field :last_name %>
+            <%= f.text_field :last_name, placeholder: 'Last Name' %>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
-            <%= f.date_field :birthdate, required: true %>
-          </div>
-          <div class="col">
-            
-            <%= f.text_field :birthplace %> 
+            <%= f.date_field :birthdate, required: true, placeholder: 'Birthdate' %>
           </div>
         </div>
+
         <div class="row">
           <div class="col">
-            <%= f.file_field :image, { label: "Headshot" } %>
+            <%= f.file_field :image, label: "Headshot" %>
           </div>
           <div class="col">
-            <%= f.text_field :remote_image_url, label: "Or Image URL"%>  
+            <%= f.text_field :remote_image_url, label: "Or Image URL", placeholder: 'Image URL' %>  
           </div>
         </div>
+
         <div class="row">
           <div class="col">
-          <%= f.select :party, ['Republican', 'Democrat', 'Declined to State', 'Green', 'Peace & Freedom', 'Libertarian', 'Reform', 'Natural Law', 'American Independent', 'Unknown'], :include_blank => true %>
+            <%= f.select :party, ['Republican', 'Democrat', 'Declined to State', 'Green', 'Peace & Freedom', 'Libertarian', 'Reform', 'Natural Law', 'American Independent', 'Unknown'], include_blank: true, label: 'Party' %>
           </div>
           <div class="col">
-            <%= f.text_field :professional_career %>
+            <%= f.text_field :professional_career, placeholder: 'Professional Career' %>
           </div>
         </div>    
-        <%= f.number_field :term, { label: "Term Limit Year" } %> 
+
+        <%= f.number_field :term, label: "Term Limit Year", placeholder: 'Term Limit Year' %> 
+
         <div class="row">
-            <div class="col"><%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires} - #{v.incumbent_name}", v.id ] }, {:include_blank => true, label: false} ) %></div>
+          <div class="col">
+            <%= f.select(:district_id, District.order(:jurisdiction_id).all.collect { |v| [ "#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires} - #{v.incumbent_name}", v.id ] }, include_blank: true, label: 'District') %>
           </div>
+        </div>
+        
+        <div class="row">
+          <div class="col">
+            <%= f.text_area :bio, rows: 4, label: "Biography", placeholder: 'Enter biography here' %>
+          </div>
+        </div>
+      </div>
     </div>
-
-  </div>
-
-
-    
-      
   
-  <%= f.submit %>
-<% end %>
-<br>
+    <%= f.submit class: 'btn btn-primary' %>
+    <br>
+  <% end %>
 </div>

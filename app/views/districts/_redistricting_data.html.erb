@@ -1,49 +1,57 @@
-
-
 <% if @district.statistical_datum.find_by(district_year: "2020").present? || @district.jurisdiction.statistical_datum.present? %>
-<% if @district.district != "At Large" %>
-<% statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district) %>
-<% elsif @district.district == "At Large" %>
-<% statistical_datum = @district.jurisdiction.statistical_datum.last %>
-<%end%>
-<% registration_snapshot = statistical_datum.registration_snapshots.last %>
-<%if user_signed_in? && current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%>
+  <% if @district.district != "At Large" %>
+    <% statistical_datum = StatisticalDatum.all.where(district_year: "2020").find_by(district_id: @district) %>
+  <% elsif @district.district == "At Large" %>
+    <% statistical_datum = @district.jurisdiction.statistical_datum.last %>
+  <% end %>
+  <% registration_snapshot = statistical_datum.registration_snapshots.last %>
+        <% if user_signed_in? && current_user.admin? %>
+        <%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum), class: 'float-right' %>
+      <% end %>
 
-<div class="card shadow-sm mb-3 bg-white rounded border-warning">
-        <div class="card-header">
-     District Registration <% if statistical_datum.registration_snapshots.present? %>(As of <%= registration_snapshot.snapshot_date.strftime("%B %d, %Y") %>)<%end%>
-        </div>
-        
-        <table class="table table-sm">
-        
-        <% if statistical_datum.registration_snapshots.present? %>
-        <%if user_signed_in? && current_user.admin? %><%end%> 
-            <thead class="thead-light">
-                    <th class="pl-4 col-3">Total Voters</th>
-                    <th class="col-2">DEM</th>
-                    <th class="col-2">REP</th>
-                    <th class="col-2 d-none d-md-table-cell"">OTHER</th>
-                    <th class="col-2">MARGIN</th>
-            </thead>
-
-            <tbody>
-                
-                <td class="pl-4"><%= number_with_delimiter(registration_snapshot.total_registered, :delimiter => ',') %></td>
-                <td><%= number_with_precision(registration_snapshot.democrat_percentage, precision: 2) %>%</td>
-                <td><%= number_with_precision(registration_snapshot.republican_percentage, precision: 2) %>%</td>
-                <td class="d-none d-md-table-cell"><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
-                <td><% if registration_snapshot.registration_advantage > 0 %>
-                                <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
-                                <% else %>
-                                <strong><span class="text-nowrap" style="color: #911111;">R +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
-                                <%end%></td>
-            </tbody>
-        <%else%>
-        <div class="pl-4 pt-3">Registration Data Not Yet Available</div>
-        <%end%>
-        </table>
-
+<div class="card shadow-sm mb-3 bg-white rounded primary-border">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span style="font-weight: normal;"><%= number_with_delimiter(registration_snapshot.total_registered) %> Registered Voters as of <%= registration_snapshot.snapshot_date.strftime("%m/%d/%y") %></span>
+      <% if registration_snapshot.registration_advantage.positive? %>
+        <span class="advantage-text" style="color: #0F609B;"><%= registration_snapshot.display_registration_advantage %></span>
+      <% else %>
+        <span class="advantage-text" style="color: #A61B1B;"><%= registration_snapshot.display_registration_advantage %></span>
+      <% end %>
     </div>
+  
+
+<div class="card-body">
+  <% if statistical_datum.registration_snapshots.present? %>
+    <div class="registration-bars">
+      <% [['DEM', registration_snapshot.democrat_percentage, registration_snapshot.registered_dem], 
+          ['REP', registration_snapshot.republican_percentage, registration_snapshot.registered_rep], 
+          ['OTHER', registration_snapshot.other_percentage, registration_snapshot.registered_other]].each do |party, percentage, total| %>
+        <div class="party-registration">
+          <div class="party-name"><%= party %>&nbsp%</div>
+          <div class="bar-container">
+            <div class="<%= party_bar_class(party) %> bar" style="width: <%= percentage %>%;"></div>
+            <div class="<%= party_text_class(party) %>" 
+              style="left: calc(<%= percentage %>% - 20px); top: 50%; transform: translateY(-50%);
+                      background-color: <%= bar_color(party) %>;">
+            <%= number_with_precision(percentage, precision: 0) %>
+          </div>
+
+          </div>
+          <div class="total-voters ms-4">
+            <%= number_with_delimiter(total) %> Voters
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="pl-4 pt-3">Registration Data Not Yet Available</div>
+  <% end %>
+</div>
+</div>
+
+
+
+
 
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <table class="table table-sm ">

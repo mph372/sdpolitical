@@ -1,23 +1,35 @@
-
+<div class="row">
+<div class="col-6">
 <%= bootstrap_form_for(@candidate_committee, label_errors: true) do |f| %>
-<% if @candidate_committee.errors.any? %>
-    <% @candidate_committee.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
+  <% if @candidate_committee.errors.any? %>
+    <ul>
+      <% @candidate_committee.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
   <% end %>
 
   <div class="form-inputs">
-    <%= f.text_field :name %>
-    <div class="row">
-      <div class="col"><%= f.select :cycle, ['2022', '2020', '2018'] %></div>
-      <div class="col"> <%= f.select :status, ['Open', 'Closed'] %></div>
-      <div class="col"><%= f.check_box :primary_committee, value: (f.object.new_record? ? 
-          true : f.object.primary_committee)  %></div>
+    <%= f.text_field :name, label: 'Committee Name', placeholder: 'Enter committee name' %>
+
+    <div class="row mb-3">
+      <div class="col">
+        <%= f.select :status, ['Open', 'Closed'], {}, label: 'Status', prompt: 'Select Status' %>
+      </div>
     </div>
-    <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id]},  label: "Candidate:" ) %>
+
+    <div class="row mb-3">
+      <div class="col">
+        <%= f.check_box :primary_committee, label: 'Primary Committee?', checked: f.object.primary_committee || f.object.new_record? %>
+      </div>
+    </div>
+
+    <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id]}, label: "Candidate:") %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
   </div>
 <% end %>
+</div>
+</div>

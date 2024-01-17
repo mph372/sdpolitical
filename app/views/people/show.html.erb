@@ -13,6 +13,11 @@
         <%= render 'campaignsection'%>
       </div>
     <%end%>
+
+    <% if @person.candidate_committees.any? %>
+      <%= render 'affiliated_committees', person: @person %>
+    <% end %>
+
     
     <%= render 'incumbentsection'%>
     <%= render 'admin'%>

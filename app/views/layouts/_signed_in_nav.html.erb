@@ -1,49 +1,26 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
-      <a class="navbar-brand"><%= image_tag 'logos/ballot_logo_square.png', class: "logo", alt: 'The Ballot Book Logo' %></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                  <a class="nav-link" <%= link_to 'Home', page_path('home') %><span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link " href="/districts/">Districts</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link " href="/jurisdictions/">Jurisdictions</a>
-              </li>
-          </ul>
-
-          <ul class="navbar-nav navbar-right">  
-            <li class="nav-item">
-                  <a class="nav-link " href="/pages/about">About</a>
-            </li>
-          <li>
-              <%= form_with url: search_path, local: true, method: :get, html: { class: "form-inline my-2 my-lg-0 mr-4" } do |form| %>
-                <%= form.text_field :q, placeholder: "Search...", data: { behavior: "autocomplete" }, class: "form-control mdb-autocomplete", aria: { label: 'Search for Candidates and Elected Officials' }  %>
-                <%= form.button "Search", class: "d-none" %>
-              <% end %>
-          </li>
-          <!-- 
-          <li class="nav-item  btn-group" data-behavior="notifications" data-notifications='<%= render template: "notifications/index", formats: [:json] %>'>
-          <a class="dropdown-toggle nav-link" type="button" data-behavior="notifications-link" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= fa_icon "bell" %> <span data-behavior="unread-count"></span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1" data-behavior="notification-items">
-          </div>
-        </li> -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href='' data-target="#navbarDropdown" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Hello, <%= current_user.first_name %>!
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/users/edit">My Account</a>
-              <a class="dropdown-item" href="/pricing/">Subscribe</a>
-              <%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "dropdown-item" %>
-            </div>
-           </li>
-          </ul> 
-    </div>
+  <a class="navbar-brand">
+    <%= image_tag 'logos/ballot_logo_square.png', class: "logo", alt: 'The Ballot Book Logo' %>
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item active">
+        <%= link_to 'Home', page_path('home'), class: 'nav-link' %><span class="sr-only">(current)</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/districts/">Districts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/jurisdictions/">Jurisdictions</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="<%= search_path %>" method="get">
+      <%= text_field_tag :q, nil, placeholder: "Search...", class: "form-control mr-sm-2", aria: { label: 'Search for Candidates and Elected Officials' } %>
+      <%= button_tag "Search", class: "btn btn-outline-success my-2 my-sm-0" %>
+    </form>
+    <!-- Add dropdown here if needed -->
+  </div>
 </nav>

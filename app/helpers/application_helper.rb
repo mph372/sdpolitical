@@ -24,4 +24,32 @@ module ApplicationHelper
     def titlize(str)
         str.gsub('_', ' ').capitalize
     end
+
+    def party_abbreviation(party_name)
+        case party_name
+            when 'Republican'
+            'R'
+            when 'Democrat'
+            'D'
+            when 'Declined to State'
+            'DTS'
+            when 'Green'
+            'GR'
+            when 'Peace & Freedom'
+            'P&F'
+            when 'Libertarian'
+            'LIB'
+            when 'Reform'
+            'REF'
+            when 'Natural Law'
+            'NL'
+            when 'American Independent'
+            'AIP'
+            when 'Unknown'
+            'N/A'
+            else
+            '' # Default case if party is not listed
+            end
+        end
+            
 end

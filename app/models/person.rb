@@ -298,11 +298,10 @@ class Person < ApplicationRecord
     end
   end
 
-  def candidate_title
+  def district_title
     if district.present?
-      district.district_title
+      "#{district.district_title}, #{district.jurisdiction.name}"
     else
-      professional_career
     end
   end
   

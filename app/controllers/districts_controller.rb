@@ -9,7 +9,7 @@ class DistrictsController < ApplicationController
   # GET /districts
   # GET /districts.json
   def index
-    @districts = District.includes(:jurisdiction, :person, :registration_history).all
+    @districts = District.includes(:jurisdiction, :person).all
     set_meta_tags title: 'Districts',
         site: 'The Ballot Book'
     

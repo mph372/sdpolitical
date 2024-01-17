@@ -21,20 +21,30 @@
 </div>     
     <br>
 <div class="">    
-  <div class="row">
-    <div class="col px-3">
-    <%= render 'incumbent' %>
-    </div>
+<div class="row">
+  <div class="col">
+
+        <!-- Incumbent Card with Float Left for large screens -->
+        <div>
+          <%= render 'incumbent' %>
+        </div>
+
+        <!-- Analysis Text 
+        <div id="analysis-text">
+          <% if @district.note.present? %>
+            <%= simple_format(@district.note) %>
+          <% else %>
+            <p class="text-muted">No analysis currently available.</p>
+          <% end %>
+
+    </div>-->
   </div>
-  <% if @district.note != nil %>
-  <div class="row mb-3">
-    <div class="col">
-    <%if @district.note.length > 1%>
-    <%= render 'note' %>
-    <%end%>
-    </div>
-  </div>
-  <% end %>
+</div>
+
+
+
+
+
   <div class="row">
     <div class="col">
       <% if @district.at_large_district == false %>
@@ -63,22 +73,6 @@
   </div>
   <%end%>  
 
-  <% if @district.district_data == false %>
-  <div class="row">
-    <div class="col-lg">
-        
-        <%= render 'registration'%>
-
-    </div>
-    <div class="col-lg">
-      
-      <% if @district.performance_eligible == true %>
-      <%= render 'performance' %>  
-      <%end%>
-      
-    </div>
-  </div>
-  <%end%>
 
 
 

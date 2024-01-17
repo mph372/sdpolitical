@@ -9,13 +9,13 @@ class Candidate < ApplicationRecord
 
 
   def display_ballot_title
-    if ballot_title != "" 
-      ballot_title
-    else
-      if person.district.present? 
+    return ballot_title if ballot_title.present?
+
+    if person.present?
+      if person.district.present? && person.district.present?
         "#{person.district.district_title}, #{person.district.jurisdiction.name}"
-      else
-        person.professional_career 
+      elsif person.professional_career.present?
+        person.professional_career
       end
     end
   end

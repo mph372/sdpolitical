@@ -1,185 +1,58 @@
 <div class="container bg-white shadow-sm rounded primary-border p-4">
-<%= @report.transactions.count %>
+
   <div class="row">
   
-    <div class="col-auto">
-    Report Filer:<br>
-    Report Filed:<br>
-    Period Begin:<br>
-    Period End:  <br>
-    <hr>
-    Period Receipts: <br>
-    Loans Received:<br>
-    Period Disbursements:<br>
-    Cash-On-Hand:<br>
-    Outstanding Debt:<br>
-    </div>
-    <div class="col-auto">
-    
-    <% if @report.committee.present? %><%= link_to "#{@report.committee.name}", @report.committee %><br><%end%>
-    <% if @report.candidate_committee.present? %><%= link_to "#{@report.candidate_committee.name}", @report.candidate_committee %> (<%= link_to "#{@report.candidate_committee.person.full_name}", @report.candidate_committee.person %>)<br><%end%>
-    <%= @report.report_filed.to_formatted_s(:long) %><%if @report.is_amended?%> (Amended)<%end%><br>
-    <%= @report.period_begin.to_formatted_s(:long) %><br>
-    <%= @report.period_end.to_formatted_s(:long) %>
-    <hr>
-    $<%= number_with_delimiter(@report.period_receipts, :delimiter => ',') %><br>
-    $<% if @report.loans_received.present? %><%= number_with_delimiter(@report.loans_received, :delimiter => ',') %><%else%>0.00<%end%><br>
-    $<%= number_with_delimiter(@report.period_disbursements, :delimiter => ',') %><br>
-    $<%= number_with_delimiter(@report.current_coh, :delimiter => ',') %><br>
-    $<%= number_with_delimiter(@report.current_debt, :delimiter => ',') %>
+<div class="col-auto">
+  Report Filer:<br>
+  Report Filed:<br>
+  Period Begin:<br>
+  Period End:<br>
+  <hr>
+  Monetary Receipts:<br>
+  Non-Monetary Receipts:<br>
+  Loans Received:<br>
+  Total Receipts:<br>
+  <hr>
+  Period Disbursements:<br>
+  Cash-On-Hand:<br>
+  Outstanding Debt:<br>
+</div>
+<div class="col-auto">
+  <% if @report.candidate_committee.present? %>
+    <%= link_to @report.candidate_committee.name, @report.candidate_committee %> 
+    (<%= link_to @report.candidate_committee.person.full_name, @report.candidate_committee.person %>)
     <br>
-    <% if @report.pdf.url.present? %><%= link_to "Download Report", @report.pdf.url %><%end%>
-    </div>
-
-
-
-
-
-  </div>
-<br>
-
-<% if @report.transactions.where(transaction_type: "RCPT").present?  %>
-
-<div class="card">
-  <div class="card-header" style="max-width: 100%;">Contributions</div>
-  <div class="p-4">
-  <table class="display table table-sm" id="">
-    <thead>
-      <tr>
-        
-        <th>Contributor</th>
-        <th>Occupation</th>
-        <th>Amount</th>
-        <th>Date</th>
-        <% if user_signed_in? %><th></th><%end%>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @report.transactions.where(transaction_type: "RCPT").each do |transaction| %>
-        <tr>
-        
-          <td><% if transaction.contributor.present? %><%= link_to "#{transaction.display_name} ", transaction.contributor  %><%else%><%= "#{transaction.display_name} " %><%end%>
-              <br><span class="small"><%= transaction.entity_city %>, <%= transaction.entity_state %> <%if transaction.entity_zip != nil%> <%= transaction.entity_zip[0,5] %><%end%></span>
-          </td>
-          <td><%if transaction.entity_occupation != "N/A" %><%= transaction.entity_occupation %><br><span class="small"><%= transaction.entity_employer %></span><%end%></td>
-          <td><%= number_to_currency(transaction.amount) %><br><span class="small"><%=transaction.full_payment_type %></span></td>
-          
-          <td><%= transaction.transaction_date %></td>
-          
-          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <% end %>
+  <%= @report.report_filed.to_formatted_s(:long) %>
+  <% if @report.is_amended? %> (Amended)<% end %>
   <br>
-  
-  </div>
+  <%= @report.period_begin.to_formatted_s(:long) %><br>
+  <%= @report.period_end.to_formatted_s(:long) %>
+  <hr>
+  $<%= number_with_delimiter(@report.period_monetary_receipts, delimiter: ',') %><br>
+  $<%= number_with_delimiter(@report.period_nonmonetary_receipts, delimiter: ',') %><br>
+  $<% if @report.loans_received.present? %>
+    <%= number_with_delimiter(@report.loans_received, delimiter: ',') %>
+  <% else %>0.00<% end %>
+  <br>
+  $<%= number_with_delimiter(@report.period_receipts, delimiter: ',') %><br>
+  <hr>
+  $<%= number_with_delimiter(@report.period_disbursements, delimiter: ',') %><br>
+  $<%= number_with_delimiter(@report.current_coh, delimiter: ',') %><br>
+  $<%= number_with_delimiter(@report.current_debt, delimiter: ',') %>
+  <br>
+  <% if @report.pdf.url.present? %>
+    <%= link_to "Download Report", @report.pdf.url %>
+  <% end %>
 </div>
-<br>
-<% if @report.transactions.where(transaction_type: "EXPN").present? %>
-<br>
-<div class="card">
-  <div class="card-header" style="max-width: 100%;">Expenditures</div>
-  <div class="p-4">
-  <table class="display table table-sm" id="">
-    <thead>
-      <tr>
-        <th>Expense Type</th>
-        <th>Recipient</th>
-        <th>Amount</th>
-        <th>Date</th>
-        
-        <% if user_signed_in? %><th></th><%end%>
-      </tr>
-    </thead>
 
-    <tbody>
-      <% @report.transactions.where(transaction_type: "EXPN").each do |transaction| %>
-        <tr>
-          <td class="col-3"><%= transaction.full_expense_type %></td>
-          <td class="col-5"><%= link_to "#{transaction.full_name} ", transaction.vendor %> </td>
-          <td class="col-2"><%= number_to_currency(transaction.amount) %></td>
-          <td class="col-2"><%= transaction.transaction_date %></td>
-          
-          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </div>
-</div>
-<%end%>
-<br>
-<% if @report.transactions.where(transaction_type: "S496").present? %>
-<br>
-<div class="card">
-  <div class="card-header" style="max-width: 100%;">Expenditures</div>
-  <div class="p-4">
-  <table class="display table table-sm" id="">
-    <thead>
-      <tr>
-        <th>Expense Type</th>
-        <th>Candidate</th>
-        <th>Support/Oppose</th>
-        <th>Amount</th>
-        <th>Date</th>
-        
-        <% if user_signed_in? %><th></th><%end%>
-      </tr>
-    </thead>
 
-    <tbody>
-      <% @report.transactions.where(transaction_type: "S496").each do |transaction| %>
-        <tr>
-          <td class="col-3"><%= transaction.description %></td>
-          <td class="col-5"><%= transaction.candidate_full_name %> </td>
-          <td class="col-5"><%= transaction.support_oppose_code %> </td>
-          <td class="col-2"><%= number_to_currency(transaction.amount) %></td>
-          <td class="col-2"><%= transaction.transaction_date %></td>
-          
-          <% if user_signed_in? %><td><%= link_to 'Destroy', transaction, method: :delete, data: { confirm: 'Are you sure?' } %></td><%end%>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  </div>
-</div>
-<%end%>
-<br>
-<div class="card">
-  <div class="card-header" style="max-width: 100%;">Campaign Expense Categories</div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="pl-4">Expense Type</th>
-          <th>Amount</th>
-          <th>% of Spend</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @report.transactions.where(transaction_type: "EXPN").select('expense_code, sum(amount) as total').group('expense_code').order('total desc').limit(15).each do |transaction| %>
-        <tr>
-        
-          <td class="pl-4 col-5"><%= transaction.full_expense_type %></td>
-          <td class="col-1"><%= number_to_currency(transaction.total) %></td>
-          <td class="col-1"><%= number_with_precision((transaction.total / @report.total_expenditures)*100, precision: 2) %>%</td>
-          <td class="col-5">
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: <%= (transaction.total / @report.total_expenditures)*100 %>%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>  
-            
-            
-            </td>
-        </tr>
-        <%end%>
-      </tbody>
-    
-    </table>
+
+
+
 
   </div>
-<%end%>
+<br>
 
 
 

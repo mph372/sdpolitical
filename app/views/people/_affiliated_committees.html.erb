@@ -1,0 +1,48 @@
+<div class="card mb-3 rounded primary-border">
+  <div class="card-header">
+    <span>Affiliated Campaign Committees</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="ps-4">Name</th>
+          <th class="text-end">Years Active</th>
+          <th class="text-end">Total Raised</th>
+          <th class="text-end">Total Spent</th>
+          <th class="text-end pe-4">Cash on Hand</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% person.candidate_committees.includes(:reports).each do |committee| %>
+          <tr style="<%= 'font-style: italic;' if committee.status == 'Closed' %>">
+            <td class="ps-4">
+              <%= link_to committee.name + (' (Terminated)' if committee.status == 'Closed').to_s, candidate_committee_path(committee) %>
+            </td>
+            <td class="text-end">
+              <% if committee.reports.any? %>
+                <%= committee.reports.minimum(:period_begin).year %>
+                <% if committee.status == 'Open' %>
+                  - Present
+                <% else %>
+                  - <%= committee.reports.maximum(:period_end).year %>
+                <% end %>
+              <% else %>
+                No Reports
+              <% end %>
+            </td>
+            <td class="text-end">
+              <%= committee.reports.any? ? number_to_currency(committee.reports.sum(:period_receipts)) : "$0.00" %>
+            </td>
+            <td class="text-end">
+              <%= committee.reports.any? ? number_to_currency(committee.reports.sum(:period_disbursements)) : "$0.00" %>
+            </td>
+            <td class="text-end pe-4">
+              <%= committee.reports.any? ? number_to_currency(committee.reports.order(period_end: :desc).first.current_coh) : "$0.00" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

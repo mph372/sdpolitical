@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_07_213711) do
+ActiveRecord::Schema.define(version: 2024_01_16_194056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,24 +233,16 @@ ActiveRecord::Schema.define(version: 2023_12_07_213711) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "committee_id"
-    t.bigint "person_id"
     t.boolean "is_amended"
-    t.integer "cycle"
-    t.bigint "district_id"
-    t.boolean "incumbent_report"
-    t.boolean "candidate_report", default: true
     t.float "loans_received"
-    t.boolean "officeholder_account", default: false
     t.string "pdf"
     t.bigint "candidate_committee_id"
-    t.integer "orig_e_filing_id"
-    t.integer "e_filing_id"
     t.bigint "import_id"
+    t.float "period_monetary_receipts"
+    t.float "period_nonmonetary_receipts"
     t.index ["candidate_committee_id"], name: "index_reports_on_candidate_committee_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
-    t.index ["district_id"], name: "index_reports_on_district_id"
     t.index ["import_id"], name: "index_reports_on_import_id"
-    t.index ["person_id"], name: "index_reports_on_person_id"
   end
 
   create_table "statistical_data", force: :cascade do |t|
@@ -369,8 +361,6 @@ ActiveRecord::Schema.define(version: 2023_12_07_213711) do
   add_foreign_key "people_districts", "people"
   add_foreign_key "registration_snapshots", "statistical_data"
   add_foreign_key "reports", "candidate_committees"
-  add_foreign_key "reports", "districts"
-  add_foreign_key "reports", "people"
   add_foreign_key "statistical_data", "districts"
   add_foreign_key "statistical_data", "jurisdictions"
 end
