@@ -1,7 +1,9 @@
 class DropMeasuresTable < ActiveRecord::Migration[6.1]
   def up
 
-    remove_foreign_key :committees, :measures
+    if foreign_key_exists?(:committees, :measures)
+      remove_foreign_key :committees, :measures
+    end
     remove_foreign_key :expenditures, :measures
     
     drop_table :measures

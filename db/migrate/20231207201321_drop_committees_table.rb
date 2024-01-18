@@ -5,7 +5,9 @@ class DropCommitteesTable < ActiveRecord::Migration[6.1]
 
     # For tables you plan to drop eventually, you can use DROP CASCADE when dropping those tables.
     # However, since we are only dropping 'committees' here, we manually remove foreign keys from these tables.
-    remove_foreign_key :vendors, :committees
+    if foreign_key_exists?(:vendors, :committees)
+      remove_foreign_key :vendors, :committees
+    end
     remove_foreign_key :imports, :committees
     remove_foreign_key :transactions, :committees
     remove_foreign_key :expenditures, :committees
