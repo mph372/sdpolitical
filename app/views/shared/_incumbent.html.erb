@@ -4,10 +4,11 @@
       <div class="card mb-3 mx-auto rounded primary-border" style="padding: 20px;">
         <div class="card-body text-center">
           <% if person.image.present? %>
-            <%= image_tag person.image.url, alt: "#{person.first_name} #{person.last_name}", class: "img-fluid rounded-circle mb-4", style: "max-width: 250px; height: auto;" %>
+            <%= image_tag person.image.url, alt: "#{person.first_name} #{person.last_name}", class: "img-fluid rounded-circle mb-4", style: "width: 250px; height: 250px; object-fit: cover;" %>
           <% else %>
-            <%= image_tag 'blank-headshot.png', alt: 'Headshot placeholder', class: "img-fluid rounded-circle mb-4", style: "max-width: 250px; height: auto;" %>
+            <%= image_tag 'blank-headshot.png', alt: 'Headshot placeholder', class: "img-fluid rounded-circle mb-4", style: "width: 250px; height: 250px; object-fit: cover;" %>
           <% end %>
+
           <h1 class="card-title mb-2">
             <%= link_to "#{person.first_name} #{person.last_name}", person_path(person) %>
           </h1>
