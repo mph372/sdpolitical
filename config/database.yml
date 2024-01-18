@@ -54,10 +54,5 @@ test:
   timeout: 5000
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: <%= ENV['PRODUCTION_DATABASE_NAME'] %>
-  username: <%= ENV['PRODUCTION_DATABASE_USERNAME'] %>
-  password: <%= ENV['PRODUCTION_DATABASE_PASSWORD'] %>
-  host: <%= ENV['PRODUCTION_DATABASE_HOST'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+
