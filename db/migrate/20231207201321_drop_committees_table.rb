@@ -10,8 +10,15 @@ class DropCommitteesTable < ActiveRecord::Migration[6.1]
     end
     remove_foreign_key :imports, :committees
     remove_foreign_key :transactions, :committees
-    remove_foreign_key :expenditures, :committees
-    remove_foreign_key :contributors, :committees
+    if foreign_key_exists?(:expenditures, :committees)
+      remove_foreign_key :expenditures, :committees
+    end    
+    if foreign_key_exists?(:contributors, :committees)
+      remove_foreign_key :contributors, :committees
+    end
+    if foreign_key_exists?(:candidates, :committees)
+      remove_foreign_key :candidates, :committees
+    end
 
     # Now, safely drop the committees table
     drop_table :committees

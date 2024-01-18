@@ -1,7 +1,9 @@
 class DropContributorsTable < ActiveRecord::Migration[6.1]
   def up
     # Remove foreign key constraint from the transactions table
-    remove_foreign_key :transactions, :contributors
+    if foreign_key_exists?(:transactions, :contributors)
+      remove_foreign_key :transactions, :contributors
+    end
 
     # Now, safely drop the contributors table
     drop_table :contributors
