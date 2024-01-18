@@ -54,5 +54,12 @@ test:
   timeout: 5000
 
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  adapter: postgresql
+  encoding: unicode
+  database: theballotbook
+  pool: 5
+  username: masonherron
+  password: 
+  host: localhost
+
 
