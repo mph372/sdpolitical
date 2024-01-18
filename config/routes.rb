@@ -6,8 +6,7 @@ Rails.application.routes.draw do
   # ActiveAdmin routes
   ActiveAdmin.routes(self)
 
-  # Stripe routes
-  mount StripeEvent::Engine, at: '/stripe-webhooks'
+
 
   # Resource routes
   resources :vendors

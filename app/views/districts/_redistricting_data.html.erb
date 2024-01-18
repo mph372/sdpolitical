@@ -23,9 +23,14 @@
 <div class="card-body">
   <% if statistical_datum.registration_snapshots.present? %>
     <div class="registration-bars">
-      <% [['DEM', registration_snapshot.democrat_percentage, registration_snapshot.registered_dem], 
-          ['REP', registration_snapshot.republican_percentage, registration_snapshot.registered_rep], 
-          ['OTHER', registration_snapshot.other_percentage, registration_snapshot.registered_other]].each do |party, percentage, total| %>
+      <% total_voters = registration_snapshot.total_registered %>
+      <% registered_dem = registration_snapshot.registered_dem %>
+      <% registered_rep = registration_snapshot.registered_rep %>
+      <% registered_other = total_voters - (registered_dem + registered_rep) %>
+
+      <% [['DEM', registration_snapshot.democrat_percentage, registered_dem], 
+          ['REP', registration_snapshot.republican_percentage, registered_rep], 
+          ['OTHER', registration_snapshot.other_percentage, registered_other]].each do |party, percentage, total| %>
         <div class="party-registration">
           <div class="party-name"><%= party %>&nbsp%</div>
           <div class="bar-container">

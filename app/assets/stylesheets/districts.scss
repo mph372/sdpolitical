@@ -1,9 +1,10 @@
 .party-registration {
   display: flex;
-  justify-content: space-between; /* This will space out the child elements */
-  align-items: center;
-  margin-bottom: 10px;
+  align-items: left;
+  justify-content: flex-start; /* Align children to the start */
+  margin-bottom: 10px; /* This can be adjusted for spacing between items */
 }
+
 
 @media (max-width: 767px) {
   .party-name {
@@ -13,6 +14,10 @@
 
   .advantage-text {
     font-size: 1em; /* Smaller font size on mobile */
+  }
+
+  .bar-container {
+    width: 50%; /* Reduce the width on smaller screens */
   }
 }
 
@@ -33,7 +38,6 @@
   font-weight: bold;
   width: 10%;
   white-space: nowrap; /* Prevent wrapping */
-
   min-width: 0; /* For flexbox to allow shrinking below content size */
 }
 
@@ -41,9 +45,10 @@
   position: relative;
   background-color: #eee;
   height: 20px;
-  width: 90%;
-  margin-left: 10px;
+  width: 75%; /* Adjust this width as necessary */
+  
 }
+
 
 .bar {
   position: absolute;
@@ -87,15 +92,15 @@
 }
 
 .total-voters {
-  margin-left: auto;
-  padding-left: 10px; /* or adjust as needed for spacing */
-  white-space: nowrap; /* This prevents wrapping to a new line */
-
+  position: absolute;
+  right: 0; /* Align to the right */
+  padding-right: 10px; /* Adjust padding as needed */
+  white-space: nowrap; /* Prevent wrapping */
 }
+
 
 .advantage-text {
   font-weight: bold;
   font-size: 1.5em; /* Larger font size */
   white-space: nowrap; /* Prevents wrapping */
 }
-

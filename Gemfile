@@ -30,10 +30,10 @@ gem 'jbuilder', '~> 2.5'
 # gem 'mini_magick', '~> 4.8'
 gem 'carrierwave'
 gem 'rmagick'
-gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-rails'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-gem 'jquery-rails'
 gem "bootstrap_form"
 gem 'acts-as-taggable-on'
 gem 'bootstrap'
@@ -55,7 +55,6 @@ gem 'safe_target_blank'
 gem "sort-by-alphabet"
 gem 'morrisjs-rails'
 gem 'raphael-rails'
-gem 'stripe_event'
 gem "nilify_blanks"
 gem "font-ionicons-rails", git: 'https://github.com/ricardoemerson/font-ionicons-rails.git'
 gem 'recaptcha'
@@ -72,6 +71,8 @@ gem 'httparty'
 gem 'activeadmin'
 gem 'matrix'
 gem 'terser'
+gem 'webpacker'
+
 
 
 
