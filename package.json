@@ -1,6 +1,10 @@
 {
   "name": "sdpolitical",
   "private": true,
+  "engines": {
+    "node": "20.x",
+    "yarn": "1.22.x"
+  },
   "dependencies": {
     "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@nathanvda/cocoon": "^1.2.14",
