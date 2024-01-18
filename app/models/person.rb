@@ -156,53 +156,7 @@ class Person < ApplicationRecord
     congressional_district != nil && senate_district != nil && assembly_district != nil && supe_district != nil
   end
 
-  def current_cash_on_hand
-    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.current_coh
-    else
-      return "0.00"
-    end
-  end
-
-  def current_net_coh
-    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(:cycle => "2020", candidate_report: true ).order('period_end DESC').first.net_coh
-    else
-      return "0.00"
-    end
-  end
-
-  def period_end
-    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(candidate_report: true).order(:period_end).last.period_end.strftime("%m/%d/%y")
-    else
-      return "No Reports"
-    end
-  end
-
-  def period_begin
-    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(candidate_report: true).order(:period_end).last.period_begin.strftime("%m/%d/%y")
-    else
-      return "No Reports"
-    end
-  end
-
-  def period_raised
-    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(candidate_report: true).order(:period_end).last.period_receipts
-    else
-      return "0.00"
-    end
-  end
-
-  def period_spent
-    if self.reports.where(:cycle => "2020", candidate_report: true ).present?
-      return self.reports.where(candidate_report: true).order(:period_end).last.period_disbursements
-    else
-      return "No Reports"
-    end
-  end
+  
 
   def incumbent_district_display
     if self.incumbent_district != "At Large" && self.incumbent_district.is_seat == false && self.incumbent_district.is_area == false 
@@ -214,9 +168,7 @@ class Person < ApplicationRecord
     end
   end
   
-  def is_birth_month
-    self.birth_day >= Time.zone.now.day.to_i
-  end
+
 
   def party_abbreviation
     if self.party == "Republican"
@@ -279,7 +231,7 @@ class Person < ApplicationRecord
 
 
 
-  before_save :update_birthdate_fields
+  #before_save :update_birthdate_fields
   # before_save :update_district_field
 
   def most_recent_report
