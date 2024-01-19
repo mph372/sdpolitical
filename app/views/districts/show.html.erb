@@ -23,50 +23,36 @@
 
 <div class="row">
   <!-- Incumbent Card -->
-  <div class="<%= @district.district_map.present? ? 'col-lg-5' : 'col-12' %>">
+  <div class="col-12">
     <div class="">
       <%= render 'incumbent' %>
     </div>
   </div>
+</div>
 
-  <!-- District Map - Only show if map is present -->
-  <% if @district.district_map.present? %>
-    <div class="col-lg-7">
+<div class="row">
+  <!-- Analysis Text and Map -->
+  <% if @district.note.present? || @district.district_map.present? %>
+    <div class="col-12 mt-3">
       <div class="card rounded primary-border">
-          <div class="card-header">
-            <span>District Map</span>
-          </div>
+        <div class="card-header">
+          <span>District Analysis</span>
+        </div>
         <div class="card-body">
-          <%= image_tag @district.district_map.url, alt: "District map", class: "img-fluid" %>
+          <!-- District Map - Only show if map is present -->
+          <% if @district.district_map.present? %>
+            <%= image_tag @district.district_map.url, alt: "District map", class: "float-end img-fluid imgshadow district-map m-2" %>
+          <% end %>
+          <!-- Analysis Text -->
+          <%= simple_format(@district.note) %>
         </div>
       </div>
     </div>
   <% end %>
 </div>
 
-<div class="row">
-    <!-- Analysis Text -->
-    <% if @district.note.present? %>
-      <div class="col-12 mt-3">
-        <div class="card">
-          <div class="card-header">
-            <span>District Analysis</span>
-          </div>
-          <div class="card-body">
-            <div id="short-note">
-              <%= simple_format(truncate(@district.note, length: 500, escape: false, separator: ' ')) %> 
-              <% if @district.note.length > 500 %>
-                <a href="#" onclick="toggleNote(); return false;">...Read More</a>
-              <% end %>
-            </div>
-            <div id="full-note" class="d-none">
-              <%= simple_format(@district.note) %> <a href="#" onclick="toggleNote(); return false;">Read Less</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
+
+
 
 
 
