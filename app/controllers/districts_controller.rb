@@ -148,7 +148,8 @@ class DistrictsController < ApplicationController
         :person_id, 
         :district_title, 
         :archived, 
-        :note
+        :note,
+        :district_map
       )
     end
     

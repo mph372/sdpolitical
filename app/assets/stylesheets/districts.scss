@@ -104,3 +104,42 @@
   font-size: 1.5em; /* Larger font size */
   white-space: nowrap; /* Prevents wrapping */
 }
+
+/* Flex container setup for the incumbent and district map cards */
+.district-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch; /* Align the children's height */
+}
+
+/* Specific card styling within the district row */
+.district-incumbent-card, .district-map-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* Space between cards when wrapped */
+}
+
+/* Image within the map card */
+.district-map-image {
+  width: 100%;
+  height: auto; /* Adjust height automatically to maintain aspect ratio */
+  object-fit: cover; /* Cover the card, cropping the image if necessary */
+}
+
+/* Card body styling for the map card */
+.district-map-card-body {
+  position: relative; /* For absolute positioned image */
+  overflow: hidden; /* Prevent content overflow */
+}
+
+/* Absolute position the image to cover the area of the card body */
+.district-map-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+

@@ -1,7 +1,12 @@
 
   <div class="row">
     <div class="col-12">
-      <div class="card mb-3 mx-auto rounded primary-border" style="padding: 20px;">
+      <div class="mb-3 mx-auto rounded primary-border card">
+      <% if local_assigns[:show_header] %>
+        <div class="card-header">
+          <span>Incumbent</span>
+        </div>
+      <% end %>
         <div class="card-body text-center">
           <% if person.image.present? %>
             <%= image_tag person.image.url, alt: "#{person.first_name} #{person.last_name}", class: "img-fluid rounded-circle mb-4", style: "width: 250px; height: 250px; object-fit: cover;" %>

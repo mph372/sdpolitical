@@ -18,6 +18,8 @@ class District < ApplicationRecord
   has_one :campaign_finance_module
   accepts_nested_attributes_for :person
   nilify_blanks only: [:person_id]
+  mount_uploader :district_map, DistrictMapUploader
+
 
   def person_id=(new_person_id)
     return if new_person_id.blank?

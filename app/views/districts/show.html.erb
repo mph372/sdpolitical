@@ -7,7 +7,7 @@
   </div>
   <div class="col-md order-1">
     <h3 class="mb-0 mt-2 header-text text-nowrap nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
-    <h1 class="heavy primary-blue"><%= @district.district_name %> </h1>
+    <h1 class="heavy primary-blue text-nowrap"><%= @district.district_name %> </h1>
     
     <% if @district.at_large_district? && user_signed_in? && current_user.admin?  %>
     <p>(Term Expires: <%= @district.term_expires %>)</p>
@@ -20,26 +20,56 @@
 </div>
 </div>     
     <br>
-<div class="">    
+
 <div class="row">
-  <div class="col">
-
-        <!-- Incumbent Card with Float Left for large screens -->
-        <div>
-          <%= render 'incumbent' %>
-        </div>
-
-        <!-- Analysis Text 
-        <div id="analysis-text">
-          <% if @district.note.present? %>
-            <%= simple_format(@district.note) %>
-          <% else %>
-            <p class="text-muted">No analysis currently available.</p>
-          <% end %>
-
-    </div>-->
+  <!-- Incumbent Card -->
+  <div class="<%= @district.district_map.present? ? 'col-lg-5' : 'col-12' %>">
+    <div class="">
+      <%= render 'incumbent' %>
+    </div>
   </div>
+
+  <!-- District Map - Only show if map is present -->
+  <% if @district.district_map.present? %>
+    <div class="col-lg-7">
+      <div class="card rounded primary-border">
+          <div class="card-header">
+            <span>District Map</span>
+          </div>
+        <div class="card-body">
+          <%= image_tag @district.district_map.url, alt: "District map", class: "img-fluid" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
+
+<div class="row">
+    <!-- Analysis Text -->
+    <% if @district.note.present? %>
+      <div class="col-12 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <span>District Analysis</span>
+          </div>
+          <div class="card-body">
+            <div id="short-note">
+              <%= simple_format(truncate(@district.note, length: 500, escape: false, separator: ' ')) %> 
+              <% if @district.note.length > 500 %>
+                <a href="#" onclick="toggleNote(); return false;">...Read More</a>
+              <% end %>
+            </div>
+            <div id="full-note" class="d-none">
+              <%= simple_format(@district.note) %> <a href="#" onclick="toggleNote(); return false;">Read Less</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+
+
 
 
 
@@ -104,4 +134,11 @@
   
 <%= render 'admin' %>
 
- 
+ <script>
+  function toggleNote() {
+    var shortNote = document.getElementById('short-note');
+    var fullNote = document.getElementById('full-note');
+    shortNote.classList.toggle('d-none');
+    fullNote.classList.toggle('d-none');
+  }
+</script>

@@ -6,8 +6,8 @@
   <% end %>
 <% elsif @district.at_large_district == false %>
   <% if @district.person.present? %>
-    <%= render 'shared/incumbent', person: @district.person, page_source: 'district' %>
+    <%= render 'shared/incumbent', person: @district.person, page_source: 'district', show_header: true %>
   <% else %>
-    <%= render partial: 'shared/vacant', locals: { person: @district.person, page_source: "district" } %>
+    <%= render partial: 'shared/vacant', locals: { person: @district.person, page_source: "district", show_header: true } %>
   <% end %>
 <% end %>

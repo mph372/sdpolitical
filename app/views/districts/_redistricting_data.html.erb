@@ -13,9 +13,9 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <span style="font-weight: normal;"><%= number_with_delimiter(registration_snapshot.total_registered) %> Registered Voters as of <%= registration_snapshot.snapshot_date.strftime("%m/%d/%y") %></span>
       <% if registration_snapshot.registration_advantage.positive? %>
-        <span class="advantage-text" style="color: #0F609B;"><%= registration_snapshot.display_registration_advantage %></span>
+        <span class="advantage-text" style="color: #0F609B;"><%= registration_snapshot.display_registration_advantage %>%</span>
       <% else %>
-        <span class="advantage-text" style="color: #A61B1B;"><%= registration_snapshot.display_registration_advantage %></span>
+        <span class="advantage-text" style="color: #A61B1B;"><%= registration_snapshot.display_registration_advantage %>%</span>
       <% end %>
     </div>
   

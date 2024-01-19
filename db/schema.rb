@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_18_180339) do
+ActiveRecord::Schema.define(version: 2024_01_19_040318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 2024_01_18_180339) do
     t.string "district_title"
     t.boolean "archived", default: false
     t.string "note"
+    t.string "district_map"
     t.index ["former_office_id"], name: "index_districts_on_former_office_id"
     t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"

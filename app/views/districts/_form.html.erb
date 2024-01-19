@@ -43,8 +43,13 @@
           <div class="col"><%= f.select :district_title, ["Representative", "Senator", "Assemblymember", "Supervisor", "Mayor", "Councilmember", "Trustee", "Board Member", "Director", "District Attorney", "Sheriff", "Treasurer-Tax Collector", "Assessor/ Recorder/ County Clerk", "City Clerk", "City Treasurer", "City Attorney"], {:include_blank => true} %></div>
         </div>
 
+          <div class="field">
+            <%= f.label :district_map %><br>
+            <%= f.file_field :district_map %>
+          </div>
+
         <div class="row">
-          <div class="col"><%= f.text_area :note, label: "District Note" %></div>
+          <div class="col"><%= f.text_area :note, label: "District Analysis" %></div>
         </div>
   </div>
 </div>
