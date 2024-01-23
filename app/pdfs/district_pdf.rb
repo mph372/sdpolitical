@@ -218,16 +218,30 @@ class DistrictPDF < Prawn::Document
         else
             candidates = @district.jurisdiction.campaigns.active.last.candidates
         end
-        [[ "Name", "Total Raised", "Total Spent", "Cash-On-Hand", "Debt", "As Of"]] +
-        candidates.map do |candidate|
-            if candidate.person.present? && candidate.person.has_reports
-            reports = candidate.person.all_reports
-            [ "#{candidate.display_name}", number_to_currency(reports.sum(:period_receipts)), number_to_currency(reports.sum(:period_disbursements)), number_to_currency(reports.order('period_end DESC').first.current_coh), number_to_currency(reports.order('period_end DESC').first.current_debt), reports.order('period_end DESC').first.period_end]
+    
+        header = [["Name", "Total Raised", "Total Spent", "Debt", "Cash-On-Hand", "As Of"]]
+        rows = candidates.map do |candidate|
+            primary_committee = candidate.person&.candidate_committees&.find_by(primary_committee: true)
+            reports = primary_committee&.reports
+    
+            if reports.present?
+                latest_report = reports.order('period_end DESC').first
+                [
+                    candidate.display_name,
+                    number_to_currency(reports.sum(:period_receipts)),
+                    number_to_currency(reports.sum(:period_disbursements)),
+                    number_to_currency(latest_report.current_debt),
+                    number_to_currency(latest_report.current_coh),
+                    latest_report.period_end.strftime("%m-%d-%y")
+                ]
             else
-            [ "#{candidate.display_name}", "$0.00", "$0.00", "$0.00", "$0.00", "N/A"]
+                [candidate.display_name, "$0.00", "$0.00", "$0.00", "$0.00", "No reports filed."]
             end
         end
+    
+        header + rows
     end
+    
 
     
 
