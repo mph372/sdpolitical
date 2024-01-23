@@ -25,12 +25,19 @@ Rails.application.routes.draw do
   resources :election_histories
   resources :updates
   resources :elections
+  
   resources :people do 
     resources :reports, only: [:index]
+    
     member do
       get 'archive'
     end
+  
+    collection do
+      get 'search'
+    end
   end
+  
   resources :campaigns
   resources :campaign_candidates
   resources :pricing, only: [:index]

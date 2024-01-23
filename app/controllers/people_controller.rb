@@ -30,6 +30,27 @@ class PeopleController < ApplicationController
     end
   end
 
+  def search
+    # Start with a basic Ransack search on people by last name
+    query = Person.ransack(last_name_cont: params[:q][:last_name_cont])
+  
+    # Get the initial query results
+    people = query.result(distinct: true)
+  
+    # Filter the results based on the specific criteria:
+    # Include people who either have associated candidates or belong to a district within a non-archived jurisdiction
+    @people = people.left_joins(:candidates, district: :jurisdiction)
+                    .where("candidates.person_id IS NOT NULL OR (districts.jurisdiction_id IS NOT NULL AND jurisdictions.archived = ?)", false)
+                    .distinct
+  
+    # Render the filtered results as JSON
+    render json: @people
+  end
+  
+  
+  
+  
+
 
   # GET /people/1
   # GET /people/1.json

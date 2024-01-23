@@ -437,6 +437,32 @@ font-style: normal !important;
   }
 }
 
+.autocomplete-dropdown {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.autocomplete-dropdown li a {
+  padding: 10px;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.autocomplete-dropdown li a:hover {
+  background-color: #f8f8f8;
+}
+
+
+
+
+
+
+
 
 
  

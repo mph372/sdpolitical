@@ -1,0 +1,5 @@
+<%= search_form_for @q, url: search_people_path, html: { method: :get, class: 'd-flex' } do |f| %>
+   <%= f.search_field :last_name_cont, placeholder: 'Search by Last Name', class: 'form-control', id: local_assigns[:search_input_id], 'data-dropdown-id': local_assigns[:dropdown_id] %>
+<% end %>
+
+<div id="<%= local_assigns[:dropdown_id] %>" class="autocomplete-dropdown"></div>

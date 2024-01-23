@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
      
     before_action :configure_permitted_parameters, if: :devise_controller?
+    before_action :set_search
 
     rescue_from ActionController::InvalidAuthenticityToken, :with => :bad_token
      def bad_token
@@ -30,4 +31,10 @@ class ApplicationController < ActionController::Base
          def is_subscriber?
           redirect_to '/pricing', notice: "You must be subscribed to access this page!" unless current_user.subscribed? 
         end
+
+     private
+
+        def set_search
+          @q = Person.ransack(params[:q])
+        end   
 end

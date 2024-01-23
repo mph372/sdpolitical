@@ -1,55 +1,48 @@
 <head>
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="The Ballot Book">
-<meta name="twitter:creator" content="@TheBallotBook">
-<meta name="twitter:title" content="Welcome to The Ballot Book">
-<meta name="twitter:description" content="'A comprehensive database of elected officials, districts, and campaign finance for all of San Diego County.'">
-<meta name="twitter:image" content="/logos/BallotBook_Twitter_card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="The Ballot Book">
+  <meta name="twitter:creator" content="@TheBallotBook">
+  <meta name="twitter:title" content="Welcome to The Ballot Book">
+  <meta name="twitter:description" content="'A comprehensive database of elected officials, districts, and campaign finance for all of San Diego County.'">
+  <meta name="twitter:image" content="/logos/BallotBook_Twitter_card.png">
 </head>
 
 <div class="container bg-white">
-
-<div class="position-relative overflow-hidden my-5 bg-white">
-<div class="row text-center">
-  <div class="col-2"></div>
-  <div class="col-8">
-    <%= image_tag 'logos/ballot_logo_square.png', class: "", alt: 'The Ballot Book Logo' %>
-    <br>
-    <h1 class="heavy mt-4">Welcome to The Ballot Book</h1>
-    <br>
-    <h3 class="">A comprehensive database of elected officials, districts, and campaign finance for San Diego County.</h3>
-    <br>
-    <p>The Ballot Book contains data regarding voter registration, past voter behavior, census data, elected officials, candidates, and campaign finance for the San Diego delegation of the California State Legislature & US Congress, as well as all San Diego County offices, and the 18 incorporated cities throughout San Diego County.</p>
-    <div>         
- 
-  <table class="table border mt-5" id="jurisdictions">
-
-
-<tbody>
-  <% Jurisdiction.where(archived: false)
-                 .sort_by { |j| [j.jurisdiction_type == "Federal" ? 0 : 1, 
-                                j.jurisdiction_type == "State" ? 0 : 1, 
-                                j.jurisdiction_type == "County" ? 0 : 1, 
-                                j.jurisdiction_type == "City" ? 0 : 1, 
-                                j.name] }
-                 .each do |jurisdiction| %>
-    <tr>
-      <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
-
-    </tr>
-  <% end %>
-</tbody>
-
-</table>
-    </div>    
-  </div>
-  <div class="col-2"></div>
-   
+  <div class="position-relative overflow-hidden my-5 bg-white">
+    <div class="row text-center">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <%= image_tag 'logos/ballot_logo_square.png', alt: 'The Ballot Book Logo' %>
+        <br>
+        <h1 class="heavy mt-4">Welcome to The Ballot Book</h1>
+        <br>
+        <h3>A comprehensive database of elected officials, districts, and campaign finance for San Diego County.</h3>
+        <br>
+        <p>The Ballot Book contains data regarding voter registration, past voter behavior, census data, elected officials, candidates, and campaign finance for the San Diego delegation of the California State Legislature & US Congress, as well as all San Diego County offices, and the 18 incorporated cities throughout San Diego County.</p>
+        <div class="card border-primary">
+          <div class="card-header">
+              Search for Elected Officials & Candidates
+          </div>
+          <div class="card-body">
+            <%= render 'shared/search', search_input_id: 'home_people_search', dropdown_id: 'home_search_results_dropdown' %>
+          </div>
+        </div> 
+        <div class="card mt-3">
+          <div class="card-header">Explore Jurisdictions</div>
+            <div class="card-body">
+              <table class="table border" id="jurisdictions">
+                <tbody>
+                  <% Jurisdiction.where(archived: false).sort_by { |j| [j.jurisdiction_type == "Federal" ? 0 : 1, j.jurisdiction_type == "State" ? 0 : 1, j.jurisdiction_type == "County" ? 0 : 1, j.jurisdiction_type == "City" ? 0 : 1, j.name] }.each do |jurisdiction| %>
+                    <tr>
+                      <td><%= link_to jurisdiction.name, jurisdiction %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div> 
+      </div>
+      <div class="col-2"></div>
+    </div>
   </div>
 </div>
-
-
-
-
-
-  </div>
