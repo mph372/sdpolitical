@@ -41,8 +41,8 @@
   $<%= number_with_delimiter(@report.current_coh, delimiter: ',') %><br>
   $<%= number_with_delimiter(@report.current_debt, delimiter: ',') %>
   <br>
-  <% if @report.pdf.url.present? %>
-    <%= link_to "Download Report", @report.pdf.url %>
+  <% if report.pdf.url.present? %>
+    <%= link_to "Download Report", report.pdf.url, target: "_blank", rel: "noopener noreferrer" %>
   <% end %>
 </div>
 

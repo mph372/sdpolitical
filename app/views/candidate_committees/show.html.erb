@@ -23,6 +23,7 @@
             <th class="text-right">Debt</th>
             <th class="text-right">Cash on Hand</th>
             <th class="text-right">Net Cash on Hand</th>
+            
           </tr>
         </thead>
          <% if @candidate_committee.reports.present? %>
@@ -36,6 +37,7 @@
             <td class="text-right"><%= number_to_currency(@candidate_committee.reports.order(period_end: :desc).first.current_debt) %></td>
             <td class="text-right"><%= number_to_currency(@candidate_committee.reports.order(period_end: :desc).first.current_coh) %></td>
             <td class="text-right"><%= number_to_currency(@candidate_committee.reports.order(period_end: :desc).first.current_coh - @candidate_committee.reports.order(period_end: :desc).first.current_debt) %></td>
+            <td></td>
           </tr>
 
           <!-- Individual report rows -->
@@ -49,6 +51,10 @@
                 <td class="text-right"><%= number_to_currency(report.current_debt) %></td>
                 <td class="text-right"><%= number_to_currency(report.current_coh) %></td>
                 <td class="text-right"><%= number_to_currency(report.current_coh - report.current_debt) %></td>
+                <td> <% if report.pdf.url.present? %>
+                        <%= link_to "Download Report", report.pdf.url, target: "_blank", rel: "noopener noreferrer" %>
+                      <% end %>
+                </td>
               </tr>
             <% end %>
           <% else %>
