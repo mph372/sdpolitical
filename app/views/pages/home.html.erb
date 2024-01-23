@@ -20,29 +20,26 @@
     <h3 class="">A comprehensive database of elected officials, districts, and campaign finance for San Diego County.</h3>
     <br>
     <p>The Ballot Book contains data regarding voter registration, past voter behavior, census data, elected officials, candidates, and campaign finance for the San Diego delegation of the California State Legislature & US Congress, as well as all San Diego County offices, and the 18 incorporated cities throughout San Diego County.</p>
-    <br>
-    <div>  
-
-
-  <h2>Select a Jurisdiction</h2>         
+    <div>         
  
-     <table class="table border mt-5" id="jurisdictions">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th class=" d-none d-lg-table-cell">Jurisdiction Type</th>
-    </tr>
-  </thead>
+  <table class="table border mt-5" id="jurisdictions">
 
-  <tbody>
-    <% Jurisdiction.all.where('archived = ?', false).order('name ASC').each do |jurisdiction| %>
-      <tr>
-        <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
-        <td class=" d-none d-lg-table-cell"><%= jurisdiction.jurisdiction_type %>
-        
-      </tr>
-    <% end %>
-  </tbody>
+
+<tbody>
+  <% Jurisdiction.where(archived: false)
+                 .sort_by { |j| [j.jurisdiction_type == "Federal" ? 0 : 1, 
+                                j.jurisdiction_type == "State" ? 0 : 1, 
+                                j.jurisdiction_type == "County" ? 0 : 1, 
+                                j.jurisdiction_type == "City" ? 0 : 1, 
+                                j.name] }
+                 .each do |jurisdiction| %>
+    <tr>
+      <td><%= link_to "#{jurisdiction.name}", jurisdiction %></td>
+
+    </tr>
+  <% end %>
+</tbody>
+
 </table>
     </div>    
   </div>

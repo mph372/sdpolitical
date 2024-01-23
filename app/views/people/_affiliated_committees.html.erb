@@ -1,4 +1,4 @@
-<div class="card mb-3 rounded primary-border">
+<div class="card mb-3 p-0 rounded primary-border">
   <div class="card-header">
     <span>Affiliated Campaign Committees</span>
   </div>
@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <% person.candidate_committees.includes(:reports).each do |committee| %>
+       <% @candidate_committees.each do |committee| %>
           <tr style="<%= 'font-style: italic;' if committee.status == 'Closed' %>">
             <td class="ps-4">
               <%= link_to committee.name + (' (Terminated)' if committee.status == 'Closed').to_s, candidate_committee_path(committee) %>

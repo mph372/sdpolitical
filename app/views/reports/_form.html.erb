@@ -32,7 +32,10 @@
         <hr>
         <div class="row mb-3">
           <div class="col-md-12">
-            <%= f.select(:candidate_committee_id, CandidateCommittee.order('name ASC').all.collect { |v| [ "#{v.person.last_name}, #{v.person.first_name} - #{v.name}", v.id ] }, {:selected => params[:candidate_committee_id], :include_blank => true }, label: "Candidate Committee:" ) %>
+            <%= f.select(:candidate_committee_id, 
+                        CandidateCommittee.order('name ASC').map { |v| [ "#{v.person.last_name}, #{v.person.first_name} - #{v.name}", v.id ] }, 
+                        { selected: params[:candidate_committee_id], include_blank: true }, 
+                        label: "Candidate Committee:" ) %>            
             <%= f.check_box :is_amended, label: "Report is Amended" %>
             <%= f.file_field :pdf, { label: "Upload Report" } %>
           </div>

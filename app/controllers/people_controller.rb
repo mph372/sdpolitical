@@ -38,6 +38,11 @@ class PeopleController < ApplicationController
     @candidate = Candidate.new
     @person = Person.find(params[:id])
     @reports = @person.reports.order(period_end: :desc)
+    @candidate_committees = @person.candidate_committees
+                               .left_joins(:reports)
+                               .select('candidate_committees.*, MAX(reports.period_end) as latest_report_date')
+                               .group('candidate_committees.id')
+                               .order('candidate_committees.primary_committee DESC, latest_report_date DESC')
 
     set_meta_tags title: @person.full_name,
                   site: 'The Ballot Book',

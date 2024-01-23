@@ -1,17 +1,20 @@
 
-<div class="container bg-white">
   <div class="row ">
-    <div class="col">
-      <div class="col">
+
+
         <%= render 'shared/incumbent', person: @person, page_source: 'person' %>
-      </div>
-    </div> 
+
+
     <br>
     
     <% if @person.candidates.present? %>
-      <div class=" mb-3 bg-white  ">
-        <%= render 'campaignsection'%>
-      </div>
+
+      <% if @person.campaign.district.at_large_district == false %>
+      <%= render partial: 'shared/candidates', locals: {district: @person.campaign.district, candidates: @person.opponents, campaign: @person.campaign} %>
+      <%else%>
+       <%= render partial: 'shared/candidates', locals: {district: @person.campaign.district, candidates: @person.campaign.district.jurisdiction.candidates, campaign: @person.campaign.district.jurisdiction.campaigns.active.last} %>
+      <%end%>
+
     <%end%>
 
     <% if @person.candidate_committees.any? %>
@@ -22,5 +25,5 @@
     <%= render 'incumbentsection'%>
     <%= render 'admin'%>
   </div>
-</div> <!-- End of wrapper -->
+
 

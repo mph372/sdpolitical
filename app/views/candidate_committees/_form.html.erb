@@ -23,8 +23,8 @@
         <%= f.check_box :primary_committee, label: 'Primary Committee?', checked: f.object.primary_committee || f.object.new_record? %>
       </div>
     </div>
+<%= f.select :person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {selected: @candidate_committee.person_id || params[:person_id]}, label: "Candidate:" %>
 
-    <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ "#{v.last_name}, #{v.first_name}", v.id ] }, {:selected => params[:person_id]}, label: "Candidate:") %>
   </div>
 
   <div class="form-actions">

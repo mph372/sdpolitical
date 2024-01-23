@@ -15,8 +15,9 @@ class CandidateCommitteesController < ApplicationController
 
   # GET /candidate_committees/new
   def new
-    @candidate_committee = CandidateCommittee.new
+    @candidate_committee = CandidateCommittee.new(person_id: params[:person_id])
   end
+  
 
   # GET /candidate_committees/1/edit
   def edit

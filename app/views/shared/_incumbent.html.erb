@@ -1,7 +1,8 @@
 
+  <div class="container">
   <div class="row">
-    <div class="col-12">
-      <div class="rounded primary-border card">
+
+      <div class="rounded primary-border card p-0">
       <% if local_assigns[:show_header] %>
         <div class="card-header">
           <span>Incumbent</span>
@@ -17,15 +18,23 @@
           <h1 class="card-title mb-2">
             <%= link_to "#{person.first_name} #{person.last_name}", person_path(person) %>
           </h1>
-          <p class="card-text mb-1">
-            <%= "#{person.party} | Birthdate: #{person.birthdate.strftime('%b %d, %Y')}" %>
-            <% if person.birthdate %>
+         <p class="card-text mb-1">
+            <%= person.party %>
+            <% if person.birthdate && person.birthdate.year >= 1910 %>
+              | Birthdate: <%= person.birthdate.strftime('%b %d, %Y') %>
               (Age <%= ((Time.zone.now - person.birthdate.to_time) / 1.year.seconds).floor %>)
             <% end %>
           </p>
-          <h5 class="card-text"><%= person.district_title %></h5>
+          <h5 class="card-text">
+            <% if person.district %>
+              <%= link_to person.district_title, district_path(person.district) %>
+            <% else %>
+              <%= person.district_title %>
+            <% end %>
+          </h5>
+
         </div>
       </div>
-    </div>
+</div>
   </div>
 
