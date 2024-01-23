@@ -33,6 +33,12 @@
             <% end %>
           </h5>
 
+          <% if person.campaign_website.present? %>
+            <p class="card-text">
+              <%= link_to person.campaign_website, person.campaign_website, target: "_blank", rel: "noopener noreferrer" %>
+            </p>
+          <% end %>
+
         </div>
       </div>
 </div>
