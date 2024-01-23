@@ -12,7 +12,7 @@ class CandidateCommitteesController < ApplicationController
   # GET /candidate_committees/1.json
   def show
     set_meta_tags title: @candidate_committee.name,
-                site: 'The Ballot Book',
+                site: 'The Ballot Book'
   end
 
   # GET /candidate_committees/new
