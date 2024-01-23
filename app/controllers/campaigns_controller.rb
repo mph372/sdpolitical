@@ -16,6 +16,9 @@ class CampaignsController < ApplicationController
   def new
     @campaign = Campaign.new
     @campaign.candidates.build
+
+    set_meta_tags title: "Create New Campaign",
+                  site: 'The Ballot Book'
   end
 
   # GET /campaigns/1/edit

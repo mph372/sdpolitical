@@ -18,6 +18,8 @@ class RegistrationSnapshotsController < ApplicationController
   # GET /registration_snapshots/new
   def new
     @registration_snapshot = RegistrationSnapshot.new
+    set_meta_tags title: "New Registration Snapshot",
+                  site: 'The Ballot Book'
   end
 
   # GET /registration_snapshots/1/edit

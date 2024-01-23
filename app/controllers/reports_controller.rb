@@ -30,11 +30,16 @@ class ReportsController < ApplicationController
   # GET /reports/new
   def new
     @report = Report.new
+
+    set_meta_tags title: "New Report",
+                site: 'The Ballot Book'
   end
 
   # GET /reports/1/edit
   def edit
     @report = Report.find(params[:id])
+    set_meta_tags title: "Edit Report",
+                site: 'The Ballot Book'
   end
 
   # POST /reports

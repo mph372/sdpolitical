@@ -11,16 +11,22 @@ class CandidateCommitteesController < ApplicationController
   # GET /candidate_committees/1
   # GET /candidate_committees/1.json
   def show
+    set_meta_tags title: @candidate_committee.name,
+                site: 'The Ballot Book',
   end
 
   # GET /candidate_committees/new
   def new
     @candidate_committee = CandidateCommittee.new(person_id: params[:person_id])
+    set_meta_tags title: "Create Candidate Committee",
+                  site: 'The Ballot Book'
   end
   
 
   # GET /candidate_committees/1/edit
   def edit
+    set_meta_tags title: "Editing #{@candidate_committee.name}",
+                  site: 'The Ballot Book'
   end
 
   # POST /candidate_committees

@@ -49,11 +49,15 @@ class DistrictsController < ApplicationController
   # GET /districts/new
   def new
     @district = District.new
+    set_meta_tags title: "Create New District",
+                  site: 'The Ballot Book'
   end
 
   # GET /districts/1/edit
   def edit
-  end
+    set_meta_tags title: "Editing #{@district.full_district_name}",
+                  site: 'The Ballot Book'
+  end  
 
   # POST /districts
   # POST /districts.json

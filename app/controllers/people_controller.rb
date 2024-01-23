@@ -89,10 +89,15 @@ class PeopleController < ApplicationController
   # GET /people/new
   def new
     @person = Person.new
+
+    set_meta_tags title: "New Person",
+                  site: 'The Ballot Book'
   end
 
   # GET /people/1/edit
   def edit
+    set_meta_tags title: "Edit #{@person.full_name}",
+                  site: 'The Ballot Book'
   end
 
   # POST /people
