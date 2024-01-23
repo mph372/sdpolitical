@@ -442,7 +442,11 @@ font-style: normal !important;
   padding: 0;
   margin: 0;
   background-color: white;
-  border: 1px solid #ddd;
+  border:  #ddd;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-top-width: 0px;
   border-radius: 4px;
 }
 
@@ -451,6 +455,7 @@ font-style: normal !important;
   display: block;
   text-decoration: none;
   color: black;
+  border: .5px solid #ddd;
 }
 
 .autocomplete-dropdown li a:hover {
