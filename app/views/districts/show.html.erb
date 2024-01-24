@@ -18,9 +18,9 @@
 
   <!-- Incumbent Card -->
       <%= render 'incumbent' %>
-
+<!-- 
 <div class="row">
-  <!-- Analysis Text and Map -->
+  
   <% if @district.note.present? || @district.district_map.present? %>
     <div class="col-12 my-3">
       <div class="card rounded primary-border">
@@ -28,18 +28,18 @@
           <span>District Analysis</span>
         </div>
         <div class="card-body">
-          <!-- District Map - Only show if map is present -->
+       
           <% if @district.district_map.present? %>
             <%= image_tag @district.district_map.url, alt: "District map", class: "float-end img-fluid imgshadow district-map m-2" %>
           <% end %>
-          <!-- Analysis Text -->
+    
           <%= simple_format(@district.note) %>
         </div>
       </div>
     </div>
   <% end %>
 </div>
-
+-->
 
 
 
