@@ -1,6 +1,6 @@
 class CandidateCommitteesController < ApplicationController
   before_action :set_candidate_committee, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin
+  before_action :authorize_admin, except: [ :show]
 
   # GET /candidate_committees
   # GET /candidate_committees.json
