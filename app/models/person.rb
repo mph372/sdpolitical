@@ -200,7 +200,7 @@ class Person < ApplicationRecord
 
   def description    
       if district.present?
-      "#{self.full_name} currently serves as #{self.title} with the #{self.district.jurisdiction.name}."
+      "#{self.full_name} currently serves as #{self.district.district_title} for the #{self.district.jurisdiction.name}."
       end
   end
 
@@ -209,7 +209,7 @@ class Person < ApplicationRecord
   def keywords
     "#{self.full_name}, #{}"
     if district.present?
-      "#{self.full_name}, #{self.district.name}."
+      "#{self.full_name}, #{self.district.name}, #{self.district.jurisdiction.name} ."
     end
   end
 

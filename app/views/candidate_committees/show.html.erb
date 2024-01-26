@@ -4,11 +4,11 @@
   <div class="text-center mb-4">
     <strong>Committee for:</strong>
     <%= link_to @candidate_committee.person.full_name, @candidate_committee.person %>
-      <% if user_signed_in? && current_user&.admin? %>
-        <div>
-          <%= link_to "Add Report", new_report_path(candidate_committee_id: @candidate_committee.id), class: "btn btn-primary btn-sm float-right" %>
-        </div>
-      <% end %>
+    <% if user_signed_in? && current_user.admin? %>
+      <div>
+        <%= link_to "Add Report", new_report_path(candidate_committee_id: @candidate_committee.id), class: "btn btn-primary btn-sm float-right" %>
+      </div>
+    <% end %>
   </div>
 
   <div class="card mb-3">
