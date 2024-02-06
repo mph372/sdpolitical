@@ -12,7 +12,7 @@ class Jurisdiction < ApplicationRecord
     has_many :statistical_datum
     has_many :registration_snapshots, through: :statistical_datum
     has_one :campaign_finance_module
-    mount_uploader :logo, LogoUploader
+    mount_uploader :map_url, JurisdictionMapUploader
 
     def person
         districts.collect{|u| u.person}

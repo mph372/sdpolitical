@@ -14,14 +14,12 @@
 
   <div class="row">
     <div class="col">
-        <%= f.text_field :map_url, label: "Map URL" %>
+         <div class="field">
+            <%= f.label :map_url, "Jurisdiction Map" %>
+            <%= f.file_field :map_url %>
+          </div>
     </div>
-    <div class="col">
-      <%= f.select(:registration_history_id, RegistrationHistory.order(:name).all.collect { |v| [ "#{v.name}", v.id ] }, {:include_blank => true, label: false} ) %>    
-      </div>
-      <div class="col">
-        <%= f.file_field :logo, { label: "Logo" } %>
-      </div>      
+   
   </div>
 
   <%= f.submit %>

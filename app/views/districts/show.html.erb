@@ -30,7 +30,7 @@
         <div class="card-body">
        
           <% if @district.district_map.present? %>
-            <%= image_tag @district.district_map.url, alt: "District map", class: "float-end img-fluid imgshadow district-map m-2" %>
+            <%= image_tag @district.district_map.url, alt: "District map", class: "float-end img-fluid imgshadow district-map m-4" %>
           <% end %>
     
           <%= simple_format(@district.note) %>

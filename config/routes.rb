@@ -9,10 +9,8 @@ Rails.application.routes.draw do
 
 
   # Resource routes
-  resources :vendors
-  resources :transactions, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
-    collection { post :import }
-  end
+
+
   resources :campaign_finance_modules
   resources :candidate_committees
   resources :candidates

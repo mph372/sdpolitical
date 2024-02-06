@@ -1,104 +1,90 @@
-<div class="container">
-  <div class="row bg-light bg-white mt-1">
+<div class="row bg-light bg-white mt-1">
+  <div class="col-md">
+    <h1 class="heavy text-nowrap primary-blue"><%= @jurisdiction.name %></h1>
+  </div>
+  <div class="col-md d-md-none float-left">
+    <%= link_to "Jurisdiction Fundraising Report (PDF)", jurisdiction_path(@jurisdiction, format: "pdf"), class: "btn btn-primary" %>
+  </div>
+</div>
 
-      <div class="col-md"><h1 class="heavy text-nowrap primary-blue"><%= @jurisdiction.name %> </h1></div>
-        <div class="col-md  d-md-none float-left">
-        <%= link_to "Jurisdiction Fundraising Report (PDF)", jurisdiction_path(@jurisdiction, format: "pdf"), :class => "btn btn-primary" %>
+<% if @jurisdiction.description.present? || @jurisdiction.map_url.present? %>
+  <div class="card rounded primary-border mt-3">
+    <div class="card-header">
+      <span>Jurisdiction Analysis</span>
+    </div>
+    <div class="card-body">
+      <% if @jurisdiction.map_url.present? %>
+        <%= image_tag @jurisdiction.map_url.url, alt: "Jurisdiction map", class: "float-end img-fluid imgshadow jurisdiction-map m-4" %>
+      <% end %>
+      <%= simple_format(@jurisdiction.description) %>
+    </div>
   </div>
-  <!-- 
-    <div class="col-md  d-none d-md-table-cell text-right">
-        <%= link_to "Jurisdiction Fundraising Report (PDF)", jurisdiction_path(@jurisdiction, format: "pdf"), :class => "float-end btn btn-primary ml-4" %>
-  </div>
--->
-      
-    </div> 
-  </div>   
+<% end %>
+
 <div class="card shadow-sm mt-3 bg-white rounded primary-border">
-  <h5 class="card-header"> List of Offices & Districts </h5>
-  <div class="table-responsive bg-white rounded border-primary ">
+  <h5 class="card-header">List of Offices & Districts</h5>
+  <div class="table-responsive bg-white rounded border-primary">
     <table class="table table-sm">
-    <thead>
+      <thead>
         <tr>
           <th class="pl-4 col-3">District</th>
           <th class="condensed-column col-1"></th>
-          <th class=" col-3">Incumbent</th>
-          <th class=" col-2">Term Expires</th>
-          <th class="pr-4 col-3 "> <span class="float-end">Registration Advantage</span> </th>
+          <th class="col-3">Incumbent</th>
+          <th class="col-2">Term Expires</th>
+          <th class="pr-4 col-3"><span class="float-end">Registration Advantage</span></th>
           <th class="col-1"></th>
         </tr>
       </thead>
-
-      <tbody> 
+      <tbody>
+        <% @jurisdiction.districts.order(:district).each do |district| %>
           <tr>
-          <% @jurisdiction.districts.order(:district).each do |district| %>
-            <td class="pl-4 col-3"><%= link_to "#{district.district_name}", district %></td>
-
-
-                <% if district.person.present? %>
-                  <% if district.person.image.url.present?%>
-                  <td class=" col-1"><%= image_tag district.person.image.url(:headshot), alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
-                  <%else%>
-                  <td class=" col-1"><%= image_tag 'blank-headshot.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
-                  <%end%>
-                <%else%>
-                <td class=" col-1"><%= image_tag 'blank-headshot.png', alt: 'headshot', :class => "avatar shadow-sm", size: "45x45"  %></td>
-                <%end%>
-
-            <td class="col-3"><% if district.person.present? %>
-                    <% if district.person.party == "Republican" %>
-                    <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, { :class =>"gop-text" }%>
-                    <%elsif district.person.party == "Democrat"%>
-                    <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, { :class =>"dem-text" }%>
-                    <%else%>
-                    <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, { :class =>"dts-text" }%>
-                    <%end%>
-                  <%else%>Vacant<%end%></td>
-            <td class="col-2"><%= district.term_expires %>
-            <td class=" col-3">
-              
-                <% if district.registration_advantage > 0 %>
-                <span class="dem-text pr-4 float-end" >D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
-                <% else %>
-                <span class="gop-text pr-4 float-end" >R +<%= number_with_precision(district.registration_advantage*-1, precision: 2) %>%</span>
-                <%end%>
-
-            </td> 
-            <td  class="col-1"></td>
+            <td class="pl-4 col-3"><%= link_to district.district_name, district %></td>
+            <td class="col-1">
+              <% if district.person.present? && district.person.image.url.present? %>
+                <%= image_tag district.person.image.url(:headshot), alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
+              <% else %>
+                <%= image_tag 'blank-headshot.png', alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
+              <% end %>
+            </td>
+            <td class="col-3">
+              <% if district.person.present? %>
+                <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, class: "#{district.person.party.downcase}-text" %>
+              <% else %>
+                Vacant
+              <% end %>
+            </td>
+            <td class="col-2"><%= district.term_expires %></td>
+            <td class="col-3">
+              <% if district.registration_advantage > 0 %>
+                <span class="dem-text pr-4 float-end">D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
+              <% else %>
+                <span class="gop-text pr-4 float-end">R +<%= number_with_precision(district.registration_advantage * -1, precision: 2) %>%</span>
+              <% end %>
+            </td>
+            <td class="col-1"></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
-</div>  
-
+</div>
 
 <% if @jurisdiction.statistical_datum.present? %>
-<div class="row">
+  <div class="row mt-3">
     <div class="col">
-      <%= render 'jurisdiction_data'%>
+      <%= render 'jurisdiction_data' %>
     </div>
-</div>
-<%end%>
-<br>
-
-<br>
-
-<br>
+  </div>
+<% end %>
 
 <% if user_signed_in? && current_user.admin? %>
-<div class="row my-3">
-  <div class="col">
-    <%= link_to 'Add Statistical Data', new_statistical_datum_path(:jurisdiction_id => @jurisdiction.id), :class => "btn btn-primary mr-2" %>  
-    <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(jurisdiction_id: @jurisdiction)), :class => "btn btn-primary mr-2" %>
-    <%= link_to 'Add Campaign Finance', new_campaign_finance_module_path(:jurisdiction_id => @jurisdiction.id), :class => "btn btn-primary mr-2" %>        
-    <%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction), :class => "btn btn-outline-primary mr-2" %> 
-    <%= link_to 'Delete Jurisdiction', @jurisdiction, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-warning" %> 
+  <div class="row my-3">
+    <div class="col">
+      <%= link_to 'Add Statistical Data', new_statistical_datum_path(jurisdiction_id: @jurisdiction.id), class: "btn btn-primary mr-2" %>
+      <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(statistical_datum_id: StatisticalDatum.find_by(jurisdiction_id: @jurisdiction)), class: "btn btn-primary mr-2" %>
+      <%= link_to 'Add Campaign Finance', new_campaign_finance_module_path(jurisdiction_id: @jurisdiction.id), class: "btn btn-primary mr-2" %>
+      <%= link_to 'Edit', edit_jurisdiction_path(@jurisdiction), class: "btn btn-outline-primary mr-2" %>
+      <%= link_to 'Delete Jurisdiction', @jurisdiction, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-warning" %>
+    </div>
   </div>
-</div>
-<%end%>
-
-
-    
-</div>
-
-</div>
+<% end %>
