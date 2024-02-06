@@ -14,7 +14,7 @@
     </div>
     <div class="card-body">
       <% if @jurisdiction.map_url.present? %>
-        <%= image_tag @jurisdiction.map_url.url, alt: "Jurisdiction map", class: "float-end img-fluid imgshadow jurisdiction-map m-4" %>
+        <%= image_tag @jurisdiction.map_url.url, alt: "Jurisdiction map", class: "float-end img-fluid imgshadow district-map m-4" %>
       <% end %>
       <%= simple_format(@jurisdiction.description) %>
     </div>
