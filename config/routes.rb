@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
 
   resources :campaign_finance_modules
-  resources :candidate_committees
+  resources :candidate_committees do
+    resources :reports
+  end
   resources :candidates
   resources :former_offices
   resources :registration_snapshots do

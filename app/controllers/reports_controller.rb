@@ -81,12 +81,11 @@ class ReportsController < ApplicationController
     end
   end
 
-  # DELETE /reports/1
-  # DELETE /reports/1.json
   def destroy
+    @candidate_committee = @report.candidate_committee
     @report.destroy
     respond_to do |format|
-      format.html { redirect_to reports_url, notice: 'Report was successfully destroyed.' }
+      format.html { redirect_to candidate_committee_url(@candidate_committee), notice: 'Report was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
