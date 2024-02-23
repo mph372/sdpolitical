@@ -13,13 +13,6 @@ GIT
     font-ionicons-rails (2.0.1.6)
       railties (>= 3.2, < 8.0)
 
-GIT
-  remote: https://github.com/tcocca/acts_as_follower.git
-  revision: c5ac7b9601c4af01eb4d9112330b27be4d694ecc
-  specs:
-    acts_as_follower (0.2.1)
-      activerecord (>= 4.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -91,8 +84,6 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    acts-as-taggable-on (10.0.0)
-      activerecord (>= 6.1, < 7.2)
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     arbre (1.7.0)
@@ -435,8 +426,6 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
-  acts-as-taggable-on
-  acts_as_follower!
   better_errors
   binding_of_caller
   bootsnap (>= 1.1.0)

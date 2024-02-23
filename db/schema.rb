@@ -10,10 +10,74 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_19_040318) do
+ActiveRecord::Schema.define(version: 2024_02_23_223402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
 
   create_table "admins", force: :cascade do |t|
     t.date "period_begin"
@@ -22,6 +86,25 @@ ActiveRecord::Schema.define(version: 2024_01_19_040318) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin_mode", default: true
+  end
+
+  create_table "blog_post_tags", force: :cascade do |t|
+    t.bigint "blog_post_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["blog_post_id"], name: "index_blog_post_tags_on_blog_post_id"
+    t.index ["tag_id"], name: "index_blog_post_tags_on_tag_id"
+  end
+
+  create_table "blog_posts", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "publish_date"
+    t.string "status"
+    t.text "excerpt"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -61,7 +144,7 @@ ActiveRecord::Schema.define(version: 2024_01_19_040318) do
     t.string "campaign_website"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "committee_id"
+    t.bigint "candidate_committee_id"
     t.string "first_name"
     t.string "last_name"
     t.integer "votes"
@@ -71,7 +154,7 @@ ActiveRecord::Schema.define(version: 2024_01_19_040318) do
     t.string "ballot_title"
     t.string "display_name"
     t.index ["campaign_id"], name: "index_candidates_on_campaign_id"
-    t.index ["committee_id"], name: "index_candidates_on_committee_id"
+    t.index ["candidate_committee_id"], name: "index_candidates_on_candidate_committee_id"
     t.index ["person_id"], name: "index_candidates_on_person_id"
   end
 
@@ -207,15 +290,14 @@ ActiveRecord::Schema.define(version: 2024_01_19_040318) do
     t.float "current_debt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "committee_id"
     t.boolean "is_amended"
     t.float "loans_received"
     t.string "pdf"
-    t.bigint "committee_id"
-    t.string "filing_id"
+    t.bigint "candidate_committee_id"
     t.bigint "import_id"
     t.float "period_monetary_receipts"
     t.float "period_nonmonetary_receipts"
-    t.bigint "candidate_committee_id"
     t.index ["candidate_committee_id"], name: "index_reports_on_candidate_committee_id"
     t.index ["committee_id"], name: "index_reports_on_committee_id"
     t.index ["import_id"], name: "index_reports_on_import_id"
@@ -275,6 +357,12 @@ ActiveRecord::Schema.define(version: 2024_01_19_040318) do
     t.index ["jurisdiction_id"], name: "index_statistical_data_on_jurisdiction_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "updates", force: :cascade do |t|
     t.text "message"
     t.datetime "created_at", null: false
@@ -318,8 +406,16 @@ ActiveRecord::Schema.define(version: 2024_01_19_040318) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "blog_post_tags", "blog_posts"
+  add_foreign_key "blog_post_tags", "tags"
   add_foreign_key "campaigns", "districts"
+  add_foreign_key "candidate_committees", "candidates"
+  add_foreign_key "candidate_committees", "people"
+  add_foreign_key "candidate_committees", "reports"
   add_foreign_key "candidates", "campaigns"
+  add_foreign_key "candidates", "candidate_committees"
   add_foreign_key "candidates", "people"
   add_foreign_key "districts", "former_offices"
   add_foreign_key "districts", "jurisdictions"

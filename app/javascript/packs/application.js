@@ -5,11 +5,14 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "bootstrap";
 import "./autocomplete"
+import "trix"
+import "@rails/actiontext"
 
 
 
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
+import 'select2';
 
 import "@nathanvda/cocoon";
 // ... any other libraries ...
@@ -36,7 +39,3 @@ $(document).on('turbolinks:load', function () {
         return event.preventDefault();
     });
 });
-
-
-
-  

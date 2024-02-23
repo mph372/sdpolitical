@@ -35,7 +35,6 @@ gem 'jquery-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem "bootstrap_form"
-gem 'acts-as-taggable-on'
 gem 'bootstrap'
 gem 'simple_form'
 gem 'high_voltage'
@@ -46,7 +45,6 @@ gem "font-awesome-rails"
 gem 'figaro'
 gem 'fog-aws'
 gem 'prawn'
-gem 'acts_as_follower', github: 'tcocca/acts_as_follower'
 gem 'gibbon', github: 'amro/gibbon'
 gem 'prawn-table'
 gem 'meta-tags'
@@ -72,6 +70,9 @@ gem 'activeadmin'
 gem 'matrix'
 gem 'terser'
 gem 'webpacker'
+
+
+
 
 
 

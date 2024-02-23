@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     end
   end
   resources :users, only: [:index, :destroy]
+  resources :blog_posts
 
   # Custom routes
   get 'emails/unsubscribe'

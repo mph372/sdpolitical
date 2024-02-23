@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   has_many :districts 
   has_many :notifications, foreign_key: :recipient_id
-  acts_as_follower
+
   
   def subscribed?
     stripe_subscription_id? || free_account?
