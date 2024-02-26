@@ -91,6 +91,11 @@ class JurisdictionsController < ApplicationController
   def edit
   end
 
+  def navigate
+    jurisdiction = Jurisdiction.find(params[:jurisdiction_id])
+    redirect_to jurisdiction_path(jurisdiction)
+  end
+
   # POST /jurisdictions
   # POST /jurisdictions.json
   def create

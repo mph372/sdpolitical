@@ -62,11 +62,11 @@
 
   <!-- FOOTER -->
   <footer class="container mt-3">
+  <hr>
     <p class="float-end">                    
-      <%= link_to "https://twitter.com/TheBallotBook", target: :_blank, aria: { label: 'Follow Us on Twitter' }   do %>
-      <%= fa_icon "twitter" %>
-      <% end %>
+    Questions or Suggestions? <%= mail_to 'theballotbook@theballotbook.com', 'Send Us an E-Mail' %></p>
+      
 
-    <p>&copy; <%= Time.now.year %> The Ballot Book <br> Questions or Suggestions? <%= mail_to 'theballotbook@theballotbook.com', 'Send Us an E-Mail' %> </p>
+    <p>&copy; <%= Time.now.year %> The Ballot Book <br>  </p>
   </footer>
 </html>

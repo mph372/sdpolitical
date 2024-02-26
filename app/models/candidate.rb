@@ -2,9 +2,7 @@ class Candidate < ApplicationRecord
   belongs_to :campaign
   # delegate :person, to: :campaign
   belongs_to :person, optional: true
-  belongs_to :candidate_committee, optional: true
-  has_many :expenditures
-  has_one :committee
+
  
 
 

@@ -1,0 +1,11 @@
+<%# app/views/blog_posts/_sidebar.html.erb %>
+<aside class="blog-sidebar">
+  <h3>Topics</h3>
+  <ul>
+    <% Tag.includes(:blog_posts).where.not(blog_posts: { id: nil }).each do |tag| %>
+  <li>
+    <%= link_to "#{tag.name} (#{tag.blog_posts.size})", filter_by_tag_path(tag_name: tag.name) %>
+  </li>
+<% end %>
+  </ul>
+</aside>

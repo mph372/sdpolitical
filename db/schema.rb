@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_23_223402) do
+ActiveRecord::Schema.define(version: 2024_02_23_224419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(version: 2024_02_23_223402) do
     t.date "publish_date"
     t.string "status"
     t.text "excerpt"
+    t.string "slug"
+    t.index ["slug"], name: "index_blog_posts_on_slug", unique: true
   end
 
   create_table "campaigns", force: :cascade do |t|

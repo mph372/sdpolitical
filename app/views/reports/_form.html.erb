@@ -7,10 +7,16 @@
       </div>
       <div class="col-md-9">
         <div class="row mb-3">
-          <div class="col-md-6">
-            <%= f.date_field :period_begin, required: true %>
-            <%= f.date_field :period_end, required: true %>
-          </div>
+        <div class="col-md-6">
+          <% if f.object.new_record? && Report.last %>
+            <%= f.date_field :period_begin, value: Report.last.period_begin, required: true %>
+            <%= f.date_field :period_end, value: Report.last.period_end, required: true %>
+          <% else %>
+            <%= f.date_field :period_begin, value: f.object.period_begin, required: true %>
+            <%= f.date_field :period_end, value: f.object.period_end, required: true %>
+          <% end %>
+        </div>
+
           <div class="col-md-6">
             <%= f.date_field :report_filed, required: true, value: (f.object.new_record? ? Date.today.strftime("%Y-%m-%d") : f.object.report_filed) %> 
           </div>

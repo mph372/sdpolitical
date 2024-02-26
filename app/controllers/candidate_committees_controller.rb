@@ -5,8 +5,13 @@ class CandidateCommitteesController < ApplicationController
   # GET /candidate_committees
   # GET /candidate_committees.json
   def index
-    @candidate_committees = CandidateCommittee.all
+    @candidate_committees = CandidateCommittee.includes(:person, :reports).all.order("reports.period_end DESC")
   end
+  
+  
+  
+
+  
 
   # GET /candidate_committees/1
   # GET /candidate_committees/1.json

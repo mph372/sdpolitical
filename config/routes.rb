@@ -65,6 +65,9 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:index, :destroy]
   resources :blog_posts
+  get 'tags/:tag_name', to: 'blog_posts#index', as: :filter_by_tag
+  get 'navigate_jurisdiction', to: 'jurisdictions#navigate', as: :navigate_jurisdiction
+
 
   # Custom routes
   get 'emails/unsubscribe'

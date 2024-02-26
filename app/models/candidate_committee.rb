@@ -1,10 +1,7 @@
 class CandidateCommittee < ApplicationRecord
     belongs_to :person
-    has_one :candidate
     has_many :reports 
-    has_many :transactions
     has_many :imports
-    before_save :only_one_primary
     
     
 
