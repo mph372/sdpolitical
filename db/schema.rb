@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_23_224419) do
+ActiveRecord::Schema.define(version: 2024_02_27_001902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,6 +160,37 @@ ActiveRecord::Schema.define(version: 2024_02_23_224419) do
     t.index ["person_id"], name: "index_candidates_on_person_id"
   end
 
+  create_table "contestant_updates", force: :cascade do |t|
+    t.integer "mail_ballots_votes"
+    t.integer "vote_center_ballots_votes"
+    t.integer "provisional_votes"
+    t.integer "total_votes"
+    t.integer "number_of_precincts"
+    t.integer "precincts_reported"
+    t.integer "ballots_cast"
+    t.bigint "contestant_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contestant_id"], name: "index_contestant_updates_on_contestant_id"
+  end
+
+  create_table "contestants", force: :cascade do |t|
+    t.string "name"
+    t.string "party"
+    t.bigint "contest_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contest_id"], name: "index_contestants_on_contest_id"
+  end
+
+  create_table "contests", force: :cascade do |t|
+    t.string "name"
+    t.bigint "election_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["election_id"], name: "index_contests_on_election_id"
+  end
+
   create_table "districts", force: :cascade do |t|
     t.string "name"
     t.string "district"
@@ -186,13 +217,22 @@ ActiveRecord::Schema.define(version: 2024_02_23_224419) do
     t.index ["registration_history_id"], name: "index_districts_on_registration_history_id"
   end
 
+  create_table "election_updates", force: :cascade do |t|
+    t.integer "ballots_cast"
+    t.integer "mail_ballots"
+    t.integer "vote_center_ballots"
+    t.integer "registered_voters"
+    t.bigint "election_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["election_id"], name: "index_election_updates_on_election_id"
+  end
+
   create_table "elections", force: :cascade do |t|
-    t.integer "year"
-    t.bigint "district_id"
-    t.string "election_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["district_id"], name: "index_elections_on_district_id"
+    t.date "election_date"
+    t.string "name"
   end
 
   create_table "former_offices", force: :cascade do |t|
@@ -419,10 +459,13 @@ ActiveRecord::Schema.define(version: 2024_02_23_224419) do
   add_foreign_key "candidates", "campaigns"
   add_foreign_key "candidates", "candidate_committees"
   add_foreign_key "candidates", "people"
+  add_foreign_key "contestant_updates", "contestants"
+  add_foreign_key "contestants", "contests"
+  add_foreign_key "contests", "elections"
   add_foreign_key "districts", "former_offices"
   add_foreign_key "districts", "jurisdictions"
   add_foreign_key "districts", "people"
-  add_foreign_key "elections", "districts"
+  add_foreign_key "election_updates", "elections"
   add_foreign_key "former_offices", "districts"
   add_foreign_key "former_offices", "jurisdictions"
   add_foreign_key "former_offices", "people"

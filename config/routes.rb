@@ -67,6 +67,8 @@ Rails.application.routes.draw do
   resources :blog_posts
   get 'tags/:tag_name', to: 'blog_posts#index', as: :filter_by_tag
   get 'navigate_jurisdiction', to: 'jurisdictions#navigate', as: :navigate_jurisdiction
+  resources :elections, only: [:new, :create, :edit, :update, :show]
+
 
 
   # Custom routes

@@ -9,7 +9,7 @@ class BlogPostsController < ApplicationController
 
   def index
     if params[:tag_name]
-      @blog_posts = BlogPost.joins(:tags).where(tags: { name: params[:tag_name] }).order(created_at: :desc)
+      @blog_posts = BlogPost.joins(:tags).where(tags: { name: params[:tag_name] }).order(publish_date: :desc)
     else
       @blog_posts = BlogPost.order(created_at: :desc).limit(4)
     end
