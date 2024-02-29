@@ -11,7 +11,7 @@ class BlogPostsController < ApplicationController
     if params[:tag_name]
       @blog_posts = BlogPost.joins(:tags).where(tags: { name: params[:tag_name] }).order(publish_date: :desc)
     else
-      @blog_posts = BlogPost.order(created_at: :desc).limit(4)
+      @blog_posts = BlogPost.order(publish_date: :desc).limit(4)
     end
     @recent_blog_posts = BlogPost.order(created_at: :desc).limit(4)
   end
