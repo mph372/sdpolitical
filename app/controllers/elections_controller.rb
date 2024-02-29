@@ -1,7 +1,14 @@
 # app/controllers/elections_controller.rb
 class ElectionsController < ApplicationController
+    before_action :authorize_admin, except: [:show]
+
     def new
       @election = Election.new
+    end
+
+    def show
+      @election = Election.friendly.find(params[:id])
+      @contests = @election.contests.includes(:contestants => :contestant_updates).order('created_at ASC')      
     end
   
     def create

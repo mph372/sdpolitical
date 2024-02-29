@@ -1,0 +1,163 @@
+<!-- app/views/elections/show.html.erb -->
+<div class="container mt-5">
+  <% if notice %>
+    <div class="alert alert-info" role="alert">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? && current_user.admin? %>
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+        <%= link_to 'Edit', edit_election_path(@election), class: 'btn btn-primary me-2' %>
+        <%= link_to 'Back', elections_path, class: 'btn btn-secondary me-2' %>
+        <%= link_to 'Add Election Update', new_election_election_update_path(@election), class: 'btn btn-success me-2' %>
+
+        <%= form_with url: election_uploads_path(@election), method: :post, local: true, multipart: true, class: 'd-flex' do |form| %>
+          <%= form.file_field :file, required: true, class: 'form-control me-2' %>
+          <%= form.submit "Upload Spreadsheet", class: 'btn btn-info' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="text-center">
+    <h2><%= @election.name %></h2>
+    <h5><%= @election.election_date.strftime("%B %-d, %Y") %></h5>
+  </div>
+
+  <% if @election.election_updates.any? %>
+    <div class="card  mx-auto" style="max-width: 500px;">
+      <div class="card-header">
+        Latest Election Update
+      </div>
+     <div class="card-body">
+  <% latest_update = @election.election_updates.last %>
+    <div class="text-center">
+
+       Last Updated:
+       <%= latest_update.created_at.strftime("%B %d, %Y") %> at <%= latest_update.created_at.strftime("%I:%M %p") %>
+
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-8">Ballots Cast:</div>
+        <div class="col-4 text-end"><%= number_with_delimiter(latest_update.ballots_cast) %></div>
+    </div>
+    <div class="row">
+        <div class="col-8">Mail Ballots:</div>
+        <div class="col-4 text-end"><%= number_with_delimiter(latest_update.mail_ballots) %></div>
+    </div>
+    <div class="row">
+        <div class="col-8">Vote Center Ballots:</div>
+        <div class="col-4 text-end"><%= number_with_delimiter(latest_update.vote_center_ballots) %></div>
+    </div>
+    <div class="row">
+        <div class="col-8">Registered Voters:</div>
+        <div class="col-4 text-end"><%= number_with_delimiter(latest_update.registered_voters) %></div>
+    </div>
+    <% if latest_update.ballots_outstanding > 0 %>
+        <div class="row">
+        <div class="col-8">Ballots Outstanding:</div>
+        <div class="col-4 text-end"><%= number_with_delimiter(latest_update.ballots_outstanding) %></div>
+        </div>
+    <% end %>
+    </div>
+
+    </div>
+  <% end %>
+
+ <div class="card mt-3">
+    <div class="card-header" id="headingGuide" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#collapseGuide" aria-expanded="true" aria-controls="collapseGuide">
+      Understanding the Election Results <small>(click to expand)</small>
+    </div>
+    <div id="collapseGuide" class="collapse" aria-labelledby="headingGuide" data-parent="#accordion">
+
+    <div class="card-body">
+      <p class="card-text">
+        To help you navigate and understand the election results presented on this website, here's a brief guide on what various terms mean and how you can interpret the data:
+      </p>
+
+      <h5>Votes Behind</h5>
+      <p>
+        "Votes Behind" refers to the number of votes a candidate needs to obtain to surpass the candidate directly ahead of them in the current standings. It does not indicate the total needed to win the election but rather the amount required to move up one rank in the results.
+      </p>
+
+      <h5>Votes Needed (% Needed from Outstanding Ballots)</h5>
+      <p>
+        This figure shows the percentage of remaining, uncounted votes a candidate would need to secure to overtake the candidate immediately in front of them. It's an estimate based on the current vote counts and the number of ballots estimated as still outstanding in that contest. This percentage is only calculated in races with two candidates due to its complexity in multi-candidate fields.
+      </p>
+
+      <h5>Ballots Cast</h5>
+      <p>
+        "Ballots Cast" indicates the total number of votes that have been counted within the jurisdiction of the specific contest. For example, if you were to add up the total votes cast in the contest, it would likely be less than "ballots cast" as some voters living in that area may have skipped that specific contest, but would have still turned in a ballot.
+      </p>
+
+      <h5>Estimated Ballots Outstanding</h5>
+      <p>
+        The "Estimated Ballots Outstanding" represents our best guess at how many votes have not yet been counted within the jurisdiction of a particular contest. Here's how we estimate this number:
+      </p>
+      <ul>
+        <li><strong>Step 1:</strong> We look at the total number of outstanding ballots across the entire county, once the estimated is made available by the Registrar of Voters.</li>
+        <li><strong>Step 2:</strong> We determine what portion of the total votes counted so far come from the contest in question. For example, if the contest accounts for 10% of all votes counted, we assume it will also account for about 10% of the outstanding ballots.</li>
+        <li><strong>Step 3:</strong> We apply this percentage to the total outstanding ballots to get an estimated count for the jurisdiction. For instance, if there are 1,000 outstanding ballots in total and the jurisdiction represents 10% of the vote, we estimate that there are about 100 outstanding ballots in that jurisdiction (10% of 1,000).</li>
+      </ul>
+
+      <p>All the data presented here is sourced from the San Diego County Registrar of Voters, ensuring you have access to the latest and most accurate information available.</p>
+    </div>
+  </div>  
+</div> 
+<% @contests.each do |contest| %>
+<div class="card mt-3">
+  <div class="card-header">
+    <%= contest.name %>
+  </div>
+  <div class="card-body">
+  <%# Display the estimated ballots outstanding %>
+    Ballots Cast: <%= number_with_delimiter(contest.ballots_cast) %><br>
+    Estimated Ballots Outstanding: <%= number_with_delimiter(contest.estimated_district_outstanding) %>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+        <th style="width: 25%; white-space: nowrap;"></th>
+        <th class="text-end" style="width: 15%;">Total Votes</th>
+        <th class="text-end" style="width: 15%;">%</th>
+        <th class="text-end" style="width: 15%;">Vote Gain</th>
+        <th class="text-end" style="width: 15%;">Votes Behind</th>
+        <% if contest.contestants.count == 2 %>
+          <th class="text-end text-nowrap" style="width: 15%;">Votes Needed</th>
+        <% else %>
+          <th class="text-end" style="width: 15%;"></th> <!-- Empty column for alignment -->
+        <% end %>
+          </tr>
+        </thead>
+            <tbody>
+            <% contest.contestants.includes(:contestant_updates).sort_by { |contestant| -contestant.latest_total_votes }.each do |contestant| %>
+                <% latest_update = contestant.contestant_updates.first %>
+                <tr>
+                <td class="text-nowrap" style="width: 20%;"><%= contestant.name %><%= " (#{contestant.party})" unless contestant.party.blank? || contestant.party == "N/A" %></td>
+                        <td class="text-end" style="width: 20%;"><%= number_with_delimiter(latest_update.total_votes) %></td>
+                        <td class="text-end" style="width: 15%;"><%= number_to_percentage(contestant.vote_percentage, precision: 2) %></td>
+                        <td class="text-end" style="width: 15%;">+<%= number_with_delimiter(contestant.vote_change) %></td>
+                        <td class="text-end" style="width: 15%;">
+                            <% votes_behind = contestant.votes_behind %>
+                            <%= votes_behind ? number_with_delimiter(votes_behind) : '-' %>
+                        </td>
+                        <% if contest.contestants.count == 2 %>
+                            <td class="text-end" style="width: 15%;"><%= number_to_percentage(contestant.needed_percentage_from_outstanding, precision: 2) %></td>
+                        <% else %>
+                            <td class="text-end" style="width: 15%;"></td> <!-- Empty cell for alignment -->
+                        <% end %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<% end %>
+
+
+</div>

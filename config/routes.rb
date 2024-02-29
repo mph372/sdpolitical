@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'uploads/new'
+  get 'uploads/create'
   # Devise routes
   devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, controllers: { registrations: "registrations", confirmations: 'confirmations' }
@@ -67,7 +69,11 @@ Rails.application.routes.draw do
   resources :blog_posts
   get 'tags/:tag_name', to: 'blog_posts#index', as: :filter_by_tag
   get 'navigate_jurisdiction', to: 'jurisdictions#navigate', as: :navigate_jurisdiction
-  resources :elections, only: [:new, :create, :edit, :update, :show]
+  resources :elections, param: :slug do
+    resources :election_updates
+    resources :uploads, only: [:create]
+  end
+  
 
 
 

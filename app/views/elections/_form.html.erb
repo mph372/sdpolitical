@@ -1,28 +1,28 @@
 <!-- app/views/elections/_form.html.erb -->
-<%= form_with(model: election, local: true) do |form| %>
+<%= form_with(model: election, local: true, class: "needs-validation", novalidate: "") do |form| %>
   <% if election.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(election.errors.count, "error") %> prohibited this election from being saved:</h2>
 
       <ul>
-      <% election.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% election.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :election_name %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
   </div>
 
-  <div class="field">
-    <%= form.label :election_date %>
-    <%= form.date_field :election_date, id: :election_election_date %>
+  <div class="mb-3">
+    <%= form.label :election_date, class: "form-label" %>
+    <%= form.date_field :election_date, class: "form-control", required: true %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

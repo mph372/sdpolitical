@@ -1,3 +1,4 @@
+<!-- app/views/your_homepage.html.erb -->
 <head>
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="The Ballot Book">
@@ -19,28 +20,51 @@
         <h3>A comprehensive database of elected officials, districts, and campaign finance for San Diego County.</h3>
         <br>
         <p>The Ballot Book contains data regarding voter registration, past voter behavior, census data, elected officials, candidates, and campaign finance for the San Diego delegation of the California State Legislature & US Congress, as well as all San Diego County offices, and the 18 incorporated cities throughout San Diego County.</p>
-        <div class="card border-primary">
+        
+        <!-- Recent Blog Updates Card -->
+        <div class="card">
+          <div class="card-header">
+            <strong>Recent Blog Updates</strong>
+          </div>
+          <div class="card-body">
+            <% @recent_blog_posts.each do |post| %>
+              <div class="row">
+                <div class="col-lg-3 text-lg-start text-center">
+                  <%= post.publish_date.strftime('%A, %B %d, %Y') %>
+                </div>
+                <div class="col-lg-9 text-lg-start text-center">
+                  <%= link_to post.title, blog_post_path(post) %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Search for Elected Officials & Candidates Card -->
+        <div class="card mt-3">
           <div class="card-header">
               Search for Elected Officials & Candidates
           </div>
           <div class="card-body">
             <%= render 'shared/search', search_input_id: 'home_people_search', dropdown_id: 'home_search_results_dropdown' %>
           </div>
-        </div> 
+        </div>
+
+        <!-- Explore Jurisdictions Card -->
         <div class="card mt-3">
           <div class="card-header">Explore Jurisdictions</div>
-            <div class="card-body">
-              <table class="table border" id="jurisdictions">
-                <tbody>
-                  <% Jurisdiction.where(archived: false).sort_by { |j| [j.jurisdiction_type == "Federal" ? 0 : 1, j.jurisdiction_type == "State" ? 0 : 1, j.jurisdiction_type == "County" ? 0 : 1, j.jurisdiction_type == "City" ? 0 : 1, j.name] }.each do |jurisdiction| %>
-                    <tr>
-                      <td><%= link_to jurisdiction.name, jurisdiction %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div> 
+          <div class="card-body">
+            <table class="table border" id="jurisdictions">
+              <tbody>
+                <% Jurisdiction.where(archived: false).sort_by { |j| [j.jurisdiction_type == "Federal" ? 0 : 1, j.jurisdiction_type == "State" ? 0 : 1, j.jurisdiction_type == "County" ? 0 : 1, j.jurisdiction_type == "City" ? 0 : 1, j.name] }.each do |jurisdiction| %>
+                  <tr>
+                    <td><%= link_to jurisdiction.name, jurisdiction %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div> 
       </div>
       <div class="col-1"></div>
     </div>

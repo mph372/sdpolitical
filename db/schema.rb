@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_27_001902) do
+ActiveRecord::Schema.define(version: 2024_02_29_211539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 2024_02_27_001902) do
     t.bigint "election_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "ballots_outstanding"
     t.index ["election_id"], name: "index_election_updates_on_election_id"
   end
 
@@ -233,6 +234,8 @@ ActiveRecord::Schema.define(version: 2024_02_27_001902) do
     t.datetime "updated_at", null: false
     t.date "election_date"
     t.string "name"
+    t.string "slug"
+    t.index ["slug"], name: "index_elections_on_slug", unique: true
   end
 
   create_table "former_offices", force: :cascade do |t|
