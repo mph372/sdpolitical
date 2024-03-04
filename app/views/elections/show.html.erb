@@ -63,7 +63,12 @@
         </div>
     <% end %>
     </div>
-
+    <% if user_signed_in? && current_user.admin? %>
+      <div class="card-footer d-flex justify-content-end">
+        <%= link_to 'Edit', edit_election_election_update_path(@election, latest_update), class: 'btn btn-primary me-2' %>
+        <%= link_to 'Delete', election_election_update_path(@election, latest_update), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      </div>
+    <% end %>
     </div>
   <% end %>
 

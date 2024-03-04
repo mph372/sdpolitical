@@ -2,7 +2,7 @@ class UploadsController < ApplicationController
   require 'csv'
 
   def create
-    election = Election.find(params[:election_id])
+    election = Election.friendly.find(params[:election_slug])
     logger.debug "Processing upload for Election ID: #{election.id}"
 
     CSV.foreach(params[:file].path, headers: true, encoding: 'bom|utf-8') do |row|
@@ -39,7 +39,11 @@ class UploadsController < ApplicationController
     redirect_to election, notice: 'Spreadsheet uploaded successfully.'
     logger.debug "Upload complete for Election ID: #{election.id}"
   rescue => e
-    logger.error "Upload failed for Election ID: #{election.id} with error: #{e.message}"
-    redirect_to election, alert: 'Spreadsheet upload failed.'
+    logger.error "Upload failed. Error: #{e.message}"
+    if election
+      redirect_to election_path(election), alert: 'Spreadsheet upload failed.'
+    else
+      redirect_to election, alert: 'Election not found.'
+    end
   end
 end
