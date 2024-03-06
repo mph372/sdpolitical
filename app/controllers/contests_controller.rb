@@ -3,6 +3,7 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.friendly.find(params[:id])
+    @election = @contest.election  # Add this line
     @contestants = @contest.contestants.includes(:contestant_updates).order('created_at ASC')
 
     set_meta_tags title: "#{@contest.name} Detailed Results",
