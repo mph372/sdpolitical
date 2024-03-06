@@ -2,6 +2,10 @@
 class Contest < ApplicationRecord
     belongs_to :election
     has_many :contestants, dependent: :destroy
+    has_many :contestant_updates, through: :contestants
+
+    extend FriendlyId
+    friendly_id :name, use: :slugged
   
     validates :name, presence: true
 
@@ -20,6 +24,22 @@ class Contest < ApplicationRecord
 
     def ballots_cast
       self.contestants.first.contestant_updates.first.ballots_cast
+    end
+
+    def total_votes_for_type(vote_type)
+      contestants.sum { |contestant| contestant.incremental_votes(vote_type) }
+    end
+  
+    def total_early_votes
+      total_votes_for_type('early_vote')
+    end
+  
+    def total_election_day_votes
+      total_votes_for_type('election_day_vote')
+    end
+  
+    def total_late_votes
+      total_votes_for_type('late_vote')
     end
 
   end

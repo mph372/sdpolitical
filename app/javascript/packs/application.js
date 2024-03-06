@@ -15,7 +15,7 @@ window.$ = window.jQuery = jQuery;
 import 'select2';
 
 import "@nathanvda/cocoon";
-// ... any other libraries ...
+
 
 Rails.start();
 Turbolinks.start();
@@ -39,3 +39,4 @@ $(document).on('turbolinks:load', function () {
         return event.preventDefault();
     });
 });
+

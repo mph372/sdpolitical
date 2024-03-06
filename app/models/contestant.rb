@@ -69,7 +69,53 @@ class Contestant < ApplicationRecord
   end
   
   
-  
+  def last_update_votes(vote_type)
+    contestant_updates.where(vote_type: vote_type).order(:created_at).last&.total_votes || 0
+  end
+
+  # Gets the total votes of the last update before the first update of a given vote type
+  def last_before_type_votes(vote_type)
+    first_update_of_type = contestant_updates.where(vote_type: vote_type).order(:created_at).first
+    return 0 unless first_update_of_type
+    contestant_updates.where("created_at < ?", first_update_of_type.created_at).order(:created_at).last&.total_votes || 0
+  end
+
+  # Calculates the incremental votes for a given vote type
+  def incremental_votes(vote_type)
+    last_update_votes(vote_type) - last_before_type_votes(vote_type)
+  end
+
+  # Updates the vote_percentage method to use incremental_votes
+  def vote_type_percentage(vote_type, total)
+    incremental_vote = incremental_votes(vote_type)
+    return 0 unless total.positive?
+    (incremental_vote.to_f / total * 100).round(2)
+  end
+
+  def incremental_votes(vote_type)
+    last_update = contestant_updates.where(vote_type: vote_type).order(created_at: :desc).first
+    last_different_type_update = contestant_updates.where.not(vote_type: vote_type).where("created_at < ?", last_update.created_at).order(created_at: :desc).first if last_update
+
+    last_update_votes = last_update&.total_votes || 0
+    last_different_type_votes = last_different_type_update&.total_votes || 0
+
+    last_update_votes - last_different_type_votes
+  end
+
+  def display_incremental_votes(vote_type, total_votes)
+    incremental_votes = self.incremental_votes(vote_type)
+    if incremental_votes > 0
+      {
+        votes: incremental_votes,
+        percentage: self.vote_type_percentage(vote_type, total_votes)
+      }
+    else
+      {
+        votes: '-',
+        percentage: '-'
+      }
+    end
+  end
   
   
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'contests/show'
   get 'uploads/new'
   get 'uploads/create'
   # Devise routes
@@ -71,8 +72,10 @@ Rails.application.routes.draw do
   get 'navigate_jurisdiction', to: 'jurisdictions#navigate', as: :navigate_jurisdiction
   resources :elections, param: :slug do
     resources :election_updates
+    resources :contests, only: [:show]
     resources :uploads, only: [:create]
   end
+  
   
 
 

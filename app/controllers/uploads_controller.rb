@@ -4,6 +4,7 @@ class UploadsController < ApplicationController
   def create
     election = Election.friendly.find(params[:election_slug])
     logger.debug "Processing upload for Election ID: #{election.id}"
+    vote_type = params[:vote_type]
 
     CSV.foreach(params[:file].path, headers: true, encoding: 'bom|utf-8') do |row|
       contest_name = row['Contest Name']
@@ -29,7 +30,9 @@ class UploadsController < ApplicationController
         number_of_precincts: row['Number Of Precincts'].to_i,
         precincts_reported: row['Precincts Reported'].to_i,
         ballots_cast: row['Ballots Cast'].to_i,
-        contestant: contestant
+        contestant: contestant,
+        vote_type: vote_type
+
       }
 
       ContestantUpdate.create!(contestant_update_attributes)

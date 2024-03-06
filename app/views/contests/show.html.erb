@@ -1,0 +1,125 @@
+<!-- app/views/contests/show.html.erb -->
+<div class="container mt-5">
+  <div class="row mb-3">
+    <div class="col text-end">
+      <%= link_to 'Go Back to Election', election_path(@contest.election), class: 'btn btn-secondary' %>
+    </div>
+  </div>
+
+
+ <div class="text-center">
+    <h4 class="text-muted">Detailed Contest Results for</h4>
+    <h1><%= @contest.name %></h1>
+    <h5><%= @contest.election.election_date.strftime("%B %-d, %Y") %></h5>
+  </div>
+<hr>
+    <div class="mt-3">
+      <p><strong>Early Vote:</strong> Includes mail ballots received before Election Day and vote center ballots from early voting between Feb. 24 and March 4.</p>
+      <p><strong>Election Day Vote:</strong> Consists solely of vote center ballots cast on Election Day.</p>
+      <p><strong>Late Vote:</strong> Comprises mail ballots collected at vote centers, official ballot drop boxes, or by the U.S. Postal Service on Election Day. Ballots mailed close to or on March 5 are counted if postmarked by Election Day. The category also includes provisional ballots from individuals who registered conditionally and voted provisionally up to and including Election Day. These are counted once the voter's registration is verified and confirmed to be unique within the state.</p>
+    </div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    Vote Breakdown
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Early Vote </th>
+            <th>Election Day Vote</th>
+            <th>Late Vote</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @contest.contestants.each do |contestant| %>
+            <tr>
+            <td class="text-nowrap">
+              <%= contestant.name %>
+              <% if contestant.party.present? %>
+                (<%= contestant.party %>)
+              <% end %>
+            </td>
+              <!-- Early Vote -->
+              <td>
+                <% early_vote_data = contestant.display_incremental_votes('early_vote', @contest.total_early_votes) %>
+                <%= early_vote_data[:votes].is_a?(Integer) ? number_with_delimiter(early_vote_data[:votes]) : early_vote_data[:votes] %>
+                <% if early_vote_data[:votes].is_a?(Integer) %>
+                  (<%= number_to_percentage(early_vote_data[:percentage], precision: 2) %>)
+                <% end %>
+              </td>
+              <!-- Election Day Vote -->
+              <td>
+                <% election_day_vote_data = contestant.display_incremental_votes('election_day_vote', @contest.total_election_day_votes) %>
+                <%= election_day_vote_data[:votes].is_a?(Integer) ? number_with_delimiter(election_day_vote_data[:votes]) : election_day_vote_data[:votes] %>
+                <% if election_day_vote_data[:votes].is_a?(Integer) %>
+                  (<%= number_to_percentage(election_day_vote_data[:percentage], precision: 2) %>)
+                <% end %>
+              </td>
+              <!-- Late Vote -->
+              <td>
+                <% late_vote_data = contestant.display_incremental_votes('late_vote', @contest.total_late_votes) %>
+                <%= late_vote_data[:votes].is_a?(Integer) ? number_with_delimiter(late_vote_data[:votes]) : late_vote_data[:votes] %>
+                <% if late_vote_data[:votes].is_a?(Integer) %>
+                  (<%= number_to_percentage(late_vote_data[:percentage], precision: 2) %>)
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<hr>
+  <div class="mt-3">
+    <h5>Vote History</h5>
+    <span>The tables below for each candidate provides a detailed view of their vote accumulation over time, showcasing the changes in their total votes as new updates are reported. It serves to illustrate the candidate's performance across different stages of the count, enabling you to track their progress and momentum throughout the tallying process.</span>
+  </div>
+  <% @contest.contestants.each do |contestant| %>
+    <div class="card mt-3">
+      <div class="card-header">
+        <%= contestant.name %>
+        <% if contestant.party.present? %>
+          (<%= contestant.party %>)
+        <% end %>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Update</th>
+                <th>Mail Ballots Votes</th>
+                <th>Vote Center Ballots Votes</th>
+                <th>Total Votes</th>
+                <th>Total Vote Gain</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% contestant.contestant_updates.each do |update| %>
+                <tr>
+                <td class="text-nowrap"><%= update.created_at.strftime("%B %d, %Y at %I:%M %p") %></td>
+                <td><%= number_with_delimiter(update.mail_ballots_votes) %></td> <!-- Adds commas to the numbers -->
+                <td><%= number_with_delimiter(update.vote_center_ballots_votes) %></td>
+                <td><%= number_with_delimiter(update.total_votes) %></td>
+                <td>
+                    <% if update.previous_total_votes %>
+                    +<%= number_with_delimiter(update.total_votes - update.previous_total_votes) %> <!-- Adds commas and calculates gain -->
+                    <% else %>
+                    N/A
+                    <% end %>
+                </td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+        </div>
+
+      </div>
+    </div>
+  <% end %>
+</div>

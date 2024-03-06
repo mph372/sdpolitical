@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_29_211539) do
+ActiveRecord::Schema.define(version: 2024_03_05_231305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 2024_02_29_211539) do
     t.bigint "contestant_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "vote_type"
     t.index ["contestant_id"], name: "index_contestant_updates_on_contestant_id"
   end
 
@@ -188,7 +189,9 @@ ActiveRecord::Schema.define(version: 2024_02_29_211539) do
     t.bigint "election_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
     t.index ["election_id"], name: "index_contests_on_election_id"
+    t.index ["slug"], name: "index_contests_on_slug", unique: true
   end
 
   create_table "districts", force: :cascade do |t|
