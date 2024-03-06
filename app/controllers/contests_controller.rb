@@ -4,7 +4,7 @@ class ContestsController < ApplicationController
   def show
     @contest = Contest.friendly.find(params[:id])
     @election = @contest.election  # Add this line
-    @contestants = @contest.contestants.includes(:contestant_updates).order('created_at ASC')
+    @contestants = @contest.contestants.includes(:contestant_updates).sort_by { |contestant| -contestant.latest_total_votes }
 
     set_meta_tags title: "#{@contest.name} Detailed Results",
               site: 'The Ballot Book',

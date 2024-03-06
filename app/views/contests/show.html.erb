@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @contest.contestants.each do |contestant| %>
+          <% @contestants.each do |contestant| %>
             <tr>
             <td class="text-nowrap">
               <%= contestant.name %>
@@ -79,7 +79,7 @@
     <h5>Vote History</h5>
     <span>The tables below for each candidate provides a detailed view of their vote accumulation over time, showcasing the changes in their total votes as new updates are reported. It serves to illustrate the candidate's performance across different stages of the count, enabling you to track their progress and momentum throughout the tallying process.</span>
   </div>
-  <% @contest.contestants.each do |contestant| %>
+  <% @contestants.each do |contestant| %>
     <div class="card mt-3">
       <div class="card-header">
         <%= contestant.name %>
