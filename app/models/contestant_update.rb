@@ -9,6 +9,8 @@ class ContestantUpdate < ApplicationRecord
       previous_update = contestant.contestant_updates.where("created_at < ?", self.created_at).order(created_at: :desc).first
       previous_update ? previous_update.total_votes : nil
     end
+
+
  
  
   end

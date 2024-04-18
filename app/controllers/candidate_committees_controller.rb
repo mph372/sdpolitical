@@ -82,6 +82,6 @@ class CandidateCommitteesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def candidate_committee_params
-      params.require(:candidate_committee).permit(:person_id, :name, :cycle, :status, :primary_committee)
+      params.require(:candidate_committee).permit(:person_id, :name, :cycle, :status, :primary_committee, :fec_id)
     end
 end

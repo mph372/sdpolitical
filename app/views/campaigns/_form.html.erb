@@ -15,10 +15,10 @@
         <%= f.select :number_of_winners, ['1', '2', '3', '4', '5', '6', '7'], required: true, selected: f.object.number_of_winners || '1' %>
       </div>
       <div class="col">
-        <%= f.select :election_type, ['General', 'Primary', 'Special', 'Special Runoff'], required: true, selected: f.object.election_type || 'Primary' %>
+        <%= f.select :election_type, ['General', 'Primary', 'Special', 'Special Runoff'], required: true, selected: f.object.election_type || 'General' %>
       </div>
       <div class="col">
-        <%= f.date_field :election_date, value: f.object.election_date || '2024-03-05' %>
+        <%= f.date_field :election_date, value: f.object.election_date || '2024-11-05' %>
       </div>
     </div>
 
