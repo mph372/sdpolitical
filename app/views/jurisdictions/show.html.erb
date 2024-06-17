@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<% if @jurisdiction.description.present? || @jurisdiction.map_url.present? %>
+<% if (@jurisdiction.description.present? && @jurisdiction.description.strip != "") %>
   <div class="card rounded primary-border mt-3">
     <div class="card-header">
       <span>Jurisdiction Analysis</span>
@@ -21,51 +21,58 @@
   </div>
 <% end %>
 
+
 <div class="card shadow-sm mt-3 bg-white rounded primary-border">
   <h5 class="card-header">List of Offices & Districts</h5>
   <div class="table-responsive bg-white rounded border-primary">
     <table class="table table-sm">
-      <thead>
-        <tr>
-          <th class="pl-4 col-3">District</th>
-          <th class="condensed-column col-1"></th>
-          <th class="col-3">Incumbent</th>
-          <th class="col-2">Term Expires</th>
-          <th class="pr-4 col-3"><span class="float-end">Registration Advantage</span></th>
-          <th class="col-1"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @jurisdiction.districts.order(:district).each do |district| %>
-          <tr>
-            <td class="pl-4 col-3"><%= link_to district.district_name, district %></td>
-            <td class="col-1">
-              <% if district.person.present? && district.person.image.url.present? %>
-                <%= image_tag district.person.image.url(:headshot), alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
-              <% else %>
-                <%= image_tag 'blank-headshot.png', alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
-              <% end %>
-            </td>
-            <td class="col-3">
-              <% if district.person.present? %>
-                <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, class: "#{district.person.party.downcase}-text" %>
-              <% else %>
-                Vacant
-              <% end %>
-            </td>
-            <td class="col-2"><%= district.term_expires %></td>
-            <td class="col-3">
-              <% if district.registration_advantage > 0 %>
-                <span class="dem-text pr-4 float-end">D +<%= number_with_precision(district.registration_advantage, precision: 2) %>%</span>
-              <% else %>
-                <span class="gop-text pr-4 float-end">R +<%= number_with_precision(district.registration_advantage * -1, precision: 2) %>%</span>
-              <% end %>
-            </td>
-            <td class="col-1"></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <thead>
+    <tr>
+      <th class="pl-4 col-3">District</th>
+      <th class="condensed-column col-1"></th>
+      <th class="col-3">Incumbent</th>
+      <th class="col-2">Term Expires</th>
+      <th class="pr-4 col-3"><span class="float-end">Registration Advantage</span></th>
+      <th class="col-1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @jurisdiction.districts.order(:district).each do |district| %>
+      <tr>
+        <td class="pl-4 col-3"><%= link_to district.district_name, district %></td>
+        <td class="col-1">
+          <% if district.person.present? && district.person.image.url.present? %>
+            <%= image_tag district.person.image.url(:headshot), alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
+          <% else %>
+            <%= image_tag 'blank-headshot.png', alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
+          <% end %>
+        </td>
+        <td class="col-3">
+          <% if district.person.present? %>
+            <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, class: "#{district.person.party.downcase}-text" %>
+          <% else %>
+            Vacant
+          <% end %>
+        </td>
+        <td class="col-2"><%= district.term_expires %></td>
+        <td class="col-3">
+          <% if district.registration_snapshots.present? %>
+            <% advantage = district.registration_snapshots.last.registration_advantage %>
+            <% if advantage > 0 %>
+              <span class="dem-text pr-4 float-end">D +<%= number_with_precision(advantage, precision: 2) %>%</span>
+            <% else %>
+              <span class="gop-text pr-4 float-end">R +<%= number_with_precision(advantage * -1, precision: 2) %>%</span>
+            <% end %>
+          <% else %>
+            <span class="pr-4 float-end">N/A</span>
+          <% end %>
+        </td>
+        <td class="col-1"></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
   </div>
 </div>
 

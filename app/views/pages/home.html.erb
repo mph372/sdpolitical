@@ -51,22 +51,60 @@
         </div>
 
         <!-- Explore Jurisdictions Card -->
-        <div class="card mt-3">
-          <div class="card-header">Explore Jurisdictions</div>
-          <div class="card-body">
-            <table class="table border" id="jurisdictions">
-              <tbody>
-                <% Jurisdiction.where(archived: false).sort_by { |j| [j.jurisdiction_type == "Federal" ? 0 : 1, j.jurisdiction_type == "State" ? 0 : 1, j.jurisdiction_type == "County" ? 0 : 1, j.jurisdiction_type == "City" ? 0 : 1, j.name] }.each do |jurisdiction| %>
-                  <tr>
-                    <td><%= link_to jurisdiction.name, jurisdiction %></td>
-                  </tr>
+<div class="card mt-3">
+  <div class="card-header">Explore Jurisdictions</div>
+  <div class="card-body">
+    <table class="table border" id="jurisdictions">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <% if user_signed_in? %>
+            <th>Last Updated</th>
+            <th>Last Registration Snapshot</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% Jurisdiction.where(jurisdiction_type: ["Federal", "State", "County", "City"]).sort_by { |j| [j.jurisdiction_type == "Federal" ? 0 : 1, j.jurisdiction_type == "State" ? 0 : 1, j.jurisdiction_type == "County" ? 0 : 1, j.jurisdiction_type == "City" ? 0 : 1, j.name] }.each do |jurisdiction| %>
+          <tr>
+            <td><%= link_to jurisdiction.name, jurisdiction %></td>
+            <% if user_signed_in? %>
+              <td><%= jurisdiction.updated_at.strftime('%B %d, %Y') %></td>
+              <td>
+                <% if jurisdiction.registration_snapshots.any? %>
+                  <%= jurisdiction.registration_snapshots.last.created_at.strftime('%B %d, %Y') %>
+                <% else %>
+                  N/A
                 <% end %>
-              </tbody>
-            </table>
-          </div>
-        </div> 
-      </div>
-      <div class="col-1"></div>
-    </div>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+        
+        <% if user_signed_in? && current_user.admin? %>
+          <% other_jurisdictions = Jurisdiction.where.not(jurisdiction_type: ["Federal", "State", "County", "City"]).sort_by(&:name) %>
+          <% other_jurisdictions.each do |jurisdiction| %>
+            <tr>
+              <td><%= link_to jurisdiction.name, jurisdiction %></td>
+              <td><%= jurisdiction.updated_at.strftime('%B %d, %Y') %></td>
+              <td>
+                <% if jurisdiction.registration_snapshots.any? %>
+                  <%= jurisdiction.registration_snapshots.last.created_at.strftime('%B %d, %Y') %>
+                <% else %>
+                  N/A
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="col-1"></div>
+</div>
+
+
+
   </div>
 </div>

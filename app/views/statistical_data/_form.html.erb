@@ -13,21 +13,22 @@
 
 <div class="row">
   <div class="col-md">
-    <%= f.select(:jurisdiction_id, Jurisdiction.order(:name).all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}, value: (f.object.new_record? ? 
-params[:jurisdiction_id] : f.object.jurisdiction_id) ) %>
+    <% selected_jurisdiction_id = f.object.new_record? ? params[:jurisdiction_id] : f.object.jurisdiction_id %>
+    <%= f.select(:jurisdiction_id, options_for_select(Jurisdiction.order(:name).pluck(:name, :id), selected_jurisdiction_id), include_blank: true) %>
   </div>
   <div class="col-md">
-    <%= f.select(:district_id, District.order(jurisdiction_id: :asc, name: :desc).all.collect { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id ] }, {:include_blank => true}, value: (f.object.new_record? ? 
-params[:district_id] : f.object.district_id)) %>
+    <% selected_district_id = f.object.new_record? ? params[:district_id] : f.object.district_id %>
+    <%= f.select(:district_id, options_for_select(District.order(jurisdiction_id: :asc, name: :desc).map { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id] }, selected_district_id), include_blank: true) %>
   </div>
   <div class="col-md">
-    <%= f.select :district_year, ['2010', '2020'], :selected => '2020', required: true %>
+    <%= f.select :district_year, options_for_select(['2010', '2020'], '2020'), required: true %>
   </div>
 </div>
 <hr>
 
- <%= f.number_field :total_population, label: "Total Population", step: :any %>
-<div class="row">  
+<%= f.number_field :total_population, label: "Total Population", step: :any %>
+<div class="row">
+
 
             <div class="col-md text-nowrap">
              
