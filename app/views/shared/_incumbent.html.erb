@@ -20,10 +20,6 @@
           </h1>
          <p class="card-text mb-1">
             <%= person.party %>
-            <% if person.birthdate && person.birthdate.year >= 1910 %>
-              | Birthdate: <%= person.birthdate.strftime('%b %d, %Y') %>
-              (Age <%= ((Time.zone.now - person.birthdate.to_time) / 1.year.seconds).floor %>)
-            <% end %>
           </p>
           <h5 class="card-text">
             <% if person.district %>
