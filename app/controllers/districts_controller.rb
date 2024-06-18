@@ -113,12 +113,14 @@ class DistrictsController < ApplicationController
   # DELETE /districts/1
   # DELETE /districts/1.json
   def destroy
+    jurisdiction = @district.jurisdiction
     @district.destroy
     respond_to do |format|
-      format.html { redirect_to districts_url, notice: 'District was successfully destroyed.' }
+      format.html { redirect_to jurisdiction_path(jurisdiction), notice: 'District was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
+  
 
 
   

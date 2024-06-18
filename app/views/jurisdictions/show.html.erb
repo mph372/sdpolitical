@@ -32,9 +32,9 @@
       <th class="condensed-column col-1"></th>
       <th class="col-3">Incumbent</th>
       <th class="col-2">Term Expires</th>
-       <% if !@jurisdiction.at_large_districts %>
+
       <th class="pr-4 col-3"><span class="float-end">Registration Advantage</span></th>
-      <%end%>
+
       <% if user_signed_in? && current_user.admin? %><th class="col-2">Edit</th><%end%>
       <th class="col-1"></th>
     </tr>

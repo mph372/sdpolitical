@@ -3,7 +3,6 @@ class District < ApplicationRecord
 
 
   belongs_to :jurisdiction 
-  has_many :election_histories, dependent: :destroy 
   has_many :historical_candidates, through: :election_histories
   has_many :statistical_datum, dependent: :destroy
   has_many :registration_snapshots, through: :statistical_datum
