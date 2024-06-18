@@ -109,12 +109,16 @@
   <div class="row">
     <div class="col">
       <% if @jurisdiction.campaigns.active.present? %>
-        <%= render partial: 'shared/candidates', locals: { district: nil, candidates: @jurisdiction.campaigns.active.last.candidates, campaign: @jurisdiction.campaigns.active.last } %>
+        <% @jurisdiction.campaigns.active.each do |campaign| %>
+          <%= render partial: 'shared/candidates', locals: { district: campaign.district, candidates: campaign.candidates, campaign: campaign } %>
+        <br>
+        <% end %>
       <% end %>
     </div>
   </div>
-
+<% end %>  
   <!-- Display Historic Campaigns -->
+<% if @jurisdiction.at_large_districts %>  
   <% if @jurisdiction.campaigns.historic.present? %>
     <div class="row">
       <div class="col">
@@ -123,6 +127,7 @@
     </div>
   <% end %>
 <% end %>
+
 
 <% if user_signed_in? && current_user.admin? %>
   <div class="row my-3">
