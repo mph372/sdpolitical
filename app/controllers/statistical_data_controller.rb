@@ -44,16 +44,20 @@ class StatisticalDataController < ApplicationController
   # PATCH/PUT /statistical_data/1
   # PATCH/PUT /statistical_data/1.json
   def update
+    Rails.logger.debug("StatisticalDatum Params: #{statistical_datum_params.inspect}")
+  
     respond_to do |format|
       if @statistical_datum.update(statistical_datum_params)
         format.html { redirect_to @statistical_datum, notice: 'Statistical datum was successfully updated.' }
         format.json { render :show, status: :ok, location: @statistical_datum }
       else
+        Rails.logger.debug("Errors: #{@statistical_datum.errors.full_messages}")
         format.html { render :edit }
         format.json { render json: @statistical_datum.errors, status: :unprocessable_entity }
       end
     end
   end
+  
 
   # DELETE /statistical_data/1
   # DELETE /statistical_data/1.json
