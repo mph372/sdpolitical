@@ -1,13 +1,8 @@
 <%# Shared Incumbent Partial %>
-<% if @district.at_large_district? %>
-  <h2>Incumbents</h2>
-  <% @district.jurisdiction.people.each do |incumbent| %>
-    <%= render partial: 'shared/incumbent', locals: { person: incumbent, page_source: "at_large_district" } %>
-  <% end %>
-<% elsif @district.at_large_district == false %>
+
   <% if @district.person.present? %>
     <%= render 'shared/incumbent', person: @district.person, page_source: 'district', show_header: true %>
   <% else %>
     <%= render partial: 'shared/vacant', locals: { person: @district.person, page_source: "district", show_header: true } %>
   <% end %>
-<% end %>
+

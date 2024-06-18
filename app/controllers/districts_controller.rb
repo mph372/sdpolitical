@@ -63,9 +63,8 @@ class DistrictsController < ApplicationController
   # POST /districts.json
   def create
     @district = District.new(district_params)
-    
-
     assign_person
+
     respond_to do |format|
       if @district.save
         format.html { redirect_to @district, notice: 'District was successfully created.' }
@@ -77,13 +76,11 @@ class DistrictsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /districts/1
-  # PATCH/PUT /districts/1.json
   def update
     assign_person
+
     respond_to do |format|
       if @district.update(district_params)
-       
         format.html { redirect_to @district, notice: 'District was successfully updated.' }
         format.json { render :show, status: :ok, location: @district }
       else
@@ -119,13 +116,17 @@ class DistrictsController < ApplicationController
 
   def assign_person
     person_id = district_params[:person_id]
-    district_id = @district.id 
     @person = Person.find_by(id: person_id)
-    Person.where(:district_id => district_id).each do |old_person|
-      old_person.update_attributes(:district_id => nil, :archived => true) unless old_person == @person 
+
+    if @person
+      @person.update(district_id: @district.id, archived: false)
     end
-    @person.update_attribute(:archived, false) unless @person.nil?
-    @person.update_attribute(:district_id, district_id) unless @person.nil?
+
+    # Unassign the previous person if it's not the current one
+    previous_person = Person.find_by(district_id: @district.id)
+    if previous_person && previous_person != @person
+      previous_person.update(district_id: nil, archived: true)
+    end
   end
 
   private

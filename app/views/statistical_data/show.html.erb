@@ -1,1 +1,10 @@
+<p>
+  <strong>District:</strong>
+  <%if @statistical_datum.district.present?%>
+  <%= link_to "#{@statistical_datum.district.jurisdiction.name} - #{@statistical_datum.district.name} #{@statistical_datum.district.district}", @statistical_datum.district %>
+  <%elsif @statistical_datum.jurisdiction.present?%>
+  <%= link_to "#{@statistical_datum.jurisdiction.name}", @statistical_datum.jurisdiction %>
+  <%end%>
+</p>
+
 <%= render partial: 'shared/statistical_datum', locals: { statistical_datum: @statistical_datum } %>
