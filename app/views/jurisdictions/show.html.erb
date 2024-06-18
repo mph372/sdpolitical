@@ -32,56 +32,96 @@
       <th class="condensed-column col-1"></th>
       <th class="col-3">Incumbent</th>
       <th class="col-2">Term Expires</th>
+       <% if !@jurisdiction.at_large_districts %>
       <th class="pr-4 col-3"><span class="float-end">Registration Advantage</span></th>
+      <%end%>
+      <% if user_signed_in? && current_user.admin? %><th class="col-2">Edit</th><%end%>
       <th class="col-1"></th>
     </tr>
   </thead>
   <tbody>
     <% @jurisdiction.districts.order(:district).each do |district| %>
-      <tr>
-        <td class="pl-4 col-3"><%= link_to district.district_name, district %></td>
-        <td class="col-1">
-          <% if district.person.present? && district.person.image.url.present? %>
-            <%= image_tag district.person.image.url(:headshot), alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
-          <% else %>
-            <%= image_tag 'blank-headshot.png', alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
-          <% end %>
-        </td>
-        <td class="col-3">
-          <% if district.person.present? %>
-            <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, class: "#{district.person.party.downcase}-text" %>
-          <% else %>
-            Vacant
-          <% end %>
-        </td>
-        <td class="col-2"><%= district.term_expires %></td>
-        <td class="col-3">
-          <% if district.registration_snapshots.present? %>
-            <% advantage = district.registration_snapshots.last.registration_advantage %>
+  <tr>
+    <td class="pl-4 col-3">
+      <% if @jurisdiction.at_large_districts %>
+        <%= district.district_name %>
+      <% else %>
+        <%= link_to district.district_name, district %>
+      <% end %>
+    </td>
+    <td class="col-1">
+      <% if district.person.present? && district.person.image.url.present? %>
+        <%= image_tag district.person.image.url(:headshot), alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
+      <% else %>
+        <%= image_tag 'blank-headshot.png', alt: 'headshot', class: "avatar shadow-sm", size: "45x45" %>
+      <% end %>
+    </td>
+    <td class="col-3">
+      <% if district.person.present? %>
+        <%= link_to "#{district.person.first_name} #{district.person.last_name} #{district.person.party_abbreviation}", district.person, class: "#{district.person.party.downcase}-text" %>
+      <% else %>
+        Vacant
+      <% end %>
+    </td>
+    <td class="col-2"><%= district.term_expires %></td>
+    <% if !@jurisdiction.at_large_districts || district.is_at_large %>
+      <td class="col-3">
+        <span class="pr-4 float-end">
+          <% advantage = district.registration_advantage %>
+          <% if advantage.is_a?(Numeric) %>
             <% if advantage > 0 %>
-              <span class="dem-text pr-4 float-end">D +<%= number_with_precision(advantage, precision: 2) %>%</span>
+              <span class="dem-text">D +<%= number_with_precision(advantage, precision: 2) %></span>
             <% else %>
-              <span class="gop-text pr-4 float-end">R +<%= number_with_precision(advantage * -1, precision: 2) %>%</span>
+              <span class="gop-text">R +<%= number_with_precision(advantage.abs, precision: 2) %></span>
             <% end %>
           <% else %>
-            <span class="pr-4 float-end">N/A</span>
+            N/A
           <% end %>
-        </td>
-        <td class="col-1"></td>
-      </tr>
+        </span>
+      </td>
     <% end %>
+    <% if user_signed_in? && current_user.admin? %>
+      <td class="col-2"><%= link_to 'Edit', edit_district_path(district) %></td>
+    <% end %>
+    <td class="col-1"></td>
+  </tr>
+<% end %>
+
   </tbody>
 </table>
 
   </div>
 </div>
 
+
+
 <% if @jurisdiction.statistical_datum.present? %>
   <div class="row mt-3">
     <div class="col">
-      <%= render 'jurisdiction_data' %>
+      <%= render partial: 'shared/statistical_datum', locals: { jurisdiction: @jurisdiction } %>
     </div>
   </div>
+<% end %>
+
+
+<% if @jurisdiction.at_large_districts %>
+  <!-- Display Active Campaigns -->
+  <div class="row">
+    <div class="col">
+      <% if @jurisdiction.campaigns.active.present? %>
+        <%= render partial: 'shared/candidates', locals: { district: nil, candidates: @jurisdiction.campaigns.active.last.candidates, campaign: @jurisdiction.campaigns.active.last } %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Display Historic Campaigns -->
+  <% if @jurisdiction.campaigns.historic.present? %>
+    <div class="row">
+      <div class="col">
+        <%= render partial: 'shared/historical_election', locals: { historical_elections: @jurisdiction.campaigns.historic.order("election_date desc"), show_district: true } %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
 
 <% if user_signed_in? && current_user.admin? %>

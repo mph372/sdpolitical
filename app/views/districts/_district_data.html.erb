@@ -145,6 +145,7 @@
       </tbody>
     </table>
   </div>
+<% if statistical_datum.prop_6_yes.present? || statistical_datum.prop_15_yes.present? || statistical_datum.prop_16_yes.present? || statistical_datum.prop_21_yes.present? || statistical_datum.prop_1_yes.present? %>
 
     <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <table class="table table-sm ">
@@ -161,42 +162,6 @@
       </thead>
 
       <tbody>
-
-
-
-        <% if statistical_datum.prop_51_yes.present? %>
-          <tr>
-            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_51,_Public_School_Facility_Bonds_(2016)" target="_blank">Prop 51 (2016)</a></td>
-            <td class="d-none d-md-table-cell">School Facility Bonds</td>
-            <td><%= number_with_precision(statistical_datum.prop_51_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(statistical_datum.prop_51_no_result.abs, precision: 2) %>%</td>
-            <td>
-              <% if statistical_datum.prop_51_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_51_difference.to_f, precision: 2) %>%</span>
-              <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_51_difference.to_f, precision: 2) %>%</span>
-              <%end%>
-            </td>
-            <td></td>
-          </tr>
-        <%end%>
-
-        <% if statistical_datum.prop_62_yes.present? %>
-          <tr>
-            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_62,_Repeal_of_the_Death_Penalty_(2016)" target="_blank">Prop 62 (2016)</a></td>
-            <td class="d-none d-md-table-cell">Death Penalty Repeal</td>
-            <td><%= number_with_precision(statistical_datum.prop_62_yes_result.abs, precision: 2) %>%</td>
-            <td><%= number_with_precision(statistical_datum.prop_62_no_result.abs, precision: 2) %>%</td>
-            <td>
-              <% if statistical_datum.prop_62_yes_result > 50 %>
-                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_62_difference.to_f, precision: 2) %>%</span>
-              <%else%>
-                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_62_difference.to_f, precision: 2) %>%</span>
-              <%end%>
-            </td>
-            <td></td>
-          </tr>
-        <%end%>
 
         <% if statistical_datum.prop_6_yes.present? %>
           <tr>
@@ -264,12 +229,29 @@
             </td>
             <td></td>
           </tr>
-        <%end%>              
+        <%end%>    
+
+         <% if statistical_datum.prop_1_yes.present? %>
+          <tr>
+            <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_1,_Right_to_Reproductive_Freedom_Amendment_(2022)" target="_blank">Prop 1 (2022)</a></td>
+            <td>Right to Reproductive Freedom Amendment</td>
+            <td><%= number_with_precision(statistical_datum.prop_1_yes_result.abs, precision: 2) %>%</td>
+            <td><%= number_with_precision(statistical_datum.prop_1_no_result.abs, precision: 2) %>%</td>
+            <td>
+              <% if statistical_datum.prop_1_yes_result > 50 %>
+                <span class="font-weight-bold ballot_measure_yes"><%= number_with_precision(statistical_datum.prop_1_difference.to_f, precision: 2) %>%</span>
+              <%else%>
+                <span class="font-weight-bold ballot_measure_no"><%= number_with_precision(statistical_datum.prop_1_difference.to_f, precision: 2) %>%</span>
+              <%end%>
+            </td>
+            <td></td>
+          </tr>
+        <%end%>           
 
       </tbody>
     </table>
   </div>
-
+ <%end%>
 
 <%end%>
 

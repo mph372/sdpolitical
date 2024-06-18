@@ -74,17 +74,17 @@ class District < ApplicationRecord
   end
 
   def registration_advantage
-    if is_at_large == true
+    if is_at_large
       if jurisdiction.registration_snapshots.present?
         jurisdiction.registration_snapshots.last.registration_advantage
       else
-        dem_voters - rep_voters
+        'N/A'
       end
     else
       if registration_snapshots.present?
         registration_snapshots.last.registration_advantage
       else
-        dem_voters - rep_voters
+        'N/A'
       end
     end
   end

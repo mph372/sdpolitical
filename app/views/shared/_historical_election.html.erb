@@ -1,60 +1,61 @@
-
- <% historical_elections.each do |historical_campaign| %>
+<% historical_elections.each do |historical_campaign| %>
   <div class="card shadow-sm bg-white mb-3 rounded primary-border p-0">
     <div class="card-header">
-    <% if show_district == true %>
-      <%= "#{historical_campaign.district.full_district_name} | #{historical_campaign.election_date.strftime("%Y")} #{historical_campaign.election_type} Election Results" %> <span class="font-weight-light"><%= "(#{historical_campaign.election_date.strftime("%B %e, %Y")})" %></span> <%if user_signed_in? && current_user.admin?%> - <%= link_to 'Edit', edit_campaign_path(historical_campaign, :election_date => historical_campaign.election_date, :district_id => historical_campaign.district_id) %><%end%>
-    <% else %>
-    <%= "#{historical_campaign.election_date.strftime("%Y")} #{historical_campaign.election_type} Election Results" %> <span class="font-weight-light"><%= "(#{historical_campaign.election_date.strftime("%B %e, %Y")})" %></span> <%if user_signed_in? && current_user.admin?%> - <%= link_to 'Edit', edit_campaign_path(historical_campaign, :election_date => historical_campaign.election_date, :district_id => historical_campaign.district_id) %><%end%>
-    <%end%>  
+      <% if show_district == true %>
+        <%= "#{historical_campaign.district.full_district_name} | #{historical_campaign.election_date.strftime("%Y")} #{historical_campaign.election_type} Election Results" %> 
+        <span class="font-weight-light"><%= "(#{historical_campaign.election_date.strftime("%B %e, %Y")})" %></span> 
+        <% if user_signed_in? && current_user.admin? %> 
+          - <%= link_to 'Edit', edit_campaign_path(historical_campaign, election_date: historical_campaign.election_date, district_id: historical_campaign.district_id) %>
+        <% end %>
+      <% else %>
+        <%= "#{historical_campaign.election_date.strftime("%Y")} #{historical_campaign.election_type} Election Results" %> 
+        <span class="font-weight-light"><%= "(#{historical_campaign.election_date.strftime("%B %e, %Y")})" %></span> 
+        <% if user_signed_in? && current_user.admin? %> 
+          - <%= link_to 'Edit', edit_campaign_path(historical_campaign, election_date: historical_campaign.election_date, district_id: historical_campaign.district_id) %>
+        <% end %>
+      <% end %>
     </div>
     <div class="table-responsive">
-      <table class="table-sm table bg-white " >
+      <table class="table-sm table bg-white">
         <thead>
           <tr>
-          <th style="width: 5%"></th>
+            <th style="width: 5%"></th>
             <th style="width: 30%">Name</th>
             <th style="width: 10%">Votes</th>
             <th style="width: 10%">Vote %</th>
             <th class="d-none d-md-table-cell" style="width: 50%">Vote Share</th>
-            
           </tr>
         </thead>
-        
         <tbody>
-        <% historical_campaign.candidates.order('votes desc').each_with_index do |candidate, index| %>
-          <tr>
-            <td class="pl-4"> <% if index <= candidate.campaign.number_of_winners - 1 %> &#10004; <%end%></td>
-            <td>
-              <% if candidate.person.present? && show_district == true  %>
-                <% if candidate.person.id == person.id %> 
-                <%= link_to "#{candidate.display_name}", candidate.person, { :class =>"heavy" } %>
-                <%else%>
-                <%= link_to "#{candidate.display_name}", candidate.person %>
-                <%end%>
-              <%else%>
-                <% if candidate.person.present? %>
-                <%= link_to "#{candidate.display_name}", candidate.person %>
-                <%else%>
-                <%= candidate.display_name %>
-                <%end%>
-              <%end%>
-            </td>
-            <td><%= number_with_delimiter(candidate.votes, :delimiter => ',') %> <span ></span> </td>
-            <td class="pe-4 font-weight-bold"><%= candidate.vote_share %></td>
-            <td class="pe-4 d-none d-md-block">
-            <% if candidate.campaign.election_date < Date.today%>
-            <div class="progress">
-              <div class="progress-bar " role="progressbar" style="width: <%= candidate.vote_share %>;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <%end%>
-            </td>
-            
-          </tr> 
-        <% end %>
+          <% historical_campaign.candidates.order('votes desc').each_with_index do |candidate, index| %>
+            <tr>
+              <td class="pl-4">
+                <% if index <= candidate.campaign.number_of_winners - 1 %> 
+                  &#10004; 
+                <% end %>
+              </td>
+              <td>
+                <% if candidate.person.present? && show_district %>
+                  <%= link_to candidate.display_name, candidate.person %>
+                <% elsif candidate.person.present? %>
+                  <%= link_to candidate.display_name, candidate.person %>
+                <% else %>
+                  <%= candidate.display_name %>
+                <% end %>
+              </td>
+              <td><%= number_with_delimiter(candidate.votes, delimiter: ',') %> </td>
+              <td class="pe-4 font-weight-bold"><%= candidate.vote_share %></td>
+              <td class="pe-4 d-none d-md-block">
+                <% if candidate.campaign.election_date < Date.today %>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: <%= candidate.vote_share %>;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
   </div>
-  <%end%>
-
+<% end %>

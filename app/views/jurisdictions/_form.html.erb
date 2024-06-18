@@ -8,6 +8,10 @@
     <div class="col ">
       <%= f.select :jurisdiction_type, ['Federal', 'State', 'County', 'City', 'School District', 'Water District', 'Fire District', 'Healthcare', 'Public Utility'], :include_blank => true, label: "Jurisdiction Type" %>
     </div>
+      <div class="form-group">
+        <%= f.label :at_large_districts, "At Large Districts" %>
+        <%= f.check_box :at_large_districts %>
+      </div>
   </div>      
   <%= f.text_area :description, label: "Jurisdiction Description" %>
 

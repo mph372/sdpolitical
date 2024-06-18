@@ -17,7 +17,7 @@
 
 
   <!-- Incumbent Card -->
-      <%= render 'incumbent' %>
+<%= render 'incumbent' %>
 
 <div class="row">
   
@@ -63,7 +63,7 @@
   <div class="row">
     <div class="col">
     <% if @district.at_large_district == false %>
-    <%= render 'redistricting_data'%>
+    <%= render partial: 'shared/statistical_datum', locals: { district: @district } %>
     <hr>
     <%end%>
     

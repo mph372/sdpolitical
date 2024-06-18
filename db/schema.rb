@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_17_234331) do
+ActiveRecord::Schema.define(version: 2024_06_17_230728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,20 +23,6 @@ ActiveRecord::Schema.define(version: 2024_04_17_234331) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
-  end
-
-  create_table "active_admin_comments", force: :cascade do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -65,18 +51,6 @@ ActiveRecord::Schema.define(version: 2024_04_17_234331) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-  create_table "admin_users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_admin_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
   create_table "admins", force: :cascade do |t|
@@ -118,6 +92,9 @@ ActiveRecord::Schema.define(version: 2024_04_17_234331) do
     t.datetime "updated_at", null: false
     t.integer "total_votes"
     t.bigint "itemized_expenditures_id"
+    t.string "campaignable_type"
+    t.bigint "campaignable_id"
+    t.index ["campaignable_type", "campaignable_id"], name: "index_campaigns_on_campaignable"
     t.index ["district_id"], name: "index_campaigns_on_district_id"
     t.index ["itemized_expenditures_id"], name: "index_campaigns_on_itemized_expenditures_id"
   end
@@ -273,6 +250,7 @@ ActiveRecord::Schema.define(version: 2024_04_17_234331) do
     t.bigint "registration_history_id"
     t.boolean "archived", default: false
     t.string "logo"
+    t.boolean "at_large_districts"
     t.index ["registration_history_id"], name: "index_jurisdictions_on_registration_history_id"
   end
 
@@ -371,10 +349,6 @@ ActiveRecord::Schema.define(version: 2024_04_17_234331) do
     t.integer "voted_2020"
     t.integer "prop_6_yes"
     t.integer "prop_6_no"
-    t.integer "prop_51_yes"
-    t.integer "prop_51_no"
-    t.integer "prop_62_yes"
-    t.integer "prop_62_no"
     t.integer "prop_15_yes"
     t.integer "prop_15_no"
     t.integer "prop_16_yes"
@@ -402,6 +376,10 @@ ActiveRecord::Schema.define(version: 2024_04_17_234331) do
     t.integer "total_population"
     t.float "newsom_2022"
     t.float "dahle_2022"
+    t.integer "prop_1_yes"
+    t.integer "prop_1_no"
+    t.integer "registered_2022"
+    t.integer "voted_2022"
     t.index ["district_id"], name: "index_statistical_data_on_district_id"
     t.index ["jurisdiction_id"], name: "index_statistical_data_on_jurisdiction_id"
   end

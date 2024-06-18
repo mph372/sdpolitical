@@ -1,55 +1,64 @@
-<% statistical_datum = @jurisdiction.statistical_datum.last %>
-<% registration_snapshot = statistical_datum.registration_snapshots.last %>
-<div><%if user_signed_in? && current_user.admin? %><%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %><%end%> </div>
-    <% if statistical_datum.registration_snapshots.present? %>
-    <div class="card shadow-sm mb-3 bg-white rounded primary-border">
-        <div class="card-header">
-        Current Registration Data (As of <%= registration_snapshot.snapshot_date.strftime("%B %d, %Y") %>)
-        </div>
-        <table class="table table-sm">
-            <thead class="thead-light">
-                    <th class="pl-4 col-3">Total Voters</th>
-                    <th class="col-2">DEM</th>
-                    <th class="col-2">REP</th>
-                    <th class="col-2">OTHER</th>
-                    <th class="col-2">MARGIN</th>
-            </thead>
+<% if local_assigns[:jurisdiction].present? %>
+  <% statistical_datum = jurisdiction.statistical_datum.last %>
+  <% registration_snapshot = statistical_datum.registration_snapshots.last %>
+<% elsif local_assigns[:district].present? %>
+  <% statistical_datum = district.statistical_datum.last %>
+  <% registration_snapshot = statistical_datum.registration_snapshots.last if statistical_datum.present? %>
+<% end %>
 
-            <tbody>
-              <tr>
-                <td class="pl-4"><%= number_with_delimiter(registration_snapshot.total_registered, :delimiter => ',') %></td>
-                <td><%= number_with_precision(registration_snapshot.democrat_percentage, precision: 2) %>%</td>
-                <td><%= number_with_precision(registration_snapshot.republican_percentage, precision: 2) %>%</td>
-                <td><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
-                <td>
-                  <% if registration_snapshot.registration_advantage > 0 %>
-                    <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
-                  <% else %>
-                    <strong><span class="text-nowrap" style="color: #911111;">R +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
-                  <% end %>
-                </td>
-              </tr>
-            </tbody>
+<% if user_signed_in? && current_user.admin? %>
+  <div>
+    <%= link_to 'Edit Statistical Data', edit_statistical_datum_path(statistical_datum) %>
+  </div>
+<% end %>
 
-        </table>
-    </div>
-    <%end%>
-    <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+<% if registration_snapshot.present? %>
+  <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <div class="card-header">
-        Candidate Performance <%if user_signed_in? && current_user.admin?%><%end%>
-        </div>   
+      Current Registration Data (As of <%= registration_snapshot.snapshot_date.strftime("%B %d, %Y") %>)
+    </div>
     <table class="table table-sm">
-         
+      <thead class="thead-light">
+        <th class="pl-4 col-3">Total Voters</th>
+        <th class="col-2">DEM</th>
+        <th class="col-2">REP</th>
+        <th class="col-2">OTHER</th>
+        <th class="col-2">MARGIN</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="pl-4"><%= number_with_delimiter(registration_snapshot.total_registered, delimiter: ',') %></td>
+          <td><%= number_with_precision(registration_snapshot.democrat_percentage, precision: 2) %>%</td>
+          <td><%= number_with_precision(registration_snapshot.republican_percentage, precision: 2) %>%</td>
+          <td><%= number_with_precision(registration_snapshot.other_percentage, precision: 2) %>%</td>
+          <td>
+            <% if registration_snapshot.registration_advantage > 0 %>
+              <strong><span class="text-nowrap" style="color: #35469C;">D +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
+            <% else %>
+              <strong><span class="text-nowrap" style="color: #911111;">R +<%= number_with_precision(registration_snapshot.registration_advantage.abs, precision: 2) %>%</span></strong>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<% if statistical_datum.present? %>
+  <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+    <div class="card-header">
+      Candidate Performance
+    </div>
+    <table class="table table-sm">
       <thead class="thead-light">
         <th class="col-3 pl-4">Election</th>
         <th class="col-2 d-none d-lg-table-cell">DEM</th>
         <th class="col-2 d-none d-lg-table-cell">REP</th>
         <th class="col-2">Margin</th>
+        <th class="col-2">Turnout</th>
       </thead>
-
       <tbody>
-
-      <% if statistical_datum.newsom_2022.present? %>
+       <% if statistical_datum.newsom_2022.present? %>
         <tr>
           <td class="pl-4">2022 Gubernatorial</td>
           <td class="d-none d-lg-table-cell">Newsom - <%= statistical_datum.newsom_2022 %>%</td>
@@ -61,7 +70,7 @@
                 <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2022.abs, precision: 1) %>%</span>
               <%end%> 
           </td>    
-           <td><%= number_with_precision(statistical_datum.turnout_2022, precision: 2) %>%</td>   
+           <td><%= statistical_datum.turnout_2022 %></td>   
         </tr>
         <%end%>
 
@@ -77,7 +86,7 @@
                 <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2020.abs, precision: 2) %>%</span>
               <%end%> 
           </td>   
-           <td><%= number_with_precision(statistical_datum.turnout_2020, precision: 2) %>%</td>    
+           <td><%= statistical_datum.turnout_2020 %></td>    
         </tr>
         <%end%>
 
@@ -93,7 +102,7 @@
                 <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2018.abs, precision: 2) %>%</span>
               <%end%> 
           </td> 
-          <td><%= number_with_precision(statistical_datum.turnout_2018, precision: 2) %>%</td>
+          <td><%= statistical_datum.turnout_2018 %></td>
         </tr>
         <%end%>
 
@@ -109,7 +118,7 @@
                 <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2016.abs, precision: 2) %>%</span>
               <%end%> 
           </td>   
-          <td><%= number_with_precision(statistical_datum.turnout_2016, precision: 2) %>%</td>    
+          <td><%= statistical_datum.turnout_2016 %></td>    
         </tr>
         <%end%>
 
@@ -125,7 +134,7 @@
                 <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2014.abs, precision: 2) %>%</span>
               <%end%> 
           </td>      
-           <td><%= number_with_precision(statistical_datum.turnout_2014, precision: 2) %>%</td> 
+           <td><%= statistical_datum.turnout_2014 %></td> 
         </tr>
         <%end%>
 
@@ -141,32 +150,59 @@
                 <span class="gop-text font-weight-bold">R +<%= number_with_precision(statistical_datum.winner_2012.abs, precision: 2) %>%</span>
               <%end%> 
           </td>   
-          <td><%= number_with_precision(statistical_datum.turnout_2012, precision: 2) %>%</td>    
+          <td><%= statistical_datum.turnout_2012 %></td>    
         </tr>
         <%end%>
-
       </tbody>
     </table>
   </div>
-<% if statistical_datum.prop_6_yes.present? || statistical_datum.prop_15_yes.present? || statistical_datum.prop_16_yes.present? || statistical_datum.prop_21_yes.present? || statistical_datum.prop_1_yes.present? %>
-    <div class="card shadow-sm mb-3 bg-white rounded primary-border">
-    <table class="table table-sm ">
-        <div class="card-header">
-        Ballot Measure Performance
-        </div> 
-      <thead class="thead-light">
-        <th class="pl-4 col-3">Ballot Item</th>
-        <th class="col-4">Description</th>
-        <th>Yes</th>
-        <th>No</th>
-        <th>Margin</th>
-        <th></th>
+
+  <% if statistical_datum.total_population.present? && statistical_datum.total_population > 0 %>
+  <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+    <div class="card-header">
+      Census Data
+    </div>
+    <table class="table table-sm">
+<thead class="thead-light">
+        <th class="pl-4 d-none d-md-table-cell">Total Population</th>
+        <th class="pl-4 d-md-none">Total</th>
+        <th>White</th>
+        <th>Hispanic</th>
+        <th>Black</th>
+        <th>Asian</th>
+        <th class="d-none d-md-table-cell">Native</th>
+        <th class="d-none d-md-table-cell">Pacific</th>
       </thead>
-
       <tbody>
-
-
-        <% if statistical_datum.prop_6_yes.present? %>
+      <tr>
+        <td class="pl-4"><%= number_with_delimiter(statistical_datum.total_population, delimiter: ",") %></td>
+        <td><%= statistical_datum.white %>%</td>
+        <td><%= statistical_datum.hispanic %>%</td>
+        <td><%= statistical_datum.black %>%</td>
+        <td><%= statistical_datum.asian %>%</td>
+        <td class="d-none d-md-table-cell"><%= statistical_datum.native %>%</td>
+        <td class="d-none d-md-table-cell"><%= statistical_datum.pacific %>%</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+ <%end%>
+    <% if statistical_datum.present? && (statistical_datum.prop_6_yes.present? || statistical_datum.prop_15_yes.present? || statistical_datum.prop_16_yes.present? || statistical_datum.prop_21_yes.present? || statistical_datum.prop_1_yes.present?) %>
+    <div class="card shadow-sm mb-3 bg-white rounded primary-border">
+        <table class="table table-sm">
+        <div class="card-header">
+            Ballot Measure Performance
+        </div>
+        <thead class="thead-light">
+            <th class="pl-4 col-3">Ballot Item</th>
+            <th class="col-4">Description</th>
+            <th>Yes</th>
+            <th>No</th>
+            <th>Margin</th>
+            <th></th>
+        </thead>
+        <tbody>
+           <% if statistical_datum.prop_6_yes.present? %>
           <tr>
             <td class="pl-4"><a href="https://ballotpedia.org/California_Proposition_6,_Voter_Approval_for_Future_Gas_and_Vehicle_Taxes_and_2017_Tax_Repeal_Initiative_(2018)" target="_blank">Prop 6 (2018)</a></td>
             <td>Gas Tax Repeal</td>
@@ -249,9 +285,9 @@
             </td>
             <td></td>
           </tr>
-        <%end%>               
-
-      </tbody>
-    </table>
-  </div>
-  <%end%>
+        <%end%> 
+        </tbody>
+        </table>
+    </div>
+    <% end %>
+<% end %>

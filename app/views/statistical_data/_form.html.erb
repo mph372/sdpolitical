@@ -1,73 +1,96 @@
-
-
-
 <div class="container bg-white shadow-sm border rounded mt-2">
-<br>
-<%= bootstrap_form_for(@statistical_datum, label_errors: true) do |f| %>
-<% if @statistical_datum.errors.any? %>
-    <% @statistical_datum.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+  <br>
+  <%= bootstrap_form_for(@statistical_datum, label_errors: true) do |f| %>
+    <% if @statistical_datum.errors.any? %>
+      <% @statistical_datum.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
     <% end %>
-  <% end %>
 
+    <div class="row">
+      <div class="col-md">
+        <% selected_jurisdiction_id = f.object.new_record? ? params[:jurisdiction_id] : f.object.jurisdiction_id %>
+        <%= f.select(:jurisdiction_id, options_for_select(Jurisdiction.order(:name).pluck(:name, :id), selected_jurisdiction_id), include_blank: true) %>
+      </div>
+      <div class="col-md">
+        <% selected_district_id = f.object.new_record? ? params[:district_id] : f.object.district_id %>
+        <%= f.select(:district_id, options_for_select(District.order(jurisdiction_id: :asc, name: :desc).map { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id] }, selected_district_id), include_blank: true) %>
+      </div>
+      <div class="col-md">
+        <%= f.select :district_year, options_for_select(['2010', '2020'], '2020'), required: true %>
+      </div>
+    </div>
+    <hr>
 
-<div class="row">
-  <div class="col-md">
-    <% selected_jurisdiction_id = f.object.new_record? ? params[:jurisdiction_id] : f.object.jurisdiction_id %>
-    <%= f.select(:jurisdiction_id, options_for_select(Jurisdiction.order(:name).pluck(:name, :id), selected_jurisdiction_id), include_blank: true) %>
-  </div>
-  <div class="col-md">
-    <% selected_district_id = f.object.new_record? ? params[:district_id] : f.object.district_id %>
-    <%= f.select(:district_id, options_for_select(District.order(jurisdiction_id: :asc, name: :desc).map { |v| ["#{v.jurisdiction.name} - #{v.name} (District #{v.district}) #{v.term_expires}", v.id] }, selected_district_id), include_blank: true) %>
-  </div>
-  <div class="col-md">
-    <%= f.select :district_year, options_for_select(['2010', '2020'], '2020'), required: true %>
-  </div>
-</div>
-<hr>
+    <%= f.number_field :total_population, label: "Total Population (integer)", step: 1 %>
 
-<%= f.number_field :total_population, label: "Total Population", step: :any %>
-<div class="row">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.number_field :white, label: "White (float)", step: :any %>
+        <%= f.number_field :hispanic, label: "Hispanic (float)", step: :any %>
+        <%= f.number_field :black, label: "Black (float)", step: :any %>
+        <%= f.number_field :asian, label: "Asian (float)", step: :any %>
+        <%= f.number_field :native, label: "Native (float)", step: :any %>
+        <%= f.number_field :pacific, label: "Pacific (float)", step: :any %>
+      </div>
 
-
-            <div class="col-md text-nowrap">
-             
-              <%= f.number_field :white, label: "White", step: :any %>
-              <%= f.number_field :hispanic, label: "Hispanic", step: :any %>
-              <%= f.number_field :black, label: "Black", step: :any %>
-
-            </div>
-            <div class="col-md text-nowrap">
-              
-              <%= f.number_field :asian, label: "Asian", step: :any %>
-              <%= f.number_field :native, label: "Native", step: :any %>
-              <%= f.number_field :pacific, label: "Pacific", step: :any %>            
-  
-            </div>
-        
-      
-       
-      
-        <div class="col-md dem-text "> 
-          <%= f.number_field :newsom_2022, label: "Newsom %", step: :any %>
-          <%= f.number_field :biden_2020, label: "Biden %", step: :any %>
-          <%= f.number_field :newsom_2018, label: "Newsom %", step: :any %>
-          <%= f.number_field :clinton_2016, label: "Clinton %", step: :any %>
-         
-        </div>
-        <div class="col-md gop-text">
-          <%= f.number_field :dahle_2022, label: "Dahle %", step: :any %>
-          <%= f.number_field :trump_2020, label: "Trump '20 %", step: :any %>
-          <%= f.number_field :cox_2018, label: "Cox %", step: :any %>
-          <%= f.number_field :trump_2016, label: "Trump '16 %", step: :any %>
-          
-        </div>  
-
+      <div class="col-md-6">
+        <%= f.number_field :registered_2022, label: "Registered 2022 (integer)", step: 1 %>
+        <%= f.number_field :voted_2022, label: "Voted 2022 (integer)", step: 1 %>
+        <%= f.number_field :registered_2020, label: "Registered 2020 (integer)", step: 1 %>
+        <%= f.number_field :voted_2020, label: "Voted 2020 (integer)", step: 1 %>
+        <%= f.number_field :registered_2018, label: "Registered 2018 (integer)", step: 1 %>
+        <%= f.number_field :voted_2018, label: "Voted 2018 (integer)", step: 1 %>
+        <%= f.number_field :registered_2016, label: "Registered 2016 (integer)", step: 1 %>
+        <%= f.number_field :voted_2016, label: "Voted 2016 (integer)", step: 1 %>
+        <%= f.number_field :registered_2014, label: "Registered 2014 (integer)", step: 1 %>
+        <%= f.number_field :voted_2014, label: "Voted 2014 (integer)", step: 1 %>
+        <%= f.number_field :registered_2012, label: "Registered 2012 (integer)", step: 1 %>
+        <%= f.number_field :voted_2012, label: "Voted 2012 (integer)", step: 1 %>
+      </div>
     </div>
 
+    <div class="row">
+      <div class="col-md-6 dem-text">
+        <%= f.number_field :newsom_2022, label: "Newsom 2022 % (float)", step: :any %>
+        <%= f.number_field :biden_2020, label: "Biden 2020 % (float)", step: :any %>
+        <%= f.number_field :newsom_2018, label: "Newsom 2018 % (float)", step: :any %>
+        <%= f.number_field :clinton_2016, label: "Clinton 2016 % (float)", step: :any %>
+        <%= f.number_field :obama_2012, label: "Obama 2012 % (float)", step: :any %>
+        <%= f.number_field :brown_2014, label: "Brown 2014 % (float)", step: :any %>
+      </div>
 
-  <div class="actions">
+      <div class="col-md-6 gop-text">
+        <%= f.number_field :dahle_2022, label: "Dahle 2022 % (float)", step: :any %>
+        <%= f.number_field :trump_2020, label: "Trump 2020 % (float)", step: :any %>
+        <%= f.number_field :cox_2018, label: "Cox 2018 % (float)", step: :any %>
+        <%= f.number_field :trump_2016, label: "Trump 2016 % (float)", step: :any %>
+        <%= f.number_field :romney_2012, label: "Romney 2012 % (float)", step: :any %>
+        <%= f.number_field :kashkari_2014, label: "Kashkari 2014 % (float)", step: :any %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.number_field :prop_1_yes, label: "Prop 1 Yes (integer)", step: 1 %>
+        <%= f.number_field :prop_1_no, label: "Prop 1 No (integer)", step: 1 %>
+        <%= f.number_field :prop_6_yes, label: "Prop 6 Yes (integer)", step: 1 %>
+        <%= f.number_field :prop_6_no, label: "Prop 6 No (integer)", step: 1 %>
+      </div>
+
+      <div class="col-md-6">
+        <%= f.number_field :prop_15_yes, label: "Prop 15 Yes (integer)", step: 1 %>
+        <%= f.number_field :prop_15_no, label: "Prop 15 No (integer)", step: 1 %>
+        <%= f.number_field :prop_16_yes, label: "Prop 16 Yes (integer)", step: 1 %>
+        <%= f.number_field :prop_16_no, label: "Prop 16 No (integer)", step: 1 %>
+        <%= f.number_field :prop_21_yes, label: "Prop 21 Yes (integer)", step: 1 %>
+        <%= f.number_field :prop_21_no, label: "Prop 21 No (integer)", step: 1 %>
+      </div>
+    </div>
+
+    <div class="actions">
       <%= f.submit %>
-  </div>
+    </div>
 
-<%end%>
+  <% end %>
+</div>

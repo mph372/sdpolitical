@@ -31,9 +31,6 @@ class CampaignsController < ApplicationController
   def create
     @campaign = Campaign.new(campaign_params)
 
-    
-    
-
     respond_to do |format|
       if @campaign.save
         format.html { redirect_to @campaign, notice: 'Campaign was successfully created.' }
@@ -48,10 +45,7 @@ class CampaignsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /campaigns/1
-  # PATCH/PUT /campaigns/1.json
   def update
-
     respond_to do |format|
       if @campaign.update(campaign_params)
         format.html { redirect_to @campaign, notice: 'Campaign was successfully updated.' }
@@ -59,7 +53,6 @@ class CampaignsController < ApplicationController
         @campaign.candidates.each do |candidate|
           candidate.set_active
         end
-        
       else
         format.html { render :edit }
         format.json { render json: @campaign.errors, status: :unprocessable_entity }

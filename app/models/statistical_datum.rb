@@ -3,24 +3,36 @@ class StatisticalDatum < ApplicationRecord
   belongs_to :jurisdiction, optional: true
   has_many :registration_snapshots, dependent: :destroy
 
+  include ActionView::Helpers::NumberHelper
+
+  def turnout_2022
+    return "N/A" if voted_2022.nil? || registered_2022.nil?
+    number_to_percentage((voted_2022.to_f / registered_2022.to_f) * 100, precision: 2)
+  end
+
   def turnout_2020
-    (voted_2020.to_f / registered_2020.to_f) * 100
+    return "N/A" if voted_2020.nil? || registered_2020.nil?
+    number_to_percentage((voted_2020.to_f / registered_2020.to_f) * 100, precision: 2)
   end
 
   def turnout_2018
-    (voted_2018.to_f / registered_2018.to_f) * 100
+    return "N/A" if voted_2018.nil? || registered_2018.nil?
+    number_to_percentage((voted_2018.to_f / registered_2018.to_f) * 100, precision: 2)
   end
 
   def turnout_2016
-    (voted_2016.to_f / registered_2016.to_f) * 100
+    return "N/A" if voted_2016.nil? || registered_2016.nil?
+    number_to_percentage((voted_2016.to_f / registered_2016.to_f) * 100, precision: 2)
   end
 
   def turnout_2014
-    (voted_2014.to_f / registered_2014.to_f) * 100
+    return "N/A" if voted_2014.nil? || registered_2014.nil?
+    number_to_percentage((voted_2014.to_f / registered_2014.to_f) * 100, precision: 2)
   end
 
   def turnout_2012
-    (voted_2012.to_f / registered_2012.to_f) * 100
+    return "N/A" if voted_2012.nil? || registered_2012.nil?
+    number_to_percentage((voted_2012.to_f / registered_2012.to_f) * 100, precision: 2)
   end
 
   def winner_2022
@@ -67,12 +79,8 @@ class StatisticalDatum < ApplicationRecord
     prop_6_yes.to_f / (prop_6_yes.to_f + prop_6_no.to_f) * 100
   end
 
-  def prop_62_yes_result
-    prop_62_yes.to_f / (prop_62_yes.to_f + prop_62_no.to_f) * 100
-  end
-
-  def prop_51_yes_result
-    prop_51_yes.to_f / (prop_51_yes.to_f + prop_51_no.to_f) * 100
+  def prop_1_yes_result
+    prop_1_yes.to_f / (prop_1_yes.to_f + prop_1_no.to_f) * 100
   end
 
   def prop_15_yes_result
@@ -91,12 +99,8 @@ class StatisticalDatum < ApplicationRecord
     prop_6_no.to_f / (prop_6_yes.to_f + prop_6_no.to_f) * 100
   end
 
-  def prop_62_no_result
-    prop_62_no.to_f / (prop_62_yes.to_f + prop_62_no.to_f) * 100
-  end
-
-  def prop_51_no_result
-    prop_51_no.to_f / (prop_51_yes.to_f + prop_51_no.to_f) * 100
+  def prop_1_no_result
+    prop_1_no.to_f / (prop_1_yes.to_f + prop_1_no.to_f) * 100
   end
 
   def prop_15_no_result
@@ -115,12 +119,8 @@ class StatisticalDatum < ApplicationRecord
     prop_6_yes_result - prop_6_no_result
   end
 
-  def prop_62_difference
-    prop_62_yes_result - prop_62_no_result
-  end
-
-  def prop_51_difference
-    prop_51_yes_result - prop_51_no_result
+  def prop_1_difference
+    prop_1_yes_result - prop_1_no_result
   end
 
   def prop_15_difference

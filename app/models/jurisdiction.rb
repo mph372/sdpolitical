@@ -11,7 +11,7 @@ class Jurisdiction < ApplicationRecord
     belongs_to :registration_history, optional: true
     has_many :statistical_datum
     has_many :registration_snapshots, through: :statistical_datum
-    has_one :campaign_finance_module
+    has_many :campaigns, through: :districts
     mount_uploader :map_url, JurisdictionMapUploader
 
     def person
