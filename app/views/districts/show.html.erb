@@ -45,15 +45,17 @@
 
   <div class="row">
     <div class="col">
-      <% if @district.at_large_district == false %>
-        <% if @district.campaigns.active.present?%>
-        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates, campaign: @district.campaigns.active.last}%>
-        <%end%>
-      <%else %>
-        <% if @district.jurisdiction.campaigns.active.present?%>
-        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.jurisdiction.campaigns.active.last.candidates, campaign: @district.jurisdiction.campaigns.active.last}%>
-        <%end%>
-      <%end%>
+     <% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
+        <div class="row">
+          <div class="col">
+            <% if @district.at_large_district == false %>
+              <% statistical_datum = @district.statistical_datum.last || @district.jurisdiction.statistical_datum.last %>
+              <%= render partial: 'shared/statistical_datum', locals: { district: @district, statistical_datum: statistical_datum } %>
+              <hr>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 
