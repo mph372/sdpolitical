@@ -20,31 +20,32 @@ class DistrictsController < ApplicationController
   # GET /districts/1
   # GET /districts/1.json
   def show
-
-    set_meta_tags title: @district.full_district_name,
-                site: 'The Ballot Book',
-                description: @district.description,
-                keywords: @district.keywords  
-
     @district = District.includes(:person, :statistical_datum).find(params[:id])
-    @incumbents = @district.person
-    # @candidates = @district.campaigns.last.candidates
-    @people = Person.all
-    @statistical_datum = @district.statistical_datum
-    
-
-    respond_to do |format|
-      format.html
-      format.pdf do
-        pdf = Prawn::Document.new
-        pdf = DistrictPDF.new(@district)
-        send_data pdf.render, filename: "#{@district.jurisdiction.name}_#{@district.name}_#{@district.district}.pdf",
-                              type: "application/pdf"
-                              
-
+  
+    if @district.jurisdiction.at_large_districts
+      redirect_to @district.jurisdiction, notice: 'This district is part of an at-large jurisdiction.'
+    else
+      set_meta_tags title: @district.full_district_name,
+                    site: 'The Ballot Book',
+                    description: @district.description,
+                    keywords: @district.keywords  
+  
+      @incumbents = @district.person
+      @people = Person.all
+      @statistical_datum = @district.statistical_datum
+  
+      respond_to do |format|
+        format.html
+        format.pdf do
+          pdf = Prawn::Document.new
+          pdf = DistrictPDF.new(@district)
+          send_data pdf.render, filename: "#{@district.jurisdiction.name}_#{@district.name}_#{@district.district}.pdf",
+                                type: "application/pdf"
+        end
       end
     end
   end
+  
 
   # GET /districts/new
   def new
@@ -99,20 +100,7 @@ class DistrictsController < ApplicationController
       format.json { head :no_content }
     end
   end
-# Add and remove districts from/to dashboard for current user
-  def dashboard
-    type = params[:type]
-    if type == "add"
-      current_user.dashboard_additions << @district
-      redirect_to dashboard_index_path, notice: "#{@district.jurisdiction.name} - #{@district.district} has been added to your dashboard!"
-    elsif type == "remove"
-      current_user.dashboard_additions.delete(@district)
-      redirect_to dashboard_index_path, notice: "#{@district.jurisdiction.name} - #{@district.name} - #{@district.district} has been removed from your dashboard!"
-    else
-      # type is missing, nothing should happen
-      redirect_to district_path(@district), notice: "Looks like nothing happened. Try again."
-    end
-  end
+
 
   def assign_person
     person_id = district_params[:person_id]
