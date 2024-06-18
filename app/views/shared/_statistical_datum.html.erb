@@ -49,6 +49,8 @@
 <% end %>
 
 <% if statistical_datum.present? %>
+  <% has_candidate_data = statistical_datum.newsom_2022.present? || statistical_datum.biden_2020.present? || statistical_datum.newsom_2018.present? || statistical_datum.clinton_2016.present? || statistical_datum.brown_2014.present? || statistical_datum.obama_2012.present? %>
+  <% if has_candidate_data %>
   <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <div class="card-header">
       Candidate Performance
@@ -160,7 +162,8 @@
       </tbody>
     </table>
   </div>
-
+  <%end%>
+  
   <% if statistical_datum.total_population.present? && statistical_datum.total_population > 0 %>
   <div class="card shadow-sm mb-3 bg-white rounded primary-border">
     <div class="card-header">
