@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_17_230728) do
+ActiveRecord::Schema.define(version: 2024_06_18_151849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,7 +178,6 @@ ActiveRecord::Schema.define(version: 2024_06_17_230728) do
     t.bigint "jurisdiction_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "incumbent_id"
     t.boolean "at_large_district", default: false
     t.integer "term_expires"
     t.integer "number_of_winners"
@@ -192,7 +191,6 @@ ActiveRecord::Schema.define(version: 2024_06_17_230728) do
     t.string "note"
     t.string "district_map"
     t.index ["former_office_id"], name: "index_districts_on_former_office_id"
-    t.index ["incumbent_id"], name: "index_districts_on_incumbent_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
     t.index ["person_id"], name: "index_districts_on_person_id"
     t.index ["registration_history_id"], name: "index_districts_on_registration_history_id"

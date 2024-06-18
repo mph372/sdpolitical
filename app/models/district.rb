@@ -3,9 +3,6 @@ class District < ApplicationRecord
 
 
   belongs_to :jurisdiction 
-  # has_many :candidates, inverse_of: :district, class_name: 'Person'
-  # belongs_to :incumbent, inverse_of: :incumbent_district, class_name: 'Person', foreign_key: 'incumbent_id', optional: true
-  has_many :reports, through: :persons
   has_many :election_histories, dependent: :destroy 
   has_many :historical_candidates, through: :election_histories
   has_many :statistical_datum, dependent: :destroy
@@ -15,26 +12,10 @@ class District < ApplicationRecord
   has_many :campaigns, dependent: :destroy
   has_many :candidates, through: :campaigns
   has_one :person
-  has_one :campaign_finance_module
   accepts_nested_attributes_for :person
   nilify_blanks only: [:person_id]
   mount_uploader :district_map, DistrictMapUploader
 
-
-  def person_id=(new_person_id)
-    return if new_person_id.blank?
-    
-    # Unlink current incumbent if different
-    if incumbent_id != new_person_id
-      Person.where(district_id: id).update_all(district_id: nil, archived: true)
-    end
-
-    # Link new incumbent
-    Person.find_by(id: new_person_id).try(:update, district_id: id, archived: false)
-
-    # Set the new incumbent_id
-    self[:incumbent_id] = new_person_id
-  end
 
   def self.ransackable_attributes(auth_object = nil)
     %w[name district term_expires number_of_winners district_title archived note] + _ransackers.keys

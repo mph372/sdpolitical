@@ -1,84 +1,109 @@
-
 <div class="container bg-white shadow-sm border rounded mt-2 pb-4">
-<br>
-<%= bootstrap_form_for(@district, label_errors: true) do |f| %>
-<% if @district.errors.any? %>
-    <% @district.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+  <br>
+  <%= bootstrap_form_for(@district, label_errors: true) do |f| %>
+    <% if @district.errors.any? %>
+      <% @district.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
     <% end %>
-  <% end %>
 
-<div class="row p-3">
-  <div class="col-md-3">
-    <h5 class="heavy">District Overview</h5>
-  </div>
-  <div class="col-md-9">
-      <div class="row">
-        <div class="col-md">
-          <%= f.text_field :name, label: "Office Name" %>
-        </div>   
-        <div class="col-md"> 
-          <%= f.text_field :district, label: "District Number/Type" %>
-        </div>
-        <div class="col-md">
-          <%= f.check_box :is_seat, label: "Is a Seat" %>
-          <%= f.check_box :is_area, label: "Is Area" %>
-          <%= f.check_box :at_large_district, label: "District is At Large" %>
-        </div>
-
-      </div>  
-      <div class="row">
-        <div class="col-md"> 
-         <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
-        </div>  
-        <div class="col-md">  
-          <%= f.select(:person_id, Person.order('last_name ASC').all.collect { |v| [ " #{v.last_name}, #{v.first_name}", v.id ] }, selected: @district.person_id, include_blank: true) %>
-        </div>
-        <div class="col-md">  
-           <%= f.select :term_expires, ['', '2024', '2026', '2028'], {:include_blank => true}, label: "Ballot Cycle" %>  
-        </div>
-      </div>  
-
+    <div class="row p-3">
+      <div class="col-md-3">
+        <h5 class="heavy">District Overview</h5>
+      </div>
+      <div class="col-md-9">
         <div class="row">
-          <div class="col"><%= f.select :district_title, ["Representative", "Senator", "Assemblymember", "Supervisor", "Mayor", "Councilmember", "Trustee", "Board Member", "Director", "District Attorney", "Sheriff", "Treasurer-Tax Collector", "Assessor/ Recorder/ County Clerk", "City Clerk", "City Treasurer", "City Attorney"], {:include_blank => true} %></div>
-        </div>
-
-          <div class="field">
-            <%= f.label :district_map %><br>
-            <%= f.file_field :district_map %>
+          <div class="col-md">
+            <%= f.text_field :name, label: "Office Name" %>
+          </div>   
+          <div class="col-md"> 
+            <%= f.text_field :district, label: "District Number/Type" %>
           </div>
-
+          <div class="col-md">
+            <%= f.check_box :is_seat, label: "Is a Seat" %>
+            <%= f.check_box :is_area, label: "Is Area" %>
+            <%= f.check_box :at_large_district, label: "District is At Large" %>
+          </div>
+        </div>  
         <div class="row">
-          <div class="col"><%= f.text_area :note, label: "District Analysis" %></div>
+          <div class="col-md"> 
+            <%= f.select(:jurisdiction_id, Jurisdiction.all.collect { |v| [ v.name, v.id ] }, {:include_blank => true}) %>
+          </div>  
+          <div class="col-md">  
+            <%= f.select(:person_id, options_for_select(Person.order('last_name ASC').pluck('last_name, first_name, id').map { |last_name, first_name, id| ["#{last_name}, #{first_name}", id] }, selected: @district.person_id), { include_blank: true }, label: 'Select Existing Person') %>
+          </div>
+          <div class="col-md">  
+            <%= f.select :term_expires, ['', '2024', '2026', '2028'], {:include_blank => true}, label: "Ballot Cycle" %>  
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col">
+            <%= f.select :district_title, ["Representative", "Senator", "Assemblymember", "Supervisor", "Mayor", "Councilmember", "Trustee", "Board Member", "Director", "District Attorney", "Sheriff", "Treasurer-Tax Collector", "Assessor/ Recorder/ County Clerk", "City Clerk", "City Treasurer", "City Attorney"], {:include_blank => true} %>
+          </div>
         </div>
-  </div>
+        <div class="field">
+          <%= f.label :district_map %><br>
+          <%= f.file_field :district_map %>
+        </div>
+        <div class="row">
+          <div class="col">
+            <%= f.text_area :note, label: "District Analysis" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    
+    <div class="row p-3">
+      <div class="col-md-3">
+        <h5 class="heavy">New Person</h5>
+      </div>
+      <div class="col-md-9">
+        <%= f.fields_for :person, (@person || Person.new) do |person_form| %>
+          <div class="row">
+            <div class="col">
+              <%= person_form.text_field :first_name, value: '', placeholder: 'First Name' %>
+            </div>
+            <div class="col">
+              <%= person_form.text_field :last_name, value: '', placeholder: 'Last Name' %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= person_form.file_field :image, label: "Headshot" %>
+            </div>
+            <div class="col">
+              <%= person_form.text_field :remote_image_url, value: '', label: "Or Image URL", placeholder: 'Image URL' %>  
+            </div>
+          </div>
+          <div class="row">
+          <div class="col">
+            <%= person_form.select :party, ['Republican', 'Democrat', 'Declined to State', 'Green', 'Peace & Freedom', 'Libertarian', 'Reform', 'Natural Law', 'American Independent', 'Unknown'], { include_blank: true, selected: '' }, label: 'Party' %>
+           </div>
+            <div class="col">
+              <%= person_form.text_field :professional_career, value: '', placeholder: 'Professional Career' %>
+            </div>
+          </div>    
+          <div class="row">
+            <div class="col">
+              <%= person_form.number_field :term, value: '', label: "Term Limit Year", placeholder: 'Term Limit Year' %> 
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= person_form.text_field :campaign_website, value: '', placeholder: 'Campaign Website URL' %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <%= person_form.text_area :bio, value: '', rows: 4, label: "Biography", placeholder: 'Enter biography here' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <%= f.submit class: 'btn btn-primary' %>
+    <br>
+  <% end %>
 </div>
-
-<hr>
-
-
-
-
-
-
-
-<%= f.submit %>  
-
-<% end %>
-
-</div>
-
-<script>
-
-$(document).on('change', '#runningFor', function(){
-    debugger;
-    if($(this).prop('checked')){
-        $('#runningForPicker').removeAttr('disabled');
-        
-    } else {
-        $('#runningForPicker').attr('disabled', 'disabled');
-        
-    }
-});
-
-</script>
