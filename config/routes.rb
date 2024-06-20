@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     resources :contests, only: [:show]
     resources :uploads, only: [:create]
   end
-  
+
   
 
 

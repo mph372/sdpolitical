@@ -20,6 +20,8 @@ class DistrictsController < ApplicationController
   # GET /districts/1
   # GET /districts/1.json
   def show
+    raise "Simulating an internal server error for testing"
+
     @district = District.includes(:person, :statistical_datum).find(params[:id])
   
     if @district.jurisdiction.at_large_districts

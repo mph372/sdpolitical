@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Internal Server Error</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+        .message { font-size: 24px; }
+        .home-link { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="message">Oops! Something went wrong.</div>
+    <div>We apologize for the inconvenience. Our team has been notified.</div>
+    <% if user_signed_in? && current_user.admin? %>
+        <div><%= @exception.message %></div>
+    <% end %>
+    <div class="home-link"><a href="/">Go back to Homepage</a></div>
+</body>
+</html>
