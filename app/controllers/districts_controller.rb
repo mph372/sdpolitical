@@ -164,7 +164,7 @@ class DistrictsController < ApplicationController
     
       if person_id.present?
         @person = Person.find_by(id: person_id)
-    
+        
         if @person
           @person.update(district_id: @district.id, archived: false)
         else
@@ -172,13 +172,16 @@ class DistrictsController < ApplicationController
           return false
         end
       else
-        person_attributes = district_params[:person_attributes]
-        if person_attributes[:first_name].blank? || person_attributes[:last_name].blank?
-          @district.errors.add(:base, "First name and last name can't be blank for new person")
+        # Ensure a new person is created without a manually set ID
+        person_attributes = district_params[:person_attributes].except(:id)
+        @person = @district.build_person(person_attributes)
+        
+        if @person.save
+          @person.update(district_id: @district.id, archived: false)
+        else
+          @district.errors.add(:person_attributes, @person.errors.full_messages.to_sentence)
           return false
         end
-    
-        @district.build_person(person_attributes)
       end
     
       # Unassign the previous person if it's not the current one
@@ -190,6 +193,7 @@ class DistrictsController < ApplicationController
     
       true
     end
+    
     
     
     
