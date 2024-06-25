@@ -1,15 +1,11 @@
-<div class="row bg-light shadow-sm bg-white section-border rounded mb-4 p-3">
-        <div class="col-sm-3 m-1 px-2 "  >
-
-          <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', :class => "avatar text-center mb-3 shadow", size: "185x185"  %><br>
-    
-        </div>
-        <div class="col-md m-1 px-2">
-            
-              <div class="col-md"> <h1 class=" primary-blue text-md-left">Vacant</h1></div>
-                   
-              
-        </div>
-           
+<div class="card rounded primary-border flex-grow-1">
+  <% if local_assigns[:show_header] %>
+    <div class="card-header">
+      <span>Incumbent</span>
+    </div>
+  <% end %>
+  <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+    <%= image_tag 'blank-headshot.png', alt: 'vacant_headshot', class: "img-fluid rounded-circle mb-4", style: "width: 150px; height: 150px; object-fit: cover;" %>
+    <h1 class="primary-blue">Vacant</h1>
+  </div>
 </div>
-

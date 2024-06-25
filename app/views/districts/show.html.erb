@@ -1,8 +1,7 @@
-
-<div class="row ">
-    <div class="col-md order-2 d-none d-md-table-cell text-right">
-        <%= link_to "Export District (PDF)", district_path(@district, format: "pdf"), :class => "btn btn-primary float-end" %>
-    </div>
+<div class="row">
+  <div class="col-md order-2 d-none d-md-table-cell text-right">
+    <%= link_to "Export District (PDF)", district_path(@district, format: "pdf"), :class => "btn btn-primary float-end" %>
+  </div>
   <div class="col-md order-1">
     <h3 class="mb-0 mt-2 header-text text-nowrap nounderline"><%= link_to "#{@district.jurisdiction.name}", @district.jurisdiction %></h4>
     <h1 class="heavy primary-blue text-nowrap"><%= @district.district_name %> </h1>
@@ -12,27 +11,48 @@
     <%end%>
   </div>
 </div>
-    
-    <br>
+<br>
+
+<!-- Incumbent Card and Map -->
+<div class="row align-items-stretch mb-3">
+  <% if @district.google_maps_url.present? %>
+    <div class="col-md-6 col-12 d-flex flex-column">
+      <%= render 'incumbent' %>
+    </div>
+    <div class="col-md-6 col-12 d-flex flex-column">
+      <div class="card rounded primary-border flex-grow-1">
+        <div class="card-body">
+          <div style="position:relative;height:100%; min-height: 300px;">
+            <iframe src="<%= @district.google_maps_url %>" 
+                    style="position:absolute;width:100%;height:100%;left:0" 
+                    frameborder="0" 
+                    allowfullscreen="">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="col-12 d-flex flex-column">
+      <%= render 'incumbent' %>
+    </div>
+  <% end %>
+</div>
 
 
-  <!-- Incumbent Card -->
-<%= render 'incumbent' %>
+
+
+
+
 
 <div class="row">
-  
-  <% if @district.note.present? || @district.district_map.present? %>
+  <% if @district.note.present?  %>
     <div class="col-12 my-3">
       <div class="card rounded primary-border">
         <div class="card-header">
           <span>District Analysis</span>
         </div>
         <div class="card-body">
-       
-          <% if @district.district_map.present? %>
-            <%= image_tag @district.district_map.url, alt: "District map", class: "float-end img-fluid imgshadow district-map m-4" %>
-          <% end %>
-    
           <%= simple_format(@district.note) %>
         </div>
       </div>
@@ -41,73 +61,69 @@
 </div>
 
 
+<div class="row">
+  <div class="col">
+    <% if @district.at_large_district == false %>
+      <% if @district.campaigns.active.present? %>
+        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates, campaign: @district.campaigns.active.last}%>
+      <% end %>
+    <% else %>
+      <% if @district.jurisdiction.campaigns.active.present? %>
+        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.jurisdiction.campaigns.active.last.candidates, campaign: @district.jurisdiction.campaigns.active.last}%>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
-
+<% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
   <div class="row">
     <div class="col">
       <% if @district.at_large_district == false %>
-        <% if @district.campaigns.active.present?%>
-        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.campaigns.active.last.candidates, campaign: @district.campaigns.active.last}%>
-        <%end%>
-      <%else %>
-        <% if @district.jurisdiction.campaigns.active.present?%>
-        <%= render partial: 'shared/candidates', locals: {district: @district, candidates: @district.jurisdiction.campaigns.active.last.candidates, campaign: @district.jurisdiction.campaigns.active.last}%>
-        <%end%>
-      <%end%>
+        <%= render partial: 'shared/statistical_datum', locals: { district: @district } %>
+        <hr>
+      <% end %>
     </div>
   </div>
+<% end %>
 
-
-
-  <% if @district.statistical_datum.present? || @district.jurisdiction.statistical_datum.present? %>
-  <div class="row">
-    <div class="col">
-    <% if @district.at_large_district == false %>
-    <%= render partial: 'shared/statistical_datum', locals: { district: @district } %>
-
-    <hr>
-    <%end%>
-    
-    </div>
-  </div>
-  <%end%>  
-
-
-
-
-<%if @district.at_large_district == false %>
+<% if @district.at_large_district == false %>
   <% if @district.campaigns.historic.present? %> 
     <div class="row">
       <div class="col">
-      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.campaigns.historic.order("election_date desc"), show_district: false } %> 
+        <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.campaigns.historic.order("election_date desc"), show_district: false } %> 
       </div>   
     </div>
   <% end %>
-<%else%>
+<% else %>
   <% if @district.jurisdiction.campaigns.historic.present? %> 
     <div class="row">
       <div class="col">
-      <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.jurisdiction.campaigns.historic.order("election_date desc"), show_district: false } %> 
+        <%= render partial: 'shared/historical_election', locals: { historical_elections: @district.jurisdiction.campaigns.historic.order("election_date desc"), show_district: false } %> 
       </div>   
     </div>
-  <%end%>
-<%end%>
+  <% end %>
+<% end %>
 
 <div class="row">
- <div class="col float-end">
-
-
-      <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-end align-bottom mt-auto", :target => "_blank"%>
-    </div>
+  <div class="col float-end">
+    <%= link_to "Help", '/pages/about_districts', :class => "btn btn-outline-secondary float-end align-bottom mt-auto", :target => "_blank"%>
+  </div>
 </div>
   
 <%= render 'admin' %>
 
- <script>
+<script>
   function toggleNote() {
     var shortNote = document.getElementById('short-note');
     var fullNote = document.getElementById('full-note');
     shortNote.classList.toggle('d-none');
     fullNote.classList.toggle('d-none');
   }
+
+
 </script>
+
+
+
+
+

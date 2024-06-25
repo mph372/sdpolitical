@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_18_151849) do
+ActiveRecord::Schema.define(version: 2024_06_25_154325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 2024_06_18_151849) do
     t.boolean "archived", default: false
     t.string "note"
     t.string "district_map"
+    t.string "google_maps_url"
     t.index ["former_office_id"], name: "index_districts_on_former_office_id"
     t.index ["jurisdiction_id"], name: "index_districts_on_jurisdiction_id"
     t.index ["person_id"], name: "index_districts_on_person_id"
@@ -249,6 +250,7 @@ ActiveRecord::Schema.define(version: 2024_06_18_151849) do
     t.boolean "archived", default: false
     t.string "logo"
     t.boolean "at_large_districts"
+    t.string "google_maps_url"
     t.index ["registration_history_id"], name: "index_jurisdictions_on_registration_history_id"
   end
 

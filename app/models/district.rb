@@ -16,6 +16,7 @@ class District < ApplicationRecord
   mount_uploader :district_map, DistrictMapUploader
 
 
+
   def self.ransackable_attributes(auth_object = nil)
     %w[name district term_expires number_of_winners district_title archived note] + _ransackers.keys
   end

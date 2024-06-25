@@ -115,5 +115,30 @@
   overflow: hidden; /* Ensures the text wraps around the floated image */
 }
 
+/* You can add this CSS in your application's stylesheet */
+.d-flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.card-body iframe {
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .card-body {
+    min-height: 300px; /* Ensure a minimum height for the map on small screens */
+  }
+}
+
+
+
 
 

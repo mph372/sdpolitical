@@ -156,6 +156,7 @@ class DistrictsController < ApplicationController
         :archived, 
         :note,
         :district_map,
+        :google_maps_url,
         person_attributes: [:id, :first_name, :last_name, :image, :remote_image_url, :party, :professional_career, :term, :campaign_website, :bio]
       )
     end
@@ -173,15 +174,21 @@ class DistrictsController < ApplicationController
           return false
         end
       else
-        # Ensure a new person is created without a manually set ID
         person_attributes = district_params[:person_attributes].except(:id)
-        @person = @district.build_person(person_attributes)
         
-        if @person.save
-          @person.update(district_id: @district.id, archived: false)
+        # Check if person attributes are filled out
+        if person_attributes.values.any?(&:present?)
+          @person = @district.build_person(person_attributes)
+          
+          if @person.save
+            @person.update(district_id: @district.id, archived: false)
+          else
+            @district.errors.add(:person_attributes, @person.errors.full_messages.to_sentence)
+            return false
+          end
         else
-          @district.errors.add(:person_attributes, @person.errors.full_messages.to_sentence)
-          return false
+          # No person attributes provided, so no person should be created
+          @person = nil
         end
       end
     
@@ -190,6 +197,12 @@ class DistrictsController < ApplicationController
     
       if previous_person
         previous_person.update(district_id: nil, archived: true)
+      end
+    
+      if @person
+        @district.person = @person
+      else
+        @district.person_id = nil
       end
     
       true

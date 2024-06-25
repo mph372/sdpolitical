@@ -19,10 +19,13 @@
   <div class="row">
     <div class="col">
          <div class="field">
-            <%= f.label :map_url, "Jurisdiction Map" %>
+            <%= f.label :map_url, "Jurisdiction Image Map" %>
             <%= f.file_field :map_url %>
           </div>
     </div>
+
+    <%= f.text_field :google_maps_url, label: "Google Maps Embed URL" %>
+
    
   </div>
 
