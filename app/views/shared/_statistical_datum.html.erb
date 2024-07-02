@@ -2,7 +2,7 @@
   <% statistical_datum = jurisdiction.statistical_datum.last %>
   <% registration_snapshot = statistical_datum.registration_snapshots.last %>
 <% elsif local_assigns[:district].present? %>
-  <% statistical_datum = district.statistical_datum.last %>
+  <% statistical_datum = district.statistical_datum.where(district_year: 2020).last || district.statistical_datum.last %>
   <% registration_snapshot = statistical_datum.registration_snapshots.last if statistical_datum.present? %>
 <% end %>
 
