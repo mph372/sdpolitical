@@ -10,9 +10,9 @@
       <% end %>
         <div class="card-body text-center">
           <% if person.image.present? %>
-            <%= image_tag person.image.url, alt: "#{person.first_name} #{person.last_name}", class: "img-fluid rounded-circle mb-4", style: "width: 250px; height: 250px; object-fit: cover;" %>
+            <%= image_tag person.image.url, alt: "#{person.first_name} #{person.last_name}", class: "img-fluid rounded-circle mb-4", style: "width: 250px; height: 250px; object-fit: cover; object-position: top;" %>
           <% else %>
-            <%= image_tag 'blank-headshot.png', alt: 'Headshot placeholder', class: "img-fluid rounded-circle mb-4", style: "width: 250px; height: 250px; object-fit: cover;" %>
+            <%= image_tag 'blank-headshot.png', alt: 'Headshot placeholder', class: "img-fluid rounded-circle mb-4", style: "width: 250px; height: 250px; object-fit: cover; object-position: top;" %>
           <% end %>
 
           <h1 class="card-title mb-2">

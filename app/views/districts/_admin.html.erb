@@ -24,10 +24,13 @@
 
 
           <% if @district.at_large_district == false && @district.statistical_datum.present? %>
-          <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(district_id: @district)), :class => "btn btn-primary btn-sm" %>      
-          <%else @district.at_large_district == true && @district.statistical_datum.present?  %>  
-          <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => StatisticalDatum.find_by(jurisdiction_id: @district.jurisdiction)), :class => "btn btn-primary btn-sm m-2" %> 
-          <%end%>  
+            <% latest_statistical_datum = StatisticalDatum.where(district_id: @district.id).order(district_year: :desc).first %>
+            <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => latest_statistical_datum.id), class: "btn btn-primary btn-sm" %>
+          <% elsif @district.at_large_district == true && @district.statistical_datum.present? %>
+            <% latest_statistical_datum = StatisticalDatum.where(jurisdiction_id: @district.jurisdiction.id).order(district_year: :desc).first %>
+            <%= link_to 'Add Registration Snapshot', new_registration_snapshot_path(:statistical_datum_id => latest_statistical_datum.id), class: "btn btn-primary btn-sm m-2" %>
+          <% end %>
+
           <%= link_to 'Add Campaign Finance', new_campaign_finance_module_path(:district_id => @district.id), :class => "btn btn-primary btn-sm" %>        
         </div>     
     <div class="col-3 text-right">
