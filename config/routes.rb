@@ -54,8 +54,7 @@ Rails.application.routes.draw do
   end
   resources :jurisdictions do
     member do
-      get 'make_archived'
-      get 'unarchive'
+      patch :toggle_archive
     end
   end
   resources :subscriptions
