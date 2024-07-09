@@ -63,7 +63,7 @@
       <% end %>
     </td>
     <td class="col-2"><%= district.term_expires %></td>
-    <% if !@jurisdiction.at_large_districts || district.is_at_large %>
+    <% if !@jurisdiction.at_large_districts || district.is_at_large || district.is_seat %>
       <td class="col-3">
         <span class="pr-4 float-end">
           <% advantage = district.registration_advantage %>
@@ -80,7 +80,8 @@
       </td>
     <% end %>
     <% if user_signed_in? && current_user.admin? %>
-      <td class="col-2"><%= link_to 'Edit', edit_district_path(district) %></td>
+      <td class="col-2"><%= link_to 'Edit', edit_district_path(district) %> | <%= link_to "Add Campaign", new_campaign_path(:district_id => district.id), 
+             :action => "new", :method => :get %>    </td>
     <% end %>
     <td class="col-1"></td>
   </tr>

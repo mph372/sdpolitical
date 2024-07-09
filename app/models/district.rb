@@ -27,16 +27,29 @@ class District < ApplicationRecord
   
 
   def district_name
-    if self.district != "At Large" 
-      if self.at_large_district == false
-     "#{self.name}, #{self.district.to_i.ordinalize} District"
-     else
-      "#{self.name}"
-     end
+    # Handle At Large cases
+    return self.name if self.district == "At Large" || self.at_large_district
+  
+    # Handle cases with seats
+    return "#{self.name}, Seat #{self.district}" if self.is_seat
+  
+    # Handle cases with areas
+    if self.is_area
+      district_type = "Area"
     else
-     "#{self.name}"
+      district_type = "District"
+    end
+  
+    # Check if district is a number
+    if self.district =~ /^\d+$/
+      # It's a number, so we can ordinalize
+      "#{self.name}, #{self.district.to_i.ordinalize} #{district_type}"
+    else
+      # Not a number, return as is
+      "#{self.name}, #{self.district} #{district_type}"
     end
   end
+  
 
   def archived
     jurisdiction.archived == true
@@ -55,7 +68,7 @@ class District < ApplicationRecord
   end
 
   def registration_advantage
-    if is_at_large
+    if is_at_large || is_seat
       if jurisdiction.registration_snapshots.present?
         jurisdiction.registration_snapshots.last.registration_advantage
       else
