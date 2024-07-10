@@ -1,3 +1,37 @@
 // Place all the styles related to the pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.card {
+    font-family: Arial, sans-serif; /* Ensures font consistency */
+  }
+  
+  .post-entry {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em; /* Adds space between entries */
+  }
+  
+  .post-date, .post-title {
+    white-space: nowrap; /* Prevents wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds an ellipsis if text is too long */
+  }
+  
+  @media (min-width: 768px) { /* Adjusts layout for larger screens */
+    .post-entry {
+      flex-direction: row;
+      align-items: center;
+    }
+  
+    .post-date {
+      flex-basis: 25%; /* Adjust the percentage based on your design */
+      flex-shrink: 0;
+      margin-right: 20px; /* Adds some space between the date and the title */
+    }
+  
+    .post-title {
+      flex-grow: 1;
+    }
+  }
+  
