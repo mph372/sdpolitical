@@ -5,8 +5,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
-  has_many :districts 
-  has_many :notifications, foreign_key: :recipient_id
 
   
   def subscribed?
@@ -28,7 +26,7 @@ class User < ApplicationRecord
    Admin.last.admin_mode == true 
   end
 
-  after_create :subscribe_user_to_mailing_list
+  # after_create :subscribe_user_to_mailing_list
 
 
   private

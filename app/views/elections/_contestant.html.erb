@@ -1,0 +1,23 @@
+<%# app/views/elections/_contestant.html.erb %>
+<% latest_update = contestant.contestant_updates.first %>
+<% winning_position = contestant.position_rank <= contestant.contest.vote_for %>
+<tr class="<%= winning_position ? 'table-success' : '' %>">
+  <td class="text-nowrap" style="width: 20%;">
+    <%= contestant.name %>
+    <%= " (#{contestant.party})" unless contestant.party.blank? || contestant.party == "N/A" %>
+  </td>
+  <td class="text-end" style="width: 20%;"><%= number_with_delimiter(latest_update.total_votes) %></td>
+  <td class="text-end" style="width: 15%;"><%= number_to_percentage(contestant.vote_percentage, precision: 2) %></td>
+  <td class="text-end" style="width: 15%;">+<%= number_with_delimiter(contestant.vote_change) %></td>
+  <td class="text-end" style="width: 15%;">
+    <% votes_behind = contestant.votes_behind %>
+    <%= votes_behind ? number_with_delimiter(votes_behind) : '-' %>
+  </td>
+  <% if contestant.contest.contestants.count == 2 %>
+    <td class="text-end" style="width: 15%;">
+      <%= number_to_percentage(contestant.needed_percentage_from_outstanding, precision: 2) %>
+    </td>
+  <% else %>
+    <td class="text-end" style="width: 15%;"></td>
+  <% end %>
+</tr>

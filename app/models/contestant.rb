@@ -116,6 +116,12 @@ class Contestant < ApplicationRecord
       }
     end
   end
+
+  def position_rank
+    contest.contestants
+           .sort_by { |c| -c.contestant_updates.first.total_votes }
+           .index(self) + 1
+  end
   
   
 end

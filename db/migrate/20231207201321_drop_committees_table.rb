@@ -1,27 +1,40 @@
 class DropCommitteesTable < ActiveRecord::Migration[6.1]
   def up
-    # Remove foreign key constraints from tables you plan to keep
-    remove_foreign_key :reports, :committees
+    # Only try to remove foreign keys if the committees table exists
+    if table_exists?(:committees)
+      # Remove foreign keys if they exist
+      if foreign_key_exists?(:reports, :committees)
+        remove_foreign_key :reports, :committees
+      end
 
-    # For tables you plan to drop eventually, you can use DROP CASCADE when dropping those tables.
-    # However, since we are only dropping 'committees' here, we manually remove foreign keys from these tables.
-    if foreign_key_exists?(:vendors, :committees)
-      remove_foreign_key :vendors, :committees
-    end
-    remove_foreign_key :imports, :committees
-    remove_foreign_key :transactions, :committees
-    if foreign_key_exists?(:expenditures, :committees)
-      remove_foreign_key :expenditures, :committees
-    end    
-    if foreign_key_exists?(:contributors, :committees)
-      remove_foreign_key :contributors, :committees
-    end
-    if foreign_key_exists?(:candidates, :committees)
-      remove_foreign_key :candidates, :committees
-    end
+      # Check each foreign key before trying to remove it
+      if foreign_key_exists?(:vendors, :committees)
+        remove_foreign_key :vendors, :committees
+      end
 
-    # Now, safely drop the committees table
-    drop_table :committees
+      if foreign_key_exists?(:imports, :committees)
+        remove_foreign_key :imports, :committees
+      end
+
+      if foreign_key_exists?(:transactions, :committees)
+        remove_foreign_key :transactions, :committees
+      end
+
+      if foreign_key_exists?(:expenditures, :committees)
+        remove_foreign_key :expenditures, :committees
+      end
+
+      if foreign_key_exists?(:contributors, :committees)
+        remove_foreign_key :contributors, :committees
+      end
+
+      if foreign_key_exists?(:candidates, :committees)
+        remove_foreign_key :candidates, :committees
+      end
+
+      # Finally drop the table
+      drop_table :committees
+    end
   end
 
   def down

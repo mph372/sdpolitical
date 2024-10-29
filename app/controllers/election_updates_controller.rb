@@ -10,14 +10,16 @@ class ElectionUpdatesController < ApplicationController
     end
   
     def create
-        @election_update = @election.election_updates.new(election_update_params)
-        logger.debug "ElectionUpdate params: #{election_update_params.inspect}"
-        if @election_update.save
-          redirect_to @election, notice: 'Election update was successfully created.'
-        else
-          logger.debug "ElectionUpdate save failed: #{@election_update.errors.full_messages.join(', ')}"
-          render :new
-        end
+      @election_update = @election.election_updates.new(election_update_params)
+      
+      if @election_update.save
+        # Enqueue notification job
+        ElectionUpdateNotificationJob.perform_later(@election_update.id)
+        redirect_to @election, notice: 'Election update was successfully created.'
+      else
+        logger.debug "ElectionUpdate save failed: #{@election_update.errors.full_messages.join(', ')}"
+        render :new
+      end
     end
       
   

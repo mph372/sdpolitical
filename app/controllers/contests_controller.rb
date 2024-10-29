@@ -3,7 +3,7 @@ class ContestsController < ApplicationController
 
   def show
     @contest = Contest.friendly.find(params[:id])
-    @election = @contest.election  # Add this line
+    @election = @contest.election
     @contestants = @contest.contestants.includes(:contestant_updates).sort_by { |contestant| -contestant.latest_total_votes }
 
     set_meta_tags title: "#{@contest.name} Detailed Results",
@@ -22,6 +22,5 @@ class ContestsController < ApplicationController
                 title: "#{@contest.name} Detailed Results",
                 description: "Explore the voting trends and detailed results for the #{@contest.name} contest."
               }
-    
   end  
 end

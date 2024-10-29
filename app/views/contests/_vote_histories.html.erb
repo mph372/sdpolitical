@@ -1,0 +1,79 @@
+<%# app/views/contests/_vote_histories.html.erb %>
+<div class="card shadow-sm mb-4">
+  <div class="card-header bg-light">
+    <h5 class="card-title mb-0">
+      <i class="bi bi-clock-history me-2"></i>Vote History
+    </h5>
+  </div>
+  <div class="card-body">
+    <p class="text-muted mb-4">
+      Track each candidate's vote accumulation over time, showing changes in total votes as new updates are reported. This helps visualize performance and momentum throughout the counting process.
+    </p>
+    
+    <div class="accordion" id="voteHistoryAccordion">
+      <% contestants.each_with_index do |contestant, index| %>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button <%= 'collapsed' unless index == 0 %>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= index %>">
+              <div class="d-flex justify-content-between align-items-center w-100 me-3">
+                <div>
+                  <%= contestant.name %>
+                  <%= "(#{contestant.party})" if contestant.party.present? %>
+                </div>
+                <div class="text-muted small">
+                  Latest Total: <%= number_with_delimiter(contestant.contestant_updates.first.total_votes) %>
+                </div>
+              </div>
+            </button>
+          </h2>
+          <div id="collapse<%= index %>" class="accordion-collapse collapse <%= 'show' if index == 0 %>" data-bs-parent="#voteHistoryAccordion">
+            <div class="accordion-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="width: 25%;">Update Time</th>
+                      <th class="text-end" style="width: 20%;">Mail Ballots</th>
+                      <th class="text-end" style="width: 20%;">Vote Center</th>
+                      <th class="text-end" style="width: 20%;">Total Votes</th>
+                      <th class="text-end" style="width: 15%;">Vote Gain</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% contestant.contestant_updates.each do |update| %>
+                      <tr>
+                        <td><%= update.created_at.strftime("%B %d, %Y at %I:%M %p") %></td>
+                        <td class="text-end"><%= number_with_delimiter(update.mail_ballots_votes) %></td>
+                        <td class="text-end"><%= number_with_delimiter(update.vote_center_ballots_votes) %></td>
+                        <td class="text-end fw-medium"><%= number_with_delimiter(update.total_votes) %></td>
+                        <td class="text-end text-success">
+                          <% if update.previous_total_votes %>
+                            +<%= number_with_delimiter(update.total_votes - update.previous_total_votes) %>
+                          <% else %>
+                            <span class="text-muted">—</span>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize tooltips
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      });
+    });
+  </script>
+<% end %>

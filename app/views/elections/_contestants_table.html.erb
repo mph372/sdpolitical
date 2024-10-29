@@ -1,0 +1,30 @@
+<!-- app/views/elections/_contestants_table.html.erb -->
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead class="table-light">
+      <tr>
+        <th style="width: 25%;">Candidate</th>
+        <th class="text-end" style="width: 15%;">Total Votes</th>
+        <th class="text-end" style="width: 15%;">Percentage</th>
+        <th class="text-end" style="width: 15%;">
+          <span data-bs-toggle="tooltip" title="Votes gained since last update">Vote Gain</span>
+        </th>
+        <th class="text-end" style="width: 15%;">
+          <span data-bs-toggle="tooltip" title="Votes needed to catch up to next position">Votes Behind</span>
+        </th>
+        <% if contest.contestants.count == 2 %>
+          <th class="text-end" style="width: 15%;">
+            <span data-bs-toggle="tooltip" title="Percentage needed from remaining ballots to win">% Needed</span>
+          </th>
+        <% else %>
+          <th class="text-end" style="width: 15%;"></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'elections/contestant', 
+                 collection: contest.contestants.includes(:contestant_updates)
+                                    .sort_by { |contestant| -contestant.latest_total_votes } %>
+    </tbody>
+  </table>
+</div>

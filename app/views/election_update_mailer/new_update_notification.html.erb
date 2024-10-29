@@ -1,0 +1,20 @@
+# app/views/election_update_mailer/new_update_notification.html.erb
+<h1>New Election Update for <%= @election.name %></h1>
+
+<p>Hello <%= @user.first_name %>,</p>
+
+<p>There has been a new update for the <%= @election.name %> election:</p>
+
+<ul>
+  <li>Total Ballots Cast: <%= number_with_delimiter(@election_update.ballots_cast) %></li>
+  <li>Mail Ballots: <%= number_with_delimiter(@election_update.mail_ballots) %></li>
+  <li>Vote Center Ballots: <%= number_with_delimiter(@election_update.vote_center_ballots) %></li>
+  <li>Ballots Outstanding: <%= number_with_delimiter(@election_update.ballots_outstanding) %></li>
+</ul>
+
+<p>
+  <small>
+    If you no longer wish to receive these notifications, you can 
+    <a href="<%= edit_user_registration_url(unsubscribe_hash: @user.unsubscribe_hash) %>">update your notification preferences</a>.
+  </small>
+</p>

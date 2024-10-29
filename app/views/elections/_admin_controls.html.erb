@@ -1,0 +1,20 @@
+<div class="row mb-4">
+  <div class="col d-flex justify-content-center">
+    <%= link_to 'Edit', edit_election_path(election), class: 'btn btn-primary me-2' %>
+    <%= link_to 'Back', elections_path, class: 'btn btn-secondary me-2' %>
+    <%= link_to 'Add Election Update', new_election_election_update_path(election), class: 'btn btn-success me-2' %>
+
+    <%= form_with url: election_uploads_path(election), method: :post, local: true, multipart: true, class: 'd-flex' do |form| %>
+      <%= form.file_field :file, required: true, class: 'form-control me-2' %>
+      <%= form.select :vote_type, 
+                     options_for_select([
+                       ['Early Vote', 'early_vote'], 
+                       ['Election Day Vote', 'election_day_vote'], 
+                       ['Late Vote', 'late_vote']
+                     ]), 
+                     required: true, 
+                     class: 'form-select me-2' %>
+      <%= form.submit "Upload Spreadsheet", class: 'btn btn-info' %>
+    <% end %>
+  </div>
+</div>

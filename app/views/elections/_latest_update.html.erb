@@ -1,0 +1,27 @@
+<!-- app/views/elections/_latest_update.html.erb -->
+<div class="card shadow-sm">
+  <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+    <h5 class="card-title mb-0">Latest Election Update</h5>
+    <small>
+      <i class="bi bi-clock me-1"></i>
+      <%= @election.election_updates.last.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+    </small>
+  </div>
+  <div class="card-body">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <% latest_update = @election.election_updates.last %>
+      <%= render 'elections/update_stats', update: latest_update %>
+    </div>
+  </div>
+  
+  <% if current_user.admin? %>
+    <div class="card-footer bg-light d-flex justify-content-end gap-2">
+      <%= link_to 'Edit', edit_election_election_update_path(@election, latest_update), class: 'btn btn-sm btn-outline-primary' %>
+      <%= link_to 'Delete', 
+          election_election_update_path(@election, latest_update), 
+          method: :delete, 
+          data: { confirm: 'Are you sure?' }, 
+          class: 'btn btn-sm btn-outline-danger' %>
+    </div>
+  <% end %>
+</div>

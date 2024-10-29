@@ -37,16 +37,6 @@
                 input_html: { autocomplete: "current-password" } %>
   </div>
 
-  <h4>E-Mail Preferences for Tracked Districts</h4>
-  <div class="mb-6">
-  <%= f.check_box :notify_when_new_expenditure %>
-  <%= f.label "Notify me of new independent expenditures"  %>
-  </div>
-   <div class="mb-6">
-  <%= f.check_box :notify_when_new_report%>
-  <%= f.label "Notify me of new candidate Reports" %>
-  </div>
-
   <div class="form-actions">
     <%= f.button :submit, "Update", :class => "btn btn-primary mt-3" %>
     <%= link_to "Back", :back, :class => "btn mt-3" %>
@@ -57,45 +47,6 @@
 
     </div>
     
-    <div class="col-md m-3">
-    
-        <% if current_user.subscribed? %>
-          
-            <div class="card-on-file">
-              <% if current_user.free_account == true%>
-              <h3>Enjoy your free account!</h3>
-              <%end%>
-              <% if current_user.card_exp_month.present? %>
-              <h3>Thank you for being a subscriber</h3>
-              <hr />
-              <p>Your current card:</p>
-              <div> **** **** **** <%= current_user.card_last4 %></div>
-              <div>Expires <%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
-              <%end%>
-              <br>
-              <% if current_user.subscribed? && current_user.cancellation_pending == false && current_user.free_account == false %>
-              <p><%= link_to "Cancel Subscription", subscription_path(current_user), method: :delete, data: { confirm: "Are you sure?" }, class: "use-different-card btn btn-outline-primary" %></p>
-              <% elsif current_user.subscribed? && current_user.cancellation_pending == true %>
-              <%= current_user.subscription_display %>
-              
-              
-              
-              
-              <% elsif current_user.subscribed == false %>
-                
-                <p> You are not currently subscribed. <%= link_to 'Sign up', pricing_index_path %>
-              <% end %>
-          <% else %>
-          <h3>Subscription Status</h3>
-          <div><mark>You still need to subscribe to access the full features of this site!</mark></div>
-          
-          <div><%= link_to 'Subscribe', pricing_index_path, :class => "btn btn-primary mt-3" %></div>
-          <%end%>
-            </div>
-        </div>
-      </div>
-   
-    </div>
     
   </div>
 </div>

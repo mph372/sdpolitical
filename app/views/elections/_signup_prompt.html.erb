@@ -1,0 +1,34 @@
+<div class="card mt-4">
+  <div class="card-body">
+    <div class="text-center">
+      <h4>Election Results Access</h4>
+      <p class="mb-4">To view detailed election results and analysis, please create a free account or sign in.</p>
+      
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="d-grid gap-3">
+            <%= link_to new_user_registration_path, class: "btn btn-primary btn-lg" do %>
+              Sign Up for Free Access
+            <% end %>
+            
+            <%= link_to new_user_session_path, class: "btn btn-outline-primary btn-lg" do %>
+              Sign In
+            <% end %>
+          </div>
+          
+          <div class="mt-4 text-muted">
+            <small>
+              By creating an account, you'll get:
+              <ul class="text-start mt-2">
+                <li>Real-time election results</li>
+                <li>Detailed vote analysis</li>
+                <li>Historical election data</li>
+                <li>Email updates when results change</li>
+              </ul>
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

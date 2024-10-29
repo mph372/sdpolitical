@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_25_154325) do
+ActiveRecord::Schema.define(version: 2024_10_28_162110) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "action_text_rich_texts", force: :cascade do |t|
@@ -168,8 +169,10 @@ ActiveRecord::Schema.define(version: 2024_06_25_154325) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
+    t.integer "vote_for"
     t.index ["election_id"], name: "index_contests_on_election_id"
     t.index ["slug"], name: "index_contests_on_slug", unique: true
+    t.index ["vote_for"], name: "index_contests_on_vote_for"
   end
 
   create_table "districts", force: :cascade do |t|
