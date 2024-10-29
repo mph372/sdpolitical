@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   get 'contests/show'
-  get 'uploads/new'
-  get 'uploads/create'
+
   # Devise routes
   devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, controllers: { registrations: "registrations", confirmations: 'confirmations' }
@@ -27,7 +26,6 @@ Rails.application.routes.draw do
   resources :historical_candidates
   resources :election_histories
   resources :updates
-  resources :elections
   
   resources :people do 
     resources :reports, only: [:index]
@@ -70,6 +68,9 @@ Rails.application.routes.draw do
   get 'tags/:tag_name', to: 'blog_posts#index', as: :filter_by_tag
   get 'navigate_jurisdiction', to: 'jurisdictions#navigate', as: :navigate_jurisdiction
   resources :elections, param: :slug do
+    member do
+      post 'process_results_update'
+    end
     resources :election_updates
     resources :contests, only: [:show]
     resources :uploads, only: [:create]

@@ -1,13 +1,12 @@
 class ElectionsController < ApplicationController
   before_action :authorize_admin, except: [:show]
+  before_action :set_election, only: [:show, :edit, :update, :process_results_update]
 
   def new
     @election = Election.new
   end
 
   def show
-    @election = Election.friendly.find(params[:id])
-    
     if user_signed_in?
       @contests = @election.contests.includes(:contestants => :contestant_updates).order('created_at ASC')      
 
@@ -23,7 +22,7 @@ class ElectionsController < ApplicationController
                   },
                   twitter: {
                     card: "summary_large_image",
-                    site: "@TheBallotBook",  # Replace with your actual Twitter handle
+                    site: "@TheBallotBook",
                     title: @election.name,
                     description: "Get the latest updates and detailed analysis of the #{@election.name}",
                   }
@@ -40,11 +39,9 @@ class ElectionsController < ApplicationController
   end
 
   def edit
-    @election = Election.find(params[:id])
   end
 
   def update
-    @election = Election.find(params[:id])
     if @election.update(election_params)
       redirect_to @election, notice: 'Election was successfully updated.'
     else
@@ -52,7 +49,54 @@ class ElectionsController < ApplicationController
     end
   end
 
+  def process_results_update
+    logger.debug "Params received: #{params.inspect}"  # Add this line
+    ActiveRecord::Base.transaction do
+      # Create the election update
+      election_update = @election.election_updates.new(
+        ballots_cast: params[:ballots_cast],
+        mail_ballots: params[:mail_ballots],
+        vote_center_ballots: params[:vote_center_ballots],
+        registered_voters: params[:registered_voters],
+        ballots_outstanding: params[:ballots_outstanding]
+      )
+
+      unless election_update.save
+        raise ActiveRecord::Rollback, "Failed to save election update"
+      end
+
+      # Process the uploaded spreadsheet using the existing uploads controller
+      if params[:file].present?
+        uploads_controller = UploadsController.new
+        uploads_controller.request = request
+        uploads_controller.response = response
+        uploads_controller.params = ActionController::Parameters.new(
+          election_slug: @election.slug,
+          vote_type: params[:vote_type],
+          file: params[:file]
+        )
+        
+        # Call the create action directly
+        uploads_controller.create
+        
+        # Check if there were any errors during upload
+        if uploads_controller.response.status == 302 && 
+           uploads_controller.response.location.include?("alert=")
+          raise ActiveRecord::Rollback, "Failed to process spreadsheet"
+        end
+      end
+
+      redirect_to @election, notice: 'Election results were successfully updated.'
+    end
+  rescue StandardError => e
+    redirect_to @election, alert: "Error updating results: #{e.message}"
+  end
+
   private
+
+  def set_election
+    @election = Election.friendly.find(params[:slug])  # Changed from params[:id]
+  end
 
   def election_params
     params.require(:election).permit(:name, :election_date)

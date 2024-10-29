@@ -14,7 +14,6 @@ class ElectionUpdatesController < ApplicationController
       
       if @election_update.save
         # Enqueue notification job
-        ElectionUpdateNotificationJob.perform_later(@election_update.id)
         redirect_to @election, notice: 'Election update was successfully created.'
       else
         logger.debug "ElectionUpdate save failed: #{@election_update.errors.full_messages.join(', ')}"

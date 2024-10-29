@@ -1,13 +1,14 @@
 <!-- app/views/elections/_guide.html.erb -->
 <div class="accordion mt-4" id="electionGuide">
-  <div class="accordion-item shadow-sm">
+  <div class="accordion-item border-primary shadow-sm">
     <h2 class="accordion-header" id="headingGuide">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuide">
-        <i class="bi bi-info-circle me-2"></i>Understanding the Election Results
+      <button class="accordion-button collapsed bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGuide">
+        <i class="bi bi-info-circle me-2 text-primary"></i>
+        <span class="fw-semibold">Understanding the Election Results</span>
       </button>
     </h2>
     <div id="collapseGuide" class="accordion-collapse collapse" data-bs-parent="#electionGuide">
-      <div class="accordion-body">
+      <div class="accordion-body bg-light">
         <%= render 'elections/guide_content' %>
       </div>
     </div>

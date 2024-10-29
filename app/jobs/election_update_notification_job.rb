@@ -9,7 +9,9 @@ class ElectionUpdateNotificationJob < ApplicationJob
                         .where.not(confirmed_at: nil)
 
     eligible_users.find_each do |user|
-      ElectionUpdateMailer.new_update_notification(user, election_update).deliver_later
+      ElectionUpdateMailer.with(user: user, election_update: election_update)
+                         .new_update_notification
+                         .deliver_later(wait: 5.seconds)
     end
   end
 end

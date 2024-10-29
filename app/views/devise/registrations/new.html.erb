@@ -2,53 +2,51 @@
   <div class="row">
     <div class="col-sm-3">
     </div>
-    <div class="col-sm-6 mt-4 p-0 bg-white shadow border border-primary" style="width: 100%;">
-          <div class="primary-header p-2">
-      <h4 class="m-1">Sign Up</h4>
-      </div>
-      <div class="m-2 p-3">
-      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= f.error_notification %>
-
-
-      <div class="form-inputs">
-        <%= f.input :first_name,
-                    required: true,
-                    autofocus: true,
-                    input_html: { autocomplete: "first name" }%>
-        <%= f.input :last_name,
-                    required: true,
-                    autofocus: true,
-                    input_html: { autocomplete: "last name" }%>            
-        <%= f.input :email,
-                    required: true,
-                    autofocus: true,
-                    input_html: { autocomplete: "email" }%>
-        <%= f.input :password,
-                    required: true,
-                    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                    input_html: { autocomplete: "new-password" } %>
-        <%= f.input :password_confirmation,
-                    required: true,
-                    input_html: { autocomplete: "new-password" } %>
+    <div class="col-sm-6 mt-4 p-0 bg-white shadow border border-primary">
+      <div class="primary-header p-3">
+        <h4 class="m-0">Sign Up</h4>
       </div>
       
-      <div class="hp">
-        <input type="checkbox" value="1" name="hp" id="hp" autocomplete="off" tabindex="-1">
-        <label for="hp">Huemans should NOT clik this.</label>
-      </div>
-       
-      <br>
+      <div class="p-4">
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= f.error_notification %>
 
-      <div class="form-actions">
-        <%= f.button :submit, "Sign up", :class => "btn btn-primary mb-3" %>
-      </div>
-    <% end %>
-      
-      <%= render "devise/shared/links" %>
-      </div>
-      </div>
-      <div class="col-sm-3">
+          <div class="form-inputs mb-4">
+            <%= f.input :first_name,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "first name" }%>
+            <%= f.input :last_name,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "last name" }%>            
+            <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email" }%>
+            <%= f.input :password,
+                      required: true,
+                      hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                      input_html: { autocomplete: "new-password" } %>
+            <%= f.input :password_confirmation,
+                      required: true,
+                      input_html: { autocomplete: "new-password" } %>
+          </div>
+          
+          <div class="hp mb-4">
+            <input type="checkbox" value="1" name="hp" id="hp" autocomplete="off" tabindex="-1">
+            <label for="hp">Huemans should NOT clik this.</label>
+          </div>
+
+          <div class="form-actions mb-4">
+            <%= f.button :submit, "Sign up", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+        
+        <%= render "devise/shared/links" %>
       </div>
     </div>
+    <div class="col-sm-3">
+    </div>
+  </div>
 </div>

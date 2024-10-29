@@ -31,41 +31,50 @@ class Contestant < ApplicationRecord
   end
 
   def vote_percentage
-    total_votes_in_contest = self.contest.contestants.includes(:contestant_updates).sum do |contestant|
-      contestant.contestant_updates.first.total_votes
+    return 0 unless contestant_updates.any?
+    
+    total_votes_in_contest = contest.contestants.includes(:contestant_updates).sum do |contestant|
+        contestant.contestant_updates.first&.total_votes.to_i
     end
+    
+    return 0 if total_votes_in_contest.zero?
+    
+    (contestant_updates.first.total_votes.to_f / total_votes_in_contest) * 100
+end
 
-    (self.contestant_updates.first.total_votes.to_f / total_votes_in_contest) * 100
+
+
+  def needed_percentage_or_status
+    percentage = needed_percentage_from_outstanding
+    
+    if percentage.nil?
+      "" # In first place or tied, leave blank
+    elsif percentage == 0
+      "Eliminated"
+    else
+      "#{percentage}%"
+    end
   end
-
-
-
+  
   def needed_percentage_from_outstanding
     return nil unless votes_behind
-  
+    
     total_ballots_cast_in_election = contest.election.election_updates.last.ballots_cast
     total_outstanding_ballots = contest.election.election_updates.last.ballots_outstanding
     district_ballots_cast = latest_update.ballots_cast
-  
+    
     return nil if total_ballots_cast_in_election.zero? || total_outstanding_ballots.zero? || votes_behind.nil?
-  
+    
     district_proportion = district_ballots_cast.to_f / total_ballots_cast_in_election
     estimated_district_outstanding = total_outstanding_ballots * district_proportion
-  
+    
     return 0 if estimated_district_outstanding <= votes_behind
-  
-    # Adjust the calculation to find x, the number of votes Reichert needs from the outstanding votes
-    # to ensure she surpasses Fletcher.
-    # The formula is derived from Reichert's votes + x = Fletcher's votes + (remaining votes - x) + 1
-    # Simplifying this gives x = (votes_behind + remaining votes + 1) / 2
-    # This ensures she covers the gap and surpasses by at least one vote.
+    
     x = (votes_behind + estimated_district_outstanding + 1) / 2.0
-  
-    # If x is greater than the estimated outstanding votes, it's impossible for Reichert to win.
-    return nil if x > estimated_district_outstanding
-  
-    # Calculate the percentage of the estimated outstanding district ballots needed
-    needed_percentage = (x.to_f / estimated_district_outstanding * 100).round(2)
+    
+    return 0 if x > estimated_district_outstanding
+    
+    (x.to_f / estimated_district_outstanding * 100).round(2)
   end
   
   

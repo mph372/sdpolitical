@@ -14,16 +14,27 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # AWS SES Configuration
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.smtp_settings = {
-    address:              'email-smtp.us-east-1.amazonaws.com',
-    port:                 587,
-    user_name:           Rails.application.credentials.dig(:aws, :ses_smtp_username),
-    password:            Rails.application.credentials.dig(:aws, :ses_smtp_password),
-    authentication:       :login,
-    enable_starttls_auto: true
-  }
+# AWS SES Configuration
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.perform_deliveries = true
+config.action_mailer.raise_delivery_errors = true
+config.action_mailer.default charset: 'utf-8'
+config.action_mailer.default_options = {
+  from: 'theballotbook@theballotbook.com'
+}
+
+config.action_mailer.smtp_settings = {
+  address:              'email-smtp.us-west-1.amazonaws.com',
+  port:                 587,
+  user_name:           Rails.application.credentials.dig(:aws, :ses_smtp_username),
+  password:            Rails.application.credentials.dig(:aws, :ses_smtp_password),
+  authentication:       :login,
+  enable_starttls_auto: true,
+  tls:                 true,
+  ssl:                 true
+}
+
+config.action_mailer.default_url_options = { host: 'theballotbook.com', protocol: 'https' }
   
   # Update this to use https and remove http:
   config.action_mailer.default_url_options = { host: 'theballotbook.com', protocol: 'https' }

@@ -25,10 +25,10 @@
     </ul>
 
     <ul class="navbar-nav ms-auto">
-
-    <li class="nav-item">
-     <%= render 'shared/search', search_input_id: 'nav_people_search', dropdown_id: 'nav_search_results_dropdown' %>
-    </li>
+      <li class="nav-item">
+        <%= render 'shared/search', search_input_id: 'nav_people_search', dropdown_id: 'nav_search_results_dropdown' %>
+      </li>
+      
       <% if user_signed_in? %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -42,6 +42,10 @@
             <% end %>
             <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
           </div>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to 'Sign In', new_user_session_path, class: 'nav-link' %>
         </li>
       <% end %>
     </ul>

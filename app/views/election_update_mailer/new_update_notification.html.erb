@@ -3,7 +3,7 @@
 
 <p>Hello <%= @user.first_name %>,</p>
 
-<p>There has been a new update for the <%= @election.name %> election:</p>
+<p>There has been a new update for the <%= link_to @election.name, election_url(@election) %> election:</p>
 
 <ul>
   <li>Total Ballots Cast: <%= number_with_delimiter(@election_update.ballots_cast) %></li>
@@ -11,6 +11,10 @@
   <li>Vote Center Ballots: <%= number_with_delimiter(@election_update.vote_center_ballots) %></li>
   <li>Ballots Outstanding: <%= number_with_delimiter(@election_update.ballots_outstanding) %></li>
 </ul>
+
+<p>
+  <%= link_to "View Full Election Details", election_url(@election), class: "button", style: "display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; margin-top: 15px;" %>
+</p>
 
 <p>
   <small>
