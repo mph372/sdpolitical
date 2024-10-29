@@ -8,6 +8,8 @@ Rails.application.configure do
   config.assets.compile = true
   config.active_storage.service = :local
   config.log_level = :debug
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.logger = ActiveSupport::Logger.new(STDOUT)
   config.log_tags = [ :request_id ]
   config.action_mailer.perform_caching = false
   config.i18n.fallbacks = true
