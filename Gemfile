@@ -72,6 +72,7 @@ gem 'terser'
 gem 'webpacker'
 gem 'friendly_id', '~> 5.4.0'
 gem 'acts-as-taggable-on'
+gem 'net-smtp', '~> 0.3.0'
 
 
 
@@ -101,7 +102,7 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem 'letter_opener'
-
+  gem 'dotenv-rails'
 end
 
 group :test do

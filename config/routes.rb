@@ -71,8 +71,14 @@ Rails.application.routes.draw do
     member do
       post 'process_results_update'
     end
+    
     resources :election_updates
-    resources :contests, only: [:show]
+    resources :contests, only: [:show] do
+      member do
+        post 'pin', to: 'pinned_contests#create'
+        delete 'unpin', to: 'pinned_contests#destroy'
+      end
+    end
     resources :uploads, only: [:create]
   end
 

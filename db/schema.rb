@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_28_162110) do
+ActiveRecord::Schema.define(version: 2024_10_29_195538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -297,6 +297,17 @@ ActiveRecord::Schema.define(version: 2024_10_28_162110) do
     t.index ["person_id"], name: "index_people_districts_on_person_id"
   end
 
+  create_table "pinned_contests", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "contest_id", null: false
+    t.integer "pin_order", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contest_id"], name: "index_pinned_contests_on_contest_id"
+    t.index ["user_id", "contest_id"], name: "index_pinned_contests_on_user_id_and_contest_id", unique: true
+    t.index ["user_id"], name: "index_pinned_contests_on_user_id"
+  end
+
   create_table "registration_snapshots", force: :cascade do |t|
     t.date "snapshot_date"
     t.integer "total_registered"
@@ -460,6 +471,8 @@ ActiveRecord::Schema.define(version: 2024_10_28_162110) do
   add_foreign_key "people", "districts"
   add_foreign_key "people_districts", "districts"
   add_foreign_key "people_districts", "people"
+  add_foreign_key "pinned_contests", "contests"
+  add_foreign_key "pinned_contests", "users"
   add_foreign_key "registration_snapshots", "statistical_data"
   add_foreign_key "reports", "candidate_committees"
   add_foreign_key "statistical_data", "districts"

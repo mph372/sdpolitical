@@ -1,0 +1,20 @@
+<div class="my-5">  <%# Changed mb-4 to my-5 for more vertical spacing %>
+  <div class="d-flex align-items-center border-bottom pb-3 mb-4">  <%# Added more padding and margin %>
+    <% if pinned %>
+      <div class="d-flex align-items-center">
+        <i class="bi bi-pin-angle-fill text-primary fs-4 me-2"></i>  <%# Made icon larger %>
+        <h3 class="mb-0 text-primary fw-bold">Pinned Contests</h3>  <%# Added color and weight %>
+      </div>
+    <% else %>
+      <div class="d-flex align-items-center">
+        <i class="bi bi-list-task fs-4 me-2"></i>  <%# Added list icon %>
+        <h3 class="mb-0 text-primary fw-bold">All Contests</h3>  <%# Added weight %>
+      </div>
+    <% end %>
+  </div>
+  
+  <%= render 'elections/contest_cards', 
+             contests: contests, 
+             pinned: pinned, 
+             election: election %>
+</div>

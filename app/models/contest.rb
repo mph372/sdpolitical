@@ -3,6 +3,8 @@ class Contest < ApplicationRecord
     belongs_to :election
     has_many :contestants, dependent: :destroy
     has_many :contestant_updates, through: :contestants
+    has_many :pinned_contests, dependent: :destroy
+    has_many :pinning_users, through: :pinned_contests, source: :user
 
     extend FriendlyId
     friendly_id :name, use: :slugged
@@ -40,6 +42,11 @@ class Contest < ApplicationRecord
   
     def total_late_votes
       total_votes_for_type('late_vote')
+    end
+
+    def pinned_by?(user)
+      return false unless user
+      pinning_users.include?(user)
     end
 
   end

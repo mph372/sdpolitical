@@ -154,6 +154,10 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.1)
+    dotenv (3.1.2)
+    dotenv-rails (3.1.2)
+      dotenv (= 3.1.2)
+      railties (>= 6.1)
     erubi (1.12.0)
     excon (0.109.0)
     execjs (2.9.1)
@@ -275,7 +279,7 @@ GEM
       net-protocol
     net-protocol (0.2.2)
       timeout
-    net-smtp (0.4.0.1)
+    net-smtp (0.3.4)
       net-protocol
     nilify_blanks (1.4.0)
       activerecord (>= 4.0.0)
@@ -471,6 +475,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   delayed_job_active_record
   devise
+  dotenv-rails
   factory_bot_rails
   figaro
   fog-aws
@@ -489,6 +494,7 @@ DEPENDENCIES
   matrix
   meta-tags
   morrisjs-rails
+  net-smtp (~> 0.3.0)
   nilify_blanks
   pg
   prawn

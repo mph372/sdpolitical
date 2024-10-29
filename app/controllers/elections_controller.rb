@@ -8,8 +8,24 @@ class ElectionsController < ApplicationController
 
   def show
     if user_signed_in?
-      @contests = @election.contests.includes(:contestants => :contestant_updates).order('created_at ASC')      
+      # Get pinned contests first, maintaining proper includes and order
+      @pinned_contests = current_user.pinned_election_contests
+                                 .includes(
+                                   contestants: :contestant_updates,
+                                   election: :election_updates
+                                 )
+                                 .where(election: @election)
+                                 .order('pinned_contests.pin_order')
 
+    @other_contests = @election.contests
+                              .includes(
+                                contestants: :contestant_updates,
+                                election: :election_updates
+                              )
+                              .where.not(id: @pinned_contests.pluck(:id))
+                              .order('created_at ASC')
+  
+      # Set meta tags
       set_meta_tags title: "#{@election.name} Results",
                   site: 'The Ballot Book',
                   description: "Detailed results and analysis for the #{@election.name} held on #{@election.election_date.strftime("%B %d, %Y")}.",

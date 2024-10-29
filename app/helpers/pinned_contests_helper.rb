@@ -1,0 +1,2 @@
+module PinnedContestsHelper
+end

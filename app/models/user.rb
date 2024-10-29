@@ -1,11 +1,13 @@
 class User < ApplicationRecord
+  has_many :pinned_contests, dependent: :destroy
+  has_many :pinned_election_contests, through: :pinned_contests, source: :contest
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :dashboardable and :omniauthable
   before_create :add_unsubscribe_hash
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable, :trackable
+         :recoverable, :rememberable, :validatable, :trackable
 
-
+  
   
   def subscribed?
     stripe_subscription_id? || free_account?
@@ -28,12 +30,6 @@ class User < ApplicationRecord
 
   # after_create :subscribe_user_to_mailing_list
 
-
-  private
-
-  def subscribe_user_to_mailing_list
-    SubscribeUserToMailingListJob.perform_later(self)
-  end
 
   private
 

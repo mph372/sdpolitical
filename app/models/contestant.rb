@@ -17,13 +17,15 @@ class Contestant < ApplicationRecord
   end
 
   def votes_behind
-    contestants = contest.contestants.includes(:contestant_updates)
-    sorted_contestants = contestants.sort_by { |c| c.latest_update&.total_votes || 0 }.reverse
-    index = sorted_contestants.find_index(self)
-
-    return nil if index.nil? || index.zero?
-
-    sorted_contestants[index - 1].latest_update.total_votes - self.latest_update.total_votes
+    Rails.cache.fetch("#{cache_key_with_version}/votes_behind") do
+      contestants = contest.contestants.includes(:contestant_updates)
+      sorted = contestants.sort_by { |c| -(c.latest_update&.total_votes || 0) }
+      index = sorted.index(self)
+      
+      return nil if index.nil? || index.zero?
+      
+      sorted[index - 1].latest_update.total_votes - latest_update.total_votes
+    end
   end
 
   def latest_total_votes
@@ -31,16 +33,18 @@ class Contestant < ApplicationRecord
   end
 
   def vote_percentage
-    return 0 unless contestant_updates.any?
-    
-    total_votes_in_contest = contest.contestants.includes(:contestant_updates).sum do |contestant|
+    Rails.cache.fetch("#{cache_key_with_version}/vote_percentage") do
+      return 0 unless contestant_updates.any?
+      
+      total_votes_in_contest = contest.contestants.sum do |contestant|
         contestant.contestant_updates.first&.total_votes.to_i
+      end
+      
+      return 0 if total_votes_in_contest.zero?
+      
+      (contestant_updates.first.total_votes.to_f / total_votes_in_contest) * 100
     end
-    
-    return 0 if total_votes_in_contest.zero?
-    
-    (contestant_updates.first.total_votes.to_f / total_votes_in_contest) * 100
-end
+  end
 
 
 
@@ -57,24 +61,25 @@ end
   end
   
   def needed_percentage_from_outstanding
-    return nil unless votes_behind
-    
-    total_ballots_cast_in_election = contest.election.election_updates.last.ballots_cast
-    total_outstanding_ballots = contest.election.election_updates.last.ballots_outstanding
-    district_ballots_cast = latest_update.ballots_cast
-    
-    return nil if total_ballots_cast_in_election.zero? || total_outstanding_ballots.zero? || votes_behind.nil?
-    
-    district_proportion = district_ballots_cast.to_f / total_ballots_cast_in_election
-    estimated_district_outstanding = total_outstanding_ballots * district_proportion
-    
-    return 0 if estimated_district_outstanding <= votes_behind
-    
-    x = (votes_behind + estimated_district_outstanding + 1) / 2.0
-    
-    return 0 if x > estimated_district_outstanding
-    
-    (x.to_f / estimated_district_outstanding * 100).round(2)
+    Rails.cache.fetch("#{cache_key_with_version}/needed_percentage") do
+      return nil unless votes_behind
+      
+      total_ballots_cast = contest.election.election_updates.last&.ballots_cast.to_i
+      total_outstanding = contest.election.election_updates.last&.ballots_outstanding.to_i
+      district_ballots = latest_update&.ballots_cast.to_i
+      
+      return nil if total_ballots_cast.zero? || total_outstanding.zero? || votes_behind.nil?
+      
+      district_proportion = district_ballots.to_f / total_ballots_cast
+      estimated_outstanding = total_outstanding * district_proportion
+      
+      return 0 if estimated_outstanding <= votes_behind
+      
+      x = (votes_behind + estimated_outstanding + 1) / 2.0
+      return 0 if x > estimated_outstanding
+      
+      (x.to_f / estimated_outstanding * 100).round(2)
+    end
   end
   
   
@@ -112,17 +117,19 @@ end
   end
 
   def display_incremental_votes(vote_type, total_votes)
-    incremental_votes = self.incremental_votes(vote_type)
-    if incremental_votes > 0
-      {
-        votes: incremental_votes,
-        percentage: self.vote_type_percentage(vote_type, total_votes)
-      }
-    else
-      {
-        votes: '-',
-        percentage: '-'
-      }
+    Rails.cache.fetch("#{cache_key_with_version}/incremental_votes/#{vote_type}") do
+      incremental_votes = self.incremental_votes(vote_type)
+      if incremental_votes > 0
+        {
+          votes: incremental_votes,
+          percentage: vote_type_percentage(vote_type, total_votes)
+        }
+      else
+        {
+          votes: '-',
+          percentage: '-'
+        }
+      end
     end
   end
 
@@ -130,6 +137,12 @@ end
     contest.contestants
            .sort_by { |c| -c.contestant_updates.first.total_votes }
            .index(self) + 1
+  end
+
+  private
+
+  def cache_key_with_version
+    "contestant/#{id}-#{updated_at.to_i}"
   end
   
   

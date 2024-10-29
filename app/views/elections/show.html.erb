@@ -8,41 +8,42 @@
 
     <% if user_signed_in? %>
       <%= render 'elections/admin_controls', election: @election if current_user.admin? %>
+      <%= render 'elections/search_bar' %>
       
-      <!-- Search Bar - Full Width -->
-      <div class="mb-4">
-        <%= render 'elections/search_bar' %>
-      </div>
-
-      <!-- Stats Card - Full Width -->
       <% if @election.election_updates.any? %>
-        <div class="mb-4">
-          <%= render 'elections/latest_update', election: @election %>
-        </div>
+        <%= render 'elections/latest_update', election: @election %>
       <% end %>
 
       <%= render 'elections/guide' %>
-      <%= render 'elections/contests_list', contests: @contests %>
+      
+      <% if @pinned_contests.any? %>
+        <%= render 'elections/contest_section', 
+                   contests: @pinned_contests, 
+                   pinned: true, 
+                   election: @election %>
+      <% end %>
+
+      <%= render 'elections/contest_section', 
+                 contests: @other_contests, 
+                 pinned: false, 
+                 election: @election %>
     <% else %>
       <%= render 'elections/signup_prompt' %>
     <% end %>
   </div>
 </div>
 
-<!-- Add JavaScript at bottom of page -->
-<script>
+<%= javascript_tag do %>
   document.addEventListener('DOMContentLoaded', function() {
+    // Search functionality
     const searchInput = document.getElementById('contestSearch');
     if (searchInput) {
       searchInput.addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase().trim();
-        
-        // Get only the contest cards by targeting only cards within the contests list
         const contestCards = document.querySelectorAll('#contests-list .card');
         
         contestCards.forEach(card => {
           const contestText = card.textContent.toLowerCase();
-          
           if (contestText.includes(searchTerm)) {
             card.style.display = '';
           } else {
@@ -51,5 +52,33 @@
         });
       });
     }
+
+    // Pin/Unpin functionality
+    document.querySelectorAll('.pin-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(this.action, {
+          method: this.method,
+          headers: {
+            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content,
+            'Accept': 'application/json'
+          },
+          body: new FormData(this)
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            window.location.reload();
+          } else {
+            alert('Error: ' + data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while processing your request.');
+        });
+      });
+    });
   });
-</script>
+<% end %>

@@ -1,5 +1,6 @@
 Rails.application.configure do
   config.cache_classes = true
+  config.cache_store = :memory_store, { size: 64.megabytes }
   config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
@@ -8,12 +9,14 @@ Rails.application.configure do
   config.assets.compile = true
   config.active_storage.service = :local
   config.log_level = :debug
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.logger = ActiveSupport::Logger.new(STDOUT)
   config.log_tags = [ :request_id ]
   config.action_mailer.perform_caching = false
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
 
-  # SendGrid Configuration
+  # AWS SES Configuration
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -21,18 +24,29 @@ Rails.application.configure do
   config.action_mailer.default_options = {
     from: 'theballotbook@theballotbook.com'
   }
+
   config.action_mailer.smtp_settings = {
-    address: 'smtp.sendgrid.net',
+    address: 'email-smtp.us-west-1.amazonaws.com',
     port: 587,
-    domain: 'theballotbook.com',  # Your domain
-    user_name: 'apikey',          # This is always "apikey" for SendGrid
-    password: ENV['SENDGRID_API_KEY'],  # SendGrid API Key from environment
+    user_name: ENV['SES_SMTP_USERNAME'],
+    password: ENV['SES_SMTP_PASSWORD'],
     authentication: :plain,
-    enable_starttls_auto: true
+    enable_starttls_auto: true,
+    domain: 'theballotbook.com',
+    openssl_verify_mode: 'none'  # Add this for debugging SSL issues
   }
-  config.action_mailer.default_url_options = { host: 'theballotbook.com', protocol: 'https' }
+
+  config.action_mailer.default_url_options = { 
+    host: 'theballotbook.com', 
+    protocol: 'https' 
+  }
+
+  # Add detailed logging for SMTP
+  config.action_mailer.logger = Logger.new(STDOUT)
+  config.action_mailer.logger.level = Logger::DEBUG
 
   config.log_formatter = ::Logger::Formatter.new
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
